@@ -14,7 +14,7 @@
 		B700C19528B92A4C0069FDF5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19428B92A4C0069FDF5 /* main.swift */; };
 		B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19728B92AF30069FDF5 /* NSScreen.swift */; };
 		B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19928B92E020069FDF5 /* AppWindow.swift */; };
-		B700C19C28B9523B0069FDF5 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19B28B9523B0069FDF5 /* AppMenu.swift */; };
+		B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1A528B955090069FDF5 /* AppMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +26,8 @@
 		B700C19428B92A4C0069FDF5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B700C19728B92AF30069FDF5 /* NSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSScreen.swift; sourceTree = "<group>"; };
 		B700C19928B92E020069FDF5 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
-		B700C19B28B9523B0069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
+		B700C1A328B954DF0069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppMenu.swift; path = ../../../../../.Trash/AppMenu.swift; sourceTree = "<group>"; };
+		B700C1A528B955090069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +61,7 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
+				B700C1A528B955090069FDF5 /* AppMenu.swift */,
 				B700C19628B92AEB0069FDF5 /* Extensions */,
 				B700C18228B920F10069FDF5 /* ContentView.swift */,
 				B700C18428B920F20069FDF5 /* Assets.xcassets */,
@@ -67,7 +69,6 @@
 				B700C18628B920F20069FDF5 /* Preview Content */,
 				B700C19428B92A4C0069FDF5 /* main.swift */,
 				B700C19928B92E020069FDF5 /* AppWindow.swift */,
-				B700C19B28B9523B0069FDF5 /* AppMenu.swift */,
 			);
 			path = Cider;
 			sourceTree = "<group>";
@@ -83,6 +84,7 @@
 		B700C19628B92AEB0069FDF5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B700C1A328B954DF0069FDF5 /* AppMenu.swift */,
 				B700C19728B92AF30069FDF5 /* NSScreen.swift */,
 			);
 			path = Extensions;
@@ -120,6 +122,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
+				ORGANIZATIONNAME = "Cider Collective";
 				TargetAttributes = {
 					B700C17C28B920F10069FDF5 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -167,7 +170,7 @@
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
-				B700C19C28B9523B0069FDF5 /* AppMenu.swift in Sources */,
+				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
