@@ -7,19 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B700C18128B920F10069FDF5 /* CiderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C18028B920F10069FDF5 /* CiderApp.swift */; };
 		B700C18328B920F10069FDF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C18228B920F10069FDF5 /* ContentView.swift */; };
 		B700C18528B920F20069FDF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18428B920F20069FDF5 /* Assets.xcassets */; };
 		B700C18828B920F20069FDF5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18728B920F20069FDF5 /* Preview Assets.xcassets */; };
+		B700C19328B92A400069FDF5 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B700C19228B92A400069FDF5 /* Inject */; };
+		B700C19528B92A4C0069FDF5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19428B92A4C0069FDF5 /* main.swift */; };
+		B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19728B92AF30069FDF5 /* NSScreen.swift */; };
+		B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19928B92E020069FDF5 /* AppWindow.swift */; };
+		B700C19C28B9523B0069FDF5 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19B28B9523B0069FDF5 /* AppMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B700C17D28B920F10069FDF5 /* Cider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cider.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B700C18028B920F10069FDF5 /* CiderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderApp.swift; sourceTree = "<group>"; };
 		B700C18228B920F10069FDF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B700C18428B920F20069FDF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B700C18728B920F20069FDF5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B700C18928B920F20069FDF5 /* Cider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cider.entitlements; sourceTree = "<group>"; };
+		B700C19428B92A4C0069FDF5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B700C19728B92AF30069FDF5 /* NSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSScreen.swift; sourceTree = "<group>"; };
+		B700C19928B92E020069FDF5 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
+		B700C19B28B9523B0069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B700C19328B92A400069FDF5 /* Inject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,11 +60,14 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
-				B700C18028B920F10069FDF5 /* CiderApp.swift */,
+				B700C19628B92AEB0069FDF5 /* Extensions */,
 				B700C18228B920F10069FDF5 /* ContentView.swift */,
 				B700C18428B920F20069FDF5 /* Assets.xcassets */,
 				B700C18928B920F20069FDF5 /* Cider.entitlements */,
 				B700C18628B920F20069FDF5 /* Preview Content */,
+				B700C19428B92A4C0069FDF5 /* main.swift */,
+				B700C19928B92E020069FDF5 /* AppWindow.swift */,
+				B700C19B28B9523B0069FDF5 /* AppMenu.swift */,
 			);
 			path = Cider;
 			sourceTree = "<group>";
@@ -67,6 +78,14 @@
 				B700C18728B920F20069FDF5 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B700C19628B92AEB0069FDF5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B700C19728B92AF30069FDF5 /* NSScreen.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +104,9 @@
 			dependencies = (
 			);
 			name = Cider;
+			packageProductDependencies = (
+				B700C19228B92A400069FDF5 /* Inject */,
+			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +135,9 @@
 				Base,
 			);
 			mainGroup = B700C17428B920F10069FDF5;
+			packageReferences = (
+				B700C19128B92A400069FDF5 /* XCRemoteSwiftPackageReference "Inject" */,
+			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +164,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
+				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
-				B700C18128B920F10069FDF5 /* CiderApp.swift in Sources */,
+				B700C19C28B9523B0069FDF5 /* AppMenu.swift in Sources */,
+				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +366,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B700C19128B92A400069FDF5 /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B700C19228B92A400069FDF5 /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B700C19128B92A400069FDF5 /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B700C17528B920F10069FDF5 /* Project object */;
 }
