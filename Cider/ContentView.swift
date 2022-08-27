@@ -8,18 +8,20 @@ import Inject
 struct ContentView: View {
     
     @ObservedObject private var iO = Inject.observer
+    @ObservedObject private var appWindowModal = AppWindowModal.shared
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 VisualEffectBackground()
                     .opacity(0.98)
-                VStack {
-                    AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top)
-                }
+                AppTitleBar(appWindowModal: appWindowModal, toolbarHeight: geometry.safeAreaInsets.top)
             }
             .onTapGesture {
                 NSApp.keyWindow?.makeFirstResponder(nil)
+            }
+            .onChange(of: geometry.size) { newSize in
+                appWindowModal.windowSize = newSize
             }
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)

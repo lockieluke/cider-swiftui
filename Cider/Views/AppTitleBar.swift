@@ -10,6 +10,7 @@ struct AppTitleBar: View {
     @ObservedObject private var iO = Inject.observer
     
     @ObservedObject private var searchModal = SearchModal.shared
+    @ObservedObject public var appWindowModal: AppWindowModal
     
     public var toolbarHeight: CGFloat = 0
     
@@ -37,8 +38,10 @@ struct AppTitleBar: View {
                     Divider()
                         .frame(height: 25)
                         .padding(.trailing, 10)
-                    TitleBarActionButton(actionType: .Back)
-                    TitleBarActionButton(actionType: .Forward)
+                    if appWindowModal.windowSize.width > 850 {
+                        TitleBarActionButton(actionType: .Back)
+                        TitleBarActionButton(actionType: .Forward)
+                    }
                     TitleBarActionButton(actionType: .Library)
                     Spacer()
                 }
@@ -50,7 +53,6 @@ struct AppTitleBar: View {
                 }
             }
             .frame(minHeight: toolbarHeight)
-            .zIndex(0)
             .enableInjection()
         }
     }
@@ -58,6 +60,6 @@ struct AppTitleBar: View {
 
 struct AppTitleBar_Previews: PreviewProvider {
     static var previews: some View {
-        AppTitleBar()
+        AppTitleBar(appWindowModal: .shared)
     }
 }

@@ -35,11 +35,9 @@ struct SegmentedControl: View {
     var body: some View {
         ZStack {
             HStack {
-                let thisControlSize = segmentedControlsSize.isEmpty ? CGSize(width: 0, height: 0) : segmentedControlsSize[selectedItem]
-                
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color("SecondaryColour"))
-                    .frame(width: thisControlSize.width, height: thisControlSize.height)
+                    .frame(width: currentSegmentedSize.width, height: currentSegmentedSize.height)
                     .offset(x: currentOffsetPosition.minX, y: 0)
                 Spacer()
             }
@@ -53,6 +51,12 @@ struct SegmentedControl: View {
                             self.currentOffsetPosition = offsetPositions[index]
                             self.currentSegmentedSize = segmentedControlsSize[index]
                         }
+                    }, sizeChanged: { newSize in
+                        self.segmentedControlsSize[index] = newSize
+                        
+                        if self.selectedItem == index {
+                            self.currentSegmentedSize = segmentedControlsSize[index]
+                        }
                     })
                     .overlay {
                         GeometryReader { geometry in
@@ -62,13 +66,6 @@ struct SegmentedControl: View {
                                     
                                     if self.selectedItem == index {
                                         self.currentOffsetPosition = offsetPositions[index]
-                                    }
-                                }
-                                .onChange(of: geometry.size) { newSize in
-                                    self.segmentedControlsSize[index] = newSize
-                                    
-                                    if self.selectedItem == index {
-                                        self.currentSegmentedSize = segmentedControlsSize[index]
                                     }
                                 }
                         }
@@ -122,9 +119,13 @@ struct SegmentedControlItem: View {
         .padding(.horizontal)
         .padding(.vertical, 5).background(isHovered ? AnyView(RoundedRectangle(cornerRadius: 7).fill(Color("SecondaryColour").opacity(0.5))) : AnyView(EmptyView()))
         .overlay {
-            GeometryReader { geomtry in
-                EmptyView()
-                    .onChange(of: geomtry.size) { newSize in
+            GeometryReader { geometry in
+                Color.clear
+                    .onAppear {
+                        self.segSize = geometry.size
+                        self.sizeChanged?(geometry.size)
+                    }
+                    .onChange(of: geometry.size) { newSize in
                         self.segSize = newSize
                         self.sizeChanged?(newSize)
                     }

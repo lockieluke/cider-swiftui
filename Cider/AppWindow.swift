@@ -21,10 +21,12 @@ class AppWindow {
     
     init() {
         let activeScreen = NSScreen.activeScreen
-        let window = NSWindow(contentViewController: NSHostingController(rootView: ContentView()))
+        let window = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 1024, height: 600), styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
+        let contentView = ContentView()
+            .frame(minWidth: 820, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
+        window.contentViewController = NSHostingController(rootView: contentView)
         window.setContentSize(NSSize(width: 1024, height: 600))
-        window.styleMask = [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView]
         window.isOpaque = true
         window.backgroundColor = .clear
         window.titlebarAppearsTransparent = true

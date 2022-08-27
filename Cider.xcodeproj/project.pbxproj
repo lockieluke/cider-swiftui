@@ -22,6 +22,7 @@
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
 		B7AAB6FF28BAC81D009AABEA /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = B7AAB6FE28BAC81D009AABEA /* Introspect */; };
+		B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70028BAD782009AABEA /* AppWindowModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		B7AAB6F928BABE83009AABEA /* SearchModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModal.swift; sourceTree = "<group>"; };
 		B7AAB6FB28BABF64009AABEA /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		B7AAB70028BAD782009AABEA /* AppWindowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				B7AAB6F928BABE83009AABEA /* SearchModal.swift */,
+				B7AAB70028BAD782009AABEA /* AppWindowModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
+				B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */,
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
