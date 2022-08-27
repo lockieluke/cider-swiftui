@@ -1,3 +1,4 @@
 .DS_Store
+.idea/
 
 Cider.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/UserInterfaceState.xcuserstate
