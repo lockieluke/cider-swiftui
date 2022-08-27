@@ -9,20 +9,34 @@ import SwiftUI
 class AppWindow {
     
     private let mainWindow: NSWindow
+    private let windowDelegate: AppWindowDelegate
+    
+    class AppWindowDelegate : NSObject, NSWindowDelegate {
+        
+        func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
+            return [.fullScreen, .autoHideDock, .autoHideToolbar, .autoHideMenuBar]
+        }
+        
+    }
     
     init() {
         let activeScreen = NSScreen.activeScreen
         let window = NSWindow(contentViewController: NSHostingController(rootView: ContentView()))
         
-        window.setContentSize(NSSize(width: 1280, height: 720))
-        window.styleMask = [.miniaturizable, .closable, .resizable, .titled]
+        window.setContentSize(NSSize(width: 1024, height: 600))
+        window.styleMask = [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView]
+        window.isOpaque = true
+        window.backgroundColor = .clear
         window.titlebarAppearsTransparent = true
         window.titleVisibility = .hidden
         window.title = "Cider"
         
+        self.windowDelegate = AppWindowDelegate()
+        window.delegate = windowDelegate
+        
         let toolbar = NSToolbar()
+        window.showsToolbarButton = false
         window.toolbar = toolbar
-        window.toolbarStyle = .unified
         
         var pos = NSPoint()
         pos.x = activeScreen.visibleFrame.midX

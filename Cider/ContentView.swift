@@ -3,16 +3,27 @@
 //  
 
 import SwiftUI
+import Inject
 
 struct ContentView: View {
     
+    @ObservedObject private var iO = Inject.observer
+    
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                
+            ZStack {
+                VisualEffectBackground()
+                    .opacity(0.98)
+                VStack {
+                    AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top)
+                }
             }
-            .frame(minWidth: 480, minHeight: 360)
-            .frame(width: geometry.size.width, height: geometry.size.height)
+            .onTapGesture {
+                NSApp.keyWindow?.makeFirstResponder(nil)
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
+            .edgesIgnoringSafeArea(.top)
+            .enableInjection()
         }
     }
 }

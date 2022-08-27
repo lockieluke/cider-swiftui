@@ -15,6 +15,13 @@
 		B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19728B92AF30069FDF5 /* NSScreen.swift */; };
 		B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19928B92E020069FDF5 /* AppWindow.swift */; };
 		B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1A528B955090069FDF5 /* AppMenu.swift */; };
+		B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */; };
+		B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */; };
+		B700C1B428B96DBD0069FDF5 /* TitleBarActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B328B96DBD0069FDF5 /* TitleBarActionButton.swift */; };
+		B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */; };
+		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
+		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
+		B7AAB6FF28BAC81D009AABEA /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = B7AAB6FE28BAC81D009AABEA /* Introspect */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +35,13 @@
 		B700C19928B92E020069FDF5 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
 		B700C1A328B954DF0069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppMenu.swift; path = ../../../../../.Trash/AppMenu.swift; sourceTree = "<group>"; };
 		B700C1A528B955090069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
+		B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleBar.swift; sourceTree = "<group>"; };
+		B700C1AC28B956550069FDF5 /* CiderDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CiderDebug.entitlements; sourceTree = "<group>"; };
+		B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
+		B700C1B328B96DBD0069FDF5 /* TitleBarActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBarActionButton.swift; sourceTree = "<group>"; };
+		B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		B7AAB6F928BABE83009AABEA /* SearchModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModal.swift; sourceTree = "<group>"; };
+		B7AAB6FB28BABF64009AABEA /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +50,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B700C19328B92A400069FDF5 /* Inject in Frameworks */,
+				B7AAB6FF28BAC81D009AABEA /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +76,10 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
+				B7AAB6F828BABE57009AABEA /* Modals */,
+				B7AAB6F728BA2DBF009AABEA /* Utils */,
+				B700C1AC28B956550069FDF5 /* CiderDebug.entitlements */,
+				B700C1A928B955B10069FDF5 /* Views */,
 				B700C1A528B955090069FDF5 /* AppMenu.swift */,
 				B700C19628B92AEB0069FDF5 /* Extensions */,
 				B700C18228B920F10069FDF5 /* ContentView.swift */,
@@ -90,6 +109,33 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		B700C1A928B955B10069FDF5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */,
+				B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */,
+				B700C1B328B96DBD0069FDF5 /* TitleBarActionButton.swift */,
+				B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */,
+				B7AAB6FB28BABF64009AABEA /* SearchBar.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B7AAB6F728BA2DBF009AABEA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B7AAB6F828BABE57009AABEA /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				B7AAB6F928BABE83009AABEA /* SearchModal.swift */,
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -108,6 +154,7 @@
 			name = Cider;
 			packageProductDependencies = (
 				B700C19228B92A400069FDF5 /* Inject */,
+				B7AAB6FE28BAC81D009AABEA /* Introspect */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider.app */;
@@ -140,6 +187,7 @@
 			mainGroup = B700C17428B920F10069FDF5;
 			packageReferences = (
 				B700C19128B92A400069FDF5 /* XCRemoteSwiftPackageReference "Inject" */,
+				B7AAB6FD28BAC81D009AABEA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -168,9 +216,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
+				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
+				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
+				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
+				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
+				B700C1B428B96DBD0069FDF5 /* TitleBarActionButton.swift in Sources */,
+				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,13 +350,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Cider/Cider.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Cider/CiderDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
-				DEVELOPMENT_TEAM = NLGX87YQQK;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = 8R23J2835D;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
@@ -312,6 +367,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciderapp.Cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -340,6 +399,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciderapp.Cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -379,6 +439,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		B7AAB6FD28BAC81D009AABEA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -386,6 +454,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B700C19128B92A400069FDF5 /* XCRemoteSwiftPackageReference "Inject" */;
 			productName = Inject;
+		};
+		B7AAB6FE28BAC81D009AABEA /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7AAB6FD28BAC81D009AABEA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
