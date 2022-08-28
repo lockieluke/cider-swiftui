@@ -7,11 +7,11 @@ import AppKit
 import SwiftUI
 
 struct VisualEffectBackground: NSViewRepresentable {
-  func makeNSView(context: Context) -> NSVisualEffectView {
-    return NSVisualEffectView()
-  }
-  
-  func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
-    // Nothing to do.
-  }
+    func makeNSView(context: Context) -> NSVisualEffectView {
+        return NSVisualEffectView()
+    }
+    
+    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
+        // Nothing to do.
+    }
 }
