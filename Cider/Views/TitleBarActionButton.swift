@@ -32,7 +32,7 @@ struct TitleBarActionButton: View {
             .overlay {
                 Image(systemName: actionType.rawValue)
                     .font(.system(size: 13))
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
             }
             .onTapGesture {
                 onClick?()

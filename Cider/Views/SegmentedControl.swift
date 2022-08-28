@@ -111,10 +111,10 @@ struct SegmentedControlItem: View {
         HStack {
             Image(systemName: icon.rawValue)
                 .font(.system(size: 12))
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
             Text(item)
                 .font(.system(size: 12))
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
         }
         .padding(.horizontal)
         .padding(.vertical, 5).background(isHovered ? AnyView(RoundedRectangle(cornerRadius: 7).fill(Color("SecondaryColour").opacity(0.5))) : AnyView(EmptyView()))
