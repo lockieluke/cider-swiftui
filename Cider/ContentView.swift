@@ -16,6 +16,10 @@ struct ContentView: View {
                 VisualEffectBackground()
                     .opacity(0.98)
                 AppTitleBar(appWindowModal: appWindowModal, toolbarHeight: geometry.safeAreaInsets.top)
+                VStack {
+                    Spacer()
+                    PlaybackView()
+                }
             }
             .onTapGesture {
                 NSApp.keyWindow?.makeFirstResponder(nil)
