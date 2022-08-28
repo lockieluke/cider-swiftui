@@ -54,4 +54,8 @@ class AppWindow {
         self.mainWindow.makeMain()
     }
     
+    func getWindow() -> NSWindow {
+        return self.mainWindow
+    }
+    
 }

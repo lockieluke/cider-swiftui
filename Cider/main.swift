@@ -12,9 +12,9 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     private var appMenu: AppMenu!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        self.appMenu = AppMenu()
-        NSApp.mainMenu = appMenu
         self.appWindow = AppWindow()
+        self.appMenu = AppMenu(appWindow.getWindow())
+        NSApp.mainMenu = appMenu.getMenu()
         
         appWindow.show()
     }
