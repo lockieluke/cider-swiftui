@@ -10,10 +10,19 @@ struct PlaybackView: View {
     @ObservedObject private var iO = Inject.observer
     
     var body: some View {
-        Group {
-            HStack {
-                PlaybackCardView()
-                Spacer()
+        ZStack {
+            PlaybackCardView()
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            VStack {
+                PlaybackBar()
+                HStack {
+                    PlaybackButton(icon: .Shuffle)
+                    PlaybackButton(icon: .Backward)
+                    PlaybackButton(icon: .Play, size: 23)
+                    PlaybackButton(icon: .Forward)
+                    PlaybackButton(icon: .Repeat)
+                }
             }
         }
         .frame(height: 100)
@@ -21,6 +30,55 @@ struct PlaybackView: View {
         .background(Color("PrimaryColour"))
         .enableInjection()
     }
+}
+
+enum PlaybackButtonIcon : String {
+    
+    case Play = "play.fill";
+    case Pause = "pause.fill";
+    case Backward = "backward.fill";
+    case Forward = "forward.fill";
+    case Repeat = "repeat";
+    case Shuffle = "shuffle";
+    
+}
+
+struct PlaybackButton: View {
+    
+    @ObservedObject private var iO = Inject.observer
+    
+    public var icon: PlaybackButtonIcon
+    public var size = CGFloat(18)
+    
+    @State private var isHovered = false
+    @State private var bouncyFontSize = CGFloat(18)
+    
+    var body: some View {
+        Image(systemName: icon.rawValue)
+            .animatableSystemFont(size: bouncyFontSize)
+            .foregroundColor(.secondary.opacity(isHovered ? 0.5 : 1))
+            .frame(width: 30, height: 30)
+            .padding(.horizontal, 5)
+            .contentShape(Rectangle())
+            .gesture(DragGesture(minimumDistance: 0).onChanged({ _ in
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 1)) {
+                    self.bouncyFontSize = size - 5
+                }
+            }).onEnded({ _ in
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 1)) {
+                    self.bouncyFontSize = size
+                }
+            }))
+            .onHover { isHovered in
+                self.isHovered = isHovered
+            }
+            .onAppear {
+                self.bouncyFontSize = size
+            }
+            .fixedSize()
+            .enableInjection()
+    }
+    
 }
 
 struct PlaybackView_Previews: PreviewProvider {

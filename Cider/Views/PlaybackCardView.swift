@@ -45,16 +45,13 @@ struct PlaybackCardView: View {
             .frame(width: 50, height: 50)
             .cornerRadius(5)
             
-            VStack {
+            VStack(alignment: .leading) {
                 Text("Permission To Dance")
                     .font(.system(.headline))
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 InteractiveText("BTS")
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 InteractiveText("Butter")
                     .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding([.horizontal, .vertical], 10)
         }

@@ -25,6 +25,8 @@
 		B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70028BAD782009AABEA /* AppWindowModal.swift */; };
 		B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70228BADCB2009AABEA /* PlaybackView.swift */; };
 		B7AAB70528BAE3DC009AABEA /* PlaybackCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70428BAE3DC009AABEA /* PlaybackCardView.swift */; };
+		B7AAB70728BCF89E009AABEA /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70628BCF89E009AABEA /* View.swift */; };
+		B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70828BD1174009AABEA /* PlaybackBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		B7AAB70028BAD782009AABEA /* AppWindowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowModal.swift; sourceTree = "<group>"; };
 		B7AAB70228BADCB2009AABEA /* PlaybackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackView.swift; sourceTree = "<group>"; };
 		B7AAB70428BAE3DC009AABEA /* PlaybackCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCardView.swift; sourceTree = "<group>"; };
+		B7AAB70628BCF89E009AABEA /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		B7AAB70828BD1174009AABEA /* PlaybackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				B700C19728B92AF30069FDF5 /* NSScreen.swift */,
+				B7AAB70628BCF89E009AABEA /* View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 				B7AAB6FB28BABF64009AABEA /* SearchBar.swift */,
 				B7AAB70228BADCB2009AABEA /* PlaybackView.swift */,
 				B7AAB70428BAE3DC009AABEA /* PlaybackCardView.swift */,
+				B7AAB70828BD1174009AABEA /* PlaybackBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,11 +230,13 @@
 			files = (
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
 				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
+				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
 				B7AAB70528BAE3DC009AABEA /* PlaybackCardView.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
 				B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */,
+				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
