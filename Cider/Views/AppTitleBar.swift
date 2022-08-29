@@ -39,10 +39,10 @@ struct AppTitleBar: View {
                         .frame(height: 25)
                         .padding(.trailing, 10)
                     if appWindowModal.windowSize.width > 850 {
-                        TitleBarActionButton(actionType: .Back)
-                        TitleBarActionButton(actionType: .Forward)
+                        ActionButton(actionType: .Back)
+                        ActionButton(actionType: .Forward)
                     }
-                    TitleBarActionButton(actionType: .Library)
+                    ActionButton(actionType: .Library)
                     Spacer()
                 }
                 

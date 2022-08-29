@@ -24,6 +24,14 @@ struct PlaybackView: View {
                     PlaybackButton(icon: .Repeat)
                 }
             }
+            
+            HStack {
+                ActionButton(actionType: .AirPlay)
+                ActionButton(actionType: .Queue)
+                ActionButton(actionType: .More)
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.horizontal, 20)
         }
         .frame(height: 100)
         .frame(maxWidth: .infinity)
