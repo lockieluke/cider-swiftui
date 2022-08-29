@@ -28,8 +28,8 @@ struct AppTitleBar: View {
                     .frame(width: geometry.size.width, height: titleBarHeight)
                 
                 SegmentedControl(
-                    items: ["Home", "Listen Now", "Browse", "Radio"],
-                    icons: [.Home, .ListenNow, .Browse, .Radio]
+                    items: ["Home", "Library"],
+                    icons: [.Home, .Library]
                 )
                 
                 HStack(spacing: 0) {

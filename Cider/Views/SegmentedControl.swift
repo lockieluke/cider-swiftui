@@ -11,6 +11,7 @@ enum SegmentedControlIcon : String {
     case ListenNow = "play.circle";
     case Browse = "globe";
     case Radio = "dot.radiowaves.left.and.right";
+    case Library = "rectangle.stack";
     
 }
 
