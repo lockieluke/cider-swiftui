@@ -36,7 +36,6 @@
 		B700C19428B92A4C0069FDF5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B700C19728B92AF30069FDF5 /* NSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSScreen.swift; sourceTree = "<group>"; };
 		B700C19928B92E020069FDF5 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
-		B700C1A328B954DF0069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppMenu.swift; path = ../../../../../.Trash/AppMenu.swift; sourceTree = "<group>"; };
 		B700C1A528B955090069FDF5 /* AppMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
 		B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleBar.swift; sourceTree = "<group>"; };
 		B700C1AC28B956550069FDF5 /* CiderDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CiderDebug.entitlements; sourceTree = "<group>"; };
@@ -109,7 +108,6 @@
 		B700C19628B92AEB0069FDF5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B700C1A328B954DF0069FDF5 /* AppMenu.swift */,
 				B700C19728B92AF30069FDF5 /* NSScreen.swift */,
 			);
 			path = Extensions;
