@@ -8,28 +8,15 @@ import Inject
 struct PlaybackBar: View {
     
     @ObservedObject private var iO = Inject.observer
-    
-    @State private var geoSize = CGSize()
+    @ObservedObject private var appWindowModal = AppWindowModal.shared
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
                 .fill(.red)
-                .frame(width: geoSize.width, height: 5)
-                .overlay {
-                    GeometryReader { geometry in
-                        Group {
-                            
-                        }
-                        .onChange(of: geometry.size) { newSize in
-                            self.geoSize = newSize
-                        }
-                        .onAppear {
-                            self.geoSize = geometry.size
-                        }
-                    }
-                }
+                .frame(width: appWindowModal.windowSize.width / 3, height: 5)
         }
+        .padding(.vertical, 10)
         .enableInjection()
     }
 }

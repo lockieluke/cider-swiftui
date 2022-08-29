@@ -27,6 +27,7 @@ struct PlaybackView: View {
         }
         .frame(height: 100)
         .frame(maxWidth: .infinity)
+        .padding(.vertical, 5)
         .background(Color("PrimaryColour"))
         .enableInjection()
     }
