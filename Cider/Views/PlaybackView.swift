@@ -8,9 +8,18 @@ import Inject
 struct PlaybackView: View {
     
     @ObservedObject private var iO = Inject.observer
+    @ObservedObject public var appWindowModal: AppWindowModal
+    
+    @State private var geometrySize = CGSize()
     
     var body: some View {
         ZStack {
+            VisualEffectBackground()
+                .frame(width: appWindowModal.windowSize.width, height: geometrySize.height)
+                .overlay {
+                    Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
+                }
+            
             PlaybackCardView()
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -33,10 +42,19 @@ struct PlaybackView: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.horizontal, 20)
         }
+        .overlay {
+            GeometryReader { geometry in
+                EmptyView()
+                    .onChange(of: geometry.size) { newSize in
+                        self.geometrySize = newSize
+                    }
+                    .onAppear {
+                        self.geometrySize = geometry.size
+                    }
+            }
+        }
         .frame(height: 100)
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 5)
-        .background(Color("PrimaryColour"))
         .enableInjection()
     }
 }
@@ -92,6 +110,6 @@ struct PlaybackButton: View {
 
 struct PlaybackView_Previews: PreviewProvider {
     static var previews: some View {
-        PlaybackView()
+        PlaybackView(appWindowModal: .shared)
     }
 }

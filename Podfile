@@ -8,6 +8,7 @@ target 'Cider' do
   use_frameworks!
 
   # Pods for Cider
-  pod 'SwiftHTTP', '~> 3.0.1'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'Alamofire'
+  pod 'Introspect'
 end

@@ -17,6 +17,10 @@ class AppWindow {
             return [.fullScreen, .autoHideDock, .autoHideToolbar, .autoHideMenuBar]
         }
         
+        func windowShouldClose(_ sender: NSWindow) -> Bool {
+            return true
+        }
+        
     }
     
     init() {
@@ -44,14 +48,17 @@ class AppWindow {
         pos.x = activeScreen.visibleFrame.midX
         pos.y = activeScreen.visibleFrame.midY
         window.setFrameOrigin(pos)
+        window.isReleasedWhenClosed = false
         window.center()
 
         self.mainWindow = window
     }
     
     func show() {
-        self.mainWindow.makeKeyAndOrderFront(nil)
-        self.mainWindow.makeMain()
+        mainWindow.makeKeyAndOrderFront(nil)
+        if !mainWindow.isMainWindow {
+            mainWindow.makeMain()
+        }
     }
     
     func getWindow() -> NSWindow {

@@ -4,7 +4,6 @@
 
 import SwiftUI
 import Inject
-import Introspect
 
 struct SearchBar: View {
     
@@ -27,15 +26,15 @@ struct SearchBar: View {
                     }
             }
             .focused($isFocused)
-            .introspectTextField { textField in
-                textField.becomeFirstResponder()
-            }
             .onHover { isHovered in
                 if isHovered {
                     NSCursor.iBeam.push()
                 } else {
                     NSCursor.pop()
                 }
+            }
+            .onAppear {
+                self.isFocused = true
             }
             .padding(.horizontal, 10)
             .enableInjection()

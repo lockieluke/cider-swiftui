@@ -19,6 +19,11 @@
 		B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */; };
 		B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B328B96DBD0069FDF5 /* ActionButton.swift */; };
 		B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */; };
+		B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050C28BE0B4F002AD76C /* AMAPI.swift */; };
+		B706050F28BF98EB002AD76C /* AMTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050E28BF98EB002AD76C /* AMTypes.swift */; };
+		B706051128BFA181002AD76C /* RecommendationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* RecommendationSection.swift */; };
+		B725013A28C2624300992F57 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* NSColor.swift */; };
+		B725013E28C2637F00992F57 /* AMPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* AMPresentable.swift */; };
 		B743B3D128BD6F7B004F58DE /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B743B3D028BD6F7B004F58DE /* Inject */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
@@ -47,6 +52,12 @@
 		B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
 		B700C1B328B96DBD0069FDF5 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		B706050B28BD8CB2002AD76C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B706050C28BE0B4F002AD76C /* AMAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAPI.swift; sourceTree = "<group>"; };
+		B706050E28BF98EB002AD76C /* AMTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMTypes.swift; sourceTree = "<group>"; };
+		B706051028BFA181002AD76C /* RecommendationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationSection.swift; sourceTree = "<group>"; };
+		B725013928C2624300992F57 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
+		B725013D28C2637F00992F57 /* AMPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMPresentable.swift; sourceTree = "<group>"; };
 		B7AAB6F928BABE83009AABEA /* SearchModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModal.swift; sourceTree = "<group>"; };
 		B7AAB6FB28BABF64009AABEA /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		B7AAB70028BAD782009AABEA /* AppWindowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowModal.swift; sourceTree = "<group>"; };
@@ -102,6 +113,7 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
+				B706050B28BD8CB2002AD76C /* Info.plist */,
 				B7AAB6F828BABE57009AABEA /* Modals */,
 				B7AAB6F728BA2DBF009AABEA /* Utils */,
 				B700C1AC28B956550069FDF5 /* CiderDebug.entitlements */,
@@ -131,6 +143,7 @@
 			children = (
 				B700C19728B92AF30069FDF5 /* NSScreen.swift */,
 				B7AAB70628BCF89E009AABEA /* View.swift */,
+				B725013928C2624300992F57 /* NSColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -147,6 +160,8 @@
 				B7AAB70428BAE3DC009AABEA /* PlaybackCardView.swift */,
 				B7AAB70828BD1174009AABEA /* PlaybackBar.swift */,
 				B7AAB70C28BD2640009AABEA /* HomeView.swift */,
+				B706051028BFA181002AD76C /* RecommendationSection.swift */,
+				B725013D28C2637F00992F57 /* AMPresentable.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -154,6 +169,8 @@
 		B7AAB6F728BA2DBF009AABEA /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B706050C28BE0B4F002AD76C /* AMAPI.swift */,
+				B706050E28BF98EB002AD76C /* AMTypes.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -311,10 +328,15 @@
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
+				B706051128BFA181002AD76C /* RecommendationSection.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
 				B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */,
+				B706050F28BF98EB002AD76C /* AMTypes.swift in Sources */,
+				B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */,
+				B725013E28C2637F00992F57 /* AMPresentable.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,
+				B725013A28C2624300992F57 /* NSColor.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +378,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -416,6 +439,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -451,15 +475,20 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cider/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSAppleMusicUsageDescription = "$(PRODUCT_NAME) has to get access to your music library to fetch Apple Music content";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Cider has to get access to your music library to fetch Apple Music content";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -479,19 +508,24 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
-				DEVELOPMENT_TEAM = NLGX87YQQK;
+				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cider/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSAppleMusicUsageDescription = "$(PRODUCT_NAME) has to get access to your music library to fetch Apple Music content";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Cider has to get access to your music library to fetch Apple Music content";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

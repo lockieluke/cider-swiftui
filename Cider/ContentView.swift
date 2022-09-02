@@ -9,16 +9,23 @@ struct ContentView: View {
     
     @ObservedObject private var iO = Inject.observer
     @ObservedObject private var appWindowModal = AppWindowModal.shared
+    @ObservedObject private var mkModal = MKModal.shared
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 VisualEffectBackground()
                     .opacity(0.98)
-                AppTitleBar(appWindowModal: appWindowModal, toolbarHeight: geometry.safeAreaInsets.top)
+                HomeView(mkModal: mkModal, appWindowModal: appWindowModal)
+                    .frame(maxHeight: .infinity, alignment: .center)
+                    .padding(.top, 40)
+                    .padding(.bottom, 100)
                 VStack {
+                    AppTitleBar(appWindowModal: appWindowModal, toolbarHeight: geometry.safeAreaInsets.top)
                     Spacer()
-                    PlaybackView()
+                    PlaybackView(appWindowModal: appWindowModal)
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .frame(height: 100)
                 }
             }
             .onTapGesture {

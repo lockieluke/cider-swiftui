@@ -1,20 +1,25 @@
 PODS:
-  - SwiftHTTP (3.0.1)
+  - Alamofire (5.6.2)
+  - Introspect (0.1.4)
   - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
-  - SwiftHTTP (~> 3.0.1)
+  - Alamofire
+  - Introspect
   - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Introspect
   trunk:
-    - SwiftHTTP
     - SwiftyJSON
 
 SPEC CHECKSUMS:
-  SwiftHTTP: e94f1aa8cde58637dcc0100f6349de31a3337fde
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Introspect: b62c4dd2063072327c21d618ef2bedc3c87bc366
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: c3b010f7b4a20c065fd89e5e210beb0dd35257aa
+PODFILE CHECKSUM: 003733e995c4c2369b5c7fe41125e4c45f7298ec
 
 COCOAPODS: 1.11.3

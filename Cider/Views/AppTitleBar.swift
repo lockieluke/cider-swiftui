@@ -16,45 +16,45 @@ struct AppTitleBar: View {
     
     private var titleBarHeight: CGFloat {
         get {
-            return toolbarHeight > 40 ? toolbarHeight : 42
+            return toolbarHeight > 40 ? toolbarHeight : 40
         }
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Rectangle()
-                    .fill(Color("PrimaryColour"))
-                    .frame(width: geometry.size.width, height: titleBarHeight)
-                
-                SegmentedControl(
-                    items: ["Home", "Library"],
-                    icons: [.Home, .Library]
-                )
-                
-                HStack(spacing: 0) {
-                    Spacer()
-                        .frame(width: 85)
-                    Divider()
-                        .frame(height: 25)
-                        .padding(.trailing, 10)
-                    if appWindowModal.windowSize.width > 850 {
-                        ActionButton(actionType: .Back)
-                        ActionButton(actionType: .Forward)
-                    }
-                    ActionButton(actionType: .Library)
-                    Spacer()
+        ZStack {
+            VisualEffectBackground()
+                .frame(width: appWindowModal.windowSize.width, height: titleBarHeight)
+                .overlay {
+                    Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
                 }
-                
-                HStack(spacing: 0) {
-                    Spacer()
-                        .frame(width: geometry.size.width * 0.8)
-                    SearchBar(searchModal: searchModal)
+            
+            SegmentedControl(
+                items: ["Home", "Library"],
+                icons: [.Home, .Library]
+            )
+            
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: 85)
+                Divider()
+                    .frame(height: 25)
+                    .padding(.trailing, 10)
+                if appWindowModal.windowSize.width > 850 {
+                    ActionButton(actionType: .Back)
+                    ActionButton(actionType: .Forward)
                 }
+                ActionButton(actionType: .Library)
+                Spacer()
             }
-            .frame(minHeight: toolbarHeight)
-            .enableInjection()
+            
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: appWindowModal.windowSize.width * 0.8)
+                SearchBar(searchModal: searchModal)
+            }
         }
+        .frame(height: 40)
+        .enableInjection()
     }
 }
 

@@ -7,6 +7,7 @@ import AppKit
 import SwiftUI
 
 struct VisualEffectBackground: NSViewRepresentable {
+    
     func makeNSView(context: Context) -> NSVisualEffectView {
         return NSVisualEffectView()
     }
