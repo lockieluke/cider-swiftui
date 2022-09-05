@@ -32,6 +32,9 @@ struct HomeView: View {
                     .progressViewStyle(.circular)
             }
         }
+        .onAppear {
+            mkModal.authorise()
+        }
         .onReceive(mkModal.$isAuthorised) { isAuthorised in
             if isAuthorised {
                 Task {

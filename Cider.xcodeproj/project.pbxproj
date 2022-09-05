@@ -34,6 +34,8 @@
 		B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70828BD1174009AABEA /* PlaybackBar.swift */; };
 		B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70A28BD24B4009AABEA /* MKModal.swift */; };
 		B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70C28BD2640009AABEA /* HomeView.swift */; };
+		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
+		B7C651D628C4B8E200D32DDC /* AuthWorkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +69,8 @@
 		B7AAB70828BD1174009AABEA /* PlaybackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackBar.swift; sourceTree = "<group>"; };
 		B7AAB70A28BD24B4009AABEA /* MKModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKModal.swift; sourceTree = "<group>"; };
 		B7AAB70C28BD2640009AABEA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B7C651D328C415F000D32DDC /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
+		B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorkerView.swift; sourceTree = "<group>"; };
 		DB5DADE1D0FE5402462C7B0A /* Pods-Cider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.release.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.release.xcconfig"; sourceTree = "<group>"; };
 		F2BEF617CF919BFDAB70B207 /* Pods-Cider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.debug.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +166,7 @@
 				B7AAB70C28BD2640009AABEA /* HomeView.swift */,
 				B706051028BFA181002AD76C /* RecommendationSection.swift */,
 				B725013D28C2637F00992F57 /* AMPresentable.swift */,
+				B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 			children = (
 				B706050C28BE0B4F002AD76C /* AMAPI.swift */,
 				B706050E28BF98EB002AD76C /* AMTypes.swift */,
+				B7C651D328C415F000D32DDC /* AppleAuth.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -329,6 +335,8 @@
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B706051128BFA181002AD76C /* RecommendationSection.swift in Sources */,
+				B7C651D628C4B8E200D32DDC /* AuthWorkerView.swift in Sources */,
+				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
 				B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */,

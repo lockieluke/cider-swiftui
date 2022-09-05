@@ -10,13 +10,7 @@ import SwiftyJSON
 
 class AMAPI {
     
-    private let skCloudServiceController: SKCloudServiceController
-    
-    private var AM_TOKEN: String {
-        get {
-            return Bundle.main.object(forInfoDictionaryKey: "AM_API_TOKEN") as! String
-        }
-    }
+    private var AM_TOKEN: String
     private var AM_USER_TOKEN: String = "null"
     public var SAFE_AM_TOKEN: String {
         get {
@@ -29,7 +23,9 @@ class AMAPI {
         get {
             return [
                 "Authorization": "Bearer \(AM_TOKEN)",
-                "Music-User-Token": AM_USER_TOKEN
+                "Music-User-Token": AM_USER_TOKEN,
+                "Origin": "https://beta.music.apple.com",
+                "Referrer": "https://beta.music.apple.com"
             ]
         }
     }
@@ -37,7 +33,7 @@ class AMAPI {
     private var STOREFRONT_ID: String?
     
     init() {
-        self.skCloudServiceController = SKCloudServiceController()
+        self.AM_TOKEN = ""
     }
     
     func requestSKAuthorisation(completion: @escaping (_ status: SKCloudServiceAuthorizationStatus) -> Void) {
@@ -54,15 +50,31 @@ class AMAPI {
         }
     }
     
+    func fetchMKDeveloperToken() async {
+        let response = await AF.request("https://api.cider.sh/v1", headers: [
+            "User-Agent": "Cider SwiftUI"
+        ]).validate().serializingData().response
+        
+        if let data = response.data {
+            let json = try? JSON(data: data)
+            if let token = json?["token"].stringValue {
+                print(token)
+                self.AM_TOKEN = token
+            }
+        }
+    }
+    
     func fetchMKUserToken(completion: @escaping (_ succeeded: Bool, _ userToken: String?, _ error: Error?) -> Void) {
-        self.skCloudServiceController.requestUserToken(forDeveloperToken: AM_TOKEN) { token, error in
-            if let error = error {
-                print("Error occurred when fetching AM User Token: \(error.localizedDescription)")
+        print(AM_TOKEN)
+        SKCloudServiceController().requestUserToken(forDeveloperToken: AM_TOKEN) { token, error in
+            if error != nil {
+                print("Error occurred when fetching AM User Token: \(error!.localizedDescription)")
                 completion(false, nil, error)
                 return
             }
             
             guard let token = token else {
+                print("MK User Token is undefined")
                 completion(false, nil, nil)
                 return
             }
@@ -72,7 +84,7 @@ class AMAPI {
     }
     
     func checkAMSubscription(completion: @escaping (_ hasSubscription: Bool) -> Void) {
-        self.skCloudServiceController.requestCapabilities { capabilities, error in
+        SKCloudServiceController().requestCapabilities { capabilities, error in
             if let error = error {
                 print("Error occurred when fetching account capabilities: \(error.localizedDescription)")
                 completion(false)

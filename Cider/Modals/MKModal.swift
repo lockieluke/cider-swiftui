@@ -15,41 +15,49 @@ class MKModal : ObservableObject {
     @Published public var amAuthError: Error?
     
     public let AM_API = AMAPI()
+    public let appleAuth = AppleAuth()
     private var AM_USER_TOKEN: String = "not initialised"
     
-    init() {
+    init() {}
+    
+    func authorise() {
         self.AM_API.requestSKAuthorisation { skStatus in
             if skStatus != .authorized {
                 self.resetAuthorisation()
             }
+            print("StoreKit successfully authorised")
             
-            self.AM_API.requestMKAuthorisation { mkStatus in
-                if mkStatus != .authorized {
-                    self.resetAuthorisation()
-                }
-                
-                self.AM_API.checkAMSubscription { hasSubscription in
-                    if !hasSubscription {
+            Task {
+                await self.AM_API.fetchMKDeveloperToken()
+                self.AM_API.requestMKAuthorisation { mkStatus in
+                    if mkStatus != .authorized {
                         self.resetAuthorisation()
-                        print("User does not have an active Apple Music subscription")
                     }
+                    print("MusicKit successfully authorised")
                     
-                    self.AM_API.fetchMKUserToken { isAuthorised, userToken, error in
-                        if let error = error {
-                            self.amAuthError = error
+                    self.AM_API.checkAMSubscription { hasSubscription in
+                        if !hasSubscription {
                             self.resetAuthorisation()
-                            return
+                            print("User does not have an active Apple Music subscription")
                         }
                         
-                        if isAuthorised {
-                            guard let userToken = userToken else {
+                        self.AM_API.fetchMKUserToken { isAuthorised, userToken, error in
+                            if let error = error {
+                                self.amAuthError = error
                                 self.resetAuthorisation()
                                 return
                             }
-
-                            self.AM_USER_TOKEN = userToken
-                            self.isAuthorised = true
-                            self.isCapableAM = true
+                            
+                            if isAuthorised {
+                                guard let userToken = userToken else {
+                                    self.resetAuthorisation()
+                                    return
+                                }
+                                print("Successfully retrieved MK User Token: \(userToken)")
+                                self.AM_USER_TOKEN = userToken
+                                self.isAuthorised = true
+                                self.isCapableAM = true
+                            }
                         }
                     }
                 }
