@@ -27,6 +27,15 @@ struct ContentView: View {
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
                 }
+                
+                if mkModal.AM_API.hasToken {
+                    AuthWorkerView(authenticatingCallback: { userToken in
+                        if let window = appWindowModal.nsWindow {
+                            Alert.showModal(on: window, message: "Successfully logged in with Apple ID")
+                        }
+                    })
+                    .frame(width: .zero, height: .zero)
+                }
             }
             .onTapGesture {
                 NSApp.keyWindow?.makeFirstResponder(nil)

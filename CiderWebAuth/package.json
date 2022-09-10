@@ -1,0 +1,16 @@
+{
+  "name": "cider-web-auth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.15.7",
+    "musickit-typescript": "^1.2.4"
+  },
+  "dependencies": {
+    "cash-dom": "^8.1.1"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --target=safari15 --outfile=dist/index.js"
+  }
+}

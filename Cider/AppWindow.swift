@@ -35,7 +35,9 @@ class AppWindow {
         window.backgroundColor = .clear
         window.titlebarAppearsTransparent = true
         window.titleVisibility = .hidden
-        window.title = "Cider"
+        if let displayName = Bundle.main.displayName {
+            window.title = displayName
+        }
         
         self.windowDelegate = AppWindowDelegate()
         window.delegate = windowDelegate
@@ -52,6 +54,7 @@ class AppWindow {
         window.center()
 
         self.mainWindow = window
+        AppWindowModal.shared.nsWindow = window
     }
     
     func show() {

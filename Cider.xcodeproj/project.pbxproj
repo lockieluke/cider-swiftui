@@ -19,12 +19,15 @@
 		B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */; };
 		B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B328B96DBD0069FDF5 /* ActionButton.swift */; };
 		B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */; };
+		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
 		B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050C28BE0B4F002AD76C /* AMAPI.swift */; };
 		B706050F28BF98EB002AD76C /* AMTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050E28BF98EB002AD76C /* AMTypes.swift */; };
 		B706051128BFA181002AD76C /* RecommendationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* RecommendationSection.swift */; };
 		B725013A28C2624300992F57 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* NSColor.swift */; };
 		B725013E28C2637F00992F57 /* AMPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* AMPresentable.swift */; };
 		B743B3D128BD6F7B004F58DE /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B743B3D028BD6F7B004F58DE /* Inject */; };
+		B755C72F28C7F00800A46FB9 /* index.js in Copy CiderWebAuth Files */ = {isa = PBXBuildFile; fileRef = B755C72E28C7F00800A46FB9 /* index.js */; };
+		B755C73228C817C000A46FB9 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755C73128C817C000A46FB9 /* Bundle.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
 		B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70028BAD782009AABEA /* AppWindowModal.swift */; };
@@ -37,6 +40,20 @@
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
 		B7C651D628C4B8E200D32DDC /* AuthWorkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B755C72828C7EF8A00A46FB9 /* Copy CiderWebAuth Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				B755C72F28C7F00800A46FB9 /* index.js in Copy CiderWebAuth Files */,
+			);
+			name = "Copy CiderWebAuth Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5B50FB0FC1CEEF09E32BCBE7 /* Pods_Cider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,12 +71,15 @@
 		B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
 		B700C1B328B96DBD0069FDF5 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		B703BBCE28CC05FA00228324 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		B706050B28BD8CB2002AD76C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B706050C28BE0B4F002AD76C /* AMAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAPI.swift; sourceTree = "<group>"; };
 		B706050E28BF98EB002AD76C /* AMTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMTypes.swift; sourceTree = "<group>"; };
 		B706051028BFA181002AD76C /* RecommendationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationSection.swift; sourceTree = "<group>"; };
 		B725013928C2624300992F57 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
 		B725013D28C2637F00992F57 /* AMPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMPresentable.swift; sourceTree = "<group>"; };
+		B755C72E28C7F00800A46FB9 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = CiderWebAuth/dist/index.js; sourceTree = "<group>"; };
+		B755C73128C817C000A46FB9 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B7AAB6F928BABE83009AABEA /* SearchModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModal.swift; sourceTree = "<group>"; };
 		B7AAB6FB28BABF64009AABEA /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		B7AAB70028BAD782009AABEA /* AppWindowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowModal.swift; sourceTree = "<group>"; };
@@ -99,6 +119,7 @@
 		B700C17428B920F10069FDF5 = {
 			isa = PBXGroup;
 			children = (
+				B755C72E28C7F00800A46FB9 /* index.js */,
 				B700C17F28B920F10069FDF5 /* Cider */,
 				B700C17E28B920F10069FDF5 /* Products */,
 				D71F616D8E45C602E3354C99 /* Pods */,
@@ -148,6 +169,7 @@
 				B700C19728B92AF30069FDF5 /* NSScreen.swift */,
 				B7AAB70628BCF89E009AABEA /* View.swift */,
 				B725013928C2624300992F57 /* NSColor.swift */,
+				B755C73128C817C000A46FB9 /* Bundle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -177,6 +199,7 @@
 				B706050C28BE0B4F002AD76C /* AMAPI.swift */,
 				B706050E28BF98EB002AD76C /* AMTypes.swift */,
 				B7C651D328C415F000D32DDC /* AppleAuth.swift */,
+				B703BBCE28CC05FA00228324 /* Alert.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -211,6 +234,8 @@
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
+				B755C72828C7EF8A00A46FB9 /* Copy CiderWebAuth Files */,
+				B755C73028C7F0CA00A46FB9 /* Finalise CiderWebAuth Files */,
 				7C5D197704F7CA6D7510485B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -314,6 +339,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B755C73028C7F0CA00A46FB9 /* Finalise CiderWebAuth Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Finalise CiderWebAuth Files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mv $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/Resources/index.js $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/Resources/ciderwebauth.js\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -322,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
+				B755C73228C817C000A46FB9 /* Bundle.swift in Sources */,
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
 				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
@@ -329,6 +373,7 @@
 				B7AAB70528BAE3DC009AABEA /* PlaybackCardView.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
+				B703BBCF28CC05FA00228324 /* Alert.swift in Sources */,
 				B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */,
 				B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */,
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
