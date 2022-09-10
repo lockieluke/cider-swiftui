@@ -1,13 +1,7 @@
-import $, {Cash} from "cash-dom";
+import $ from "cash-dom";
 
 declare const amToken: string;
 declare const isForgettingAuth: boolean;
-
-declare module 'cash-dom' {
-    interface Cash {
-        click(): Cash
-    }
-}
 
 function sendNativeMessage(message: any) {
     alert(JSON.stringify(message));
