@@ -8,7 +8,7 @@ import MusicKit
 import Alamofire
 import SwiftyJSON
 
-class AMAPI: ObservableObject {
+class AMAPI {
     
     private var AM_TOKEN: String
     private var AM_USER_TOKEN: String = "null"
@@ -29,7 +29,6 @@ class AMAPI: ObservableObject {
             ]
         }
     }
-    @Published public var hasToken = false
     
     private var STOREFRONT_ID: String?
     
@@ -60,7 +59,6 @@ class AMAPI: ObservableObject {
             let json = try? JSON(data: data)
             if let token = json?["token"].stringValue {
                 self.AM_TOKEN = token
-                self.hasToken = true
             }
         }
     }
@@ -83,15 +81,8 @@ class AMAPI: ObservableObject {
         }
     }
     
-    func checkAMSubscription(completion: @escaping (_ hasSubscription: Bool) -> Void) {
-        SKCloudServiceController().requestCapabilities { capabilities, error in
-            if let error = error {
-                print("Error occurred when fetching account capabilities: \(error.localizedDescription)")
-                completion(false)
-            }
-            
-            completion(capabilities.contains(.musicCatalogPlayback))
-        }
+    func setUserToken(userToken: String) {
+        self.AM_USER_TOKEN = userToken
     }
     
     func fetchAPI(_ endpoint: String) async throws -> JSON {

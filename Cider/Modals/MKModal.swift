@@ -11,12 +11,11 @@ class MKModal : ObservableObject {
     public static let shared = MKModal()
     
     @Published public var isAuthorised = false
-    @Published public var isCapableAM = false
     @Published public var amAuthError: Error?
+    @Published public var hasDeveloperToken = false
     
     public let AM_API = AMAPI()
     public let appleAuth = AppleAuth()
-    private var AM_USER_TOKEN: String = "not initialised"
     
     init() {}
     
@@ -29,45 +28,26 @@ class MKModal : ObservableObject {
             
             Task {
                 await self.AM_API.fetchMKDeveloperToken()
+                DispatchQueue.main.async {
+                    self.hasDeveloperToken = true
+                }
                 self.AM_API.requestMKAuthorisation { mkStatus in
                     if mkStatus != .authorized {
                         self.resetAuthorisation()
                     }
                     print("MusicKit successfully authorised")
-                    
-                    self.AM_API.checkAMSubscription { hasSubscription in
-                        if !hasSubscription {
-                            self.resetAuthorisation()
-                            print("User does not have an active Apple Music subscription")
-                        }
-                        
-                        self.AM_API.fetchMKUserToken { isAuthorised, userToken, error in
-                            if let error = error {
-                                self.amAuthError = error
-                                self.resetAuthorisation()
-                                return
-                            }
-                            
-                            if isAuthorised {
-                                guard let userToken = userToken else {
-                                    self.resetAuthorisation()
-                                    return
-                                }
-                                print("Successfully retrieved MK User Token: \(userToken)")
-                                self.AM_USER_TOKEN = userToken
-                                self.isAuthorised = true
-                                self.isCapableAM = true
-                            }
-                        }
-                    }
                 }
             }
         }
     }
     
+    func authenticateWithToken(userToken: String) {
+        self.AM_API.setUserToken(userToken: userToken)
+        self.isAuthorised = true
+    }
+    
     func resetAuthorisation() {
         self.isAuthorised = false
-        self.isCapableAM = false
     }
     
 }

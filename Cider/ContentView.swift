@@ -28,9 +28,10 @@ struct ContentView: View {
                         .frame(height: 100)
                 }
                 
-                if mkModal.AM_API.hasToken {
+                if mkModal.hasDeveloperToken {
                     AuthWorkerView(authenticatingCallback: { userToken in
                         if let window = appWindowModal.nsWindow {
+                            mkModal.authenticateWithToken(userToken: userToken)
                             Alert.showModal(on: window, message: "Successfully logged in with Apple ID")
                         }
                     })
