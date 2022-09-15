@@ -39,6 +39,7 @@ class MKModal : ObservableObject {
                 }
             }
         }
+        
     }
     
     func authenticateWithToken(userToken: String) {
@@ -47,6 +48,7 @@ class MKModal : ObservableObject {
     }
     
     func resetAuthorisation() {
+        self.AM_API.unauthorise()
         self.isAuthorised = false
     }
     

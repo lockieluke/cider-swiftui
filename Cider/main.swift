@@ -15,6 +15,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.appWindow = AppWindow()
         self.appMenu = AppMenu(appWindow.getWindow())
+        appMenu.loadMenus()
         NSApp.mainMenu = appMenu.getMenu()
         
         appWindow.show()

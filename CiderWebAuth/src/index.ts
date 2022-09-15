@@ -2,6 +2,13 @@ import $ from "cash-dom";
 
 declare const amToken: string;
 declare const isForgettingAuth: boolean;
+declare const initialURL: string;
+
+declare global {
+    interface Window {
+        unauthoriseAM: () => void
+    }
+}
 
 function sendNativeMessage(message: any) {
     alert(JSON.stringify(message));
@@ -53,6 +60,13 @@ $(function () {
         const isInAuthorisationWindow = currentURL.includes('https://authorize.music.apple.com');
         const mk = MusicKit.getInstance();
 
+        window.unauthoriseAM = function () {
+            if (mk.isAuthorized) {
+                mk.unauthorize();
+                window.location.assign(initialURL);
+            }
+        }
+
         if (isInAuthorisationWindow) {
             enum AuthorisationWindowType {
                 Continue = 'https://authorize.music.apple.com/?liteSessionId=',
@@ -75,9 +89,9 @@ $(function () {
             }
         } else {
             console.log("In Mock-Origin Page");
-            if (isForgettingAuth && mk.isAuthorized) {
-                console.log("Forgetting user authentication");
-                await mk.unauthorize();
+            if (isForgettingAuth) {
+               window.unauthoriseAM();
+               return;
             }
 
             if (mk.isAuthorized) {

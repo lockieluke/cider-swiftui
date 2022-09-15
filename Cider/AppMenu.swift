@@ -8,15 +8,31 @@ import AppKit
 class AppMenu {
     
     private let menu: NSMenu
+    private let appName: String
+    private let window: NSWindow
     
     init(_ window: NSWindow) {
         let menu = NSMenu()
+        
+        self.window = window
+        self.appName = ProcessInfo.processInfo.processName
+        self.menu = menu
+    }
+    
+    func loadMenus() {
         let undoManager = window.undoManager
         
-        let appName = ProcessInfo.processInfo.processName
         let appNameMenu = NSMenuItem()
         appNameMenu.submenu = NSMenu(title: "\(appName)")
-        appNameMenu.submenu?.items = [NSMenuItem(title: "Quit \(appName)", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")]
+        
+        let signOutMenu = NSMenuItem(title: "Sign Out...", action: #selector(self.signOut(_:)), keyEquivalent: "")
+        signOutMenu.target = self
+        
+        appNameMenu.submenu?.items = [
+            signOutMenu,
+            .separator(),
+            NSMenuItem(title: "Quit \(appName)", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        ]
         
         let editMenu = NSMenuItem()
         editMenu.submenu = NSMenu(title: "Edit")
@@ -33,7 +49,15 @@ class AppMenu {
         ]
         
         menu.items = [appNameMenu, editMenu]
-        self.menu = menu
+    }
+    
+    @objc func signOut(_ sender: Any) {
+        AuthWorkerView.shared.signOut {
+            MKModal.shared.resetAuthorisation()
+            Alert.showModal(on: self.window, message: "Cider will have to be restarted so we can sign you out") {
+                NSApp.relaunch(clearAppData: true)
+            }
+        }
     }
     
     func getMenu() -> NSMenu {

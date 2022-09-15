@@ -39,6 +39,7 @@
 		B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70C28BD2640009AABEA /* HomeView.swift */; };
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
 		B7C651D628C4B8E200D32DDC /* AuthWorkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */; };
+		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,6 +92,7 @@
 		B7AAB70C28BD2640009AABEA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B7C651D328C415F000D32DDC /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
 		B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorkerView.swift; sourceTree = "<group>"; };
+		B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApp.swift; sourceTree = "<group>"; };
 		DB5DADE1D0FE5402462C7B0A /* Pods-Cider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.release.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.release.xcconfig"; sourceTree = "<group>"; };
 		F2BEF617CF919BFDAB70B207 /* Pods-Cider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.debug.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,13 +145,13 @@
 				B7AAB6F728BA2DBF009AABEA /* Utils */,
 				B700C1AC28B956550069FDF5 /* CiderDebug.entitlements */,
 				B700C1A928B955B10069FDF5 /* Views */,
-				B700C1A528B955090069FDF5 /* AppMenu.swift */,
 				B700C19628B92AEB0069FDF5 /* Extensions */,
 				B700C18228B920F10069FDF5 /* ContentView.swift */,
 				B700C18428B920F20069FDF5 /* Assets.xcassets */,
 				B700C18928B920F20069FDF5 /* Cider.entitlements */,
 				B700C18628B920F20069FDF5 /* Preview Content */,
 				B700C19428B92A4C0069FDF5 /* main.swift */,
+				B700C1A528B955090069FDF5 /* AppMenu.swift */,
 				B700C19928B92E020069FDF5 /* AppWindow.swift */,
 			);
 			path = Cider;
@@ -170,6 +172,7 @@
 				B7AAB70628BCF89E009AABEA /* View.swift */,
 				B725013928C2624300992F57 /* NSColor.swift */,
 				B755C73128C817C000A46FB9 /* Bundle.swift */,
+				B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
 				B7AAB70528BAE3DC009AABEA /* PlaybackCardView.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
+				B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
 				B703BBCF28CC05FA00228324 /* Alert.swift in Sources */,
 				B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */,

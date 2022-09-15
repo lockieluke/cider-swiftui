@@ -11,6 +11,8 @@ final class AuthWorkerView : NSViewRepresentable {
     
     private let wkWebView: WKWebView
     private var wkUIDelegate: AuthWorkerUIDelegate?
+    
+    static var shared: AuthWorkerView! = nil
     private static let INITIAL_URL = URLRequest(url: URL(string: "https://www.apple.com/legal/privacy/en-ww/cookies/")!)
     private static let USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15"
     private static let IS_FORGETTING_AUTH: Bool = CommandLine.arguments.contains("-clear-auth")
@@ -83,6 +85,7 @@ final class AuthWorkerView : NSViewRepresentable {
         }
         
         let userScript = WKUserScript(source: """
+                                      const initialURL = \"\(AuthWorkerView.INITIAL_URL)\";
                                       const amToken = \"\(MKModal.shared.AM_API.SAFE_AM_TOKEN)\";
                                       const isForgettingAuth = \(AuthWorkerView.IS_FORGETTING_AUTH);
                                       \(script)
@@ -95,6 +98,8 @@ final class AuthWorkerView : NSViewRepresentable {
         wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
         
         self.wkWebView = WKWebView(frame: .zero, configuration: wkConfiguration)
+        
+        AuthWorkerView.shared = self
     }
     
     func makeNSView(context: Context) -> WKWebView {
@@ -111,6 +116,12 @@ final class AuthWorkerView : NSViewRepresentable {
     
     func updateNSView(_ nsView: WKWebView, context: Context) {
         
+    }
+    
+    func signOut(completion: (() -> Void)? = nil) {
+        self.wkWebView.evaluateJavaScript("window.authoriseAM();") { any, error in
+            completion?()
+        }
     }
     
     static func clearAuthCache() {

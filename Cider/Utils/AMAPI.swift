@@ -85,6 +85,10 @@ class AMAPI {
         self.AM_USER_TOKEN = userToken
     }
     
+    func unauthorise() {
+        self.AM_USER_TOKEN = "null"
+    }
+    
     func fetchAPI(_ endpoint: String) async throws -> JSON {
         let afReq = AF.request("\(AM_API_END)\(endpoint)", method: .get, headers: AM_HEADERS).serializingData()
         let response = await afReq.response
