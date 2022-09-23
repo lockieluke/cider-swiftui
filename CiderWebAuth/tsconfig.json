@@ -5,7 +5,10 @@
     "typeRoots": [
       "node_modules/musickit-typescript",
       "node_modules/@types"
-    ]
+    ],
+    "rootDir": "src",
+    "alwaysStrict": true,
+    "removeComments": true,
   },
   "exclude": [
     "node_modules"

@@ -1,4 +1,4 @@
-import $ from "cash-dom";
+export {};
 
 declare const amToken: string;
 declare const isForgettingAuth: boolean;
@@ -34,9 +34,15 @@ function waitForDom(selector: string): Promise<Element> {
     })
 }
 
-$(function () {
+window.addEventListener('DOMContentLoaded', function () {
     console.log(`CiderWebAuth is attached`);
-    $('<script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js" data-web-components async></script>').appendTo('head');
+
+    // Add MK Script
+    const mkScript = document.createElement('script');
+    mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/musickit.js";
+    mkScript.setAttribute('data-web-component', undefined);
+    mkScript.setAttribute('async', undefined);
+    document.head.appendChild(mkScript);
 
     document.addEventListener('musickitloaded', async function () {
         console.log(`MusicKit ${MusicKit.version} loaded`);
@@ -90,8 +96,8 @@ $(function () {
         } else {
             console.log("In Mock-Origin Page");
             if (isForgettingAuth) {
-               window.unauthoriseAM();
-               return;
+                window.unauthoriseAM();
+                return;
             }
 
             if (mk.isAuthorized) {
