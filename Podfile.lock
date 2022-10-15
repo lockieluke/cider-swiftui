@@ -1,25 +1,21 @@
 PODS:
-  - Alamofire (5.6.2)
   - Introspect (0.1.4)
   - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
-  - Alamofire
   - Introspect
   - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Alamofire
     - Introspect
   trunk:
     - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   Introspect: b62c4dd2063072327c21d618ef2bedc3c87bc366
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 003733e995c4c2369b5c7fe41125e4c45f7298ec
+PODFILE CHECKSUM: c9a524409c8bdb2839571153195d833c9c3518d0
 
 COCOAPODS: 1.11.3

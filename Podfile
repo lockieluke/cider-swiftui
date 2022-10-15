@@ -9,6 +9,5 @@ target 'Cider' do
 
   # Pods for Cider
   pod 'SwiftyJSON', '~> 4.0'
-  pod 'Alamofire'
   pod 'Introspect'
 end
