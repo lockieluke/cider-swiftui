@@ -5,7 +5,6 @@
 import Foundation
 import AppKit
 import SwiftUI
-import JavaScriptCore
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     

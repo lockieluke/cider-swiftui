@@ -11,6 +11,8 @@ struct ContentView: View {
     @ObservedObject private var appWindowModal = AppWindowModal.shared
     @ObservedObject private var mkModal = MKModal.shared
     
+    @State private var authWorkerView: AuthWorkerView?
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -27,19 +29,21 @@ struct ContentView: View {
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
                 }
-                
-                if mkModal.hasDeveloperToken {
-                    AuthWorkerView(authenticatingCallback: { userToken in
-                        mkModal.authenticateWithToken(userToken: userToken)
-                    })
-                    .frame(width: .zero, height: .zero)
-                }
             }
             .onTapGesture {
                 NSApp.keyWindow?.makeFirstResponder(nil)
             }
             .onChange(of: geometry.size) { newSize in
                 appWindowModal.windowSize = newSize
+            }
+            .onChange(of: mkModal.hasDeveloperToken) { hasDeveloperToken in
+                self.authWorkerView = AuthWorkerView()
+                
+                if hasDeveloperToken {
+                    authWorkerView?.presentAuthView() { userToken in
+                        mkModal.authenticateWithToken(userToken: userToken)
+                    }
+                }
             }
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)

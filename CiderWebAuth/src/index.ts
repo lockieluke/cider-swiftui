@@ -1,17 +1,20 @@
-export {};
+import to from "await-to-js";
 
 declare const amToken: string;
-declare const isForgettingAuth: boolean;
 declare const initialURL: string;
 
 declare global {
     interface Window {
-        unauthoriseAM: () => void
+        unauthoriseAM: () => void;
+        importMusicKit: () => void;
+        configureMusicKit: () => Promise<void>;
+        sendNativeMessage: (message) => void;
     }
 }
 
-function sendNativeMessage(message: any) {
-    alert(JSON.stringify(message));
+enum AuthorisationWindowType {
+    Continue = 'https://authorize.music.apple.com/?liteSessionId=',
+    AppleIDSignIn = 'https://authorize.music.apple.com/woa'
 }
 
 function waitForDom(selector: string): Promise<Element> {
@@ -34,18 +37,20 @@ function waitForDom(selector: string): Promise<Element> {
     })
 }
 
-window.addEventListener('DOMContentLoaded', function () {
-    console.log(`CiderWebAuth is attached`);
+window.sendNativeMessage = (message) => {
+    alert(JSON.stringify(message));
+}
 
-    // Add MK Script
+window.importMusicKit = () => {
     const mkScript = document.createElement('script');
     mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/musickit.js";
     mkScript.setAttribute('data-web-component', undefined);
     mkScript.setAttribute('async', undefined);
     document.head.appendChild(mkScript);
+}
 
-    document.addEventListener('musickitloaded', async function () {
-        console.log(`MusicKit ${MusicKit.version} loaded`);
+window.configureMusicKit = () => {
+    return new Promise<void>(async (resolve, reject) => {
         try {
             await MusicKit.configure({
                 developerToken: amToken,
@@ -56,74 +61,71 @@ window.addEventListener('DOMContentLoaded', function () {
                 }
             });
         } catch (err) {
-            sendNativeMessage({
+            window.sendNativeMessage({
                 error: err,
                 message: "Error initialising MusicKit"
             });
-        }
-
-        const currentURL = window.location.toString();
-        const isInAuthorisationWindow = currentURL.includes('https://authorize.music.apple.com');
-        const mk = MusicKit.getInstance();
-
-        window.unauthoriseAM = function () {
-            if (mk.isAuthorized) {
-                mk.unauthorize();
-                window.location.assign(initialURL);
-            }
-        }
-
-        if (isInAuthorisationWindow) {
-            enum AuthorisationWindowType {
-                Continue = 'https://authorize.music.apple.com/?liteSessionId=',
-                AppleIDSignIn = 'https://authorize.music.apple.com/woa'
-            }
-
-            console.log("In Authorisation Page");
-
-            if (currentURL.includes(AuthorisationWindowType.AppleIDSignIn)) {
-                sendNativeMessage({
-                    action: 'authenticating-apple-id'
-                });
-            } else if (currentURL.includes(AuthorisationWindowType.Continue)) {
-                sendNativeMessage({
-                    action: 'authenticating-am'
-                });
-
-                const continueButton = await waitForDom('#app > div > div > section > div.base-content-wrapper__button-container > button') as HTMLButtonElement;
-                continueButton.click();
-            }
-        } else {
-            console.log("In Mock-Origin Page");
-            if (isForgettingAuth) {
-                window.unauthoriseAM();
-                return;
-            }
-
-            if (mk.isAuthorized) {
-                console.log("User was already authenticated previously");
-                sendNativeMessage({
-                    action: 'authenticated',
-                    token: mk.musicUserToken
-                });
-            } else {
-                console.log("Restarting user authentication flow");
-                let userToken: string;
-                try {
-                    userToken = await mk.authorize();
-                } catch (err) {
-                    sendNativeMessage({
-                        error: err,
-                        message: "Failed to authenticate user"
-                    });
-                } finally {
-                    if (userToken)
-                        sendNativeMessage({
-                            action: 'authenticated',
-                            token: userToken
-                        });
-                }
-            }
+            reject();
+        } finally {
+            resolve();
         }
     })
+}
+
+const currentURL = window.location.toString();
+if (currentURL.includes(initialURL))
+    window.importMusicKit();
+else {
+    if (currentURL.includes(AuthorisationWindowType.AppleIDSignIn)) {
+        window.sendNativeMessage({
+            action: 'authenticating-apple-id'
+        });
+    } else if (currentURL.includes(AuthorisationWindowType.Continue)) {
+        window.sendNativeMessage({
+            action: 'authenticating-am'
+        });
+
+        (async () => {
+            const continueButton = await waitForDom('#app > div > div > section > div.base-content-wrapper__button-container > button') as HTMLButtonElement;
+            continueButton.click();
+        })();
+    }
+
+}
+
+document.addEventListener('musickitloaded', async function () {
+    console.log(`MusicKit ${MusicKit.version} loaded`);
+    const [err] = await to(window.configureMusicKit());
+    if (err)
+        return;
+    console.log(`MusicKit ${MusicKit.version} configured`);
+
+    const mk = MusicKit.getInstance();
+
+    if (mk.isAuthorized) {
+        console.log("User was previously authorised");
+        window.sendNativeMessage({
+            action: 'authenticated',
+            token: mk.musicUserToken
+        });
+        return;
+    }
+
+    const [aErr, userToken] = await to(mk.authorize());
+    if (aErr) {
+        window.sendNativeMessage({
+            error: err,
+            message: "Failed to authenticate user"
+        });
+        return;
+    }
+
+    if (userToken) {
+        window.sendNativeMessage({
+            action: 'authenticated',
+            token: userToken
+        });
+    }
 })
+
+export {};

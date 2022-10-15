@@ -7,7 +7,9 @@
     "esbuild": "^0.15.7",
     "musickit-typescript": "^1.2.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "await-to-js": "^3.0.0"
+  },
   "scripts": {
     "build": "esbuild src/index.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/index.js",
     "clean": "rm -rf dist/"
