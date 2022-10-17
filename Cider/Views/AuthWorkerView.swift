@@ -67,7 +67,7 @@ final class AuthWorkerView {
             }
             
             if json["error"].exists() {
-                fatalError("Error occurred when authenticating AM User: \(json["error"]["message"].string ?? "No error description")")
+                fatalError("Error occurred when authenticating AM User: \(json["message"].string ?? "No error description")")
             }
             
             completionHandler()
@@ -97,7 +97,7 @@ final class AuthWorkerView {
         
         let userScript = WKUserScript(source: """
                                       const initialURL = \"\(AuthWorkerView.INITIAL_URL)\";
-                                      const amToken = \"\(MKModal.shared.AM_API.SAFE_AM_TOKEN)\";
+                                      const amToken = \"\(MKModal.shared.AM_API.AM_TOKEN)\";
                                       const isForgettingAuth = \(AuthWorkerView.IS_FORGETTING_AUTH);
                                       \(script)
                                       """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)

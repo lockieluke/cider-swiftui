@@ -15,7 +15,6 @@ class MKModal : ObservableObject {
     @Published public var hasDeveloperToken = false
     
     public let AM_API = AMAPI()
-    public let appleAuth = AppleAuth()
     
     init() {}
     
@@ -43,7 +42,8 @@ class MKModal : ObservableObject {
     }
     
     func authenticateWithToken(userToken: String) {
-        self.AM_API.setUserToken(userToken: userToken)
+        self.AM_API.AM_USER_TOKEN = userToken
+        self.AM_API.initialiseAMNetworking()
         self.isAuthorised = true
     }
     

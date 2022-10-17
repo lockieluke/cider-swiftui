@@ -61,11 +61,7 @@ window.configureMusicKit = () => {
                 }
             });
         } catch (err) {
-            window.sendNativeMessage({
-                error: err,
-                message: "Error initialising MusicKit"
-            });
-            reject();
+            reject(err);
         } finally {
             resolve();
         }
@@ -96,8 +92,13 @@ else {
 document.addEventListener('musickitloaded', async function () {
     console.log(`MusicKit ${MusicKit.version} loaded`);
     const [err] = await to(window.configureMusicKit());
-    if (err)
+    if (err) {
+        window.sendNativeMessage({
+            error: err,
+            message: "Error initialising MusicKit"
+        });
         return;
+    }
     console.log(`MusicKit ${MusicKit.version} configured`);
 
     const mk = MusicKit.getInstance();

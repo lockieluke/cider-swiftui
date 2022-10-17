@@ -10,4 +10,5 @@ target 'Cider' do
   # Pods for Cider
   pod 'SwiftyJSON', '~> 4.0'
   pod 'Introspect'
+  pod 'SwiftHTTP', '~> 3.0.1'
 end

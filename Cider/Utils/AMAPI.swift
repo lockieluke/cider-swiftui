@@ -5,35 +5,21 @@
 import Foundation
 import StoreKit
 import MusicKit
-import Alamofire
 import SwiftyJSON
 
 class AMAPI {
     
-    private var AM_TOKEN: String
-    private var AM_USER_TOKEN: String = "null"
-    public var SAFE_AM_TOKEN: String {
-        get {
-            // might do checks to prevent token leak
-            return self.AM_TOKEN
-        }
-    }
-    private let AM_API_END = "https://api.music.apple.com/v1"
-    private var AM_HEADERS: HTTPHeaders {
-        get {
-            return [
-                "Authorization": "Bearer \(AM_TOKEN)",
-                "Music-User-Token": AM_USER_TOKEN,
-                "Origin": "https://beta.music.apple.com",
-                "Referrer": "https://beta.music.apple.com"
-            ]
-        }
-    }
+    var AM_TOKEN: String = ""
+    var AM_USER_TOKEN: String = "null"
+    
+    private let amNetworkingClient: NetworkingProvider
+    private let ciderNetworkingClient: NetworkingProvider
     
     private var STOREFRONT_ID: String?
     
     init() {
-        self.AM_TOKEN = ""
+        self.amNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.music.apple.com/v1")!)
+        self.ciderNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.cider.sh/v1")!, defaultHeaders: ["User-Agent": "Cider SwiftUI"])
     }
     
     func requestSKAuthorisation(completion: @escaping (_ status: SKCloudServiceAuthorizationStatus) -> Void) {
@@ -51,15 +37,11 @@ class AMAPI {
     }
     
     func fetchMKDeveloperToken() async {
-        let response = await AF.request("https://api.cider.sh/v1", headers: [
-            "User-Agent": "Cider SwiftUI"
-        ]).validate().serializingData().response
-        
-        if let data = response.data {
-            let json = try? JSON(data: data)
-            if let token = json?["token"].stringValue {
-                self.AM_TOKEN = token
-            }
+        do {
+            let json = try await ciderNetworkingClient.requestJSON("/")
+            self.AM_TOKEN = json["token"].stringValue
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -81,34 +63,36 @@ class AMAPI {
         }
     }
     
-    func setUserToken(userToken: String) {
-        self.AM_USER_TOKEN = userToken
+    func initialiseAMNetworking() {
+        self.amNetworkingClient.setDefaultHTTPHeaders(headers: [
+            "Authorization": "Bearer \(AM_TOKEN)",
+            "Music-User-Token": AM_USER_TOKEN,
+            "Origin": "https://beta.music.apple.com",
+            "Referrer": "https://beta.music.apple.com"
+        ])
     }
     
     func unauthorise() {
         self.AM_USER_TOKEN = "null"
     }
     
-    func fetchAPI(_ endpoint: String) async throws -> JSON {
-        let afReq = AF.request("\(AM_API_END)\(endpoint)", method: .get, headers: AM_HEADERS).serializingData()
-        let response = await afReq.response
-        guard let data = response.data else { throw NSError(domain: "Error fetching \(endpoint)", code: .zero)}
-        let json = try? JSON(data: data)
-        
-        return json ?? JSON()
-    }
-    
     func initStorefront() async {
         print("AM_TOKEN: \(AM_TOKEN) Music User Token: \(AM_USER_TOKEN)")
-        let responseJson = try! await self.fetchAPI("/me/storefront")
+        guard let responseJson = try? await amNetworkingClient.requestJSON("/me/storefront") else { return }
+        
         let data = responseJson["data"].array?[0]
         let countryCode = data?["id"].stringValue
         
         self.STOREFRONT_ID = countryCode
     }
     
-    func fetchRecommendation() async -> AMRecommendations {
-        let responseJson = try! await self.fetchAPI("/me/recommendations")
+    func fetchRecommendations() async throws -> AMRecommendations {
+        var responseJson: JSON
+        do {
+            responseJson = try await amNetworkingClient.requestJSON("/me/recommendations")
+        } catch {
+            throw AMNetworkingError.unableToFetchRecommendations(error.localizedDescription)
+        }
         let recommendationCategories = responseJson["data"].array ?? []
         
         return AMRecommendations(

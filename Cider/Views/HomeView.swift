@@ -39,7 +39,11 @@ struct HomeView: View {
             if isAuthorised {
                 Task {
                     await mkModal.AM_API.initStorefront()
-                    self.recommendations = await mkModal.AM_API.fetchRecommendation()
+                    do {
+                        self.recommendations = try await mkModal.AM_API.fetchRecommendations()
+                    } catch AMNetworkingError.unableToFetchRecommendations(let errorMessage) {
+                        fatalError("\(errorMessage)")
+                    }
                 }
             }
         }
