@@ -20,14 +20,13 @@ struct HomeView: View {
                 ScrollView([.vertical]) {
                     ForEach(recommendations?.contents ?? [], id: \.id) { content in
                         MediaShowcaseRow(content.title, mediaItems: content.recommendations)
-                            .frame(width: appWindowModal.windowSize.width)
                     }
                     .introspectScrollView { scrollView in
                         scrollView.autohidesScrollers = true
                         scrollView.scrollerStyle = .overlay
                     }
+                    .padding(.vertical, 10)
                 }
-                .frame(maxWidth: appWindowModal.windowSize.width)
             } else {
                 ProgressView()
                     .progressViewStyle(.circular)

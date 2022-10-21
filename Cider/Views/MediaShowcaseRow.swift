@@ -22,14 +22,20 @@ struct MediaShowcaseRow: View {
             Text(rowTitle ?? "No Title")
                 .font(.system(size: 15).bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
-            HStack() {
-                ForEach(self.mediaItems, id: \.title) { mediaItem in
-                    AMPresentable(recommendation: mediaItem)
+                .padding(.horizontal, 25)
+            ScrollView([.horizontal]) {
+                HStack {
+                    ForEach(self.mediaItems, id: \.title) { mediaItem in
+                        AMPresentable(recommendation: mediaItem)
+                    }
+                }
+                .introspectScrollView { scrollView in
+                    scrollView.autohidesScrollers = true
+                    scrollView.scrollerStyle = .overlay
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding()
         .enableInjection()
     }
 }
