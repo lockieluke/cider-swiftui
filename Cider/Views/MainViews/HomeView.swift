@@ -17,9 +17,10 @@ struct HomeView: View {
     var body: some View {
         VStack {
             if mkModal.isAuthorised && recommendations != nil {
-                ScrollView([.vertical, .horizontal]) {
+                ScrollView([.vertical]) {
                     ForEach(recommendations?.contents ?? [], id: \.id) { content in
                         MediaShowcaseRow(content.title, mediaItems: content.recommendations)
+                            .frame(width: appWindowModal.windowSize.width)
                     }
                     .introspectScrollView { scrollView in
                         scrollView.autohidesScrollers = true
