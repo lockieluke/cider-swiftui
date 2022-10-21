@@ -52,7 +52,7 @@ class AppMenu {
     }
     
     @objc func signOut(_ sender: Any) {
-        AuthWorkerView.shared.signOut {
+        AuthWorker.shared.signOut {
             MKModal.shared.resetAuthorisation()
             Alert.showModal(on: self.window, message: "Cider will have to be restarted so we can sign you out") {
                 NSApp.relaunch(clearAppData: true)

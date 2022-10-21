@@ -7,13 +7,13 @@ import WebKit
 import SwiftUI
 import SwiftyJSON
 
-final class AuthWorkerView {
+final class AuthWorker {
     
     private let wkWebView: WKWebView
     private let authWindow: NSWindow
     private var wkUIDelegate: AuthWorkerUIDelegate?
     
-    static let shared = AuthWorkerView()
+    static let shared = AuthWorker()
     private static let INITIAL_URL = URLRequest(url: URL(string: "https://www.apple.com/legal/privacy/en-ww/cookies/")!)
     private static let USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15"
     
@@ -24,9 +24,9 @@ final class AuthWorkerView {
     
     class AuthWorkerUIDelegate : NSObject, WKUIDelegate {
         
-        weak var parent: AuthWorkerView! = nil
+        weak var parent: AuthWorker! = nil
         
-        init(parent: AuthWorkerView) {
+        init(parent: AuthWorker) {
             self.parent = parent
         }
         
@@ -42,7 +42,7 @@ final class AuthWorkerView {
                 return
             }
             
-            if AuthWorkerView.IS_PASSING_LOGS {
+            if AuthWorker.IS_PASSING_LOGS {
                 if let rawJson = json.rawString() {
                  print("JSON message from AuthWorker: \(rawJson)")
                 }
@@ -86,8 +86,8 @@ final class AuthWorkerView {
     }
     
     init() {
-        if AuthWorkerView.IS_FORGETTING_AUTH {
-            AuthWorkerView.clearAuthCache()
+        if AuthWorker.IS_FORGETTING_AUTH {
+            AuthWorker.clearAuthCache()
         }
         
         guard let jsPath = Bundle.main.path(forResource: "ciderwebauth", ofType: "js"),
@@ -96,9 +96,9 @@ final class AuthWorkerView {
         }
         
         let userScript = WKUserScript(source: """
-                                      const initialURL = \"\(AuthWorkerView.INITIAL_URL)\";
+                                      const initialURL = \"\(AuthWorker.INITIAL_URL)\";
                                       const amToken = \"\(MKModal.shared.AM_API.AM_TOKEN)\";
-                                      const isForgettingAuth = \(AuthWorkerView.IS_FORGETTING_AUTH);
+                                      const isForgettingAuth = \(AuthWorker.IS_FORGETTING_AUTH);
                                       \(script)
                                       """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
         let userContentController = WKUserContentController()
@@ -110,7 +110,7 @@ final class AuthWorkerView {
         
         self.wkWebView = WKWebView(frame: .zero, configuration: wkConfiguration)
         wkWebView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-        wkWebView.customUserAgent = AuthWorkerView.USER_AGENT
+        wkWebView.customUserAgent = AuthWorker.USER_AGENT
         
         self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false)
         if let displayName = Bundle.main.displayName {
@@ -131,7 +131,7 @@ final class AuthWorkerView {
             authenticatingCallback?(userToken)
         }
         
-        wkWebView.load(AuthWorkerView.INITIAL_URL)
+        wkWebView.load(AuthWorker.INITIAL_URL)
     }
     
     func showAuthWindow() {

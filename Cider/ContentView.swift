@@ -11,7 +11,7 @@ struct ContentView: View {
     @ObservedObject private var appWindowModal = AppWindowModal.shared
     @ObservedObject private var mkModal = MKModal.shared
     
-    @State private var authWorkerView: AuthWorkerView?
+    @State private var authWorkerView: AuthWorker?
     
     var body: some View {
         GeometryReader { geometry in
@@ -37,7 +37,7 @@ struct ContentView: View {
                 appWindowModal.windowSize = newSize
             }
             .onChange(of: mkModal.hasDeveloperToken) { hasDeveloperToken in
-                self.authWorkerView = AuthWorkerView()
+                self.authWorkerView = AuthWorker()
                 
                 if hasDeveloperToken {
                     authWorkerView?.presentAuthView() { userToken in

@@ -38,7 +38,7 @@
 		B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70A28BD24B4009AABEA /* MKModal.swift */; };
 		B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70C28BD2640009AABEA /* HomeView.swift */; };
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
-		B7C651D628C4B8E200D32DDC /* AuthWorkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */; };
+		B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorker.swift */; };
 		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
 		B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7A728FAD07D00B5DF11 /* Networking.swift */; };
 		B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7AC28FDC56600B5DF11 /* AMError.swift */; };
@@ -94,7 +94,7 @@
 		B7AAB70A28BD24B4009AABEA /* MKModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKModal.swift; sourceTree = "<group>"; };
 		B7AAB70C28BD2640009AABEA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B7C651D328C415F000D32DDC /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
-		B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorkerView.swift; sourceTree = "<group>"; };
+		B7C651D528C4B8E200D32DDC /* AuthWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorker.swift; sourceTree = "<group>"; };
 		B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApp.swift; sourceTree = "<group>"; };
 		B7ECB7A728FAD07D00B5DF11 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		B7ECB7AC28FDC56600B5DF11 /* AMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMError.swift; sourceTree = "<group>"; };
@@ -187,6 +187,7 @@
 		B700C1A928B955B10069FDF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B7ECB7C429033AA700B5DF11 /* MainViews */,
 				B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */,
 				B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */,
 				B700C1B328B96DBD0069FDF5 /* ActionButton.swift */,
@@ -195,10 +196,8 @@
 				B7AAB70228BADCB2009AABEA /* PlaybackView.swift */,
 				B7AAB70428BAE3DC009AABEA /* PlaybackCardView.swift */,
 				B7AAB70828BD1174009AABEA /* PlaybackBar.swift */,
-				B7AAB70C28BD2640009AABEA /* HomeView.swift */,
 				B706051028BFA181002AD76C /* RecommendationSection.swift */,
 				B725013D28C2637F00992F57 /* AMPresentable.swift */,
-				B7C651D528C4B8E200D32DDC /* AuthWorkerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -206,6 +205,7 @@
 		B7AAB6F728BA2DBF009AABEA /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B7C651D528C4B8E200D32DDC /* AuthWorker.swift */,
 				B706050C28BE0B4F002AD76C /* AMAPI.swift */,
 				B706050E28BF98EB002AD76C /* AMTypes.swift */,
 				B7C651D328C415F000D32DDC /* AppleAuth.swift */,
@@ -224,6 +224,14 @@
 				B7AAB70A28BD24B4009AABEA /* MKModal.swift */,
 			);
 			path = Modals;
+			sourceTree = "<group>";
+		};
+		B7ECB7C429033AA700B5DF11 /* MainViews */ = {
+			isa = PBXGroup;
+			children = (
+				B7AAB70C28BD2640009AABEA /* HomeView.swift */,
+			);
+			path = MainViews;
 			sourceTree = "<group>";
 		};
 		D71F616D8E45C602E3354C99 /* Pods */ = {
@@ -413,7 +421,7 @@
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B706051128BFA181002AD76C /* RecommendationSection.swift in Sources */,
-				B7C651D628C4B8E200D32DDC /* AuthWorkerView.swift in Sources */,
+				B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */,
 				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
