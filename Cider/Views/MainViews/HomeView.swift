@@ -19,7 +19,7 @@ struct HomeView: View {
             if mkModal.isAuthorised && recommendations != nil {
                 ScrollView([.vertical, .horizontal]) {
                     ForEach(recommendations?.contents ?? [], id: \.id) { content in
-                        RecommendationSection(content.title, recommendations: content.recommendations)
+                        MediaShowcaseRow(content.title, mediaItems: content.recommendations)
                     }
                     .introspectScrollView { scrollView in
                         scrollView.autohidesScrollers = true

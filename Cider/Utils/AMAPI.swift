@@ -104,7 +104,7 @@ class AMAPI {
                     recommendations: json["relationships"]["contents"]["data"].arrayValue.map { data in
                         let attributes = data["attributes"]
                         let artwork = attributes["artwork"]
-                        return AMRecommendation(
+                        return AMMediaItem(
                             title: attributes["name"].stringValue,
                             artwork: AMArtwork(
                                 url: artwork["url"].stringValue,

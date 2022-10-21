@@ -5,26 +5,26 @@
 import SwiftUI
 import Inject
 
-struct RecommendationSection: View {
+struct MediaShowcaseRow: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    public let recommendationTitle: String?
-    public let recommendations: [AMRecommendation]
+    public let rowTitle: String?
+    public let mediaItems: [AMMediaItem]
     
-    init(_ recommendationTitle: String? = nil, recommendations: [AMRecommendation] = []) {
-        self.recommendationTitle = recommendationTitle
-        self.recommendations = recommendations
+    init(_ rowHeading: String? = nil, mediaItems: [AMMediaItem] = []) {
+        self.rowTitle = rowHeading
+        self.mediaItems = mediaItems
     }
     
     var body: some View {
         VStack {
-            Text(recommendationTitle ?? "No Title")
+            Text(rowTitle ?? "No Title")
                 .font(.system(size: 15).bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
             HStack() {
-                ForEach(self.recommendations, id: \.title) { recommendation in
-                    AMPresentable(recommendation: recommendation)
+                ForEach(self.mediaItems, id: \.title) { mediaItem in
+                    AMPresentable(recommendation: mediaItem)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -36,6 +36,6 @@ struct RecommendationSection: View {
 
 struct RecommendationSection_Previews: PreviewProvider {
     static var previews: some View {
-        RecommendationSection()
+        MediaShowcaseRow()
     }
 }

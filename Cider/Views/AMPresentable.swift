@@ -9,7 +9,7 @@ struct AMPresentable: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    public var recommendation: AMRecommendation
+    public var recommendation: AMMediaItem
     private let PRESENTABLE_IMG_SIZE = CGSize(width: 200, height: 200)
     
     var body: some View {

@@ -24,7 +24,7 @@ struct AMArtwork {
 }
 
 // Individual recommended album / song
-struct AMRecommendation {
+struct AMMediaItem {
     var title: String
     var artwork: AMArtwork
 }
@@ -32,5 +32,5 @@ struct AMRecommendation {
 struct AMRecommendationSection {
     var title: String
     var id: String
-    var recommendations: [AMRecommendation] = []
+    var recommendations: [AMMediaItem] = []
 }

@@ -22,7 +22,7 @@
 		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
 		B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050C28BE0B4F002AD76C /* AMAPI.swift */; };
 		B706050F28BF98EB002AD76C /* AMTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050E28BF98EB002AD76C /* AMTypes.swift */; };
-		B706051128BFA181002AD76C /* RecommendationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* RecommendationSection.swift */; };
+		B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* MediaShowcaseRow.swift */; };
 		B725013A28C2624300992F57 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* NSColor.swift */; };
 		B725013E28C2637F00992F57 /* AMPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* AMPresentable.swift */; };
 		B743B3D128BD6F7B004F58DE /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B743B3D028BD6F7B004F58DE /* Inject */; };
@@ -79,7 +79,7 @@
 		B706050B28BD8CB2002AD76C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B706050C28BE0B4F002AD76C /* AMAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAPI.swift; sourceTree = "<group>"; };
 		B706050E28BF98EB002AD76C /* AMTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMTypes.swift; sourceTree = "<group>"; };
-		B706051028BFA181002AD76C /* RecommendationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationSection.swift; sourceTree = "<group>"; };
+		B706051028BFA181002AD76C /* MediaShowcaseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaShowcaseRow.swift; sourceTree = "<group>"; };
 		B725013928C2624300992F57 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
 		B725013D28C2637F00992F57 /* AMPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMPresentable.swift; sourceTree = "<group>"; };
 		B755C72E28C7F00800A46FB9 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = CiderWebAuth/dist/index.js; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 				B7AAB70228BADCB2009AABEA /* PlaybackView.swift */,
 				B7AAB70428BAE3DC009AABEA /* PlaybackCardView.swift */,
 				B7AAB70828BD1174009AABEA /* PlaybackBar.swift */,
-				B706051028BFA181002AD76C /* RecommendationSection.swift */,
+				B706051028BFA181002AD76C /* MediaShowcaseRow.swift */,
 				B725013D28C2637F00992F57 /* AMPresentable.swift */,
 			);
 			path = Views;
@@ -420,7 +420,7 @@
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
-				B706051128BFA181002AD76C /* RecommendationSection.swift in Sources */,
+				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
 				B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */,
 				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
