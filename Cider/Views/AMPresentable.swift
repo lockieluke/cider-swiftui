@@ -9,13 +9,23 @@ import SDWebImageSwiftUI
 struct AMPresentable: View {
     
     @ObservedObject private var iO = Inject.observer
+    @ObservedObject private var appWindowModal = AppWindowModal.shared
     
     public var recommendation: AMMediaItem
-    private let PRESENTABLE_IMG_SIZE = CGSize(width: 200, height: 200)
+    
+    private let sizeMultipler: CGFloat = 0.3
+    private let minSize: CGFloat = 160
+    private let maxSize: CGFloat = 190
+    @State private var relativeSize: CGFloat = 0
     
     @State private var isHovering = false
     @State private var isHoveringPlay = false
     @State private var isClicked = false
+    
+    func calculateRelativeSize(baseHeight: CGFloat) -> CGFloat {
+        let newSize = baseHeight * sizeMultipler
+        return newSize < minSize ? minSize : (newSize > maxSize ? maxSize : newSize)
+    }
     
     var body: some View {
         VStack {
@@ -25,7 +35,7 @@ struct AMPresentable: View {
                     ProgressView()
                 }
                 .scaledToFit()
-                .frame(width: PRESENTABLE_IMG_SIZE.width, height: PRESENTABLE_IMG_SIZE.height)
+                .frame(width: relativeSize, height: relativeSize)
                 .cornerRadius(5)
                 .brightness(isHovering ? (isClicked ? -0.15 : -0.1) : 0)
                 .animation(.easeIn(duration: 0.1), value: isHovering)
@@ -71,7 +81,14 @@ struct AMPresentable: View {
                 }))
             Text("\(recommendation.title)")
         }
-        .frame(width: PRESENTABLE_IMG_SIZE.width + 50, height: PRESENTABLE_IMG_SIZE.height + 50)
+        .frame(width: relativeSize, height: relativeSize)
+        .onChange(of: appWindowModal.windowSize) { newWindowSize in
+            self.relativeSize = self.calculateRelativeSize(baseHeight: newWindowSize.height)
+        }
+        .onAppear {
+            self.relativeSize = self.calculateRelativeSize(baseHeight: appWindowModal.windowSize.height)
+        }
+        .padding()
         .enableInjection()
     }
 }

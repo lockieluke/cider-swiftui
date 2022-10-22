@@ -22,7 +22,7 @@ struct MediaShowcaseRow: View {
             Text(rowTitle ?? "No Title")
                 .font(.system(size: 15).bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 25)
+                .padding(.horizontal, 15)
             ScrollView([.horizontal]) {
                 LazyHStack {
                     ForEach(self.mediaItems, id: \.title) { mediaItem in
