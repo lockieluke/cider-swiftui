@@ -11,4 +11,5 @@ target 'Cider' do
   pod 'SwiftyJSON', '~> 4.0'
   pod 'Introspect'
   pod 'SwiftHTTP', '~> 3.0.1'
+  pod 'SDWebImageSwiftUI'
 end
