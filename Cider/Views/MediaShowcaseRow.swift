@@ -24,7 +24,7 @@ struct MediaShowcaseRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 25)
             ScrollView([.horizontal]) {
-                HStack {
+                LazyHStack {
                     ForEach(self.mediaItems, id: \.title) { mediaItem in
                         AMPresentable(recommendation: mediaItem)
                     }

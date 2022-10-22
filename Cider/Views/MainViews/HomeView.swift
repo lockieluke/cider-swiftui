@@ -18,8 +18,10 @@ struct HomeView: View {
         VStack {
             if mkModal.isAuthorised && recommendations != nil {
                 ScrollView([.vertical]) {
-                    ForEach(recommendations?.contents ?? [], id: \.id) { content in
-                        MediaShowcaseRow(content.title, mediaItems: content.recommendations)
+                    LazyVStack {
+                        ForEach(recommendations?.contents ?? [], id: \.id) { content in
+                            MediaShowcaseRow(content.title, mediaItems: content.recommendations)
+                        }
                     }
                     .introspectScrollView { scrollView in
                         scrollView.autohidesScrollers = true
