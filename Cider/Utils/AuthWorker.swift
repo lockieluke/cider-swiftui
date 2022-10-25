@@ -9,7 +9,7 @@ import SwiftyJSON
 
 final class AuthWorker {
     
-    private let wkWebView: WKWebView
+    private var wkWebView: WKWebView?
     private let authWindow: NSWindow
     private var wkUIDelegate: AuthWorkerUIDelegate?
     
@@ -109,8 +109,8 @@ final class AuthWorker {
         wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
         
         self.wkWebView = WKWebView(frame: .zero, configuration: wkConfiguration)
-        wkWebView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-        wkWebView.customUserAgent = AuthWorker.USER_AGENT
+        wkWebView?.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        wkWebView?.customUserAgent = AuthWorker.USER_AGENT
         
         self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false)
         if let displayName = Bundle.main.displayName {
@@ -120,21 +120,30 @@ final class AuthWorker {
         authWindow.isMovableByWindowBackground = false
 
         self.wkUIDelegate = AuthWorkerUIDelegate(parent: self)
-        wkWebView.uiDelegate = wkUIDelegate
+        wkWebView?.uiDelegate = wkUIDelegate
     }
     
     func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) {
         print("Presenting AuthWindow")
-        self.authenticatingCallback = { [authWindow, wkWebView] userToken in
-            authWindow.close()
-            wkWebView.load(URLRequest(url: URL(string: "about:blank")!))
+        self.authenticatingCallback = { userToken in
+            self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
+            
+            // hack to dispose wkwebview manually
+            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+            self.wkWebView?.perform(disposeSel)
+            
+            self.wkWebView?.removeFromSuperview()
+            self.authWindow.close()
+            
+            self.wkWebView = nil
             authenticatingCallback?(userToken)
         }
         
-        wkWebView.load(AuthWorker.INITIAL_URL)
+        wkWebView?.loadSimulatedRequest(AuthWorker.INITIAL_URL, responseHTML: "<p>Cider AuthWorker</p>")
     }
     
     func showAuthWindow() {
+        guard let wkWebView = wkWebView else { return }
         wkWebView.frame.size = (authWindow.contentView?.frame.size)!
         wkWebView.autoresizingMask = [.height, .width]
         authWindow.contentView?.addSubview(wkWebView)
@@ -148,7 +157,7 @@ final class AuthWorker {
     }
     
     func signOut(completion: (() -> Void)? = nil) {
-        self.wkWebView.evaluateJavaScript("window.authoriseAM();") { any, error in
+        self.wkWebView?.evaluateJavaScript("window.authoriseAM();") { any, error in
             completion?()
         }
     }
