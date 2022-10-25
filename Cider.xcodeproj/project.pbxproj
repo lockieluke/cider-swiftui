@@ -39,11 +39,19 @@
 		B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70C28BD2640009AABEA /* HomeView.swift */; };
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
 		B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorker.swift */; };
+		B7C9CD8A2908467A00A67CE4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD892908467A00A67CE4 /* main.swift */; };
+		B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD922908797C00A67CE4 /* Dictionary.swift */; };
+		B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD94290879F500A67CE4 /* Validation.swift */; };
+		B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */; };
+		B7C9CD9F2908861500A67CE4 /* index-cpa.js in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7C9CD9E2908861500A67CE4 /* index-cpa.js */; };
+		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CiderPlaybackAgent */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */; };
 		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
 		B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7A728FAD07D00B5DF11 /* Networking.swift */; };
 		B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7AC28FDC56600B5DF11 /* AMError.swift */; };
 		B7ECB7C328FDFA6700B5DF11 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7C228FDFA6700B5DF11 /* Dictionary.swift */; };
 		B7ECB7C6290497B000B5DF11 /* ObservableHoveringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7C5290497B000B5DF11 /* ObservableHoveringObject.swift */; };
+		D223C43B6499E457FB1D56D5 /* libPods-CiderPlaybackAgent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE7E4ABF8189C65AD09B599 /* libPods-CiderPlaybackAgent.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,10 +66,44 @@
 			name = "Copy CiderWebAuth Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C9CD852908467A00A67CE4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		B7C9CD992908853700A67CE4 /* Copy Scripts */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				B7C9CD9F2908861500A67CE4 /* index-cpa.js in Copy Scripts */,
+			);
+			name = "Copy Scripts";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C9CDA129088F4F00A67CE4 /* Copy CiderPlaybackAgent */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 12;
+			files = (
+				B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CiderPlaybackAgent */,
+			);
+			name = "Copy CiderPlaybackAgent";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5AE7E4ABF8189C65AD09B599 /* libPods-CiderPlaybackAgent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CiderPlaybackAgent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B50FB0FC1CEEF09E32BCBE7 /* Pods_Cider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C53A7C80EC158E07EB7F829 /* Pods-CiderPlaybackAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CiderPlaybackAgent.debug.xcconfig"; path = "Target Support Files/Pods-CiderPlaybackAgent/Pods-CiderPlaybackAgent.debug.xcconfig"; sourceTree = "<group>"; };
+		6EA4EC281B2CAEF2607AF5CF /* Pods-CiderPlaybackAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CiderPlaybackAgent.release.xcconfig"; path = "Target Support Files/Pods-CiderPlaybackAgent/Pods-CiderPlaybackAgent.release.xcconfig"; sourceTree = "<group>"; };
 		B700C17D28B920F10069FDF5 /* Cider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B700C18228B920F10069FDF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B700C18428B920F20069FDF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,6 +138,15 @@
 		B7AAB70C28BD2640009AABEA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B7C651D328C415F000D32DDC /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
 		B7C651D528C4B8E200D32DDC /* AuthWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorker.swift; sourceTree = "<group>"; };
+		B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CiderPlaybackAgent; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7C9CD892908467A00A67CE4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B7C9CD8E2908621400A67CE4 /* CiderPlaybackAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CiderPlaybackAgent.entitlements; sourceTree = "<group>"; };
+		B7C9CD8F2908745000A67CE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7C9CD922908797C00A67CE4 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		B7C9CD94290879F500A67CE4 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKitWorker.swift; sourceTree = "<group>"; };
+		B7C9CD9E2908861500A67CE4 /* index-cpa.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "index-cpa.js"; path = "CiderPlaybackAgent/Web Scripts/dist/index-cpa.js"; sourceTree = "<group>"; };
+		B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderPlayback.swift; sourceTree = "<group>"; };
 		B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApp.swift; sourceTree = "<group>"; };
 		B7ECB7A728FAD07D00B5DF11 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		B7ECB7AC28FDC56600B5DF11 /* AMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMError.swift; sourceTree = "<group>"; };
@@ -115,6 +166,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C9CD842908467A00A67CE4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D223C43B6499E457FB1D56D5 /* libPods-CiderPlaybackAgent.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -122,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				5B50FB0FC1CEEF09E32BCBE7 /* Pods_Cider.framework */,
+				5AE7E4ABF8189C65AD09B599 /* libPods-CiderPlaybackAgent.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -129,8 +189,10 @@
 		B700C17428B920F10069FDF5 = {
 			isa = PBXGroup;
 			children = (
+				B7C9CD9E2908861500A67CE4 /* index-cpa.js */,
 				B755C72E28C7F00800A46FB9 /* index.js */,
 				B700C17F28B920F10069FDF5 /* Cider */,
+				B7C9CD882908467A00A67CE4 /* CiderPlaybackAgent */,
 				B700C17E28B920F10069FDF5 /* Products */,
 				D71F616D8E45C602E3354C99 /* Pods */,
 				05E5EED94290D24B5EBA549B /* Frameworks */,
@@ -141,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				B700C17D28B920F10069FDF5 /* Cider.app */,
+				B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,6 +278,7 @@
 				B7ECB7A728FAD07D00B5DF11 /* Networking.swift */,
 				B7ECB7AC28FDC56600B5DF11 /* AMError.swift */,
 				B7ECB7C5290497B000B5DF11 /* ObservableHoveringObject.swift */,
+				B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -227,6 +291,27 @@
 				B7AAB70A28BD24B4009AABEA /* MKModal.swift */,
 			);
 			path = Modals;
+			sourceTree = "<group>";
+		};
+		B7C9CD882908467A00A67CE4 /* CiderPlaybackAgent */ = {
+			isa = PBXGroup;
+			children = (
+				B7C9CD912908796D00A67CE4 /* Extensions */,
+				B7C9CD8E2908621400A67CE4 /* CiderPlaybackAgent.entitlements */,
+				B7C9CD892908467A00A67CE4 /* main.swift */,
+				B7C9CD8F2908745000A67CE4 /* Info.plist */,
+				B7C9CD94290879F500A67CE4 /* Validation.swift */,
+				B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */,
+			);
+			path = CiderPlaybackAgent;
+			sourceTree = "<group>";
+		};
+		B7C9CD912908796D00A67CE4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B7C9CD922908797C00A67CE4 /* Dictionary.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		B7ECB7C429033AA700B5DF11 /* MainViews */ = {
@@ -242,6 +327,8 @@
 			children = (
 				F2BEF617CF919BFDAB70B207 /* Pods-Cider.debug.xcconfig */,
 				DB5DADE1D0FE5402462C7B0A /* Pods-Cider.release.xcconfig */,
+				6C53A7C80EC158E07EB7F829 /* Pods-CiderPlaybackAgent.debug.xcconfig */,
+				6EA4EC281B2CAEF2607AF5CF /* Pods-CiderPlaybackAgent.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -257,9 +344,10 @@
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
+				B7C9CDA129088F4F00A67CE4 /* Copy CiderPlaybackAgent */,
 				B703BBD028CD0DC500228324 /* Build CiderWebAuth Scripts */,
 				B755C72828C7EF8A00A46FB9 /* Copy CiderWebAuth Files */,
-				B755C73028C7F0CA00A46FB9 /* Finalise CiderWebAuth Files */,
+				B755C73028C7F0CA00A46FB9 /* Finalise JS Scripts */,
 				7C5D197704F7CA6D7510485B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -274,6 +362,27 @@
 			productReference = B700C17D28B920F10069FDF5 /* Cider.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B7C9CD862908467A00A67CE4 /* CiderPlaybackAgent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7C9CD8D2908467A00A67CE4 /* Build configuration list for PBXNativeTarget "CiderPlaybackAgent" */;
+			buildPhases = (
+				DC25EF1091D003AC4A365153 /* [CP] Check Pods Manifest.lock */,
+				B7C9CD832908467A00A67CE4 /* Sources */,
+				B7C9CD842908467A00A67CE4 /* Frameworks */,
+				B7C9CD98290884B900A67CE4 /* Build Scripts */,
+				B7C9CD992908853700A67CE4 /* Copy Scripts */,
+				B7C9CD9D2908858F00A67CE4 /* Finalise Scripts */,
+				B7C9CD852908467A00A67CE4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CiderPlaybackAgent;
+			productName = CiderPlaybackAgent;
+			productReference = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -286,6 +395,9 @@
 				ORGANIZATIONNAME = "Cider Collective";
 				TargetAttributes = {
 					B700C17C28B920F10069FDF5 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					B7C9CD862908467A00A67CE4 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
 				};
@@ -307,6 +419,7 @@
 			projectRoot = "";
 			targets = (
 				B700C17C28B920F10069FDF5 /* Cider */,
+				B7C9CD862908467A00A67CE4 /* CiderPlaybackAgent */,
 			);
 		};
 /* End PBXProject section */
@@ -381,7 +494,7 @@
 			shellPath = /bin/zsh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n(cd $SRCROOT/CiderWebAuth/; yarn build)\n";
 		};
-		B755C73028C7F0CA00A46FB9 /* Finalise CiderWebAuth Files */ = {
+		B755C73028C7F0CA00A46FB9 /* Finalise JS Scripts */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -390,14 +503,73 @@
 			);
 			inputPaths = (
 			);
-			name = "Finalise CiderWebAuth Files";
+			name = "Finalise JS Scripts";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "mv $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/Resources/index.js $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/Resources/ciderwebauth.js\n";
+			shellScript = "mv $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/Resources/index.js $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/Resources/ciderwebauth.js\ncp $CONFIGURATION_BUILD_DIR/index-cpa.js \"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/ciderplaybackagent.js\"\n";
+		};
+		B7C9CD98290884B900A67CE4 /* Build Scripts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Scripts";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n(cd $SRCROOT/CiderPlaybackAgent/Web\\ Scripts/; yarn build)\n";
+		};
+		B7C9CD9D2908858F00A67CE4 /* Finalise Scripts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Finalise Scripts";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "
+";
+		};
+		DC25EF1091D003AC4A365153 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CiderPlaybackAgent-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -425,6 +597,7 @@
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
 				B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */,
+				B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */,
 				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
@@ -438,6 +611,17 @@
 				B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */,
 				B725013A28C2624300992F57 /* NSColor.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C9CD832908467A00A67CE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C9CD8A2908467A00A67CE4 /* main.swift in Sources */,
+				B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */,
+				B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */,
+				B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +819,38 @@
 			};
 			name = Release;
 		};
+		B7C9CD8B2908467A00A67CE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C53A7C80EC158E07EB7F829 /* Pods-CiderPlaybackAgent.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEVELOPMENT_TEAM = 8R23J2835D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B7C9CD8C2908467A00A67CE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6EA4EC281B2CAEF2607AF5CF /* Pods-CiderPlaybackAgent.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEVELOPMENT_TEAM = 8R23J2835D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -652,6 +868,15 @@
 			buildConfigurations = (
 				B700C18D28B920F20069FDF5 /* Debug */,
 				B700C18E28B920F20069FDF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7C9CD8D2908467A00A67CE4 /* Build configuration list for PBXNativeTarget "CiderPlaybackAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7C9CD8B2908467A00A67CE4 /* Debug */,
+				B7C9CD8C2908467A00A67CE4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

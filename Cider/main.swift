@@ -10,9 +10,11 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var appWindow: AppWindow!
     private var appMenu: AppMenu!
+    private var ciderPlayback: CiderPlayback!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.appWindow = AppWindow()
+        self.ciderPlayback = CiderPlayback()
         self.appMenu = AppMenu(appWindow.getWindow())
         appMenu.loadMenus()
         NSApp.mainMenu = appMenu.getMenu()

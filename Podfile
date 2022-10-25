@@ -13,3 +13,7 @@ target 'Cider' do
   pod 'SwiftHTTP', '~> 3.0.1'
   pod 'SDWebImageSwiftUI'
 end
+
+target 'CiderPlaybackAgent' do
+  pod 'Swifter', '~> 1.5.0'
+end
