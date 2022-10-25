@@ -19,7 +19,7 @@ class MusicKitWorker {
 """
     
     init() {
-        guard let jsPath = Bundle.main.executableURL?.deletingLastPathComponent().appendingPathComponent("index-cpa.js"), let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
+        guard let jsPath = Bundle.main.executableURL?.deletingLastPathComponent().appendingPathComponent("ciderplaybackagent.js"), let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
             fatalError("Unable to load CiderPlaybackAgent scripts")
         }
         
