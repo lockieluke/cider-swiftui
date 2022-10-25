@@ -90,8 +90,8 @@ final class AuthWorker {
             AuthWorker.clearAuthCache()
         }
         
-        guard let jsPath = Bundle.main.path(forResource: "ciderwebauth", ofType: "js"),
-              let script = try? String(contentsOfFile: jsPath, encoding: .utf8) else {
+        guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderwebauth.js"),
+              let script = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
             fatalError("Unable to load CiderWebAuth Scripts")
         }
         
