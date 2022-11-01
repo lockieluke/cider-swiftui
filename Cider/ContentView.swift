@@ -11,6 +11,7 @@ struct ContentView: View {
     @ObservedObject private var appWindowModal = AppWindowModal.shared
     @ObservedObject private var mkModal = MKModal.shared
     
+    
     @State private var authWorkerView: AuthWorker?
     
     var body: some View {
@@ -42,6 +43,8 @@ struct ContentView: View {
                 if hasDeveloperToken {
                     authWorkerView?.presentAuthView() { userToken in
                         mkModal.authenticateWithToken(userToken: userToken)
+                        CiderPlayback.shared.setUserToken(userToken: userToken)
+                        CiderPlayback.shared.start()
                     }
                 }
             }

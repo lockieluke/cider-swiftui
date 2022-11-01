@@ -6,7 +6,11 @@
     "removeComments": true,
     "rootDir": "src",
     "outDir": "dist",
-    "alwaysStrict": true
+    "alwaysStrict": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/musickit-typescript"
+    ]
   },
   "exclude": [
     "node_modules"

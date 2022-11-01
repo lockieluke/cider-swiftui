@@ -129,8 +129,8 @@ final class AuthWorker {
             self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
             
             // hack to dispose wkwebview manually
-            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
-            self.wkWebView?.perform(disposeSel)
+//            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+//            self.wkWebView?.perform(disposeSel)
             
             self.wkWebView?.removeFromSuperview()
             self.authWindow.close()

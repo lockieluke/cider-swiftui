@@ -6,15 +6,60 @@ import Foundation
 
 class CiderPlayback {
     
+    static let shared = CiderPlayback()
+    
+    private let proc: Process
+    private let agentPort: UInt16
+    private let commClient: NetworkingProvider
+    
     init() {
+        let pipe = Pipe()
+        pipe.fileHandleForReading.readabilityHandler = { fileHandle in
+            let data = fileHandle.availableData
+            if data.isEmpty {
+                fileHandle.readabilityHandler = nil
+            } else {
+                guard let str = String(data: data, encoding: .utf8) else {
+                    fileHandle.readabilityHandler = nil
+                    return
+                }
+                print("CiderPlaybackAgent: \(str)")
+            }
+        }
         let proc = Process()
+        let agentPort = NetworkingProvider.findFreeLocalPort()
         guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
+        proc.arguments = ["--agent-port", String(agentPort)]
         proc.executableURL = execUrl
+        proc.standardOutput = pipe
+        
+        self.proc = proc
+        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: ["User-Agent": "Cider SwiftUI"])
+        self.agentPort = agentPort
+    }
+    
+    func setDeveloperToken(developerToken: String) {
+        self.proc.arguments?.append(contentsOf: ["--am-token", developerToken])
+    }
+    
+    func setUserToken(userToken: String) {
+        self.proc.arguments?.append(contentsOf: ["--am-user-token", userToken])
+    }
+    
+    func start() {
         do {
             try proc.run()
-            print("Successfully launched CiderPlaybackAgent")
+            print("CiderPlaybackAgent on port \(agentPort)")
         } catch {
-            print("Error running CiderPlaybackAgent: \(error)")
+            fatalError("Error running CiderPlaybackAgent: \(error)")
+        }
+    }
+    
+    func shutdown() async {
+        do {
+            _ = try await self.commClient.request("/shutdown")
+        } catch {
+            fatalError("Error shutting down CiderPlaybackAgent: \(error)")
         }
     }
     

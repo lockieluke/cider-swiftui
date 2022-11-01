@@ -36,13 +36,18 @@ class AMAPI {
         }
     }
     
-    func fetchMKDeveloperToken() async {
+    func fetchMKDeveloperToken() async -> String {
+        var amToken: String!
         do {
             let json = try await ciderNetworkingClient.requestJSON("/")
-            self.AM_TOKEN = json["token"].stringValue
+            amToken = json["token"].stringValue
+            
+            self.AM_TOKEN = amToken
         } catch {
             print(error.localizedDescription)
         }
+        
+        return amToken
     }
     
     func fetchMKUserToken(completion: @escaping (_ succeeded: Bool, _ userToken: String?, _ error: Error?) -> Void) {
