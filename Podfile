@@ -16,4 +16,6 @@ end
 
 target 'CiderPlaybackAgent' do
   pod 'Swifter', '~> 1.5.0'
+  pod 'SwiftyJSON', '~> 4.0'
+  pod 'ArgumentParserKit'
 end

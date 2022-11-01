@@ -10,11 +10,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var appWindow: AppWindow!
     private var appMenu: AppMenu!
-    private var ciderPlayback: CiderPlayback!
+    private let ciderPlayback = CiderPlayback.shared
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.appWindow = AppWindow()
-        self.ciderPlayback = CiderPlayback()
         self.appMenu = AppMenu(appWindow.getWindow())
         appMenu.loadMenus()
         NSApp.mainMenu = appMenu.getMenu()
@@ -28,6 +27,15 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
+    }
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        let semaphore = DispatchSemaphore(value: 0)
+        Task {
+            await self.ciderPlayback.shutdown()
+            semaphore.signal()
+        }
+        semaphore.wait()
     }
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

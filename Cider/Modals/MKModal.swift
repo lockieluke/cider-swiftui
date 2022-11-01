@@ -26,9 +26,10 @@ class MKModal : ObservableObject {
             print("StoreKit successfully authorised")
             
             Task {
-                await self.AM_API.fetchMKDeveloperToken()
+                let developerToken = await self.AM_API.fetchMKDeveloperToken()
                 DispatchQueue.main.async {
                     self.hasDeveloperToken = true
+                    CiderPlayback.shared.setDeveloperToken(developerToken: developerToken)
                 }
                 self.AM_API.requestMKAuthorisation { mkStatus in
                     if mkStatus != .authorized {
