@@ -63,4 +63,13 @@ class CiderPlayback {
         }
     }
     
+    func shutdownSync() {
+        let semaphore = DispatchSemaphore(value: 0)
+        Task {
+            await self.shutdown()
+            semaphore.signal()
+        }
+        semaphore.wait()
+    }
+    
 }

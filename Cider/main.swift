@@ -18,6 +18,18 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         appMenu.loadMenus()
         NSApp.mainMenu = appMenu.getMenu()
         
+        // might be useful for cleaning up child processes when process gets killed
+        let terminatedCallback = { exitCode in
+            print("exiting")
+            DispatchQueue.main.async {
+                CiderPlayback.shared.shutdownSync()
+            }
+        } as (@convention(c) (Int32) -> Void)?
+        signal(SIGTERM, terminatedCallback)
+        signal(SIGINT, terminatedCallback)
+        signal(SIGKILL, terminatedCallback)
+        signal(SIGSTOP, terminatedCallback)
+        
         appWindow.show()
     }
     
@@ -30,12 +42,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ notification: Notification) {
-        let semaphore = DispatchSemaphore(value: 0)
-        Task {
-            await self.ciderPlayback.shutdown()
-            semaphore.signal()
-        }
-        semaphore.wait()
+        self.ciderPlayback.shutdownSync()
     }
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
