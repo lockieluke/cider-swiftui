@@ -12,6 +12,7 @@ target 'Cider' do
   pod 'Introspect'
   pod 'SwiftHTTP', '~> 3.0.1'
   pod 'SDWebImageSwiftUI'
+  pod 'Inject', :git => 'https://github.com/krzysztofzablocki/Inject.git', :branch => 'main'
 end
 
 target 'CiderPlaybackAgent' do

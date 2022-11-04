@@ -26,7 +26,6 @@
 		B725013A28C2624300992F57 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* NSColor.swift */; };
 		B725013E28C2637F00992F57 /* AMPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* AMPresentable.swift */; };
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
-		B743B3D128BD6F7B004F58DE /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B743B3D028BD6F7B004F58DE /* Inject */; };
 		B755C73228C817C000A46FB9 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755C73128C817C000A46FB9 /* Bundle.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
@@ -143,7 +142,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B743B3D128BD6F7B004F58DE /* Inject in Frameworks */,
 				908A6A938F4FC5126227AE39 /* Pods_Cider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,7 +336,6 @@
 			);
 			name = Cider;
 			packageProductDependencies = (
-				B743B3D028BD6F7B004F58DE /* Inject */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider.app */;
@@ -392,7 +389,6 @@
 			);
 			mainGroup = B700C17428B920F10069FDF5;
 			packageReferences = (
-				B743B3CF28BD6F7B004F58DE /* XCRemoteSwiftPackageReference "Inject" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -844,25 +840,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		B743B3CF28BD6F7B004F58DE /* XCRemoteSwiftPackageReference "Inject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzysztofzablocki/Inject";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		B743B3D028BD6F7B004F58DE /* Inject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B743B3CF28BD6F7B004F58DE /* XCRemoteSwiftPackageReference "Inject" */;
-			productName = Inject;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B700C17528B920F10069FDF5 /* Project object */;
 }
