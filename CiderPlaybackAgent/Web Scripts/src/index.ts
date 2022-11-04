@@ -3,6 +3,21 @@ import MusicKitInstance = MusicKit.MusicKitInstance;
 declare let AM_TOKEN: string;
 declare let AM_USER_TOKEN: string;
 
+declare global {
+    interface Window {
+        webkit: {
+            messageHandlers: {
+                ciderkit: {
+                    postMessage: (message: object) => void
+                }
+            }
+        },
+        ciderInterop: {
+            mk: CiderMusicKitInstance
+        }
+    }
+}
+
 type CiderMusicKitInstance = MusicKitInstance & {
     _services: {
         apiManager: {
@@ -44,6 +59,10 @@ document.addEventListener('musickitloaded', async function () {
     storekit.userToken = AM_USER_TOKEN;
     storekit.userTokenIsValid = true;
     await mk.authorize();
+
+    window.ciderInterop = {
+        mk
+    };
 })
 
 export {};

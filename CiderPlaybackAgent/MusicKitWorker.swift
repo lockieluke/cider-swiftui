@@ -4,8 +4,9 @@
 
 import Foundation
 import WebKit
+import MediaPlayer
 
-class MusicKitWorker {
+class MusicKitWorker : NSObject, WKScriptMessageHandler {
     
     private let wkWebView: WKWebView
     private let windowContainer: NSWindow
@@ -37,21 +38,63 @@ class MusicKitWorker {
         
         // Hack to enable playback for headless WKWebView
         let windowContainer = NSWindow(contentRect: .zero, styleMask: [.borderless, .nonactivatingPanel, .hudWindow], backing: .buffered, defer: false)
+        windowContainer.animationBehavior = .none
+        windowContainer.collectionBehavior = .transient
         
         let wkWebView = WKWebView(frame: .zero, configuration: wkConfiguration)
         windowContainer.contentView?.addSubview(wkWebView)
-        wkWebView.loadSimulatedRequest(URLRequest(url: URL(string: "https://beta.music.apple.com")!), responseHTML: self.bootstrapHTML)
+        defer {
+            wkWebView.configuration.userContentController.add(self, name: "ciderkit")
+            wkWebView.loadSimulatedRequest(URLRequest(url: URL(string: "https://beta.music.apple.com")!), responseHTML: self.bootstrapHTML)
+        }
         
         self.wkWebView = wkWebView
         self.windowContainer = windowContainer
         self.userToken = userToken
         self.developerToken = developerToken
+        
+        super.init()
+    }
+    
+    func setQueueWithAlbumID(albumID: String) {
+        self.runMKJS("setQueue({album: '\(albumID)'})")
+    }
+    
+    func play() {
+        self.asyncRunMKJS("play()")
+    }
+    
+    private func runMKJS(_ script: String) {
+        self.wkWebView.evaluateJavaScript("window.ciderInterop.mk.\(script)")
+    }
+    
+    private func asyncRunMKJS(_ script: String) {
+        self.wkWebView.evaluateJavaScript("(async () => { await window.ciderInterop.mk.\(script) })()")
     }
     
     func dispose() {
         let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
         self.wkWebView.perform(disposeSel)
         self.windowContainer.close()
+    }
+    
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        switch message.name {
+        case "ciderkit":
+//            guard let dict = message.body as? [String: AnyObject] else { return }
+            break
+            
+        default:
+            break
+        }
+    }
+    
+}
+
+extension MusicKitWorker : NSWindowDelegate {
+    
+    func windowDidBecomeKey(_ notification: Notification) {
+        print("HEY")
     }
     
 }

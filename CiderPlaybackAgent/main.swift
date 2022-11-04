@@ -38,11 +38,38 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             return .ok(.text("HELLO WORLD"))
         }
         
-        server["/shutdown"] = { request in
+        server["/set-queue"] = { request in
+            if !isReqFromCider(request.headers) {
+                return self.serverFallback
+            }
+
+            guard let body = try? JSON(data: Data(request.body)) else { return .internalServerError }
+            if body.isEmpty {
+                return .notAcceptable
+            }
+
+            if let albumId = body["album-id"].string {
+                self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
+            }
+
+            return .accepted
+        }
+
+        server["/play"] = { request in
             if !isReqFromCider(request.headers) {
                 return self.serverFallback
             }
             
+            self.musicKitWorker?.play()
+
+            return .ok(.text("Playing"))
+        }
+
+        server["/shutdown"] = { request in
+            if !isReqFromCider(request.headers) {
+                return self.serverFallback
+            }
+
             let json = JSON(["message": "\(Bundle.main.procName) is shutting down"])
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.musicKitWorker?.dispose()
@@ -52,9 +79,9 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             }
             return .ok(.text(json.rawString()!))
         }
-        
+
         let defaultPort = Bundle.main.infoDictionary?["DEFAULT_PORT"] as! Int
-        
+
         do {
             try server.start(UInt16(agentPort ?? defaultPort))
         } catch {
