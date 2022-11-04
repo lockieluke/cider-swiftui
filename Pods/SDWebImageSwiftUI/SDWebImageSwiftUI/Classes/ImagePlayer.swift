@@ -14,6 +14,8 @@ import SDWebImage
 public final class ImagePlayer : ObservableObject {
     var player: SDAnimatedImagePlayer?
     
+    var waitingPlaying = false
+    
     /// Max buffer size
     public var maxBufferSize: UInt?
     
@@ -31,7 +33,6 @@ public final class ImagePlayer : ObservableObject {
     
     deinit {
         player?.stopPlaying()
-        currentFrame = nil
     }
     
     /// Current playing frame image
@@ -43,9 +44,19 @@ public final class ImagePlayer : ObservableObject {
     /// Current playing loop count
     @Published public var currentLoopCount: UInt = 0
     
+    var currentAnimatedImage: (PlatformImage & SDAnimatedImageProvider)?
+    
     /// Whether current player is valid for playing. This will check the internal player exist or not
     public var isValid: Bool {
         player != nil
+    }
+    
+    /// The player is preparing to resume from previous stop state. This is intermediate status when previous frame disappear and new frame appear
+    public var isWaiting: Bool {
+        if let player = player {
+            return player.isPlaying && waitingPlaying
+        }
+        return true
     }
     
     /// Current playing status
@@ -56,6 +67,12 @@ public final class ImagePlayer : ObservableObject {
     /// Start the animation
     public func startPlaying() {
         player?.startPlaying()
+        waitingPlaying = true
+        DispatchQueue.main.async {
+            // This workaround `WebImage` caller
+            // Which previous frame onDisappear and new frame onAppear, cause player status wrong
+            self.waitingPlaying = false
+        }
     }
     
     /// Pause the animation
@@ -81,17 +98,28 @@ public final class ImagePlayer : ObservableObject {
     /// Setup the player using Animated Image.
     /// After setup, you can always check `isValid` status, or call `startPlaying` to play the animation.
     /// - Parameter image: animated image
-    public func setupPlayer(animatedImage: SDAnimatedImageProvider) {
+    public func setupPlayer(animatedImage: PlatformImage & SDAnimatedImageProvider) {
         if isValid {
             return
         }
+        currentAnimatedImage = animatedImage
         if let imagePlayer = SDAnimatedImagePlayer(provider: animatedImage) {
             imagePlayer.animationFrameHandler = { [weak self] (index, frame) in
-                self?.currentFrameIndex = index
-                self?.currentFrame = frame
+                guard let self = self else {
+                    return
+                }
+                if (self.isPlaying) {
+                    self.currentFrameIndex = index
+                    self.currentFrame = frame
+                }
             }
             imagePlayer.animationLoopHandler = { [weak self] (loopCount) in
-                self?.currentLoopCount = loopCount
+                guard let self = self else {
+                    return
+                }
+                if (self.isPlaying) {
+                    self.currentLoopCount = loopCount
+                }
             }
             // Setup configuration
             if let maxBufferSize = maxBufferSize {
