@@ -18,7 +18,7 @@ struct HomeView: View {
         VStack {
             if mkModal.isAuthorised && recommendations != nil {
                 ScrollView([.vertical]) {
-                    LazyVStack {
+                    VStack {
                         ForEach(recommendations?.contents ?? [], id: \.id) { content in
                             MediaShowcaseRow(content.title, mediaItems: content.recommendations)
                         }
