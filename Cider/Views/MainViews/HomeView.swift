@@ -23,11 +23,11 @@ struct HomeView: View {
                             MediaShowcaseRow(content.title, mediaItems: content.recommendations)
                         }
                     }
-                    .introspectScrollView { scrollView in
-                        scrollView.autohidesScrollers = true
-                        scrollView.scrollerStyle = .overlay
-                    }
                     .padding(.vertical, 10)
+                }
+                .introspectScrollView { scrollView in
+                    scrollView.autohidesScrollers = true
+                    scrollView.scrollerStyle = .overlay
                 }
             } else {
                 ProgressView()
