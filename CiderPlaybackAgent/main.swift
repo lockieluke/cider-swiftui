@@ -9,6 +9,7 @@ import ArgumentParserKit
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     
+    private var agentSessionId: String!
     private let server = HttpServer()
     private let serverFallback = HttpResponse.movedPermanently("https://discord.com/invite/applemusic")
     private var musicKitWorker: MusicKitWorker?
@@ -17,13 +18,15 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         let argParser = ArgumentParser(usage: "<options>", overview: "\(Bundle.main.procName)")
         
         let agentPortOption = argParser.add(option: "--agent-port", kind: Int.self)
+        let agentSessionIdOption = argParser.add(option: "--agent-session-id", kind: String.self)
         let userTokenOption = argParser.add(option: "--am-user-token", kind: String.self)
         let developerTokenOption = argParser.add(option: "--am-token", kind: String.self)
         
         guard let parsedArguments = try? argParser.parse(Array(CommandLine.arguments.dropFirst())) else {
-            fatalError("Failed to parse arguments")
+            fatalError("Failed to parse arguments: \(CommandLine.arguments.dropFirst())")
         }
         let agentPort = parsedArguments.get(agentPortOption)
+        guard let agentSessionId = parsedArguments.get(agentSessionIdOption)?.unquote() else { fatalError("Agent session ID is not present") }
         guard let userToken = parsedArguments.get(userTokenOption) else { fatalError("Invalid user token") }
         guard let developerToken = parsedArguments.get(developerTokenOption) else { fatalError("Invalid developer token") }
         
@@ -31,7 +34,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         self.musicKitWorker = MusicKitWorker(userToken: userToken, developerToken: developerToken)
         
         server["/"] = { request in
-            if !isReqFromCider(request.headers) {
+            if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
                 return self.serverFallback
             }
             
@@ -39,7 +42,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         }
         
         server["/set-queue"] = { request in
-            if !isReqFromCider(request.headers) {
+            if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
                 return self.serverFallback
             }
 
@@ -56,7 +59,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         }
 
         server["/play"] = { request in
-            if !isReqFromCider(request.headers) {
+            if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
                 return self.serverFallback
             }
             
@@ -66,7 +69,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         }
 
         server["/shutdown"] = { request in
-            if !isReqFromCider(request.headers) {
+            if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
                 return self.serverFallback
             }
 
