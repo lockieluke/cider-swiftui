@@ -11,7 +11,7 @@ struct AMPresentable: View {
     @ObservedObject private var iO = Inject.observer
     @ObservedObject private var appWindowModal = AppWindowModal.shared
     
-    public var recommendation: AMMediaItem
+    public var recommendation: MusicItem
     
     private let sizeMultipler: CGFloat = 0.3
     private let minSize: CGFloat = 160

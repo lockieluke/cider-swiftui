@@ -91,36 +91,15 @@ class AMAPI {
         self.STOREFRONT_ID = countryCode
     }
     
-    func fetchRecommendations() async throws -> AMRecommendations {
+    func fetchRecommendations() async throws -> MusicRecommendationSections {
         var responseJson: JSON
         do {
             responseJson = try await amNetworkingClient.requestJSON("/me/recommendations")
         } catch {
             throw AMNetworkingError.unableToFetchRecommendations(error.localizedDescription)
         }
-        let recommendationCategories = responseJson["data"].array ?? []
         
-        return AMRecommendations(
-            id: responseJson["id"].stringValue,
-            contents: recommendationCategories.map({json in
-                return AMRecommendationSection(
-                    title: json["attributes"]["title"]["stringForDisplay"].stringValue,
-                    id: json["id"].stringValue,
-                    recommendations: json["relationships"]["contents"]["data"].arrayValue.map { data in
-                        let attributes = data["attributes"]
-                        let artwork = attributes["artwork"]
-                        return AMMediaItem(
-                            title: attributes["name"].stringValue,
-                            artwork: AMArtwork(
-                                url: artwork["url"].stringValue,
-                                size: NSSize(width: artwork["width"].doubleValue, height: artwork["height"].doubleValue),
-                                bgColour: NSColor(hex: artwork["bgColor"].stringValue)
-                            )
-                        )
-                    }
-                )
-            })
-        )
+        return MusicRecommendationSections(datas: responseJson)
     }
     
     

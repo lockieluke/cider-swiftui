@@ -12,15 +12,15 @@ struct HomeView: View {
     @ObservedObject public var mkModal: MKModal
     @ObservedObject public var appWindowModal: AppWindowModal
     
-    @State private var recommendations: AMRecommendations?
+    @State private var recommendationSections: MusicRecommendationSections?
     
     var body: some View {
         VStack {
-            if mkModal.isAuthorised && recommendations != nil {
+            if mkModal.isAuthorised && recommendationSections != nil {
                 ScrollView([.vertical]) {
                     VStack {
-                        ForEach(recommendations?.contents ?? [], id: \.id) { content in
-                            MediaShowcaseRow(content.title, mediaItems: content.recommendations)
+                        ForEach(self.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
+                            MediaShowcaseRow(musicRecommendation.title, recommendationSection: musicRecommendation)
                         }
                     }
                     .padding(.vertical, 10)
@@ -42,7 +42,7 @@ struct HomeView: View {
                 Task {
                     await mkModal.AM_API.initStorefront()
                     do {
-                        self.recommendations = try await mkModal.AM_API.fetchRecommendations()
+                        self.recommendationSections = try await mkModal.AM_API.fetchRecommendations()
                     } catch AMNetworkingError.unableToFetchRecommendations(let errorMessage) {
                         fatalError("\(errorMessage)")
                     }

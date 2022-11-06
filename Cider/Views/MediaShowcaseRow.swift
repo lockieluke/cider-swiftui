@@ -9,12 +9,12 @@ struct MediaShowcaseRow: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    public let rowTitle: String?
-    public let mediaItems: [AMMediaItem]
+    private let rowTitle: String?
+    private let recommendationSection: MusicRecommendationSection?
     
-    init(_ rowHeading: String? = nil, mediaItems: [AMMediaItem] = []) {
+    init(_ rowHeading: String? = nil, recommendationSection: MusicRecommendationSection? = nil) {
         self.rowTitle = rowHeading
-        self.mediaItems = mediaItems
+        self.recommendationSection = recommendationSection
     }
     
     var body: some View {
@@ -26,8 +26,10 @@ struct MediaShowcaseRow: View {
                 .padding(.top, 10)
             ScrollView([.horizontal]) {
                 LazyHStack {
-                    ForEach(self.mediaItems, id: \.title) { mediaItem in
-                        AMPresentable(recommendation: mediaItem)
+                    if let recommendations = recommendationSection?.recommendations {
+                        ForEach(recommendations, id: \.title) { recommendation in
+                            AMPresentable(recommendation: recommendation)
+                        }
                     }
                 }
                 .introspectScrollView { scrollView in
