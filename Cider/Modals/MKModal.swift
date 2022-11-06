@@ -44,7 +44,7 @@ class MKModal : ObservableObject {
     
     func authenticateWithToken(userToken: String) {
         self.AM_API.AM_USER_TOKEN = userToken
-        self.AM_API.initialiseAMNetworking()
+        try? self.AM_API.initialiseAMNetworking()
         self.isAuthorised = true
     }
     

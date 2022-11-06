@@ -9,8 +9,8 @@ import SwiftyJSON
 
 class AMAPI {
     
-    var AM_TOKEN: String = ""
-    var AM_USER_TOKEN: String = "null"
+    var AM_TOKEN: String?
+    var AM_USER_TOKEN: String?
     
     private let amNetworkingClient: NetworkingProvider
     private let ciderNetworkingClient: NetworkingProvider
@@ -51,24 +51,31 @@ class AMAPI {
     }
     
     func fetchMKUserToken(completion: @escaping (_ succeeded: Bool, _ userToken: String?, _ error: Error?) -> Void) {
-        SKCloudServiceController().requestUserToken(forDeveloperToken: AM_TOKEN) { token, error in
-            if error != nil {
-                print("Error occurred when fetching AM User Token: \(error!.localizedDescription)")
-                completion(false, nil, error)
-                return
+        if let AM_TOKEN = self.AM_TOKEN {
+            SKCloudServiceController().requestUserToken(forDeveloperToken: AM_TOKEN) { token, error in
+                if error != nil {
+                    print("Error occurred when fetching AM User Token: \(error!.localizedDescription)")
+                    completion(false, nil, error)
+                    return
+                }
+                
+                guard let token = token else {
+                    print("MK User Token is undefined")
+                    completion(false, nil, nil)
+                    return
+                }
+                self.AM_USER_TOKEN = token
+                completion(true, token, nil)
             }
-            
-            guard let token = token else {
-                print("MK User Token is undefined")
-                completion(false, nil, nil)
-                return
-            }
-            self.AM_USER_TOKEN = token
-            completion(true, token, nil)
+        } else {
+            completion(false, nil, AMAuthError.invalidDeveloperToken)
         }
     }
     
-    func initialiseAMNetworking() {
+    func initialiseAMNetworking() throws {
+        guard let AM_USER_TOKEN = self.AM_USER_TOKEN else { throw AMAuthError.invalidUserToken }
+        guard let AM_TOKEN = self.AM_TOKEN else { throw AMAuthError.invalidDeveloperToken }
+        
         self.amNetworkingClient.setDefaultHTTPHeaders(headers: [
             "Authorization": "Bearer \(AM_TOKEN)",
             "Music-User-Token": AM_USER_TOKEN,
@@ -78,11 +85,10 @@ class AMAPI {
     }
     
     func unauthorise() {
-        self.AM_USER_TOKEN = "null"
+        self.AM_USER_TOKEN = ""
     }
     
     func initStorefront() async {
-        print("AM_TOKEN: \(AM_TOKEN) Music User Token: \(AM_USER_TOKEN)")
         guard let responseJson = try? await amNetworkingClient.requestJSON("/me/storefront") else { return }
         
         let data = responseJson["data"].array?[0]

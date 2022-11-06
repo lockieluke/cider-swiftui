@@ -29,3 +29,10 @@ extension AMNetworkingError : LocalizedError {
     }
     
 }
+
+enum AMAuthError : Error {
+    
+case invalidDeveloperToken,
+    invalidUserToken
+    
+}
