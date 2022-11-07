@@ -62,7 +62,7 @@ class CiderPlayback {
         do {
             _ = try await self.commClient.request("/shutdown")
         } catch {
-            fatalError("Error shutting down CiderPlaybackAgent: \(error)")
+            print("Error shutting down CiderPlaybackAgent: \(error)")
         }
     }
     
