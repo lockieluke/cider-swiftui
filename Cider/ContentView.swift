@@ -10,7 +10,7 @@ struct ContentView: View {
     @ObservedObject private var iO = Inject.observer
     @ObservedObject private var appWindowModal = AppWindowModal.shared
     @ObservedObject private var mkModal = MKModal.shared
-    
+    @ObservedObject private var navigationModal = NavigationModal()
     
     @State private var authWorkerView: AuthWorker?
     
@@ -19,12 +19,19 @@ struct ContentView: View {
             ZStack {
                 VisualEffectBackground()
                     .opacity(0.98)
-                HomeView(mkModal: mkModal, appWindowModal: appWindowModal)
-                    .frame(maxHeight: .infinity, alignment: .center)
-                    .padding(.top, 40)
-                    .padding(.bottom, 100)
+                
+                if self.mkModal.isAuthorised {
+                    HomeView(mkModal: mkModal, appWindowModal: appWindowModal)
+                        .frame(maxHeight: .infinity, alignment: .center)
+                        .padding(.top, 40)
+                        .padding(.bottom, 100)
+                        .hideWithoutDestroying(self.navigationModal.currentRootStack != .Home)
+                }
+                
                 VStack {
-                    AppTitleBar(appWindowModal: appWindowModal, toolbarHeight: geometry.safeAreaInsets.top)
+                    AppTitleBar(appWindowModal: appWindowModal, toolbarHeight: geometry.safeAreaInsets.top, rootPageChanged: { currentRootPage in
+                        self.navigationModal.currentRootStack = currentRootPage
+                    })
                     Spacer()
                     PlaybackView(appWindowModal: appWindowModal)
                         .frame(maxHeight: .infinity, alignment: .bottom)
@@ -37,10 +44,11 @@ struct ContentView: View {
             .onChange(of: geometry.size) { newSize in
                 appWindowModal.windowSize = newSize
             }
-            .onChange(of: mkModal.hasDeveloperToken) { hasDeveloperToken in
-                self.authWorkerView = AuthWorker()
-                
-                if hasDeveloperToken {
+            .onAppear {
+                Task {
+                    _ = await self.mkModal.authorise()
+                    
+                    self.authWorkerView = AuthWorker()
                     authWorkerView?.presentAuthView() { userToken in
                         mkModal.authenticateWithToken(userToken: userToken)
                         CiderPlayback.shared.setUserToken(userToken: userToken)

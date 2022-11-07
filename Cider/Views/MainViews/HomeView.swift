@@ -35,17 +35,12 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            mkModal.authorise()
-        }
-        .onReceive(mkModal.$isAuthorised) { isAuthorised in
-            if isAuthorised {
-                Task {
-                    await mkModal.AM_API.initStorefront()
-                    do {
-                        self.recommendationSections = try await mkModal.AM_API.fetchRecommendations()
-                    } catch AMNetworkingError.unableToFetchRecommendations(let errorMessage) {
-                        fatalError("\(errorMessage)")
-                    }
+            Task {
+                await self.mkModal.AM_API.initStorefront()
+                do {
+                    self.recommendationSections = try await self.mkModal.AM_API.fetchRecommendations()
+                } catch AMNetworkingError.unableToFetchRecommendations(let errorMessage) {
+                    fatalError("\(errorMessage)")
                 }
             }
         }

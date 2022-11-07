@@ -42,11 +42,15 @@ class CiderPlayback {
     }
     
     func setDeveloperToken(developerToken: String) {
-        self.proc.arguments?.append(contentsOf: ["--am-token", developerToken])
+        if !self.proc.isRunning {
+            self.proc.arguments?.append(contentsOf: ["--am-token", developerToken])
+        }
     }
     
     func setUserToken(userToken: String) {
-        self.proc.arguments?.append(contentsOf: ["--am-user-token", userToken])
+        if !self.proc.isRunning {
+            self.proc.arguments?.append(contentsOf: ["--am-user-token", userToken])
+        }
     }
     
     func start() {

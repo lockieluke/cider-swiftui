@@ -13,6 +13,7 @@ struct AppTitleBar: View {
     @ObservedObject public var appWindowModal: AppWindowModal
     
     public var toolbarHeight: CGFloat = 0
+    public var rootPageChanged: ((_ currentPage: RootNavigationType) -> Void)? = nil
     
     private var titleBarHeight: CGFloat {
         get {
@@ -30,7 +31,10 @@ struct AppTitleBar: View {
             
             SegmentedControl(
                 items: ["Home", "Library"],
-                icons: [.Home, .Library]
+                icons: [.Home, .Library],
+                segmentedItemChanged: { currentSegmentedItem in
+                    self.rootPageChanged?(RootNavigationType(rawValue: currentSegmentedItem) ?? .AnyView)
+                }
             )
             
             HStack(spacing: 0) {

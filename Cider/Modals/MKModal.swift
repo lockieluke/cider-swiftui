@@ -18,28 +18,27 @@ class MKModal : ObservableObject {
     
     init() {}
     
-    func authorise() {
-        self.AM_API.requestSKAuthorisation { skStatus in
-            if skStatus != .authorized {
-                self.resetAuthorisation()
-            }
-            print("StoreKit successfully authorised")
-            
-            Task {
-                let developerToken = await self.AM_API.fetchMKDeveloperToken()
-                DispatchQueue.main.async {
-                    self.hasDeveloperToken = true
-                    CiderPlayback.shared.setDeveloperToken(developerToken: developerToken)
+    func authorise() async -> String {
+        return await withCheckedContinuation { continuation in
+            self.AM_API.requestSKAuthorisation { skStatus in
+                if skStatus != .authorized {
+                    self.resetAuthorisation()
                 }
-                self.AM_API.requestMKAuthorisation { mkStatus in
-                    if mkStatus != .authorized {
-                        self.resetAuthorisation()
+                Task {
+                    let developerToken = await self.AM_API.fetchMKDeveloperToken()
+                    DispatchQueue.main.async {
+                        self.hasDeveloperToken = true
+                        CiderPlayback.shared.setDeveloperToken(developerToken: developerToken)
+                        continuation.resume(returning: developerToken)
                     }
-                    print("MusicKit successfully authorised")
+                    self.AM_API.requestMKAuthorisation { mkStatus in
+                        if mkStatus != .authorized {
+                            self.resetAuthorisation()
+                        }
+                    }
                 }
             }
         }
-        
     }
     
     func authenticateWithToken(userToken: String) {

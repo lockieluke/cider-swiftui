@@ -47,4 +47,12 @@ extension View {
     func animatableSystemFont(size: Double, weight: Font.Weight = .regular, design: Font.Design = .default) -> some View {
         self.modifier(AnimatableSystemFontModifier(size: size, weight: weight, design: design))
     }
+    
+    @ViewBuilder func hideWithoutDestroying(_ hidden: Bool) -> some View {
+        if hidden {
+            self.frame(width: hidden ? .zero : .infinity, height: hidden ? .zero : .infinity)
+        } else {
+            self
+        }
+    }
 }

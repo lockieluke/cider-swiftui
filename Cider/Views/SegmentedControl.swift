@@ -22,8 +22,13 @@ struct SegmentedControl: View {
     
     public var items: [String] = []
     public var icons: [SegmentedControlIcon] = []
+    public var segmentedItemChanged: ((_ currentSegmentedItem: String) -> Void)? = nil
     
-    @State private var selectedItem: Int = 0
+    @State private var selectedItem: Int = 0 {
+        didSet {
+            self.segmentedItemChanged?(items[selectedItem])
+        }
+    }
     @State private var hoveredItem: Int = -1
     @State private var selectedWidth: CGFloat = 0
     
