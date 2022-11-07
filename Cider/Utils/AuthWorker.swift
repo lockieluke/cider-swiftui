@@ -97,7 +97,7 @@ final class AuthWorker {
         
         let userScript = WKUserScript(source: """
                                       const initialURL = \"\(AuthWorker.INITIAL_URL)\";
-                                      const amToken = \"\(MKModal.shared.AM_API.AM_TOKEN)\";
+                                      const amToken = \"\(MKModal.shared.AM_API.AM_TOKEN!)\";
                                       const isForgettingAuth = \(AuthWorker.IS_FORGETTING_AUTH);
                                       \(script)
                                       """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
