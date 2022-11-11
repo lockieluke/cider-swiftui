@@ -13,7 +13,6 @@ target 'Cider' do
   pod 'SwiftHTTP', :git => 'https://github.com/rahul-racha/SwiftHTTP.git', :branch => 'issue-305'
   pod 'SDWebImageSwiftUI'
   pod 'Inject', :git => 'https://github.com/krzysztofzablocki/Inject.git', :branch => 'main'
-  pod 'NavigationStack'
 end
 
 target 'CiderPlaybackAgent' do
