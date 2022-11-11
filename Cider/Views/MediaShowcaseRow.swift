@@ -28,7 +28,7 @@ struct MediaShowcaseRow: View {
                 LazyHStack {
                     if let recommendations = recommendationSection?.recommendations {
                         ForEach(recommendations, id: \.title) { recommendation in
-                            AMPresentable(recommendation: recommendation)
+                            RecommendationItemPresentable(recommendation: recommendation)
                         }
                     }
                 }

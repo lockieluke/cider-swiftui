@@ -6,7 +6,7 @@ import SwiftUI
 import Inject
 import SDWebImageSwiftUI
 
-struct AMPresentable: View {
+struct RecommendationItemPresentable: View {
     
     @ObservedObject private var iO = Inject.observer
     @ObservedObject private var appWindowModal = AppWindowModal.shared
