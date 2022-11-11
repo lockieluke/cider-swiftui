@@ -12,6 +12,7 @@ class CiderPlayback {
     private let agentPort: UInt16
     private let agentSessionId: String
     private let commClient: NetworkingProvider
+    private var isRunning: Bool
     
     init() {
         let pipe = Pipe()
@@ -39,23 +40,29 @@ class CiderPlayback {
         self.proc = proc
         self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: ["User-Agent": "Cider SwiftUI", "Agent-Session-ID": agentSessionId])
         self.agentPort = agentPort
+        self.isRunning = false
     }
     
     func setDeveloperToken(developerToken: String) {
-        if !self.proc.isRunning {
+        if !self.isRunning {
             self.proc.arguments?.append(contentsOf: ["--am-token", developerToken])
         }
     }
     
     func setUserToken(userToken: String) {
-        if !self.proc.isRunning {
+        if !self.isRunning {
             self.proc.arguments?.append(contentsOf: ["--am-user-token", userToken])
         }
     }
     
     func start() {
+        if self.isRunning {
+            return
+        }
+        
         do {
             try proc.run()
+            self.isRunning = true
             print("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
         } catch {
             print("Error running CiderPlaybackAgent: \(error)")
