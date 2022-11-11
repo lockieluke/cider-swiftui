@@ -12,6 +12,8 @@ struct HomeView: View {
     @ObservedObject public var mkModal: MKModal
     @ObservedObject public var appWindowModal: AppWindowModal
     
+    @Binding var isHidden: Bool
+    
     @State private var recommendationSections: MusicRecommendationSections?
     
     var body: some View {
@@ -44,12 +46,13 @@ struct HomeView: View {
                 }
             }
         }
+        .frame(width: isHidden ? .zero : .infinity, height: isHidden ? .zero : .infinity)
         .enableInjection()
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(mkModal: .shared, appWindowModal: .shared)
+        HomeView(mkModal: .shared, appWindowModal: .shared, isHidden: .constant(false))
     }
 }

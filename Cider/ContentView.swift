@@ -20,12 +20,13 @@ struct ContentView: View {
                 VisualEffectBackground()
                     .opacity(0.98)
                 
-                if self.mkModal.isAuthorised {
-                    HomeView(mkModal: mkModal, appWindowModal: appWindowModal)
-                        .frame(maxHeight: .infinity, alignment: .center)
-                        .padding(.top, 40)
-                        .padding(.bottom, 100)
-                        .hideWithoutDestroying(self.navigationModal.currentRootStack != .Home)
+                VStack {
+                    if self.mkModal.isAuthorised {
+                        let homeHidden = Binding<Bool>(get: { self.navigationModal.currentRootStack != .Home }, set: { _ in })
+                        HomeView(mkModal: mkModal, appWindowModal: appWindowModal, isHidden: homeHidden)
+                           .padding(.top, 40)
+                           .padding(.bottom, 100)
+                    }
                 }
                 
                 VStack {
