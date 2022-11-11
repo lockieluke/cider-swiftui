@@ -58,7 +58,7 @@ class CiderPlayback {
             try proc.run()
             print("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
         } catch {
-            fatalError("Error running CiderPlaybackAgent: \(error)")
+            print("Error running CiderPlaybackAgent: \(error)")
         }
     }
     
