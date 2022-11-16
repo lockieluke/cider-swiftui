@@ -124,6 +124,8 @@ final class AuthWorker {
     }
     
     func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) {
+        if MKModal.shared.isAuthorised { return }
+        
         print("Presenting AuthWindow")
         self.authenticatingCallback = { userToken in
             self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
