@@ -10,7 +10,7 @@ target 'Cider' do
   # Pods for Cider
   pod 'SwiftyJSON', '~> 4.0'
   pod 'Introspect'
-  pod 'SwiftHTTP', :git => 'https://github.com/rahul-racha/SwiftHTTP.git', :branch => 'issue-305'
+  # pod 'SwiftHTTP', :git => 'https://github.com/rahul-racha/SwiftHTTP.git', :branch => 'issue-305'
   pod 'SDWebImageSwiftUI'
   pod 'Inject', :git => 'https://github.com/krzysztofzablocki/Inject.git', :branch => 'main'
 end

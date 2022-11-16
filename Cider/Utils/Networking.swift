@@ -3,8 +3,18 @@
 //  
 
 import Foundation
-import SwiftHTTP
 import SwiftyJSON
+
+enum HTTPMethod : String {
+    case GET = "GET",
+    POST = "POST"
+}
+
+struct HTTPResponse {
+    
+    let data: Data
+    
+}
 
 class NetworkingProvider {
     
@@ -20,17 +30,17 @@ class NetworkingProvider {
         self.defaultHeaders = headers
     }
     
-    func request(_ endpoint: String, method: HTTPVerb = .GET, headers: [String : String]? = nil) async throws -> Response {
+    func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> HTTPResponse {
         var newHeaders = self.defaultHeaders
         newHeaders.merge(dict: self.defaultHeaders)
-        return try await NetworkingProvider.request(self.baseURL.appendingPathComponent(endpoint).absoluteString, method: method, headers: newHeaders)
+        return try await NetworkingProvider.request(self.baseURL.appendingPathComponent(endpoint).absoluteString, method: method, headers: newHeaders, body: body)
     }
     
-    func requestJSON(_ endpoint: String, method: HTTPVerb = .GET, headers: [String : String]? = nil) async throws -> JSON {
+    func requestJSON(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> JSON {
         let json: JSON
-        let response: Response
+        let response: HTTPResponse
         do {
-            response = try await request(endpoint, method: method, headers: headers)
+            response = try await request(endpoint, method: method, headers: headers, body: body)
             json = try JSON(data: response.data)
         } catch {
             throw error
@@ -38,16 +48,23 @@ class NetworkingProvider {
         return json
     }
     
-    static func request(_ endpoint: String, method: HTTPVerb = .GET, headers: [String : String]? = nil) async throws -> Response {
-        return try await withCheckedThrowingContinuation { continuation in
-            HTTP.New(endpoint, method: method, headers: headers) { response in
-                if let error = response.error {
-                    continuation.resume(throwing: error)
-                    return
-                }
-                continuation.resume(returning: response)
-            }?.run()
+    static func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> HTTPResponse {
+        var request = URLRequest(url: URL(string: endpoint)!)
+        request.allHTTPHeaderFields = headers
+        request.httpMethod = method.rawValue
+        if let body = body {
+            request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         }
+        
+        var responseData: Data
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            responseData = data
+        } catch {
+            throw error
+        }
+        
+        return HTTPResponse(data: responseData)
     }
     
     static func findFreeLocalPort() -> UInt16 {
