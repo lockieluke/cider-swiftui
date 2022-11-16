@@ -10,7 +10,9 @@ struct ContentView: View {
     @ObservedObject private var iO = Inject.observer
     @ObservedObject private var appWindowModal = AppWindowModal.shared
     @ObservedObject private var mkModal = MKModal.shared
-    @ObservedObject private var navigationModal = NavigationModal()
+    
+    @StateObject private var navigationModal = NavigationModal()
+    @StateObject private var personalisedData = PersonalisedData()
     
     @State private var authWorkerView: AuthWorker?
     
@@ -22,10 +24,12 @@ struct ContentView: View {
                 
                 VStack {
                     if self.mkModal.isAuthorised {
-                        let homeHidden = Binding<Bool>(get: { self.navigationModal.currentRootStack != .Home }, set: { _ in })
-                        HomeView(mkModal: mkModal, appWindowModal: appWindowModal, isHidden: homeHidden)
+//                        let homeHidden = Binding<Bool>(get: { self.navigationModal.currentRootStack != .Home }, set: { _ in })
+                        HomeView(mkModal: mkModal, appWindowModal: appWindowModal)
                            .padding(.top, 40)
                            .padding(.bottom, 100)
+                           .environmentObject(personalisedData)
+                           .environmentObject(navigationModal)
                     }
                 }
                 
@@ -54,6 +58,10 @@ struct ContentView: View {
                         mkModal.authenticateWithToken(userToken: userToken)
                         CiderPlayback.shared.setUserToken(userToken: userToken)
                         CiderPlayback.shared.start()
+                        
+                        Task {
+                            await self.mkModal.AM_API.initStorefront()
+                        }
                     }
                 }
             }

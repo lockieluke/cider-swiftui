@@ -51,7 +51,7 @@ extension View {
     
     @ViewBuilder func hideWithoutDestroying(_ hidden: Bool) -> some View {
         if hidden {
-            self.frame(width: hidden ? .zero : .infinity, height: hidden ? .zero : .infinity)
+            self.frame(width: .zero, height: .zero)
         } else {
             self
         }

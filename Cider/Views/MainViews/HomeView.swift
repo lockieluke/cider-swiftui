@@ -12,16 +12,15 @@ struct HomeView: View {
     @ObservedObject public var mkModal: MKModal
     @ObservedObject public var appWindowModal: AppWindowModal
     
-    @Binding var isHidden: Bool
-    
-    @State private var recommendationSections: MusicRecommendationSections?
+    @EnvironmentObject private var personalisedData: PersonalisedData
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     var body: some View {
         VStack {
-            if mkModal.isAuthorised && recommendationSections != nil {
+            if mkModal.isAuthorised && self.personalisedData.recommendationSections != nil {
                 ScrollView([.vertical]) {
                     VStack {
-                        ForEach(self.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
+                        ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
                             MediaShowcaseRow(musicRecommendation.title, recommendationSection: musicRecommendation)
                         }
                     }
@@ -37,22 +36,23 @@ struct HomeView: View {
             }
         }
         .onAppear {
+            if self.personalisedData.recommendationSections != nil { return }
+            
             Task {
-                await self.mkModal.AM_API.initStorefront()
                 do {
-                    self.recommendationSections = try await self.mkModal.AM_API.fetchRecommendations()
+                    self.personalisedData.recommendationSections = try await self.mkModal.AM_API.fetchRecommendations()
                 } catch AMNetworkingError.unableToFetchRecommendations(let errorMessage) {
                     fatalError("\(errorMessage)")
                 }
             }
         }
-        .frame(width: isHidden ? .zero : .infinity, height: isHidden ? .zero : .infinity)
+        .frame(width: navigationModal.currentRootStack == .Home ? .infinity : .zero, height: navigationModal.currentRootStack == .Home ? .infinity : .zero)
         .enableInjection()
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(mkModal: .shared, appWindowModal: .shared, isHidden: .constant(false))
+        HomeView(mkModal: .shared, appWindowModal: .shared)
     }
 }
