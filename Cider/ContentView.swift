@@ -24,7 +24,6 @@ struct ContentView: View {
                 
                 VStack {
                     if self.mkModal.isAuthorised {
-//                        let homeHidden = Binding<Bool>(get: { self.navigationModal.currentRootStack != .Home }, set: { _ in })
                         HomeView(mkModal: mkModal, appWindowModal: appWindowModal)
                            .padding(.top, 40)
                            .padding(.bottom, 100)
