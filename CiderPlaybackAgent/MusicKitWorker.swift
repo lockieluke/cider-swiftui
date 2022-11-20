@@ -56,20 +56,28 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
         super.init()
     }
     
-    func setQueueWithAlbumID(albumID: String) {
-        self.runMKJS("setQueue({album: '\(albumID)'})")
+    func setQueueWithAlbumID(albumID: String) async {
+        _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.setQueue({album: albumId})", arguments: ["albumId": albumID], contentWorld: .page)
     }
     
-    func play() {
-        self.asyncRunMKJS("play()")
+    func play() async {
+        _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.play()", arguments: [:], contentWorld: .page)
     }
     
-    private func runMKJS(_ script: String) {
-        self.wkWebView.evaluateJavaScript("window.ciderInterop.mk.\(script)")
+    private func asyncRunMKJS(_ script: String) async {
+        do {
+            _ = try await self.wkWebView.evaluateJavaScriptAsync("window.ciderInterop.mk.\(script)")
+        } catch {
+            print("Error running JavaScript: \(error)")
+        }
     }
     
-    private func asyncRunMKJS(_ script: String) {
-        self.wkWebView.evaluateJavaScript("(async () => { await window.ciderInterop.mk.\(script) })()")
+    private func asyncRunJS(_ script: String) async {
+        do {
+            _ = try await self.wkWebView.evaluateJavaScriptAsync(script)
+        } catch {
+            print("Error running JavaScript: \(error)")
+        }
     }
     
     func dispose() {

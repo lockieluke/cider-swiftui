@@ -53,7 +53,16 @@ class NetworkingProvider {
         request.allHTTPHeaderFields = headers
         request.httpMethod = method.rawValue
         if let body = body {
-            request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+            if method != .GET {
+                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                request.setValue(NSLocalizedString("lang", comment: ""), forHTTPHeaderField:"Accept-Language");
+                var values: String = ""
+                for bodyValue in body {
+                    values.append("\(values.isEmpty ? "" : "&")\(bodyValue.key)=\(bodyValue.value)")
+                }
+                
+                request.httpBody = values.data(using: .utf8)
+            }
         }
         
         var responseData: Data

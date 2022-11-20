@@ -1,9 +1,12 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
+import to from "await-to-js";
+import { waitUntil } from "./utils";
 
 declare let AM_TOKEN: string;
 declare let AM_USER_TOKEN: string;
 
 declare global {
+
     interface Window {
         webkit: {
             messageHandlers: {
@@ -13,7 +16,9 @@ declare global {
             }
         },
         ciderInterop: {
-            mk: CiderMusicKitInstance
+            mk: CiderMusicKitInstance,
+            play: () => void,
+            setQueue: (mediaItem: MusicKit.SetQueueOptions) => void
         }
     }
 }
@@ -28,7 +33,9 @@ type CiderMusicKitInstance = MusicKitInstance & {
                 }
             }
         }
-    }
+    },
+    queue: [],
+    queueIsEmpty: boolean
 };
 
 const mkScript = document.createElement('script');
@@ -61,7 +68,25 @@ document.addEventListener('musickitloaded', async function () {
     await mk.authorize();
 
     window.ciderInterop = {
-        mk
+        mk,
+        play: async () => {
+            const [err, playStatus] = await to(mk.play());
+            if (err) {
+                console.error(`Failed to initiate play ${err}`);
+                return;
+            }
+
+            console.log(`Initiated play with ${playStatus}`)
+        },
+        setQueue: async mediaItem => {
+            const [err, setQueueResult] = await to(mk.setQueue(mediaItem));
+            if (err) {
+                console.error(`Failed to set queue ${err}`);
+                return;
+            }
+
+            console.log(`Initiated setQueue with ${setQueueResult.length} items`);
+        }
     };
 })
 

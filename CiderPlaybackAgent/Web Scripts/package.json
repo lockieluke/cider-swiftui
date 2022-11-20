@@ -12,5 +12,8 @@
   "scripts": {
     "build": "esbuild src/index.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/index-cpa.js",
     "clean": "rm -rf dist/"
+  },
+  "dependencies": {
+    "await-to-js": "^3.0.0"
   }
 }

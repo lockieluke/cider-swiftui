@@ -3,15 +3,14 @@
 //  
 
 import Foundation
-import Swifter
-import SwiftyJSON
 import ArgumentParserKit
+import GCDWebServer
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var agentSessionId: String!
-    private let server = HttpServer()
-    private let serverFallback = HttpResponse.movedPermanently("https://discord.com/invite/applemusic")
+    private let server = GCDWebServer()
+    private let serverFallback = GCDWebServerResponse(redirect: URL(string: "https://discord.com/invite/applemusic")!, permanent: true)
     private var musicKitWorker: MusicKitWorker?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -26,70 +25,65 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             fatalError("Failed to parse arguments: \(CommandLine.arguments.dropFirst())")
         }
         let agentPort = parsedArguments.get(agentPortOption)
-        guard let agentSessionId = parsedArguments.get(agentSessionIdOption)?.unquote() else { fatalError("Agent session ID is not present") }
+        guard let agentSessionId = parsedArguments.get(agentSessionIdOption)?.replacingOccurrences(of: "\"", with: "") else { fatalError("Agent session ID is not present") }
         guard let userToken = parsedArguments.get(userTokenOption) else { fatalError("Invalid user token") }
         guard let developerToken = parsedArguments.get(developerTokenOption) else { fatalError("Invalid developer token") }
         
         NSApp.setActivationPolicy(.accessory)
         self.musicKitWorker = MusicKitWorker(userToken: userToken, developerToken: developerToken)
         
-        server["/"] = { request in
+        server.addHandler(forMethod: "GET", path: "/", request: GCDWebServerRequest.self) { request in
             if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
                 return self.serverFallback
             }
             
-            return .ok(.text("HELLO WORLD"))
+            return GCDWebServerDataResponse(text: "HELLO WORLD")
         }
         
-        server["/set-queue"] = { request in
+        server.addHandler(forMethod: "POST", path: "/set-queue", request: GCDWebServerURLEncodedFormRequest.self) { request, response in
+            let request = request as! GCDWebServerURLEncodedFormRequest
             if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
-                return self.serverFallback
+                response(self.serverFallback)
             }
 
-            guard let body = try? JSON(data: Data(request.body)) else { return .internalServerError }
-            if body.isEmpty {
-                return .notAcceptable
-            }
+            Task {
+                if let albumId = request.arguments["album-id"] {
+                    await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
+                }
 
-            if let albumId = body["album-id"].string {
-                self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
+                response(GCDWebServerDataResponse(text: "Added to queue"))
             }
-
-            return .accepted
         }
 
-        server["/play"] = { request in
+        server.addHandler(forMethod: "GET", path: "/play", request: GCDWebServerDataRequest.self) { request, response in
             if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
-                return self.serverFallback
+                response(self.serverFallback)
             }
             
-            self.musicKitWorker?.play()
+            Task {
+                await self.musicKitWorker?.play()
 
-            return .ok(.text("Playing"))
+                response(GCDWebServerDataResponse(text: "Playing"))
+            }
         }
 
-        server["/shutdown"] = { request in
+        server.addHandler(forMethod: "GET", path: "/shutdown", request: GCDWebServerDataRequest.self) { request, response in
             if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
-                return self.serverFallback
+                response(self.serverFallback)
             }
 
-            let json = JSON(["message": "\(Bundle.main.procName) is shutting down"])
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.musicKitWorker?.dispose()
                 self.musicKitWorker = nil
                 self.server.stop()
                 NSApp.terminate(nil)
             }
-            return .ok(.text(json.rawString()!))
+            response(GCDWebServerDataResponse(statusCode: 200))
         }
 
         let defaultPort = Bundle.main.infoDictionary?["DEFAULT_PORT"] as! Int
 
-        do {
-            try server.start(UInt16(agentPort ?? defaultPort))
-        } catch {
-            fatalError("\(Bundle.main.executableURL?.lastPathComponent ?? "This application encountered an error"): \(error)")
-        }
+        server.start(withPort: UInt(agentPort ?? defaultPort), bonjourName: nil)
     }
     
 }

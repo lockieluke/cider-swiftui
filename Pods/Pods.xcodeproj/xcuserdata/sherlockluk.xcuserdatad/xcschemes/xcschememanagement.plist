@@ -9,7 +9,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Inject.xcscheme</key>
+		<key>GCDWebServer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>InjectHotReload.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -44,12 +49,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SwiftyJSON-framework.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SwiftyJSON-library.xcscheme</key>
+		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

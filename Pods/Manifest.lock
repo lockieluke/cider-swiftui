@@ -1,10 +1,13 @@
 PODS:
   - ArgumentParserKit (1.0.0)
-  - Inject (1.2.2)
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
+  - InjectHotReload (1.2.2)
   - Introspect (0.1.4)
-  - SDWebImage (5.13.5):
-    - SDWebImage/Core (= 5.13.5)
-  - SDWebImage/Core (5.13.5)
+  - SDWebImage (5.14.2):
+    - SDWebImage/Core (= 5.14.2)
+  - SDWebImage/Core (5.14.2)
   - SDWebImageSwiftUI (2.2.1):
     - SDWebImage (~> 5.10)
   - Swifter (1.5.0)
@@ -12,7 +15,8 @@ PODS:
 
 DEPENDENCIES:
   - ArgumentParserKit
-  - Inject (from `https://github.com/krzysztofzablocki/Inject.git`, branch `main`)
+  - GCDWebServer (~> 3.0)
+  - InjectHotReload
   - Introspect
   - SDWebImageSwiftUI
   - Swifter (~> 1.5.0)
@@ -21,31 +25,24 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - ArgumentParserKit
+    - GCDWebServer
+    - InjectHotReload
     - Introspect
     - SDWebImage
     - SDWebImageSwiftUI
     - Swifter
     - SwiftyJSON
 
-EXTERNAL SOURCES:
-  Inject:
-    :branch: main
-    :git: https://github.com/krzysztofzablocki/Inject.git
-
-CHECKOUT OPTIONS:
-  Inject:
-    :commit: b7895b662421838cb00cb8b913b92ec50e927d83
-    :git: https://github.com/krzysztofzablocki/Inject.git
-
 SPEC CHECKSUMS:
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
-  Inject: f42187bf8390083f39fbedfe8402fc47ca556fb2
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
+  InjectHotReload: e524b7c46ec063d84e407e65df5fe251cde19b32
   Introspect: b62c4dd2063072327c21d618ef2bedc3c87bc366
-  SDWebImage: 23d714cd599354ee7906dbae26dff89b421c4370
+  SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
   SDWebImageSwiftUI: 2ecf5ab6f574526326b10ecb155e72a88059d0f0
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: f3641cbb820b67cc0727f6900bc7306370857fca
+PODFILE CHECKSUM: 633c91fa07a7c3bef72b43be5d84db417a61f8a8
 
 COCOAPODS: 1.11.3

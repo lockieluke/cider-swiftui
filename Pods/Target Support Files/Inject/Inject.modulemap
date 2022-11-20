@@ -1,6 +1,0 @@
-framework module Inject {
-  umbrella header "Inject-umbrella.h"
-
-  export *
-  module * { export * }
-}

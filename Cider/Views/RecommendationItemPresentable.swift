@@ -3,7 +3,7 @@
 //  
 
 import SwiftUI
-import Inject
+import InjectHotReload
 import SDWebImageSwiftUI
 
 struct RecommendationItemPresentable: View {
@@ -61,6 +61,15 @@ struct RecommendationItemPresentable: View {
                                 .onHover { isHovering in
                                     self.isHoveringPlay = isHovering
                                 }
+                                .onTapGesture {
+                                    print("Clicked play \(recommendation.id) \(recommendation.type)")
+                                    if recommendation.type == .Album {
+                                        Task {
+                                            await CiderPlayback.shared.setQueue(album: recommendation.id)
+                                            await CiderPlayback.shared.play()
+                                        }
+                                    }
+                                }
                             }
                             .padding(.bottom, 10)
                             Spacer()
@@ -73,6 +82,9 @@ struct RecommendationItemPresentable: View {
                     withAnimation(.easeIn(duration: 0.15)) {
                         self.isHovering = isHovering
                     }
+                }
+                .onTapGesture {
+                    print("Clicked \(recommendation.id)")
                 }
                 .gesture(DragGesture(minimumDistance: 0).onChanged({ _ in
                     self.isClicked = true

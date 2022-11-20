@@ -55,6 +55,18 @@ class CiderPlayback {
         }
     }
     
+    func setQueue(album: String) async {
+        do {
+            _ = try await self.commClient.request("/set-queue", method: .POST, body: ["album-id": album])
+        } catch {
+            print("Set Queue failed \(error)")
+        }
+    }
+    
+    func play() async {
+        _ = try? await self.commClient.request("/play")
+    }
+    
     func start() {
         if self.isRunning {
             return

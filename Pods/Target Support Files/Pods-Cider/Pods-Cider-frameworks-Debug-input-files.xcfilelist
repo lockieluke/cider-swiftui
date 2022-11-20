@@ -1,6 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks.sh
-${BUILT_PRODUCTS_DIR}/Inject/Inject.framework
+${BUILT_PRODUCTS_DIR}/InjectHotReload/InjectHotReload.framework
 ${BUILT_PRODUCTS_DIR}/Introspect/Introspect.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImageSwiftUI/SDWebImageSwiftUI.framework
-${BUILT_PRODUCTS_DIR}/SwiftyJSON-framework/SwiftyJSON.framework
+${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework
