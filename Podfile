@@ -18,7 +18,7 @@ end
 
 target 'CiderPlaybackAgent' do
   # use_frameworks!
-  pod "GCDWebServer", "~> 3.0", :modular_headers => true
+  # own private fork of Swifter
   pod 'Swifter', :git => 'https://github.com/ciderapp/swifter.git', :branch => 'stable'
   pod 'ArgumentParserKit'
   pod 'SwiftyJSON', '~> 4.0'

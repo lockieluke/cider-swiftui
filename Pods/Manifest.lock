@@ -1,8 +1,5 @@
 PODS:
   - ArgumentParserKit (1.0.0)
-  - GCDWebServer (3.5.4):
-    - GCDWebServer/Core (= 3.5.4)
-  - GCDWebServer/Core (3.5.4)
   - InjectHotReload (1.2.2)
   - Introspect (0.1.4)
   - SDWebImage (5.14.2):
@@ -16,7 +13,6 @@ PODS:
 
 DEPENDENCIES:
   - ArgumentParserKit
-  - GCDWebServer (~> 3.0)
   - InjectHotReload
   - Introspect
   - SDWebImageSwiftUI
@@ -27,7 +23,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - ArgumentParserKit
-    - GCDWebServer
     - InjectHotReload
     - Introspect
     - SDWebImage
@@ -47,7 +42,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
-  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   InjectHotReload: e524b7c46ec063d84e407e65df5fe251cde19b32
   Introspect: b62c4dd2063072327c21d618ef2bedc3c87bc366
   SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
@@ -56,6 +50,6 @@ SPEC CHECKSUMS:
   Swifter: aa3514bbb8df8980c118f7bb1b80f2da24e39c2b
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 7cadddc88ee969db5af034ff2de7a524c19cc5c2
+PODFILE CHECKSUM: 875d87f3afe54957dece1345380ed67e8d531636
 
 COCOAPODS: 1.11.3
