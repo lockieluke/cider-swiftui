@@ -36,16 +36,14 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         
         server["/ws"] = websocket(text: { session, text in        
             let json = try? JSON(data: text.data(using: .utf8)!)
-            guard let reqAgentSessionId = json?["agent-session-id"].string,
-                  let userAgent = json?["user-agent"].string,
-                  let route = json?["route"].string,
+            guard let route = json?["route"].string,
                   let requestId = json?["request-id"].string
             else {
                 session.writeCloseFrame()
                 return
             }
             
-            if reqAgentSessionId != agentSessionId || userAgent != "Cider SwiftUI" {
+            if !isReqFromCider(session.request?.headers ?? [:], agentSessionId: agentSessionId) {
                 session.writeCloseFrame()
                 return
             }

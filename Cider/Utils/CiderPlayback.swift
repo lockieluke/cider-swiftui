@@ -46,9 +46,9 @@ class CiderPlayback : WebSocketDelegate {
         
         self.agentSessionId = agentSessionId
         self.proc = proc
-        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultBody: [
-            "agent-session-id": agentSessionId,
-            "user-agent": "Cider SwiftUI"
+        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultHeaders:  [
+            "Agent-Session-ID": agentSessionId,
+            "User-Agent": "Cider SwiftUI"
         ])
         self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: [
             "Agent-Session-ID": agentSessionId,

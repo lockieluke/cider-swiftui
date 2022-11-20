@@ -34,6 +34,7 @@ class CiderWSProvider {
     
     private let baseURL: URL
     private var defaultBody: JSON?
+    private var defaultHeaders: [String : String]?
     private let socket: WebSocket
     private var callbacksPool: [WebSocketCallbackEvent] = []
     
@@ -43,13 +44,15 @@ class CiderWSProvider {
         }
     }
     
-    init(baseURL: URL, defaultBody: JSON? = nil) {
+    init(baseURL: URL, defaultBody: JSON? = nil, defaultHeaders: [String : String]? = nil) {
         var request = URLRequest(url: baseURL)
         request.timeoutInterval = 5
+        request.allHTTPHeaderFields = defaultHeaders
         let socket = WebSocket(request: request, engine: NativeEngine())
         
         self.baseURL = baseURL
         self.defaultBody = defaultBody
+        self.defaultHeaders = defaultHeaders
         self.socket = socket
     }
     
