@@ -3,14 +3,16 @@
 //  
 
 import Foundation
+import Starscream
 
-class CiderPlayback {
+class CiderPlayback : WebSocketDelegate {
     
     static let shared = CiderPlayback()
     
     private let proc: Process
     private let agentPort: UInt16
     private let agentSessionId: String
+    private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
     private var isRunning: Bool
     
@@ -25,7 +27,13 @@ class CiderPlayback {
                     fileHandle.readabilityHandler = nil
                     return
                 }
-                print("CiderPlaybackAgent: \(str)")
+                var newStr = str
+                if let last = newStr.last {
+                    if last.isNewline {
+                        newStr.removeLast()
+                    }
+                }
+                print("CiderPlaybackAgent: \(newStr)")
             }
         }
         let agentSessionId = UUID().uuidString
@@ -38,7 +46,14 @@ class CiderPlayback {
         
         self.agentSessionId = agentSessionId
         self.proc = proc
-        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: ["User-Agent": "Cider SwiftUI", "Agent-Session-ID": agentSessionId])
+        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultBody: [
+            "agent-session-id": agentSessionId,
+            "user-agent": "Cider SwiftUI"
+        ])
+        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: [
+            "Agent-Session-ID": agentSessionId,
+            "User-Agent": "Cider SwiftUI"
+        ])
         self.agentPort = agentPort
         self.isRunning = false
     }
@@ -65,14 +80,18 @@ class CiderPlayback {
     
     func setQueue(requestBody: [String : Any]? = nil) async {
         do {
-            _ = try await self.commClient.request("/set-queue", method: .POST, body: requestBody)
+            _ = try await self.wsCommClient.request("/set-queue", body: requestBody)
         } catch {
-            print("Set Queue via failed \(error)")
+            print("Set Queue failed \(error)")
         }
     }
     
     func play() async {
-        _ = try? await self.commClient.request("/play")
+        do {
+            _ = try await self.wsCommClient.request("/play")
+        } catch {
+            print("Play failed \(error)")
+        }
     }
     
     func start() {
@@ -84,6 +103,10 @@ class CiderPlayback {
             try proc.run()
             self.isRunning = true
             print("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
+            self.wsCommClient.delegate = self
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                self.wsCommClient.connect()
+            }
         } catch {
             print("Error running CiderPlaybackAgent: \(error)")
         }
@@ -104,6 +127,25 @@ class CiderPlayback {
             semaphore.signal()
         }
         semaphore.wait()
+    }
+    
+    
+    func didReceive(event: WebSocketEvent, client: WebSocket) {
+        switch event {
+            
+        case .connected:
+            print("Connected to CiderPlaybackAgent")
+            break
+            
+        case .error(let error):
+            guard let error = error else { return }
+            print("WebSockets error: \(error)")
+            break
+            
+        default:
+            break
+            
+        }
     }
     
 }

@@ -10,6 +10,7 @@ PODS:
   - SDWebImage/Core (5.14.2)
   - SDWebImageSwiftUI (2.2.1):
     - SDWebImage (~> 5.10)
+  - Starscream (4.0.4)
   - Swifter (1.5.0)
   - SwiftyJSON (4.3.0)
 
@@ -19,7 +20,8 @@ DEPENDENCIES:
   - InjectHotReload
   - Introspect
   - SDWebImageSwiftUI
-  - Swifter (~> 1.5.0)
+  - Starscream (~> 4.0.0)
+  - Swifter (from `https://github.com/ciderapp/swifter.git`, branch `stable`)
   - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
@@ -30,8 +32,18 @@ SPEC REPOS:
     - Introspect
     - SDWebImage
     - SDWebImageSwiftUI
-    - Swifter
+    - Starscream
     - SwiftyJSON
+
+EXTERNAL SOURCES:
+  Swifter:
+    :branch: stable
+    :git: https://github.com/ciderapp/swifter.git
+
+CHECKOUT OPTIONS:
+  Swifter:
+    :commit: 7c7dfba1057005e44c8312f45f3dec834e2e9b21
+    :git: https://github.com/ciderapp/swifter.git
 
 SPEC CHECKSUMS:
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
@@ -40,9 +52,10 @@ SPEC CHECKSUMS:
   Introspect: b62c4dd2063072327c21d618ef2bedc3c87bc366
   SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
   SDWebImageSwiftUI: 2ecf5ab6f574526326b10ecb155e72a88059d0f0
-  Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  Swifter: aa3514bbb8df8980c118f7bb1b80f2da24e39c2b
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 633c91fa07a7c3bef72b43be5d84db417a61f8a8
+PODFILE CHECKSUM: 7cadddc88ee969db5af034ff2de7a524c19cc5c2
 
 COCOAPODS: 1.11.3

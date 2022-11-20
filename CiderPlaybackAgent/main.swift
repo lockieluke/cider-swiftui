@@ -5,12 +5,14 @@
 import Foundation
 import ArgumentParserKit
 import GCDWebServer
+import Swifter
+import SwiftyJSON
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var agentSessionId: String!
-    private let server = GCDWebServer()
-    private let serverFallback = GCDWebServerResponse(redirect: URL(string: "https://discord.com/invite/applemusic")!, permanent: true)
+    private let server = HttpServer()
+    private let serverFallback: HttpResponse = .movedPermanently("https://discord.com/invite/applemusic")
     private var musicKitWorker: MusicKitWorker?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -32,60 +34,80 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         self.musicKitWorker = MusicKitWorker(userToken: userToken, developerToken: developerToken)
         
-        server.addHandler(forMethod: "GET", path: "/", request: GCDWebServerRequest.self) { request in
+        server["/ws"] = websocket(text: { session, text in        
+            let json = try? JSON(data: text.data(using: .utf8)!)
+            guard let reqAgentSessionId = json?["agent-session-id"].string,
+                  let userAgent = json?["user-agent"].string,
+                  let route = json?["route"].string,
+                  let requestId = json?["request-id"].string
+            else {
+                session.writeCloseFrame()
+                return
+            }
+            
+            if reqAgentSessionId != agentSessionId || userAgent != "Cider SwiftUI" {
+                session.writeCloseFrame()
+                return
+            }
+            
+            let done = {
+                session.writeText(JSON([
+                    "request-id": requestId
+                ]).rawString()!)
+            }
+            
+            switch route {
+                
+            case "/":
+                session.writeText("CiderPlaybackAgent on port \(agentPort?.formatted() ?? "Default Port")")
+                break
+                
+            case "/set-queue":
+                Task {
+                    if let albumId = json?["album-id"].string {
+                        await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
+                    } else if let playlistId = json?["playlist-id"].string {
+                        await self.musicKitWorker?.setQueueWithPlaylistID(playlistID: playlistId)
+                    }
+                    done()
+                }
+                break
+                
+            case "/play":
+                Task {
+                    await self.musicKitWorker?.play()
+                    done()
+                }
+                break
+                
+            default:
+                break
+            }
+        }, connected: { session in
+            print("Cider Client connected")
+        })
+        
+        server["/shutdown"] = { request in
             if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
                 return self.serverFallback
             }
             
-            return GCDWebServerDataResponse(text: "HELLO WORLD")
-        }
-        
-        server.addHandler(forMethod: "POST", path: "/set-queue", request: GCDWebServerURLEncodedFormRequest.self) { request, response in
-            let request = request as! GCDWebServerURLEncodedFormRequest
-            if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
-                response(self.serverFallback)
-            }
-
-            Task {
-                if let albumId = request.arguments["album-id"] {
-                    await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
-                } else if let playlistId = request.arguments["playlist-id"] {
-                    await self.musicKitWorker?.setQueueWithPlaylistID(playlistID: playlistId)
-                }
-
-                response(GCDWebServerDataResponse(text: "Added to queue"))
-            }
-        }
-
-        server.addHandler(forMethod: "GET", path: "/play", request: GCDWebServerDataRequest.self) { request, response in
-            if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
-                response(self.serverFallback)
-            }
-            
-            Task {
-                await self.musicKitWorker?.play()
-
-                response(GCDWebServerDataResponse(text: "Playing"))
-            }
-        }
-
-        server.addHandler(forMethod: "GET", path: "/shutdown", request: GCDWebServerDataRequest.self) { request, response in
-            if !isReqFromCider(request.headers, agentSessionId: agentSessionId) {
-                response(self.serverFallback)
-            }
-
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.musicKitWorker?.dispose()
                 self.musicKitWorker = nil
                 self.server.stop()
                 NSApp.terminate(nil)
             }
-            response(GCDWebServerDataResponse(statusCode: 200))
+            
+            return .ok(.text("Shutting down"))
         }
 
         let defaultPort = Bundle.main.infoDictionary?["DEFAULT_PORT"] as! Int
-
-        server.start(withPort: UInt(agentPort ?? defaultPort), bonjourName: nil)
+        do {
+            try server.start(UInt16(agentPort ?? defaultPort))
+        } catch {
+            fatalError("Failed to start CiderPlaybackAgent server")
+        }
     }
     
 }

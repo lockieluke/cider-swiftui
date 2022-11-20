@@ -4,6 +4,7 @@
 
 import Foundation
 import SwiftyJSON
+import Starscream
 
 enum HTTPMethod : String {
     case GET = "GET",
@@ -13,6 +14,104 @@ enum HTTPMethod : String {
 struct HTTPResponse {
     
     let data: Data
+    
+}
+
+enum CiderWSError : Error {
+    
+case failedToCreateJSON
+    
+}
+
+class CiderWSProvider {
+    
+    struct WebSocketCallbackEvent {
+        
+        let onEvent: (WebSocketEvent) -> Void
+        let id: String
+        
+    }
+    
+    private let baseURL: URL
+    private var defaultBody: JSON?
+    private let socket: WebSocket
+    private var callbacksPool: [WebSocketCallbackEvent] = []
+    
+    var delegate: WebSocketDelegate? {
+        didSet {
+            self.socket.delegate = delegate
+        }
+    }
+    
+    init(baseURL: URL, defaultBody: JSON? = nil) {
+        var request = URLRequest(url: baseURL)
+        request.timeoutInterval = 5
+        let socket = WebSocket(request: request, engine: NativeEngine())
+        
+        self.baseURL = baseURL
+        self.defaultBody = defaultBody
+        self.socket = socket
+    }
+    
+    deinit {
+        self.socket.disconnect()
+    }
+    
+    func connect() {
+        socket.onEvent = { event in
+            self.callbacksPool.forEach { callback in
+                callback.onEvent(event)
+            }
+        }
+        self.socket.connect()
+    }
+    
+    func request(_ route: String, body: [String: Any]? = nil) async throws {
+        let lock = NSLock()
+        return try await withUnsafeThrowingContinuation() { continuation in
+            let requestId = UUID().uuidString
+            var requestBody = JSON([
+                "route": route.unescaped,
+                "request-id": requestId
+            ])
+            if let body = body {
+                try? requestBody.merge(with: JSON(body))
+            }
+            if let defaultBody = self.defaultBody {
+                try? requestBody.merge(with: defaultBody)
+            }
+            
+            self.callbacksPool.append(WebSocketCallbackEvent(onEvent: { event in
+                defer {
+                    self.callbacksPool.removeAll(where: { callback in callback.id == requestId })
+                    lock.unlock()
+                }
+                lock.lock()
+                
+                switch event {
+                    
+                case .text(let text):
+                    let responseBody = try? JSON(data: text.data(using: .utf8)!)
+                    DispatchQueue.main.async {
+                        if responseBody?["request-id"].stringValue == requestId {
+                            continuation.resume()
+                        }
+                    }
+                    break
+                    
+                default:
+                    break
+                }
+            }, id: requestId))
+            guard let requestBodyString = requestBody.rawString(.utf8) else {
+                print("Failed to create string of WS request body")
+                continuation.resume(throwing: CiderWSError.failedToCreateJSON)
+                return
+            }
+
+            self.socket.write(string: requestBodyString)
+        }
+    }
     
 }
 
