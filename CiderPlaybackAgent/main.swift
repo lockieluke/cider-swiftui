@@ -90,7 +90,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 return self.serverFallback
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            DispatchQueue.main.async {
                 self.musicKitWorker?.dispose()
                 self.musicKitWorker = nil
                 self.server.stop()
