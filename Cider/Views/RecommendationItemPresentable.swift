@@ -62,12 +62,23 @@ struct RecommendationItemPresentable: View {
                                     self.isHoveringPlay = isHovering
                                 }
                                 .onTapGesture {
-                                    print("Clicked play \(recommendation.id) \(recommendation.type)")
-                                    if recommendation.type == .Album {
-                                        Task {
+                                    Task {
+                                        switch recommendation.type {
+                                            
+                                        case .Album:
                                             await CiderPlayback.shared.setQueue(album: recommendation.id)
-                                            await CiderPlayback.shared.play()
+                                            break
+                                            
+                                        case .Playlist:
+                                            await CiderPlayback.shared.setQueue(playlist: recommendation.id)
+                                            break
+                                            
+                                        default:
+                                            break
+                                            
                                         }
+                                        
+                                        await CiderPlayback.shared.play()
                                     }
                                 }
                             }

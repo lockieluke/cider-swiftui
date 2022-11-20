@@ -49,6 +49,8 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             Task {
                 if let albumId = request.arguments["album-id"] {
                     await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
+                } else if let playlistId = request.arguments["playlist-id"] {
+                    await self.musicKitWorker?.setQueueWithPlaylistID(playlistID: playlistId)
                 }
 
                 response(GCDWebServerDataResponse(text: "Added to queue"))
