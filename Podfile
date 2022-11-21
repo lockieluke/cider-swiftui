@@ -11,13 +11,15 @@ target 'Cider' do
   pod 'SwiftyJSON', '~> 4.0'
   pod 'Introspect'
   # pod 'SwiftHTTP', :git => 'https://github.com/rahul-racha/SwiftHTTP.git', :branch => 'issue-305'
+  pod 'Starscream', '~> 4.0.0'
   pod 'SDWebImageSwiftUI'
   pod 'InjectHotReload'
 end
 
 target 'CiderPlaybackAgent' do
   # use_frameworks!
-  pod "GCDWebServer", "~> 3.0", :modular_headers => true
-  pod 'Swifter', '~> 1.5.0'
+  # own private fork of Swifter
+  pod 'Swifter', :git => 'https://github.com/ciderapp/swifter.git', :branch => 'stable'
   pod 'ArgumentParserKit'
+  pod 'SwiftyJSON', '~> 4.0'
 end

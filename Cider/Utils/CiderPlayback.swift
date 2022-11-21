@@ -3,18 +3,35 @@
 //  
 
 import Foundation
+import Starscream
 
-class CiderPlayback {
+class CiderPlayback : WebSocketDelegate {
     
     static let shared = CiderPlayback()
     
     private let proc: Process
     private let agentPort: UInt16
     private let agentSessionId: String
+    private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
     private var isRunning: Bool
     
     init() {
+        let agentPort = NetworkingProvider.findFreeLocalPort()
+        let agentSessionId = UUID().uuidString
+        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultHeaders:  [
+            "Agent-Session-ID": agentSessionId,
+            "User-Agent": "Cider SwiftUI"
+        ])
+        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: [
+            "Agent-Session-ID": agentSessionId,
+            "User-Agent": "Cider SwiftUI"
+        ])
+        
+        // hack to access self before everything is initialised
+        weak var weakSelf: CiderPlayback?
+        
+        let proc = Process()
         let pipe = Pipe()
         pipe.fileHandleForReading.readabilityHandler = { fileHandle in
             let data = fileHandle.availableData
@@ -25,12 +42,22 @@ class CiderPlayback {
                     fileHandle.readabilityHandler = nil
                     return
                 }
-                print("CiderPlaybackAgent: \(str)")
+                var newStr = str
+                if let last = newStr.last {
+                    if last.isNewline {
+                        newStr.removeLast()
+                    }
+                }
+                
+                if newStr == "websocketcomm.ready" {
+                    weakSelf?.wsCommClient.delegate = weakSelf
+                    weakSelf?.wsCommClient.connect()
+                } else {
+                    print("CiderPlaybackAgent: \(newStr)")
+                }
             }
         }
-        let agentSessionId = UUID().uuidString
-        let proc = Process()
-        let agentPort = NetworkingProvider.findFreeLocalPort()
+        
         guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
         proc.arguments = ["--agent-port", String(agentPort), "--agent-session-id", "\"\(agentSessionId)\""]
         proc.executableURL = execUrl
@@ -38,9 +65,10 @@ class CiderPlayback {
         
         self.agentSessionId = agentSessionId
         self.proc = proc
-        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: ["User-Agent": "Cider SwiftUI", "Agent-Session-ID": agentSessionId])
         self.agentPort = agentPort
         self.isRunning = false
+        
+        weakSelf = self
     }
     
     func setDeveloperToken(developerToken: String) {
@@ -65,14 +93,18 @@ class CiderPlayback {
     
     func setQueue(requestBody: [String : Any]? = nil) async {
         do {
-            _ = try await self.commClient.request("/set-queue", method: .POST, body: requestBody)
+            _ = try await self.wsCommClient.request("/set-queue", body: requestBody)
         } catch {
-            print("Set Queue via failed \(error)")
+            print("Set Queue failed \(error)")
         }
     }
     
     func play() async {
-        _ = try? await self.commClient.request("/play")
+        do {
+            _ = try await self.wsCommClient.request("/play")
+        } catch {
+            print("Play failed \(error)")
+        }
     }
     
     func start() {
@@ -104,6 +136,25 @@ class CiderPlayback {
             semaphore.signal()
         }
         semaphore.wait()
+    }
+    
+    
+    func didReceive(event: WebSocketEvent, client: WebSocket) {
+        switch event {
+            
+        case .connected:
+            print("Connected to CiderPlaybackAgent")
+            break
+            
+        case .error(let error):
+            guard let error = error else { return }
+            print("WebSockets error: \(error)")
+            break
+            
+        default:
+            break
+            
+        }
     }
     
 }
