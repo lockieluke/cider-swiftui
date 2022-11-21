@@ -17,6 +17,21 @@ class CiderPlayback : WebSocketDelegate {
     private var isRunning: Bool
     
     init() {
+        let agentPort = NetworkingProvider.findFreeLocalPort()
+        let agentSessionId = UUID().uuidString
+        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultHeaders:  [
+            "Agent-Session-ID": agentSessionId,
+            "User-Agent": "Cider SwiftUI"
+        ])
+        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: [
+            "Agent-Session-ID": agentSessionId,
+            "User-Agent": "Cider SwiftUI"
+        ])
+        
+        // hack to access self before everything is initialised
+        weak var weakSelf: CiderPlayback?
+        
+        let proc = Process()
         let pipe = Pipe()
         pipe.fileHandleForReading.readabilityHandler = { fileHandle in
             let data = fileHandle.availableData
@@ -33,12 +48,16 @@ class CiderPlayback : WebSocketDelegate {
                         newStr.removeLast()
                     }
                 }
-                print("CiderPlaybackAgent: \(newStr)")
+                
+                if newStr == "websocketcomm.ready" {
+                    weakSelf?.wsCommClient.delegate = weakSelf
+                    weakSelf?.wsCommClient.connect()
+                } else {
+                    print("CiderPlaybackAgent: \(newStr)")
+                }
             }
         }
-        let agentSessionId = UUID().uuidString
-        let proc = Process()
-        let agentPort = NetworkingProvider.findFreeLocalPort()
+        
         guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
         proc.arguments = ["--agent-port", String(agentPort), "--agent-session-id", "\"\(agentSessionId)\""]
         proc.executableURL = execUrl
@@ -46,16 +65,10 @@ class CiderPlayback : WebSocketDelegate {
         
         self.agentSessionId = agentSessionId
         self.proc = proc
-        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultHeaders:  [
-            "Agent-Session-ID": agentSessionId,
-            "User-Agent": "Cider SwiftUI"
-        ])
-        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: [
-            "Agent-Session-ID": agentSessionId,
-            "User-Agent": "Cider SwiftUI"
-        ])
         self.agentPort = agentPort
         self.isRunning = false
+        
+        weakSelf = self
     }
     
     func setDeveloperToken(developerToken: String) {
@@ -103,10 +116,6 @@ class CiderPlayback : WebSocketDelegate {
             try proc.run()
             self.isRunning = true
             print("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
-            self.wsCommClient.delegate = self
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                self.wsCommClient.connect()
-            }
         } catch {
             print("Error running CiderPlaybackAgent: \(error)")
         }

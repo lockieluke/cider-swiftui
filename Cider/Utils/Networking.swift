@@ -19,7 +19,8 @@ struct HTTPResponse {
 
 enum CiderWSError : Error {
     
-case failedToCreateJSON
+case failedToCreateJSON,
+    wsNotConnected(String)
     
 }
 
@@ -37,6 +38,7 @@ class CiderWSProvider {
     private var defaultHeaders: [String : String]?
     private let socket: WebSocket
     private var callbacksPool: [WebSocketCallbackEvent] = []
+    private var isReady = false
     
     var delegate: WebSocketDelegate? {
         didSet {
@@ -62,6 +64,7 @@ class CiderWSProvider {
     
     func connect() {
         socket.onEvent = { event in
+            self.isReady = true
             self.callbacksPool.forEach { callback in
                 callback.onEvent(event)
             }
@@ -72,6 +75,10 @@ class CiderWSProvider {
     func request(_ route: String, body: [String: Any]? = nil) async throws {
         let lock = NSLock()
         return try await withUnsafeThrowingContinuation() { continuation in
+            if !self.isReady {
+                continuation.resume(throwing: CiderWSError.wsNotConnected("WebSockets connection is not ready"))
+                return
+            }
             let requestId = UUID().uuidString
             var requestBody = JSON([
                 "route": route.unescaped,

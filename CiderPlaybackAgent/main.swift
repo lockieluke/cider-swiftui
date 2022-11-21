@@ -105,6 +105,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         } catch {
             fatalError("Failed to start CiderPlaybackAgent server")
         }
+        
+        do {
+            print("websocketcomm.ready")
+        }
     }
     
 }
