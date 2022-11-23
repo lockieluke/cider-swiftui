@@ -9,6 +9,7 @@ import SwiftyJSON
 
 final class AuthWorker {
     
+    private let logger: Logger
     private var wkWebView: WKWebView?
     private let authWindow: NSWindow
     private var wkUIDelegate: AuthWorkerUIDelegate?
@@ -44,7 +45,7 @@ final class AuthWorker {
             
             if AuthWorker.IS_PASSING_LOGS {
                 if let rawJson = json.rawString() {
-                 print("JSON message from AuthWorker: \(rawJson)")
+                    parent.logger.info("JSON message from AuthWorker: \(rawJson)")
                 }
             }
             
@@ -118,6 +119,8 @@ final class AuthWorker {
         }
         authWindow.isMovable = false
         authWindow.isMovableByWindowBackground = false
+        
+        self.logger = Logger(label: "AuthWorker")
 
         self.wkUIDelegate = AuthWorkerUIDelegate(parent: self)
         wkWebView?.uiDelegate = wkUIDelegate
@@ -126,7 +129,7 @@ final class AuthWorker {
     func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) {
         if MKModal.shared.isAuthorised { return }
         
-        print("Presenting AuthWindow")
+        logger.info("Presenting AuthWindow")
         self.authenticatingCallback = { userToken in
             self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
             
@@ -166,7 +169,7 @@ final class AuthWorker {
     
     static func clearAuthCache() {
         WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache], modifiedSince: Date(timeIntervalSince1970: 0)) {
-            print("Successfully cleared auth cache")
+            AuthWorker.shared.logger.info("Successfully cleared auth cache")
         }
     }
     

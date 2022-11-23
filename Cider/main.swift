@@ -20,7 +20,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         
         // might be useful for cleaning up child processes when process gets killed
         let terminatedCallback = { exitCode in
-            print("exiting")
+            Logger.shared.info("Cider is exiting")
             DispatchQueue.main.async {
                 CiderPlayback.shared.shutdownSync()
             }

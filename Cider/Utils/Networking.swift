@@ -34,6 +34,7 @@ class CiderWSProvider {
     }
     
     private let baseURL: URL
+    private let logger: Logger
     private var defaultBody: JSON?
     private var defaultHeaders: [String : String]?
     private let socket: WebSocket
@@ -53,6 +54,7 @@ class CiderWSProvider {
         let socket = WebSocket(request: request, engine: NativeEngine())
         
         self.baseURL = baseURL
+        self.logger = Logger(label: "CiderWSProvider \(baseURL)")
         self.defaultBody = defaultBody
         self.defaultHeaders = defaultHeaders
         self.socket = socket
@@ -114,7 +116,7 @@ class CiderWSProvider {
                 }
             }, id: requestId))
             guard let requestBodyString = requestBody.rawString(.utf8) else {
-                print("Failed to create string of WS request body")
+                self.logger.error("Failed to create string of WS request body", displayCross: true)
                 continuation.resume(throwing: CiderWSError.failedToCreateJSON)
                 return
             }
@@ -128,9 +130,12 @@ class CiderWSProvider {
 class NetworkingProvider {
     
     private let baseURL: URL
+    private let logger: Logger
+    private static let sharedLogger = Logger(label: "Shared Networking Provider")
     private var defaultHeaders: [String : String]
     
     init(baseURL: URL, defaultHeaders: [String : String]? = nil) {
+        self.logger = Logger(label: "Networking Provider \(baseURL)")
         self.baseURL = baseURL
         self.defaultHeaders = defaultHeaders ?? [:]
     }
@@ -190,7 +195,7 @@ class NetworkingProvider {
         
         let socketFD = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         if socketFD == -1 {
-            print("Error creating socket: \(errno)")
+            sharedLogger.error("Error creating socket: \(errno)")
             return port;
         }
         

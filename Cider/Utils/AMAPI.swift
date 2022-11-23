@@ -14,10 +14,12 @@ class AMAPI {
     
     private let amNetworkingClient: NetworkingProvider
     private let ciderNetworkingClient: NetworkingProvider
+    private let logger: Logger
     
     private var STOREFRONT_ID: String?
     
     init() {
+        self.logger = Logger(label: "Apple Music API")
         self.amNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.music.apple.com/v1")!)
         self.ciderNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.cider.sh/v1")!, defaultHeaders: ["User-Agent": "Cider SwiftUI"])
     }
@@ -44,7 +46,7 @@ class AMAPI {
             
             self.AM_TOKEN = amToken
         } catch {
-            print(error.localizedDescription)
+            self.logger.error(error.localizedDescription)
         }
         
         return amToken
@@ -54,13 +56,13 @@ class AMAPI {
         if let AM_TOKEN = self.AM_TOKEN {
             SKCloudServiceController().requestUserToken(forDeveloperToken: AM_TOKEN) { token, error in
                 if error != nil {
-                    print("Error occurred when fetching AM User Token: \(error!.localizedDescription)")
+                    self.logger.error("Error occurred when fetching AM User Token: \(error!.localizedDescription)")
                     completion(false, nil, error)
                     return
                 }
                 
                 guard let token = token else {
-                    print("MK User Token is undefined")
+                    self.logger.error("MK User Token is undefined")
                     completion(false, nil, nil)
                     return
                 }

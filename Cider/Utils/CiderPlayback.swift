@@ -9,6 +9,7 @@ class CiderPlayback : WebSocketDelegate {
     
     static let shared = CiderPlayback()
     
+    private let logger: Logger
     private let proc: Process
     private let agentPort: UInt16
     private let agentSessionId: String
@@ -17,6 +18,7 @@ class CiderPlayback : WebSocketDelegate {
     private var isRunning: Bool
     
     init() {
+        let logger = Logger(label: "CiderPlayback")
         let agentPort = NetworkingProvider.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
         self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultHeaders:  [
@@ -53,7 +55,7 @@ class CiderPlayback : WebSocketDelegate {
                     weakSelf?.wsCommClient.delegate = weakSelf
                     weakSelf?.wsCommClient.connect()
                 } else {
-                    print("CiderPlaybackAgent: \(newStr)")
+                    logger.info("[CiderPlaybackAgent] \(newStr)")
                 }
             }
         }
@@ -63,6 +65,7 @@ class CiderPlayback : WebSocketDelegate {
         proc.executableURL = execUrl
         proc.standardOutput = pipe
         
+        self.logger = logger
         self.agentSessionId = agentSessionId
         self.proc = proc
         self.agentPort = agentPort
@@ -95,7 +98,7 @@ class CiderPlayback : WebSocketDelegate {
         do {
             _ = try await self.wsCommClient.request("/set-queue", body: requestBody)
         } catch {
-            print("Set Queue failed \(error)")
+            self.logger.error("Set Queue failed \(error)", displayCross: true)
         }
     }
     
@@ -103,7 +106,7 @@ class CiderPlayback : WebSocketDelegate {
         do {
             _ = try await self.wsCommClient.request("/play")
         } catch {
-            print("Play failed \(error)")
+            self.logger.error("Play failed \(error)", displayCross: true)
         }
     }
     
@@ -115,9 +118,9 @@ class CiderPlayback : WebSocketDelegate {
         do {
             try proc.run()
             self.isRunning = true
-            print("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
+            self.logger.info("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
         } catch {
-            print("Error running CiderPlaybackAgent: \(error)")
+            self.logger.error("Error running CiderPlaybackAgent: \(error)")
         }
     }
     
@@ -125,7 +128,7 @@ class CiderPlayback : WebSocketDelegate {
         do {
             _ = try await self.commClient.request("/shutdown")
         } catch {
-            print("Error shutting down CiderPlaybackAgent: \(error)")
+            self.logger.error("Error shutting down CiderPlaybackAgent: \(error)")
         }
     }
     
@@ -143,12 +146,12 @@ class CiderPlayback : WebSocketDelegate {
         switch event {
             
         case .connected:
-            print("Connected to CiderPlaybackAgent")
+            self.logger.success("Connected to CiderPlaybackAgent", displayTick: true)
             break
             
         case .error(let error):
             guard let error = error else { return }
-            print("WebSockets error: \(error)")
+            self.logger.error("WebSockets error: \(error)")
             break
             
         default:

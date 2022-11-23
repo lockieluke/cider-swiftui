@@ -14,6 +14,7 @@ target 'Cider' do
   pod 'Starscream', '~> 4.0.0'
   pod 'SDWebImageSwiftUI'
   pod 'InjectHotReload'
+  pod 'RainbowSwift'
 end
 
 target 'CiderPlaybackAgent' do
