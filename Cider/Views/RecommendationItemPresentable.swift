@@ -11,7 +11,7 @@ struct RecommendationItemPresentable: View {
     @ObservedObject private var iO = Inject.observer
     @EnvironmentObject private var appWindowModal: AppWindowModal
     
-    public var recommendation: MusicItem
+    var recommendation: MusicItem
     
     private let sizeMultipler: CGFloat = 0.3
     private let minSize: CGFloat = 160

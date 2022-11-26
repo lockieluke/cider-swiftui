@@ -6,7 +6,7 @@ import Foundation
 
 class SearchModal : ObservableObject {
     
-    @Published public var currentSearchText: String = ""
+    @Published var currentSearchText: String = ""
     
     init() {
         

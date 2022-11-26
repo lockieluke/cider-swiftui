@@ -7,8 +7,8 @@ import AppKit
 
 class AppWindowModal : ObservableObject {
 
-    @Published public var windowSize = CGSize()
-    @Published public var nsWindow: NSWindow?
+    @Published var windowSize = CGSize()
+    @Published var nsWindow: NSWindow?
     
     init () {
         

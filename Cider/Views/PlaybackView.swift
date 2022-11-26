@@ -74,8 +74,8 @@ struct PlaybackButton: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    public var icon: PlaybackButtonIcon
-    public var size = CGFloat(18)
+    var icon: PlaybackButtonIcon
+    var size = CGFloat(18)
     
     @State private var isHovered = false
     @State private var bouncyFontSize = CGFloat(18)

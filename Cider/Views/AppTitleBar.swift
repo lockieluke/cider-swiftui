@@ -12,8 +12,8 @@ struct AppTitleBar: View {
     @EnvironmentObject private var searchModal: SearchModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     
-    public var toolbarHeight: CGFloat = 0
-    public var rootPageChanged: ((_ currentPage: RootNavigationType) -> Void)? = nil
+    var toolbarHeight: CGFloat = 0
+    var rootPageChanged: ((_ currentPage: RootNavigationType) -> Void)? = nil
     
     private var titleBarHeight: CGFloat {
         get {

@@ -20,8 +20,8 @@ struct ActionButton: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    public var actionType: ButtonAction = .More
-    public var onClick: (() -> Void)? = nil
+    var actionType: ButtonAction = .More
+    var onClick: (() -> Void)? = nil
     
     @State private var isHovered = false
     @State private var isClicked = false

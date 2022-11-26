@@ -8,14 +8,13 @@ import StoreKit
 
 class MKModal : ObservableObject {
     
-    @Published public var isAuthorised = false
-    @Published public var amAuthError: Error?
-    @Published public var hasDeveloperToken = false
+    @Published var isAuthorised = false
+    @Published var amAuthError: Error?
+    @Published var hasDeveloperToken = false
     
     private let logger = Logger(label: "MusicKit Wrapper")
     
-    
-    public let AM_API = AMAPI()
+    let AM_API = AMAPI()
     
     func authorise() async -> String {
         self.logger.info("Fetching MusicKit Developer Token")

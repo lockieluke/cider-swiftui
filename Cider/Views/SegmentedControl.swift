@@ -20,9 +20,9 @@ struct SegmentedControl: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    public var items: [String] = []
-    public var icons: [SegmentedControlIcon] = []
-    public var segmentedItemChanged: ((_ currentSegmentedItem: String) -> Void)? = nil
+    var items: [String] = []
+    var icons: [SegmentedControlIcon] = []
+    var segmentedItemChanged: ((_ currentSegmentedItem: String) -> Void)? = nil
     
     @State private var selectedItem: Int = 0 {
         didSet {
@@ -103,12 +103,12 @@ struct SegmentedControlItem: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    public var item: String
-    public var icon: SegmentedControlIcon
-    public var isSelected: Bool
-    public var selectedCB: (() -> Void)? = nil
-    public var sizeChanged: ((_ newSize: CGSize) -> Void)? = nil
-    public var positionUpdated: ((_ newPosition: CGRect) -> Void)? = nil
+    var item: String
+    var icon: SegmentedControlIcon
+    var isSelected: Bool
+    var selectedCB: (() -> Void)? = nil
+    var sizeChanged: ((_ newSize: CGSize) -> Void)? = nil
+    var positionUpdated: ((_ newPosition: CGRect) -> Void)? = nil
     
     @State private var isHovered = false
     @State private var segSize = CGSize(width: 0, height: 0)

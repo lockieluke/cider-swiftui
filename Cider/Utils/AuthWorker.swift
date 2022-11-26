@@ -23,7 +23,7 @@ final class AuthWorker {
     private static let IS_FORGETTING_AUTH: Bool = CommandLine.arguments.contains("-clear-auth")
     private static let IS_PASSING_LOGS: Bool = CommandLine.arguments.contains("-pass-auth-logs")
     
-    public var authenticatingCallback: ((_ userToken: String) -> Void)?
+    var authenticatingCallback: ((_ userToken: String) -> Void)?
     
     class AuthWorkerUIDelegate : NSObject, WKUIDelegate {
         
