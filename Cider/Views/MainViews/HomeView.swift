@@ -36,16 +36,10 @@ struct HomeView: View {
                     .progressViewStyle(.circular)
             }
         }
-        .onAppear {
+        .task {
             if self.personalisedData.recommendationSections != nil { return }
             
-            Task {
-                do {
-                    self.personalisedData.recommendationSections = try await self.mkModal.AM_API.fetchRecommendations()
-                } catch AMNetworkingError.unableToFetchRecommendations(let errorMessage) {
-                    fatalError("\(errorMessage)")
-                }
-            }
+            self.personalisedData.recommendationSections = try? await self.mkModal.AM_API.fetchRecommendations()
         }
         .frame(width: navigationModal.currentRootStack == .Home ? .infinity : .zero, height: navigationModal.currentRootStack == .Home ? .infinity : .zero)
         .enableInjection()
