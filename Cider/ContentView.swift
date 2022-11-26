@@ -53,16 +53,14 @@ struct ContentView: View {
             .onChange(of: geometry.size) { newSize in
                 appWindowModal.windowSize = newSize
             }
-            .onAppear {
-                Task {
-                    self.authWorker.presentAuthView() { userToken in
-                        self.mkModal.authenticateWithToken(userToken: userToken)
-                        CiderPlayback.shared.setUserToken(userToken: userToken)
-                        CiderPlayback.shared.start()
-                        
-                        Task {
-                            await self.mkModal.AM_API.initStorefront()
-                        }
+            .task {
+                await self.authWorker.presentAuthView() { userToken in
+                    self.mkModal.authenticateWithToken(userToken: userToken)
+                    CiderPlayback.shared.setUserToken(userToken: userToken)
+                    CiderPlayback.shared.start()
+                    
+                    Task {
+                        await self.mkModal.AM_API.initStorefront()
                     }
                 }
             }

@@ -56,10 +56,14 @@ class AppMenu {
     }
     
     @objc func signOut(_ sender: Any) {
-        self.authWorker.signOut {
+        Task {
+            Logger.shared.info("Signing out")
+            await AuthWorker.clearAuthCache()
             self.mkModal.resetAuthorisation()
-            Alert.showModal(on: self.window, message: "Cider will have to be restarted so we can sign you out") {
-                NSApp.relaunch(clearAppData: true)
+            DispatchQueue.main.async {
+                Alert.showModal(on: self.window, message: "Cider will have to be restarted so we can sign you out") {
+                    NSApp.relaunch(clearAppData: true)
+                }
             }
         }
     }

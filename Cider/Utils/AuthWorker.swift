@@ -90,12 +90,12 @@ final class AuthWorker {
     
     init(mkModal: MKModal, appWindowModal: AppWindowModal) {
         if AuthWorker.IS_FORGETTING_AUTH {
-            AuthWorker.clearAuthCache()
-        }
-        
-        guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderwebauth.js"),
-              let script = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
-            fatalError("Unable to load CiderWebAuth Scripts")
+            let semaphore = DispatchSemaphore(value: 0)
+            Task {
+                await AuthWorker.clearAuthCache()
+                semaphore.signal()
+            }
+            _ = semaphore.wait(timeout: .now() + .milliseconds(300))
         }
         
         self.wkWebView = WKWebView(frame: .zero)
@@ -118,46 +118,50 @@ final class AuthWorker {
         wkWebView?.uiDelegate = wkUIDelegate
         
         Task {
-            _ = await mkModal.authorise()
             
-            DispatchQueue.main.async {
-                let userScript = WKUserScript(source: """
-                                              const initialURL = \"\(AuthWorker.INITIAL_URL)\";
-                                              const amToken = \"\(mkModal.AM_API.AM_TOKEN!)\";
-                                              const isForgettingAuth = \(AuthWorker.IS_FORGETTING_AUTH);
-                                              \(script)
-                                              """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-                self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
-                self.wkWebView?.configuration.userContentController.addUserScript(userScript)
-            }
         }
     }
     
-    func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) {
-        if self.mkModal.isAuthorised {
-            self.logger.success("Logged in with previously fetched user token", displayTick: true)
-            return
-        } else if self.mkModal.hasDeveloperToken {
-            self.logger.error("MusicKitWrapper does not have the developer token needed for authorisation")
-            return
+    func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) async {
+        guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderwebauth.js"),
+              let script = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
+            fatalError("Unable to load CiderWebAuth Scripts")
         }
         
-        self.logger.info("Presenting AuthWindow")
-        self.authenticatingCallback = { userToken in
-            self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
-            
-            // hack to dispose wkwebview manually
-//            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
-//            self.wkWebView?.perform(disposeSel)
-            
-            self.wkWebView?.removeFromSuperview()
-            self.authWindow.close()
-            
-            self.wkWebView = nil
-            authenticatingCallback?(userToken)
-        }
+        let developerToken = await self.mkModal.authorise()
         
-        wkWebView?.loadSimulatedRequest(AuthWorker.INITIAL_URL, responseHTML: "<p>Cider AuthWorker</p>")
+        DispatchQueue.main.async {
+            let userScript = WKUserScript(source: """
+                                          const initialURL = \"\(AuthWorker.INITIAL_URL)\";
+                                          const amToken = \"\(developerToken)\";
+                                          const isForgettingAuth = \(AuthWorker.IS_FORGETTING_AUTH);
+                                          \(script)
+                                          """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+            self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+            self.wkWebView?.configuration.userContentController.addUserScript(userScript)
+            
+            if self.mkModal.isAuthorised {
+                self.logger.success("Logged in with previously fetched user token", displayTick: true)
+                return
+            }
+            
+            self.logger.info("Presenting AuthWindow")
+            self.authenticatingCallback = { userToken in
+                self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
+                
+                // hack to dispose wkwebview manually
+    //            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+    //            self.wkWebView?.perform(disposeSel)
+                
+                self.wkWebView?.removeFromSuperview()
+                self.authWindow.close()
+                
+                self.wkWebView = nil
+                authenticatingCallback?(userToken)
+            }
+            
+            self.wkWebView?.loadSimulatedRequest(AuthWorker.INITIAL_URL, responseHTML: "<p>Cider AuthWorker</p>")
+        }
     }
     
     func showAuthWindow() {
@@ -166,7 +170,7 @@ final class AuthWorker {
         wkWebView.autoresizingMask = [.height, .width]
         authWindow.contentView?.addSubview(wkWebView)
         
-        self.appWindowModal.$nsWindow.sink(receiveValue: { parentWindow in
+        _ = self.appWindowModal.$nsWindow.sink(receiveValue: { parentWindow in
             let parentWindow = parentWindow.unsafelyUnwrapped
             parentWindow.addChildWindow(self.authWindow, ordered: .above)
             self.authWindow.center()
@@ -174,16 +178,15 @@ final class AuthWorker {
         })
     }
     
-    func signOut(completion: (() -> Void)? = nil) {
-        self.wkWebView?.evaluateJavaScript("window.authoriseAM();") { any, error in
-            completion?()
-        }
-    }
-    
-    static func clearAuthCache() {
-        WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache], modifiedSince: Date(timeIntervalSince1970: 0)) {
-            // TODO: better way to handle signout
-            Logger.shared.info("Successfully cleared auth cache")
+    static func clearAuthCache() async {
+        return await withCheckedContinuation { continuation in
+            DispatchQueue.main.async {
+                WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache], modifiedSince: Date(timeIntervalSince1970: 0)) {
+                    // TODO: better way to handle signout
+                    Logger.shared.info("Successfully cleared auth cache")
+                    continuation.resume()
+                }
+            }
         }
     }
     
