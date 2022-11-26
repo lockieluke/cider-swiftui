@@ -9,8 +9,8 @@ struct AppTitleBar: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    @ObservedObject private var searchModal = SearchModal.shared
-    @ObservedObject public var appWindowModal: AppWindowModal
+    @EnvironmentObject private var searchModal: SearchModal
+    @EnvironmentObject private var appWindowModal: AppWindowModal
     
     public var toolbarHeight: CGFloat = 0
     public var rootPageChanged: ((_ currentPage: RootNavigationType) -> Void)? = nil
@@ -54,7 +54,8 @@ struct AppTitleBar: View {
             HStack(spacing: 0) {
                 Spacer()
                     .frame(width: appWindowModal.windowSize.width * 0.8)
-                SearchBar(searchModal: searchModal)
+                SearchBar()
+                    .environmentObject(searchModal)
             }
         }
         .frame(height: 40)
@@ -64,6 +65,7 @@ struct AppTitleBar: View {
 
 struct AppTitleBar_Previews: PreviewProvider {
     static var previews: some View {
-        AppTitleBar(appWindowModal: .shared)
+        AppTitleBar()
+            .environmentObject(AppWindowModal())
     }
 }

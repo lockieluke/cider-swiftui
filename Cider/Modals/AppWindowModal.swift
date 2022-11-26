@@ -6,9 +6,7 @@ import Foundation
 import AppKit
 
 class AppWindowModal : ObservableObject {
-    
-    public static let shared = AppWindowModal()
-    
+
     @Published public var windowSize = CGSize()
     @Published public var nsWindow: NSWindow?
     

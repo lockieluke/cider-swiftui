@@ -14,7 +14,9 @@ final class AuthWorker {
     private let authWindow: NSWindow
     private var wkUIDelegate: AuthWorkerUIDelegate?
     
-    static let shared = AuthWorker()
+    private let appWindowModal: AppWindowModal
+    private let mkModal: MKModal
+    
     private static let INITIAL_URL = URLRequest(url: URL(string: "https://www.apple.com/legal/privacy/en-ww/cookies/")!)
     private static let USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15"
     
@@ -86,7 +88,7 @@ final class AuthWorker {
         
     }
     
-    init() {
+    init(mkModal: MKModal, appWindowModal: AppWindowModal) {
         if AuthWorker.IS_FORGETTING_AUTH {
             AuthWorker.clearAuthCache()
         }
@@ -96,20 +98,7 @@ final class AuthWorker {
             fatalError("Unable to load CiderWebAuth Scripts")
         }
         
-        let userScript = WKUserScript(source: """
-                                      const initialURL = \"\(AuthWorker.INITIAL_URL)\";
-                                      const amToken = \"\(MKModal.shared.AM_API.AM_TOKEN!)\";
-                                      const isForgettingAuth = \(AuthWorker.IS_FORGETTING_AUTH);
-                                      \(script)
-                                      """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-        let userContentController = WKUserContentController()
-        userContentController.addUserScript(userScript)
-        
-        let wkConfiguration = WKWebViewConfiguration()
-        wkConfiguration.userContentController = userContentController
-        wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
-        
-        self.wkWebView = WKWebView(frame: .zero, configuration: wkConfiguration)
+        self.wkWebView = WKWebView(frame: .zero)
         wkWebView?.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         wkWebView?.customUserAgent = AuthWorker.USER_AGENT
         
@@ -120,16 +109,40 @@ final class AuthWorker {
         authWindow.isMovable = false
         authWindow.isMovableByWindowBackground = false
         
+        self.mkModal = mkModal
+        self.appWindowModal = appWindowModal
+        
         self.logger = Logger(label: "AuthWorker")
 
         self.wkUIDelegate = AuthWorkerUIDelegate(parent: self)
         wkWebView?.uiDelegate = wkUIDelegate
+        
+        Task {
+            _ = await mkModal.authorise()
+            
+            DispatchQueue.main.async {
+                let userScript = WKUserScript(source: """
+                                              const initialURL = \"\(AuthWorker.INITIAL_URL)\";
+                                              const amToken = \"\(mkModal.AM_API.AM_TOKEN!)\";
+                                              const isForgettingAuth = \(AuthWorker.IS_FORGETTING_AUTH);
+                                              \(script)
+                                              """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+                self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+                self.wkWebView?.configuration.userContentController.addUserScript(userScript)
+            }
+        }
     }
     
     func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) {
-        if MKModal.shared.isAuthorised { return }
+        if self.mkModal.isAuthorised {
+            self.logger.success("Logged in with previously fetched user token", displayTick: true)
+            return
+        } else if self.mkModal.hasDeveloperToken {
+            self.logger.error("MusicKitWrapper does not have the developer token needed for authorisation")
+            return
+        }
         
-        logger.info("Presenting AuthWindow")
+        self.logger.info("Presenting AuthWindow")
         self.authenticatingCallback = { userToken in
             self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
             
@@ -153,12 +166,12 @@ final class AuthWorker {
         wkWebView.autoresizingMask = [.height, .width]
         authWindow.contentView?.addSubview(wkWebView)
         
-        if let parentWindow = AppWindowModal.shared.nsWindow {
-            parentWindow.addChildWindow(authWindow, ordered: .above)
-        }
-        
-        authWindow.center()
-        authWindow.makeKeyAndOrderFront(nil)
+        self.appWindowModal.$nsWindow.sink(receiveValue: { parentWindow in
+            let parentWindow = parentWindow.unsafelyUnwrapped
+            parentWindow.addChildWindow(self.authWindow, ordered: .above)
+            self.authWindow.center()
+            self.authWindow.makeKeyAndOrderFront(nil)
+        })
     }
     
     func signOut(completion: (() -> Void)? = nil) {
@@ -169,7 +182,8 @@ final class AuthWorker {
     
     static func clearAuthCache() {
         WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache], modifiedSince: Date(timeIntervalSince1970: 0)) {
-            AuthWorker.shared.logger.info("Successfully cleared auth cache")
+            // TODO: better way to handle signout
+            Logger.shared.info("Successfully cleared auth cache")
         }
     }
     

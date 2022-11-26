@@ -14,9 +14,6 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.appWindow = AppWindow()
-        self.appMenu = AppMenu(appWindow.getWindow())
-        appMenu.loadMenus()
-        NSApp.mainMenu = appMenu.getMenu()
         
         // might be useful for cleaning up child processes when process gets killed
         let terminatedCallback = { exitCode in

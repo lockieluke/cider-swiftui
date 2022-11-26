@@ -10,13 +10,17 @@ class AppMenu {
     private let menu: NSMenu
     private let appName: String
     private let window: NSWindow
+    private let mkModal: MKModal
+    private let authWorker: AuthWorker
     
-    init(_ window: NSWindow) {
+    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker) {
         let menu = NSMenu()
         
         self.window = window
         self.appName = ProcessInfo.processInfo.processName
         self.menu = menu
+        self.mkModal = mkModal
+        self.authWorker = authWorker
     }
     
     func loadMenus() {
@@ -52,8 +56,8 @@ class AppMenu {
     }
     
     @objc func signOut(_ sender: Any) {
-        AuthWorker.shared.signOut {
-            MKModal.shared.resetAuthorisation()
+        self.authWorker.signOut {
+            self.mkModal.resetAuthorisation()
             Alert.showModal(on: self.window, message: "Cider will have to be restarted so we can sign you out") {
                 NSApp.relaunch(clearAppData: true)
             }

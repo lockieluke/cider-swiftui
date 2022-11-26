@@ -9,8 +9,8 @@ import Introspect
 struct HomeView: View {
     
     @ObservedObject private var iO = Inject.observer
-    @ObservedObject public var mkModal: MKModal
-    @ObservedObject public var appWindowModal: AppWindowModal
+    @EnvironmentObject private var mkModal: MKModal
+    @EnvironmentObject private var appWindowModal: AppWindowModal
     
     @EnvironmentObject private var personalisedData: PersonalisedData
     @EnvironmentObject private var navigationModal: NavigationModal
@@ -22,6 +22,7 @@ struct HomeView: View {
                     VStack {
                         ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
                             MediaShowcaseRow(musicRecommendation.title, recommendationSection: musicRecommendation)
+                                .environmentObject(appWindowModal)
                         }
                     }
                     .padding(.vertical, 10)
@@ -53,6 +54,8 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(mkModal: .shared, appWindowModal: .shared)
+        HomeView()
+            .environmentObject(AppWindowModal())
+            .environmentObject(MKModal())
     }
 }

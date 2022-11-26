@@ -6,8 +6,6 @@ import Foundation
 
 class SearchModal : ObservableObject {
     
-    public static let shared = SearchModal()
-    
     @Published public var currentSearchText: String = ""
     
     init() {

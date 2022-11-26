@@ -8,7 +8,7 @@ import InjectHotReload
 struct PlaybackView: View {
     
     @ObservedObject private var iO = Inject.observer
-    @ObservedObject public var appWindowModal: AppWindowModal
+    @EnvironmentObject private var appWindowModal: AppWindowModal
     
     @State private var geometrySize = CGSize()
     
@@ -110,6 +110,7 @@ struct PlaybackButton: View {
 
 struct PlaybackView_Previews: PreviewProvider {
     static var previews: some View {
-        PlaybackView(appWindowModal: .shared)
+        PlaybackView()
+            .environmentObject(AppWindowModal())
     }
 }

@@ -10,6 +10,10 @@ class AppWindow {
     
     private let mainWindow: NSWindow
     private let windowDelegate: AppWindowDelegate
+    private let appWindowModal = AppWindowModal()
+    private let mkModal = MKModal()
+    private let authWorker: AuthWorker
+    private let appMenu: AppMenu
     
     class AppWindowDelegate : NSObject, NSWindowDelegate {
         
@@ -27,7 +31,11 @@ class AppWindow {
         let activeScreen = NSScreen.activeScreen
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
-        let contentView = ContentView()
+        let authWorker = AuthWorker(mkModal: self.mkModal, appWindowModal: self.appWindowModal)
+        
+        let contentView = ContentView(authWorker: authWorker)
+            .environmentObject(self.appWindowModal)
+            .environmentObject(self.mkModal)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         window.contentViewController = NSHostingController(rootView: contentView)
         window.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
@@ -52,9 +60,14 @@ class AppWindow {
         window.setFrameOrigin(pos)
         window.isReleasedWhenClosed = false
         window.center()
+        
+        let appMenu = AppMenu(window, mkModal: self.mkModal, authWorker: authWorker)
+        appMenu.loadMenus()
 
         self.mainWindow = window
-        AppWindowModal.shared.nsWindow = window
+        self.appWindowModal.nsWindow = window
+        self.authWorker = authWorker
+        self.appMenu = appMenu
     }
     
     func show() {
@@ -62,6 +75,7 @@ class AppWindow {
         if !mainWindow.isMainWindow {
             mainWindow.makeMain()
         }
+        NSApp.mainMenu = appMenu.getMenu()
     }
     
     func getWindow() -> NSWindow {

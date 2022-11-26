@@ -9,7 +9,7 @@ import SDWebImageSwiftUI
 struct RecommendationItemPresentable: View {
     
     @ObservedObject private var iO = Inject.observer
-    @ObservedObject private var appWindowModal = AppWindowModal.shared
+    @EnvironmentObject private var appWindowModal: AppWindowModal
     
     public var recommendation: MusicItem
     
@@ -95,7 +95,7 @@ struct RecommendationItemPresentable: View {
                     }
                 }
                 .onTapGesture {
-                    print("Clicked \(recommendation.id)")
+                    // TODO: Open separate page for album
                 }
                 .gesture(DragGesture(minimumDistance: 0).onChanged({ _ in
                     self.isClicked = true

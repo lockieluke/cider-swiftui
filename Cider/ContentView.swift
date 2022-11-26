@@ -8,13 +8,13 @@ import InjectHotReload
 struct ContentView: View {
     
     @ObservedObject private var iO = Inject.observer
-    @ObservedObject private var appWindowModal = AppWindowModal.shared
-    @ObservedObject private var mkModal = MKModal.shared
     
+    @EnvironmentObject private var mkModal: MKModal
+    @EnvironmentObject private var appWindowModal: AppWindowModal
+    var authWorker: AuthWorker
+    @StateObject private var searchModal = SearchModal()
     @StateObject private var navigationModal = NavigationModal()
     @StateObject private var personalisedData = PersonalisedData()
-    
-    @State private var authWorkerView: AuthWorker?
     
     var body: some View {
         GeometryReader { geometry in
@@ -24,20 +24,25 @@ struct ContentView: View {
                 
                 VStack {
                     if self.mkModal.isAuthorised {
-                        HomeView(mkModal: mkModal, appWindowModal: appWindowModal)
-                           .padding(.top, 40)
-                           .padding(.bottom, 100)
-                           .environmentObject(personalisedData)
-                           .environmentObject(navigationModal)
+                        HomeView()
+                            .padding(.top, 40)
+                            .padding(.bottom, 100)
+                            .environmentObject(appWindowModal)
+                            .environmentObject(mkModal)
+                            .environmentObject(personalisedData)
+                            .environmentObject(navigationModal)
                     }
                 }
                 
                 VStack {
-                    AppTitleBar(appWindowModal: appWindowModal, toolbarHeight: geometry.safeAreaInsets.top, rootPageChanged: { currentRootPage in
+                    AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top, rootPageChanged: { currentRootPage in
                         self.navigationModal.currentRootStack = currentRootPage
                     })
+                    .environmentObject(appWindowModal)
+                    .environmentObject(searchModal)
                     Spacer()
-                    PlaybackView(appWindowModal: appWindowModal)
+                    PlaybackView()
+                        .environmentObject(appWindowModal)
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
                 }
@@ -50,11 +55,8 @@ struct ContentView: View {
             }
             .onAppear {
                 Task {
-                    _ = await self.mkModal.authorise()
-                    
-                    self.authWorkerView = AuthWorker()
-                    authWorkerView?.presentAuthView() { userToken in
-                        mkModal.authenticateWithToken(userToken: userToken)
+                    self.authWorker.presentAuthView() { userToken in
+                        self.mkModal.authenticateWithToken(userToken: userToken)
                         CiderPlayback.shared.setUserToken(userToken: userToken)
                         CiderPlayback.shared.start()
                         
@@ -73,6 +75,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(authWorker: AuthWorker(mkModal: MKModal(), appWindowModal: AppWindowModal()))
     }
 }

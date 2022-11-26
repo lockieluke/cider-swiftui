@@ -8,7 +8,7 @@ import InjectHotReload
 struct SearchBar: View {
     
     @ObservedObject private var iO = Inject.observer
-    @ObservedObject public var searchModal: SearchModal
+    @EnvironmentObject private var searchModal: SearchModal
     
     @FocusState private var isFocused: Bool
     
@@ -43,6 +43,7 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(searchModal: .shared)
+        SearchBar()
+            .environmentObject(SearchModal())
     }
 }

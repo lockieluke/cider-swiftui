@@ -8,17 +8,17 @@ import StoreKit
 
 class MKModal : ObservableObject {
     
-    public static let shared = MKModal()
-    
     @Published public var isAuthorised = false
     @Published public var amAuthError: Error?
     @Published public var hasDeveloperToken = false
     
+    private let logger = Logger(label: "MusicKit Wrapper")
+    
+    
     public let AM_API = AMAPI()
     
-    init() {}
-    
     func authorise() async -> String {
+        self.logger.info("Fetching MusicKit Developer Token")
         return await withCheckedContinuation { continuation in
             self.AM_API.requestSKAuthorisation { skStatus in
                 if skStatus != .authorized {
@@ -29,6 +29,7 @@ class MKModal : ObservableObject {
                     DispatchQueue.main.async {
                         self.hasDeveloperToken = true
                         CiderPlayback.shared.setDeveloperToken(developerToken: developerToken)
+                        self.logger.success("Successfully fetched MusicKit Developer Token", displayTick: true)
                         continuation.resume(returning: developerToken)
                     }
                     self.AM_API.requestMKAuthorisation { mkStatus in

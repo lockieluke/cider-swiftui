@@ -8,7 +8,7 @@ import InjectHotReload
 struct PlaybackBar: View {
     
     @ObservedObject private var iO = Inject.observer
-    @ObservedObject private var appWindowModal = AppWindowModal.shared
+    @EnvironmentObject private var appWindowModal: AppWindowModal
     
     var body: some View {
         ZStack {
@@ -24,5 +24,6 @@ struct PlaybackBar: View {
 struct PlaybackBar_Previews: PreviewProvider {
     static var previews: some View {
         PlaybackBar()
+            .environmentObject(AppWindowModal())
     }
 }
