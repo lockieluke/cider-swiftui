@@ -10,6 +10,7 @@ struct RecommendationItemPresentable: View {
     
     @ObservedObject private var iO = Inject.observer
     @EnvironmentObject private var appWindowModal: AppWindowModal
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var recommendation: MusicItem
     
@@ -66,11 +67,11 @@ struct RecommendationItemPresentable: View {
                                         switch recommendation.type {
                                             
                                         case .Album:
-                                            await CiderPlayback.shared.setQueue(album: recommendation.id)
+                                            await self.ciderPlayback.setQueue(album: recommendation.id)
                                             break
                                             
                                         case .Playlist:
-                                            await CiderPlayback.shared.setQueue(playlist: recommendation.id)
+                                            await self.ciderPlayback.setQueue(playlist: recommendation.id)
                                             break
                                             
                                         default:
@@ -78,7 +79,7 @@ struct RecommendationItemPresentable: View {
                                             
                                         }
                                         
-                                        await CiderPlayback.shared.play()
+                                        await self.ciderPlayback.play()
                                     }
                                 }
                             }

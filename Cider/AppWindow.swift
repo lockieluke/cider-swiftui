@@ -11,7 +11,8 @@ class AppWindow {
     private let mainWindow: NSWindow
     private let windowDelegate: AppWindowDelegate
     private let appWindowModal = AppWindowModal()
-    private let mkModal = MKModal()
+    private let mkModal: MKModal
+    let ciderPlayback = CiderPlayback()
     private let authWorker: AuthWorker
     private let appMenu: AppMenu
     
@@ -31,11 +32,13 @@ class AppWindow {
         let activeScreen = NSScreen.activeScreen
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
-        let authWorker = AuthWorker(mkModal: self.mkModal, appWindowModal: self.appWindowModal)
+        let mkModal = MKModal(ciderPlayback: self.ciderPlayback)
+        let authWorker = AuthWorker(mkModal: mkModal, appWindowModal: self.appWindowModal)
         
         let contentView = ContentView(authWorker: authWorker)
             .environmentObject(self.appWindowModal)
-            .environmentObject(self.mkModal)
+            .environmentObject(mkModal)
+            .environmentObject(self.ciderPlayback)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         window.contentViewController = NSHostingController(rootView: contentView)
         window.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
@@ -61,13 +64,14 @@ class AppWindow {
         window.isReleasedWhenClosed = false
         window.center()
         
-        let appMenu = AppMenu(window, mkModal: self.mkModal, authWorker: authWorker)
+        let appMenu = AppMenu(window, mkModal: mkModal, authWorker: authWorker)
         appMenu.loadMenus()
 
         self.mainWindow = window
         self.appWindowModal.nsWindow = window
         self.authWorker = authWorker
         self.appMenu = appMenu
+        self.mkModal = mkModal
     }
     
     func show() {

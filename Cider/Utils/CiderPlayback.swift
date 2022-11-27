@@ -5,9 +5,7 @@
 import Foundation
 import Starscream
 
-class CiderPlayback : WebSocketDelegate {
-    
-    static let shared = CiderPlayback()
+class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     private let logger: Logger
     private let proc: Process

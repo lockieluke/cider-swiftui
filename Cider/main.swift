@@ -10,7 +10,6 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var appWindow: AppWindow!
     private var appMenu: AppMenu!
-    private let ciderPlayback = CiderPlayback.shared
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.appWindow = AppWindow()
@@ -18,9 +17,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         // might be useful for cleaning up child processes when process gets killed
         let terminatedCallback = { exitCode in
             Logger.shared.info("Cider is exiting")
-            DispatchQueue.main.async {
-                CiderPlayback.shared.shutdownSync()
-            }
+            // does not work
+//            DispatchQueue.main.async {
+//                self.appWindow.ciderPlayback.shutdownSync()
+//            }
         } as (@convention(c) (Int32) -> Void)?
         signal(SIGTERM, terminatedCallback)
         signal(SIGINT, terminatedCallback)
@@ -39,7 +39,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ notification: Notification) {
-        self.ciderPlayback.shutdownSync()
+        self.appWindow.ciderPlayback.shutdownSync()
     }
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

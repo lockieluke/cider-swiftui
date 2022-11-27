@@ -14,6 +14,7 @@ struct HomeView: View {
     
     @EnvironmentObject private var personalisedData: PersonalisedData
     @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
         VStack {
@@ -23,6 +24,7 @@ struct HomeView: View {
                         ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
                             MediaShowcaseRow(musicRecommendation.title, recommendationSection: musicRecommendation)
                                 .environmentObject(appWindowModal)
+                                .environmentObject(ciderPlayback)
                         }
                     }
                     .padding(.vertical, 10)
@@ -50,6 +52,6 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
             .environmentObject(AppWindowModal())
-            .environmentObject(MKModal())
+            .environmentObject(MKModal(ciderPlayback: CiderPlayback()))
     }
 }

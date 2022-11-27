@@ -10,6 +10,7 @@ struct MediaShowcaseRow: View {
     @ObservedObject private var iO = Inject.observer
     
     @EnvironmentObject private var appWindowModal: AppWindowModal
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     private let rowTitle: String?
     private let recommendationSection: MusicRecommendationSection?
@@ -32,6 +33,7 @@ struct MediaShowcaseRow: View {
                         ForEach(recommendations, id: \.title) { recommendation in
                             RecommendationItemPresentable(recommendation: recommendation)
                                 .environmentObject(appWindowModal)
+                                .environmentObject(ciderPlayback)
                         }
                     }
                 }
