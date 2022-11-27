@@ -23,18 +23,12 @@ struct ContentView: View {
                 VisualEffectBackground()
                     .opacity(0.98)
                 
-                VStack {
-                    if self.mkModal.isAuthorised {
-                        HomeView()
-                            .padding(.top, 40)
-                            .padding(.bottom, 100)
-                            .environmentObject(appWindowModal)
-                            .environmentObject(mkModal)
-                            .environmentObject(personalisedData)
-                            .environmentObject(navigationModal)
-                            .environmentObject(ciderPlayback)
-                    }
-                }
+                NavigationContainer()
+                    .environmentObject(appWindowModal)
+                    .environmentObject(mkModal)
+                    .environmentObject(personalisedData)
+                    .environmentObject(navigationModal)
+                    .environmentObject(ciderPlayback)
                 
                 VStack {
                     AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top, rootPageChanged: { currentRootPage in
