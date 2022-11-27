@@ -38,8 +38,9 @@ struct RecommendationItemPresentable: View {
                 .scaledToFit()
                 .frame(width: relativeSize, height: relativeSize)
                 .cornerRadius(5)
-                .brightness(isHovering ? (isClicked ? -0.15 : -0.1) : 0)
+                .brightness(isHovering ? (self.isClicked ? -0.15 : -0.1) : 0)
                 .animation(.easeIn(duration: 0.1), value: isHovering)
+                .animation(.easeIn(duration: 0.1), value: isClicked)
                 .overlay {
                     if isHovering {
                         HStack {
@@ -98,9 +99,9 @@ struct RecommendationItemPresentable: View {
                 .onTapGesture {
                     // TODO: Open separate page for album
                 }
-                .gesture(DragGesture(minimumDistance: 0).onChanged({ _ in
+                .modifier(PressActions(onPress: {
                     self.isClicked = true
-                }).onEnded({_ in
+                }, onRelease: {
                     self.isClicked = false
                 }))
             Text("\(recommendation.title)")
