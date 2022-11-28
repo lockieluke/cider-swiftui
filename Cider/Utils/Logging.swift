@@ -6,8 +6,17 @@ import Foundation
 import Darwin
 import RainbowSwift
 
+enum SharedLoggers {
+    
+    case UIInteraction
+    
+}
+
 class Logger {
     
+    static let sharedLoggers: Dictionary<SharedLoggers, Logger> = [
+        .UIInteraction: Logger(label: "UIInteraction")
+    ]
     static let shared = Logger(label: "Shared")
     private let label: String
     
