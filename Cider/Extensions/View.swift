@@ -123,6 +123,45 @@ struct MouseModifier: ViewModifier {
     }
 }
 
+/// An animatable modifier that is used for observing animations for a given animatable value.
+struct AnimationCompletionObserverModifier<Value>: AnimatableModifier where Value: VectorArithmetic {
+
+    /// While animating, SwiftUI changes the old input value to the new target value using this property. This value is set to the old value until the animation completes.
+    var animatableData: Value {
+        didSet {
+            notifyCompletionIfFinished()
+        }
+    }
+
+    /// The target value for which we're observing. This value is directly set once the animation starts. During animation, `animatableData` will hold the oldValue and is only updated to the target value once the animation completes.
+    private var targetValue: Value
+
+    /// The completion callback which is called once the animation completes.
+    private var completion: () -> Void
+
+    init(observedValue: Value, completion: @escaping () -> Void) {
+        self.completion = completion
+        self.animatableData = observedValue
+        targetValue = observedValue
+    }
+
+    /// Verifies whether the current animation is finished and calls the completion callback if true.
+    private func notifyCompletionIfFinished() {
+        guard animatableData == targetValue else { return }
+
+        /// Dispatching is needed to take the next runloop for the completion callback.
+        /// This prevents errors like "Modifying state during view update, this will cause undefined behavior."
+        DispatchQueue.main.async {
+            self.completion()
+        }
+    }
+
+    func body(content: Content) -> some View {
+        /// We're not really modifying the view so we can directly return the original input value.
+        return content
+    }
+}
+
 // To make that easier to use, I recommend wrapping
 // it in a `View` extension, like this:
 extension View {
@@ -159,23 +198,39 @@ extension View {
         AnyView(self)
     }
     
+    @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
+        if hidden {
+            if !remove {
+                self.hidden()
+            }
+        } else {
+            self
+        }
+    }
+    
+    func onAnimationCompleted<Value: VectorArithmetic>(for value: Value, completion: @escaping () -> Void) -> ModifiedContent<Self, AnimationCompletionObserverModifier<Value>> {
+        return modifier(AnimationCompletionObserverModifier(observedValue: value, completion: completion))
+    }
+
 }
 
 struct PressActions: ViewModifier {
-    var onPress: () -> Void
-    var onRelease: () -> Void
+    
+    var onEvent: ((_ isPressed: Bool) -> Void)?
+    var onPress: (() -> Void)?
+    var onRelease: (() -> Void)?
     
     func body(content: Content) -> some View {
         content
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged({ _ in
-                        onPress()
+                        onPress?()
                     })
                     .onEnded({ _ in
-                        onRelease()
+                        onRelease?()
+                        onEvent?(false)
                     })
             )
     }
-    
 }
