@@ -226,6 +226,7 @@ struct PressActions: ViewModifier {
                 DragGesture(minimumDistance: 0)
                     .onChanged({ _ in
                         onPress?()
+                        onEvent?(true)
                     })
                     .onEnded({ _ in
                         onRelease?()
