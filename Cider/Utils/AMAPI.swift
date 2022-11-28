@@ -21,7 +21,10 @@ class AMAPI {
     init() {
         self.logger = Logger(label: "Apple Music API")
         self.amNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.music.apple.com/v1")!)
-        self.ciderNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.cider.sh/v1")!, defaultHeaders: ["User-Agent": "Cider SwiftUI"])
+        self.ciderNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.cider.sh/v1")!, defaultHeaders: [
+            "User-Agent": "Cider;?client=swiftui&env=dev&platform=darwin",
+            "Referer": "localhost"
+        ])
     }
     
     func requestSKAuthorisation(completion: @escaping (_ status: SKCloudServiceAuthorizationStatus) -> Void) {
@@ -42,13 +45,17 @@ class AMAPI {
         var amToken: String!
         do {
             let json = try await ciderNetworkingClient.requestJSON("/")
-            amToken = json["token"].stringValue
             
-            self.AM_TOKEN = amToken
+            if let token = json["token"].string {
+                amToken = token
+            } else {
+                self.logger.error("MusicKit Developer Token could not be fetched", displayCross: true)
+            }
         } catch {
             self.logger.error(error.localizedDescription)
         }
         
+        self.AM_TOKEN = amToken
         return amToken
     }
     
