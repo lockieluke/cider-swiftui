@@ -749,6 +749,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA5BC30A3E396CFF27A565B4 /* Pods-Cider.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Cider/CiderDebug.entitlements;
@@ -787,6 +788,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B3C31CEA2AB409FB87D85687 /* Pods-Cider.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Cider/Cider.entitlements;
@@ -825,6 +827,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8C2C2A2AEA0FC0C88E42E59F /* Pods-CiderPlaybackAgent.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
@@ -844,6 +847,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CF52258159134FE837BB1C4 /* Pods-CiderPlaybackAgent.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
