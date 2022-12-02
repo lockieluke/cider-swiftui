@@ -22,10 +22,12 @@ struct HomeView: View {
                 ScrollView([.vertical]) {
                     VStack {
                         ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
-                            MediaShowcaseRow(musicRecommendation.title, recommendationSection: musicRecommendation)
+                            MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
                                 .environmentObject(appWindowModal)
                                 .environmentObject(ciderPlayback)
+                                .environmentObject(navigationModal)
                         }
+                        .isHidden(navigationModal.isInDetailedView)
                     }
                     .padding(.vertical, 10)
                 }

@@ -16,18 +16,24 @@ struct NavigationContainer: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
-        VStack {
+        ZStack {
             if self.mkModal.isAuthorised {
                 HomeView()
-                    .padding(.top, 40)
-                    .padding(.bottom, 100)
                     .environmentObject(appWindowModal)
                     .environmentObject(mkModal)
                     .environmentObject(personalisedData)
                     .environmentObject(navigationModal)
                     .environmentObject(ciderPlayback)
+                
+                if navigationModal.isInDetailedView {
+                    DetailedView()
+                        .environmentObject(appWindowModal)
+                        .environmentObject(navigationModal)
+                }
             }
         }
+        .padding(.top, 40)
+        .padding(.bottom, 100)
         .enableInjection()
     }
 }

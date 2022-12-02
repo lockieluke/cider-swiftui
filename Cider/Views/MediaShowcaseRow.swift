@@ -11,14 +11,10 @@ struct MediaShowcaseRow: View {
     
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
-    private let rowTitle: String?
-    private let recommendationSection: MusicRecommendationSection?
-    
-    init(_ rowHeading: String? = nil, recommendationSection: MusicRecommendationSection? = nil) {
-        self.rowTitle = rowHeading
-        self.recommendationSection = recommendationSection
-    }
+    var rowTitle: String?
+    var recommendationSection: MusicRecommendationSection?
     
     var body: some View {
         VStack {
@@ -34,6 +30,7 @@ struct MediaShowcaseRow: View {
                             RecommendationItemPresentable(recommendation: recommendation)
                                 .environmentObject(appWindowModal)
                                 .environmentObject(ciderPlayback)
+                                .environmentObject(navigationModal)
                         }
                     }
                 }

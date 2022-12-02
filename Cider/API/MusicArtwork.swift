@@ -9,12 +9,20 @@ struct MusicArtwork {
     
     let width: Int
     let height: Int
-    let url: String
+    let rawUrl: String
     
     init(data: JSON) {
         self.width = data["width"].intValue
         self.height = data["height"].intValue
-        self.url = data["url"].stringValue
+        self.rawUrl = data["url"].stringValue
+    }
+    
+    func getUrl(_ dimension: CGSize) -> URL {
+        return URL(string: self.rawUrl.replacingOccurrences(of: "{w}", with: dimension.width.formatted()).replacingOccurrences(of: "{h}", with: dimension.height.formatted()))!
+    }
+    
+    func getUrl(width: Int, height: Int) -> URL {
+        return self.getUrl(CGSize(width: width, height: height))
     }
     
 }

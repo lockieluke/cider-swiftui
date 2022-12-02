@@ -3,6 +3,7 @@
 //  
 
 import Foundation
+import SwiftUI
 
 enum RootNavigationType : String {
     
@@ -12,8 +13,34 @@ enum RootNavigationType : String {
     
 }
 
+struct DetailedViewParams {
+    
+    let mediaItem: MusicItem
+    let geometryMatching: Namespace.ID
+    let originalSize: CGSize
+    
+}
+
 class NavigationModal : ObservableObject {
     
-    @Published var currentRootStack: RootNavigationType = .Home
+    @Published var currentRootStack: RootNavigationType = .Home {
+        didSet {
+            self.isInDetailedView = false
+        }
+    }
+    @Published var detailedViewParams: DetailedViewParams? = nil {
+        didSet {
+            if detailedViewParams != nil {
+                self.isInDetailedView = true
+            }
+        }
+    }
+    @Published var isInDetailedView: Bool = false {
+        didSet {
+            if !isInDetailedView {
+                detailedViewParams = nil
+            }
+        }
+    }
     
 }

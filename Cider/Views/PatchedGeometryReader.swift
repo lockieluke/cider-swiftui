@@ -1,0 +1,47 @@
+//
+//  Copyright © 2022 Cider Collective. All rights reserved.
+//  
+
+import SwiftUI
+
+struct PatchedGeometryReaderSize: PreferenceKey {
+    
+    static var defaultValue = CGSize()
+    
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+    
+}
+
+struct PatchedGeometryProxy {
+    
+    var size: CGSize = .zero
+    
+}
+
+struct PatchedGeometryReader<Content: View>: View {
+    
+    @ViewBuilder var content: (PatchedGeometryProxy) -> Content
+    
+    @State private var geometryProxy = PatchedGeometryProxy()
+    
+    init(@ViewBuilder content: @escaping (PatchedGeometryProxy) -> Content) {
+        self.content = content
+    }
+    
+    var body: some View {
+        content(self.geometryProxy)
+            .overlay {
+                GeometryReader { geometry in
+                    Color.clear
+                        .preference(key: PatchedGeometryReaderSize.self, value: geometry.size)
+                }
+            }
+            .onPreferenceChange(PatchedGeometryReaderSize.self) { newSize in
+                DispatchQueue.main.async {
+                    self.geometryProxy.size = newSize
+                }
+            }
+    }
+}
