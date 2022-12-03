@@ -90,7 +90,7 @@ struct SegmentedControl: View {
                     .padding([.horizontal, .vertical], -3)
                 
                 GeometryReader { geometry in
-                    EmptyView()
+                    Color.clear
                         .onChange(of: geometry.size) { newSize in
                             self.segmentedSize = newSize
                         }
