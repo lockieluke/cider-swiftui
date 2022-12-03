@@ -40,10 +40,8 @@ struct ActionButton: View {
             .onTapGesture {
                 onClick?()
             }
-            .gesture(DragGesture(minimumDistance: 0).onChanged({_ in
-                self.isClicked = true
-            }).onEnded({_ in
-                self.isClicked = false
+            .modifier(PressActions(onEvent: { isPressed in
+                self.isClicked = isPressed
             }))
             .onHover { isHovered in
                 self.isHovered = isHovered
