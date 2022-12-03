@@ -4,10 +4,14 @@
 
 import Foundation
 
-enum MediaType : String {
+enum MediaType: String {
     
 case Playlist = "playlists",
 Album = "albums",
 AnyMedia = "any"
     
+}
+
+enum PlaylistType: String {
+    case PersonalMix = "personal-mix"
 }

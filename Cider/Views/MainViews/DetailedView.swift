@@ -94,19 +94,23 @@ struct DetailedView: View {
                                 HStack {
                                     Text("\(mediaItem.title)")
                                         .font(.system(size: 18, weight: .bold))
-                                    Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: mediaItem.artwork.bgColour))
-                                        .font(.system(size: 18))
-                                        .toolTip("Playlist curated by Apple Music")
-                                        .modifier(SimpleHoverModifier())
+                                    if mediaItem.playlistType == .PersonalMix {
+                                        Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: mediaItem.artwork.bgColour))
+                                            .font(.system(size: 18))
+                                            .toolTip("Playlist curated by Apple Music")
+                                            .modifier(SimpleHoverModifier())
+                                    }
                                 }
                                 Text("\(mediaItem.curatorName)")
                                     .foregroundColor(.gray)
                                 
-                                Text("\(mediaItem.description)")
-                                    .frame(width: size.width)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.top, 2)
-                                    .frame(maxWidth: 150)
+                                if let description = mediaItem.description {
+                                    Text("\(description)")
+                                        .frame(width: size.width)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.top, 2)
+                                        .frame(maxWidth: 150)
+                                }
                             }
                             .isHidden(!animationFinished)
                             .transition(.move(edge: .bottom))
