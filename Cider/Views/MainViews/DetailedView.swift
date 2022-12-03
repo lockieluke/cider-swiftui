@@ -90,7 +90,7 @@ struct DetailedView: View {
                             .padding(.vertical, 10)
                         
                         if descriptionsShouldLoadIn {
-                            Group {
+                            VStack {
                                 HStack {
                                     Text("\(reflectedMusicItem.title)")
                                         .font(.system(size: 18, weight: .bold))
@@ -113,6 +113,7 @@ struct DetailedView: View {
                                 
                                 playButton
                             }
+                            .padding(.vertical)
                             .isHidden(!animationFinished)
                             .transition(.move(edge: .bottom).animation(.interactiveSpring()))
                         }
