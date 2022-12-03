@@ -14,6 +14,7 @@ struct DetailedView: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var mkModal: MKModal
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     @State private var size: CGSize = .zero
     @State private var animationFinished = false
@@ -25,19 +26,6 @@ struct DetailedView: View {
     
     func calculateRelativeSize() {
         self.size = CGSize(width: appWindowModal.windowSize.width * 0.03, height: appWindowModal.windowSize.height * 0.03)
-    }
-    
-    var playButton: some View {
-        Button {
-            
-        } label: {
-            Image(systemName: "play.fill")
-            Text("Play")
-        }
-        .buttonStyle(.borderless)
-        .frame(width: 65, height: 25)
-        .background(RoundedRectangle(cornerRadius: 20).fill(Color.pink))
-        .modifier(SimpleHoverModifier())
     }
     
     var addToLibrary: some View {
@@ -128,7 +116,14 @@ struct DetailedView: View {
                                 }
                                 
                                 HStack {
-                                    playButton
+                                    MediaActionButton(icon: .Play) {
+                                        print(self.reflectedMusicItem.type)
+                                        Task {
+                                            await self.ciderPlayback.setQueue(id: self.reflectedMusicItem.id, type: self.reflectedMusicItem.type)
+                                            await self.ciderPlayback.play()
+                                        }
+                                    }
+                                    MediaActionButton(icon: .Shuffle)
                                     addToLibrary
                                 }
                             }

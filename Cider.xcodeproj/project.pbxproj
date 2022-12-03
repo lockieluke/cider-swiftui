@@ -42,6 +42,7 @@
 		B77AACF2293B871700F8E1E2 /* MediaTrackRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF1293B871700F8E1E2 /* MediaTrackRepresentable.swift */; };
 		B77AACF4293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF3293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift */; };
 		B77AACF6293B93C200F8E1E2 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF5293B93C200F8E1E2 /* TimeInterval.swift */; };
+		B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */; };
 		B798562929285218003CA787 /* WKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562829285218003CA787 /* WKWebView.swift */; };
 		B798562B292ADE13003CA787 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562A292ADE13003CA787 /* String.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
@@ -142,6 +143,7 @@
 		B77AACF1293B871700F8E1E2 /* MediaTrackRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTrackRepresentable.swift; sourceTree = "<group>"; };
 		B77AACF3293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentScrollbarsModifier.swift; sourceTree = "<group>"; };
 		B77AACF5293B93C200F8E1E2 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaActionButton.swift; sourceTree = "<group>"; };
 		B798561E29259D85003CA787 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B79856202925A3C3003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B79856222925A453003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,6 +302,7 @@
 				B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */,
 				B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */,
 				B77AACF1293B871700F8E1E2 /* MediaTrackRepresentable.swift */,
+				B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */,
 				B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */,
 				B75219AC291836B5005CF8F0 /* MusicItem.swift in Sources */,
+				B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */,
 				B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */,
 				B725013E28C2637F00992F57 /* RecommendationItemPresentable.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,

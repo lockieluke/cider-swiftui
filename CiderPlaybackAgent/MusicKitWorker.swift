@@ -64,6 +64,11 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.setQueue({playlist: playlistId})", arguments: ["playlistId": playlistID], contentWorld: .page)
     }
     
+    func setQueueWithSongID(songID: String) async {
+        _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.setQueue({song: songId})", arguments: ["songId": songID], contentWorld: .page)
+    }
+
+    
     func play() async {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.play()", arguments: [:], contentWorld: .page)
     }

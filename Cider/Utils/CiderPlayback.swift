@@ -92,6 +92,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         await self.setQueue(requestBody: ["playlist-id": playlist])
     }
     
+    func setQueue(id: String, type: MediaType) async {
+        await self.setQueue(requestBody: ["\(type.rawValue)-id": id])
+    }
+    
     func setQueue(requestBody: [String : Any]? = nil) async {
         do {
             _ = try await self.wsCommClient.request("/set-queue", body: requestBody)

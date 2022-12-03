@@ -63,8 +63,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 Task {
                     if let albumId = json?["album-id"].string {
                         await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
-                    } else if let playlistId = json?["playlist-id"].string {
+                    } else if let playlistId = json?["playlists-id"].string {
                         await self.musicKitWorker?.setQueueWithPlaylistID(playlistID: playlistId)
+                    } else if let songId = json?["songs-id"].string {
+                        await self.musicKitWorker?.setQueueWithSongID(songID: songId)
                     }
                     done()
                 }

@@ -6,9 +6,10 @@ import Foundation
 
 enum MediaType: String {
     
-case Playlist = "playlists",
-Album = "albums",
-AnyMedia = "any"
+    case Playlist = "playlists",
+         Album = "albums",
+         AnyMedia = "any",
+         Song = "songs"
     
 }
 

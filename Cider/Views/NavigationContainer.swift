@@ -30,6 +30,7 @@ struct NavigationContainer: View {
                         .environmentObject(appWindowModal)
                         .environmentObject(mkModal)
                         .environmentObject(navigationModal)
+                        .environmentObject(ciderPlayback)
                 }
             }
         }
