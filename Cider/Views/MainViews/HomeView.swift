@@ -19,15 +19,15 @@ struct HomeView: View {
     var body: some View {
         VStack {
             if mkModal.isAuthorised && self.personalisedData.recommendationSections != nil {
-                ScrollView([.vertical]) {
+                ScrollView(.vertical) {
                     VStack {
                         ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
                             MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
                                 .environmentObject(appWindowModal)
                                 .environmentObject(ciderPlayback)
                                 .environmentObject(navigationModal)
+                                .isHidden(navigationModal.isInDetailedView)
                         }
-                        .isHidden(navigationModal.isInDetailedView)
                     }
                     .padding(.vertical, 10)
                 }
@@ -35,6 +35,7 @@ struct HomeView: View {
                     scrollView.autohidesScrollers = true
                     scrollView.scrollerStyle = .overlay
                 }
+                .allowsHitTesting(!navigationModal.isInDetailedView)
             } else {
                 ProgressView()
                     .progressViewStyle(.circular)

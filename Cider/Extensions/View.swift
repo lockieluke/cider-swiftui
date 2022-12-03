@@ -216,6 +216,10 @@ extension View {
         return self.modifier(MultiColourGlow(gradientColours: gradientColours))
     }
     
+    func disableScrolling(disabled: Bool) -> some View {
+        modifier(DisableScrollingModifier(scrollingDisabled: disabled))
+    }
+    
     func onAnimationCompleted<Value: VectorArithmetic>(for value: Value, completion: @escaping () -> Void) -> ModifiedContent<Self, AnimationCompletionObserverModifier<Value>> {
         return modifier(AnimationCompletionObserverModifier(observedValue: value, completion: completion))
     }
