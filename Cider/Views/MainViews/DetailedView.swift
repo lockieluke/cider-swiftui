@@ -44,9 +44,9 @@ struct DetailedView: View {
            let animationNamespace = navigationModal.detailedViewParams?.geometryMatching,
            let originalSize = navigationModal.detailedViewParams?.originalSize
         {
-            HStack {
-                VStack {
-                    ResponsiveLayoutReader { windowProps in
+            ResponsiveLayoutReader { windowProps in
+                HStack(spacing: 0) {
+                    VStack {
                         let size = CGSize(width: windowProps.size.width * 0.33, height: windowProps.size.height * 0.33)
                         
                         // there's a slight delay before copying the state to reflectedMediaItem, use original mediaItem data to fetch the image
@@ -105,7 +105,6 @@ struct DetailedView: View {
                                 
                                 if let description = reflectedMusicItem.description {
                                     Text("\(description)")
-                                        .frame(width: size.width)
                                         .multilineTextAlignment(.center)
                                         .padding(.top, 2)
                                         .frame(maxWidth: 150)
@@ -117,21 +116,30 @@ struct DetailedView: View {
                             .transition(.move(edge: .bottom).animation(.interactiveSpring()))
                         }
                     }
-                    .environmentObject(appWindowModal)
+                    
+                    Spacer()
+                    
+                    ScrollView(.vertical) {
+                        LazyVStack {
+                            ForEach(reflectedMusicItem.tracks, id: \.id) { track in
+                                MediaTrackRepresentable(mediaItem: track)
+                            }
+                        }
+                        .padding(.vertical)
+                    }
+                    .transparentScrollbars()
+                    .frame(width: .infinity)
+                    .task {
+                        self.reflectedMusicItem.tracks = try! await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)
+                    }
+                    .onAppear {
+                        self.reflectedMusicItem = mediaItem
+                    }
                 }
-                .padding()
-                
-                Spacer()
-                
-                Color.clear.task {
-                    self.reflectedMusicItem.tracks = try! await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)
-                }
-                .onAppear {
-                    self.reflectedMusicItem = mediaItem
-                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.leading, 30)
             }
-            .padding(.horizontal, 30)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .environmentObject(appWindowModal)
             .onDisappear {
                 self.reflectedMusicItem.tracks = []
                 self.reflectedMusicItem = MusicItem(data: [])
