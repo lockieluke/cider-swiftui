@@ -111,7 +111,7 @@ struct DetailedView: View {
                                 if let description = reflectedMusicItem.description {
                                     Text("\(description)")
                                         .multilineTextAlignment(.center)
-                                        .padding(.top, 2)
+                                        .padding(.vertical, 2)
                                         .frame(maxWidth: 300)
                                 }
                                 
