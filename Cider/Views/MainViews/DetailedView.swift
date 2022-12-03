@@ -110,11 +110,11 @@ struct DetailedView: View {
                                         .padding(.top, 2)
                                         .frame(maxWidth: 150)
                                 }
+                                
+                                playButton
                             }
                             .isHidden(!animationFinished)
-                            .transition(.move(edge: .bottom))
-                            
-                            playButton
+                            .transition(.move(edge: .bottom).animation(.interactiveSpring()))
                         }
                     }
                     .environmentObject(appWindowModal)
