@@ -40,6 +40,22 @@ struct DetailedView: View {
         .modifier(SimpleHoverModifier())
     }
     
+    var addToLibrary: some View {
+        Button {
+            
+        } label: {
+            HStack {
+                Image(systemName: "plus")
+                Text("Add to Library")
+            }
+            .padding(.horizontal)
+        }
+        .buttonStyle(.borderless)
+        .frame(height: 25)
+        .background(RoundedRectangle(cornerRadius: 20).fill(Color("SecondaryColour").opacity(0.5)))
+        .modifier(SimpleHoverModifier())
+    }
+    
     var body: some View {
         if let mediaItem = navigationModal.detailedViewParams?.mediaItem,
            let animationNamespace = navigationModal.detailedViewParams?.geometryMatching,
@@ -111,7 +127,10 @@ struct DetailedView: View {
                                         .frame(maxWidth: 300)
                                 }
                                 
-                                playButton
+                                HStack {
+                                    playButton
+                                    addToLibrary
+                                }
                             }
                             .padding(.vertical)
                             .isHidden(!animationFinished)
