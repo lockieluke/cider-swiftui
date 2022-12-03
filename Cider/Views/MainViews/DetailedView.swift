@@ -64,8 +64,14 @@ struct DetailedView: View {
                         
                         if descriptionsShouldLoadIn {
                             Group {
-                                Text("\(mediaItem.title)")
-                                    .font(.system(size: 18, weight: .bold))
+                                HStack {
+                                    Text("\(mediaItem.title)")
+                                        .font(.system(size: 18, weight: .bold))
+                                    Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: mediaItem.artwork.bgColour))
+                                        .font(.system(size: 18))
+                                        .toolTip("Playlist curated by Apple Music")
+                                        .modifier(SimpleHoverModifier())
+                                }
                                 Text("\(mediaItem.curatorName)")
                                     .foregroundColor(.gray)
                                 

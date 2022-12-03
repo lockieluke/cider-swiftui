@@ -34,6 +34,8 @@
 		B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */; };
 		B755C73228C817C000A46FB9 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755C73128C817C000A46FB9 /* Bundle.swift */; };
 		B77AACE3293AC40900F8E1E2 /* ResponsiveLayoutReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */; };
+		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
+		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; };
 		B798562929285218003CA787 /* WKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562829285218003CA787 /* WKWebView.swift */; };
 		B798562B292ADE13003CA787 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562A292ADE13003CA787 /* String.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
@@ -126,6 +128,8 @@
 		B755C72E28C7F00800A46FB9 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = CiderWebAuth/dist/index.js; sourceTree = "<group>"; };
 		B755C73128C817C000A46FB9 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveLayoutReader.swift; sourceTree = "<group>"; };
+		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
+		B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
 		B798561E29259D85003CA787 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B79856202925A3C3003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B79856222925A453003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +227,7 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
+				B77AACE4293ACC7600F8E1E2 /* ViewModifiers */,
 				B7F623F32915DB2100316F8E /* API */,
 				B706050B28BD8CB2002AD76C /* Info.plist */,
 				B7AAB6F828BABE57009AABEA /* Modals */,
@@ -280,8 +285,17 @@
 				B7C06F832932E1C5000C1192 /* NavigationContainer.swift */,
 				B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */,
 				B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */,
+				B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B77AACE4293ACC7600F8E1E2 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */,
+			);
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 		B7AAB6F728BA2DBF009AABEA /* Utils */ = {
@@ -607,6 +621,7 @@
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
 				B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */,
+				B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */,
 				B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */,
 				B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */,
 				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
@@ -618,6 +633,7 @@
 				B7ECB7C6290497B000B5DF11 /* ObservableHoveringObject.swift in Sources */,
 				B75219AE29187526005CF8F0 /* MusicArtwork.swift in Sources */,
 				B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */,
+				B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */,
 				B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */,
 				B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */,
 				B75219AC291836B5005CF8F0 /* MusicItem.swift in Sources */,
