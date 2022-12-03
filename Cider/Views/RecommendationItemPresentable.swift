@@ -11,35 +11,50 @@ struct RecommendationItemPresentable: View {
     @ObservedObject private var iO = Inject.observer
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     var recommendation: MusicItem
     
     private let sizeMultipler: CGFloat = 0.3
     private let minSize: CGFloat = 160
     private let maxSize: CGFloat = 190
-    @State private var relativeSize: CGFloat = 0
     
+    @State private var relativeSize = CGSize()
+    @State private var absXY = CGPoint()
     @State private var isHovering = false
     @State private var isHoveringPlay = false
-    @State private var isClicked = false
+    @State private var scaleClickingEffect = 1.0
+    @State private var isInDetailedView = false
+    
+    @Namespace private var cardAnimation
     
     func calculateRelativeSize(baseHeight: CGFloat) -> CGFloat {
         let newSize = baseHeight * sizeMultipler
         return newSize < minSize ? minSize : (newSize > maxSize ? maxSize : newSize)
     }
     
+    func getAppropriateSize(sizeMultiplier: CGFloat = 1) -> CGSize {
+        let size = self.calculateRelativeSize(baseHeight: appWindowModal.windowSize.height) * sizeMultiplier
+        return CGSize(width: size, height: size)
+    }
+    
+    func resizeCover(sizeMultiplier: CGFloat = 1) {
+        self.relativeSize = self.getAppropriateSize(sizeMultiplier: sizeMultiplier)
+    }
+    
     var body: some View {
         VStack {
-            WebImage(url: URL(string: recommendation.artwork.url.replacingOccurrences(of: "{w}", with: "200").replacingOccurrences(of: "{h}", with: "200")))
+            WebImage(url: recommendation.artwork.getUrl(width: 200, height: 200))
                 .resizable()
                 .placeholder {
                     ProgressView()
                 }
                 .scaledToFit()
-                .frame(width: relativeSize, height: relativeSize)
+                .frame(width: relativeSize.width, height: relativeSize.height)
                 .cornerRadius(5)
-                .brightness(isHovering ? (isClicked ? -0.15 : -0.1) : 0)
-                .animation(.easeIn(duration: 0.1), value: isHovering)
+                .matchedGeometryEffect(id: recommendation.id, in: self.cardAnimation)
+                .brightness(isHovering ? -0.1 : 0)
+                .animation(.easeIn(duration: 0.15), value: isHovering)
                 .overlay {
                     if isHovering {
                         HStack {
@@ -79,7 +94,7 @@ struct RecommendationItemPresentable: View {
                                             
                                         }
                                         
-                                        await self.ciderPlayback.play()
+//                                        await self.ciderPlayback.play()
                                     }
                                 }
                             }
@@ -91,26 +106,44 @@ struct RecommendationItemPresentable: View {
                     }
                 }
                 .onHover { isHovering in
-                    withAnimation(.easeIn(duration: 0.15)) {
-                        self.isHovering = isHovering
+                    self.isHovering = isHovering
+                }
+                .modifier(PressActions(onEvent: { isPressed in
+                    let newValue = isPressed ? 0.95 : 1
+                    if newValue != scaleClickingEffect {
+                        withAnimation(.spring()) {
+                            self.scaleClickingEffect = newValue
+                        }
+                    }
+                }))
+                .scaleEffect(scaleClickingEffect)
+                .onAnimationCompleted(for: scaleClickingEffect) {
+                    self.isInDetailedView = true
+                    withAnimation(.spring()) {
+                        self.navigationModal.detailedViewParams = DetailedViewParams(mediaItem: self.recommendation, geometryMatching: self.cardAnimation, originalSize: self.relativeSize)
                     }
                 }
-                .onTapGesture {
-                    // TODO: Open separate page for album
-                }
-                .gesture(DragGesture(minimumDistance: 0).onChanged({ _ in
-                    self.isClicked = true
-                }).onEnded({_ in
-                    self.isClicked = false
-                }))
+            
             Text("\(recommendation.title)")
         }
-        .frame(width: relativeSize, height: relativeSize)
+        .frame(width: relativeSize.width, height: relativeSize.height)
+        .background(GeometryReader { geometry in
+            Color.clear.onAppear {
+                self.absXY = geometry.frame(in: .global).origin
+            }
+        })
         .onChange(of: appWindowModal.windowSize) { newWindowSize in
-            self.relativeSize = self.calculateRelativeSize(baseHeight: newWindowSize.height)
+            if !self.isInDetailedView {
+                self.resizeCover()
+            }
+        }
+        .onChange(of: navigationModal.isInDetailedView) { newIsInDetailedView in
+            if !newIsInDetailedView {
+                self.isInDetailedView = isInDetailedView
+            }
         }
         .onAppear {
-            self.relativeSize = self.calculateRelativeSize(baseHeight: appWindowModal.windowSize.height)
+            self.resizeCover()
         }
         .padding()
         .enableInjection()

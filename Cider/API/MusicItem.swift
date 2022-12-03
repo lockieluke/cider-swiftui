@@ -9,6 +9,8 @@ struct MusicItem {
     
     let id: String
     let title: String
+    let curatorName: String
+    let description: String
     let type: MediaType
     let artwork: MusicArtwork
     
@@ -17,6 +19,8 @@ struct MusicItem {
         
         let attributes = data["attributes"]
         self.title = attributes["name"].stringValue
+        self.curatorName = attributes["curatorName"].stringValue
+        self.description = attributes["description"]["standard"].stringValue
         self.artwork = MusicArtwork(data: attributes["artwork"])
         self.type = MediaType(rawValue: data["type"].stringValue) ?? .AnyMedia
     }
