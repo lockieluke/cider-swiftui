@@ -104,9 +104,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    func play() async {
+    func play(shuffle: Bool = false) async {
         do {
-            _ = try await self.wsCommClient.request("/play")
+            _ = try await self.wsCommClient.request("/play", body: [
+                "shuffle": shuffle
+            ])
         } catch {
             self.logger.error("Play failed \(error)", displayCross: true)
         }

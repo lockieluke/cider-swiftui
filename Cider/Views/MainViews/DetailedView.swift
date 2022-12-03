@@ -44,6 +44,13 @@ struct DetailedView: View {
         .modifier(SimpleHoverModifier())
     }
     
+    func playSync(mediaItem: MusicItem, shuffle: Bool = false) {
+        Task {
+            await self.ciderPlayback.setQueue(id: self.reflectedMusicItem.id, type: self.reflectedMusicItem.type)
+            await self.ciderPlayback.play(shuffle: shuffle)
+        }
+    }
+    
     var body: some View {
         if let mediaItem = navigationModal.detailedViewParams?.mediaItem,
            let animationNamespace = navigationModal.detailedViewParams?.geometryMatching,
@@ -117,12 +124,11 @@ struct DetailedView: View {
                                 
                                 HStack {
                                     MediaActionButton(icon: .Play) {
-                                        Task {
-                                            await self.ciderPlayback.setQueue(id: self.reflectedMusicItem.id, type: self.reflectedMusicItem.type)
-                                            await self.ciderPlayback.play()
-                                        }
+                                        self.playSync(mediaItem: reflectedMusicItem)
                                     }
-                                    MediaActionButton(icon: .Shuffle)
+                                    MediaActionButton(icon: .Shuffle) {
+                                        self.playSync(mediaItem: reflectedMusicItem, shuffle: true)
+                                    }
                                     addToLibrary
                                 }
                             }

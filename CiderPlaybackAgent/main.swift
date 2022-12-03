@@ -74,6 +74,9 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 
             case "/play":
                 Task {
+                    if let shuffle = json?["shuffle"].bool {
+                        await self.musicKitWorker?.setShuffleMode(shuffle)
+                    }
                     await self.musicKitWorker?.play()
                     done()
                 }
