@@ -212,6 +212,10 @@ extension View {
         return self.overlay(TooltipView(tooltip: toolTip))
     }
     
+    func multicolourGlow(gradientColours: Gradient = Gradient(colors: [])) -> some View {
+        return self.modifier(MultiColourGlow(gradientColours: gradientColours))
+    }
+    
     func onAnimationCompleted<Value: VectorArithmetic>(for value: Value, completion: @escaping () -> Void) -> ModifiedContent<Self, AnimationCompletionObserverModifier<Value>> {
         return modifier(AnimationCompletionObserverModifier(observedValue: value, completion: completion))
     }

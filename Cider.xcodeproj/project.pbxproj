@@ -36,6 +36,7 @@
 		B77AACE3293AC40900F8E1E2 /* ResponsiveLayoutReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */; };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
 		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; };
+		B77AACEA293AD0F300F8E1E2 /* MultiColourGlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE9293AD0F300F8E1E2 /* MultiColourGlow.swift */; };
 		B798562929285218003CA787 /* WKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562829285218003CA787 /* WKWebView.swift */; };
 		B798562B292ADE13003CA787 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562A292ADE13003CA787 /* String.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
@@ -130,6 +131,7 @@
 		B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveLayoutReader.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
 		B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
+		B77AACE9293AD0F300F8E1E2 /* MultiColourGlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiColourGlow.swift; sourceTree = "<group>"; };
 		B798561E29259D85003CA787 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B79856202925A3C3003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B79856222925A453003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */,
+				B77AACE9293AD0F300F8E1E2 /* MultiColourGlow.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -633,6 +636,7 @@
 				B7ECB7C6290497B000B5DF11 /* ObservableHoveringObject.swift in Sources */,
 				B75219AE29187526005CF8F0 /* MusicArtwork.swift in Sources */,
 				B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */,
+				B77AACEA293AD0F300F8E1E2 /* MultiColourGlow.swift in Sources */,
 				B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */,
 				B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */,
 				B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */,

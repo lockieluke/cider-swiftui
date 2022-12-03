@@ -5,6 +5,7 @@
 import SwiftUI
 import InjectHotReload
 import SDWebImageSwiftUI
+import UIImageColors
 
 struct DetailedView: View {
     
@@ -16,6 +17,7 @@ struct DetailedView: View {
     @State private var size: CGSize = .zero
     @State private var animationFinished = false
     @State private var descriptionsShouldLoadIn = false
+    @State private var bgGlowGradientColours = Gradient(colors: [])
     
     func calculateRelativeSize() {
         self.size = CGSize(width: appWindowModal.windowSize.width * 0.03, height: appWindowModal.windowSize.height * 0.03)
@@ -32,11 +34,23 @@ struct DetailedView: View {
                         let size = CGSize(width: windowProps.size.width * 0.33, height: windowProps.size.height * 0.33)
                         
                         WebImage(url: mediaItem.artwork.getUrl(width: 600, height: 600))
+                            .onSuccess { image, data, cacheType in
+                                image.getColors(quality: .highest) { colours in
+                                    guard let colours = colours else { return }
+                                    self.bgGlowGradientColours = Gradient(colors: [Color(nsColor: colours.primary), Color(nsColor: colours.secondary), Color(nsColor: colours.detail), Color(nsColor: colours.background)])
+                                }
+                            }
                             .resizable()
                             .scaledToFit()
                             .cornerRadius(5)
                             .frame(width: size.width, height: size.height)
-                            .background(Rectangle().background(Color(nsColor: mediaItem.artwork.bgColour)).aspectRatio(contentMode: .fit).cornerRadius(5))
+                            .background(
+                                Rectangle()
+                                    .background(Color(nsColor: mediaItem.artwork.bgColour))
+                                    .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(5)
+                                    .multicolourGlow()
+                            )
                             .aspectRatio(1, contentMode: .fill)
                             .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
                             .onTapGesture {

@@ -15,6 +15,7 @@ target 'Cider' do
   pod 'SDWebImageSwiftUI'
   pod 'InjectHotReload'
   pod 'RainbowSwift'
+  pod 'UIImageColors'
 end
 
 target 'CiderPlaybackAgent' do

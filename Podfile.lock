@@ -11,6 +11,7 @@ PODS:
   - Starscream (4.0.4)
   - Swifter (1.5.0)
   - SwiftyJSON (4.3.0)
+  - UIImageColors (2.1.0)
 
 DEPENDENCIES:
   - ArgumentParserKit
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - Starscream (~> 4.0.0)
   - Swifter (from `https://github.com/ciderapp/swifter.git`, branch `stable`)
   - SwiftyJSON (~> 4.0)
+  - UIImageColors
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -32,6 +34,7 @@ SPEC REPOS:
     - SDWebImageSwiftUI
     - Starscream
     - SwiftyJSON
+    - UIImageColors
 
 EXTERNAL SOURCES:
   Swifter:
@@ -53,7 +56,8 @@ SPEC CHECKSUMS:
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   Swifter: aa3514bbb8df8980c118f7bb1b80f2da24e39c2b
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
 
-PODFILE CHECKSUM: 5c9b5635fc55da0460291a90ea49c8f998b8b5f1
+PODFILE CHECKSUM: ff73d4de4047732e8aa42ad4a2e792eae7586b21
 
 COCOAPODS: 1.11.3
