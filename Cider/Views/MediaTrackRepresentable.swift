@@ -20,7 +20,14 @@ struct MediaTrackRepresentable: View {
         ResponsiveLayoutReader { windowProp in
             HStack {
                 Group {
-                    Text("\(mediaItem.title)")
+                    HStack {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 14))
+                            .foregroundColor(isHovering ? .pink : .primary)
+                            .animation(.interactiveSpring(), value: isHovering)
+                        Text("\(mediaItem.title)")
+                            .padding(.horizontal)
+                    }
                     Spacer()
                     Text("\(mediaItem.duration.minuteSecond)")
                 }
