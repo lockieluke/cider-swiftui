@@ -15,18 +15,24 @@ enum SegmentedControlIcon : String {
     
 }
 
+struct SegmentedControlItemData {
+    
+    let title: String
+    let icon: SegmentedControlIcon
+    
+}
+
 // Stops working when hot reload is triggered
 struct SegmentedControl: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    var items: [String] = []
-    var icons: [SegmentedControlIcon] = []
+    var items: [SegmentedControlItemData] = []
     var segmentedItemChanged: ((_ currentSegmentedItem: String) -> Void)? = nil
     
     @State private var selectedItem: Int = 0 {
         didSet {
-            self.segmentedItemChanged?(items[selectedItem])
+            self.segmentedItemChanged?(items[selectedItem].title)
         }
     }
     @State private var hoveredItem: Int = -1
@@ -51,7 +57,7 @@ struct SegmentedControl: View {
             HStack {
                 ForEach(Array(items.enumerated()), id: \.offset) { index, item in
                     let isSelected = selectedItem == index
-                    SegmentedControlItem(item: item, icon: icons[index], isSelected: isSelected, selectedCB: {
+                    SegmentedControlItem(item: item.title, icon: items[index].icon, isSelected: isSelected, selectedCB: {
                         self.selectedItem = index
                         withAnimation(.spring().speed(1.30)) {
                             self.currentOffsetPosition = offsetPositions[index]

@@ -30,8 +30,10 @@ struct AppTitleBar: View {
                 }
             
             SegmentedControl(
-                items: ["Home", "Library"],
-                icons: [.Home, .Library],
+                items: [
+                    SegmentedControlItemData(title: "Home", icon: .Home),
+                    SegmentedControlItemData(title: "Library", icon: .Library)
+                ],
                 segmentedItemChanged: { currentSegmentedItem in
                     self.navigationModal.currentRootStack = RootNavigationType(rawValue: currentSegmentedItem) ?? .AnyView
                 }
