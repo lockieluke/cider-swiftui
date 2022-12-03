@@ -13,11 +13,14 @@ struct DetailedView: View {
     
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
+    @EnvironmentObject private var mkModal: MKModal
     
     @State private var size: CGSize = .zero
     @State private var animationFinished = false
     @State private var descriptionsShouldLoadIn = false
     @State private var bgGlowGradientColours = Gradient(colors: [])
+    // copy of the recommendation, this one isn't read only
+    @State private var reflectedMusicItem = MusicItem(data: [])
     
     func calculateRelativeSize() {
         self.size = CGSize(width: appWindowModal.windowSize.width * 0.03, height: appWindowModal.windowSize.height * 0.03)
@@ -46,6 +49,7 @@ struct DetailedView: View {
                     ResponsiveLayoutReader { windowProps in
                         let size = CGSize(width: windowProps.size.width * 0.33, height: windowProps.size.height * 0.33)
                         
+                        // there's a slight delay before copying the state to reflectedMediaItem, use original mediaItem data to fetch the image
                         WebImage(url: mediaItem.artwork.getUrl(width: 600, height: 600))
                             .onSuccess { image, data, cacheType in
                                 image.getColors(quality: .highest) { colours in
@@ -59,7 +63,7 @@ struct DetailedView: View {
                             .frame(width: size.width, height: size.height)
                             .background(
                                 Rectangle()
-                                    .background(Color(nsColor: mediaItem.artwork.bgColour))
+                                    .background(Color(nsColor: reflectedMusicItem.artwork.bgColour))
                                     .aspectRatio(contentMode: .fit)
                                     .cornerRadius(5)
                                     .multicolourGlow()
@@ -87,19 +91,19 @@ struct DetailedView: View {
                         if descriptionsShouldLoadIn {
                             Group {
                                 HStack {
-                                    Text("\(mediaItem.title)")
+                                    Text("\(reflectedMusicItem.title)")
                                         .font(.system(size: 18, weight: .bold))
-                                    if mediaItem.playlistType == .PersonalMix {
-                                        Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: mediaItem.artwork.bgColour))
+                                    if reflectedMusicItem.playlistType == .PersonalMix {
+                                        Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: reflectedMusicItem.artwork.bgColour))
                                             .font(.system(size: 18))
                                             .toolTip("Playlist curated by Apple Music")
                                             .modifier(SimpleHoverModifier())
                                     }
                                 }
-                                Text("\(mediaItem.curatorName)")
+                                Text("\(reflectedMusicItem.curatorName)")
                                     .foregroundColor(.gray)
                                 
-                                if let description = mediaItem.description {
+                                if let description = reflectedMusicItem.description {
                                     Text("\(description)")
                                         .frame(width: size.width)
                                         .multilineTextAlignment(.center)
@@ -118,9 +122,20 @@ struct DetailedView: View {
                 .padding()
                 
                 Spacer()
+                
+                Color.clear.task {
+                    self.reflectedMusicItem.tracks = try! await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)
+                }
+                .onAppear {
+                    self.reflectedMusicItem = mediaItem
+                }
             }
             .padding(.horizontal, 30)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onDisappear {
+                self.reflectedMusicItem.tracks = []
+                self.reflectedMusicItem = MusicItem(data: [])
+            }
             .enableInjection()
         }
     }

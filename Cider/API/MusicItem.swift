@@ -7,13 +7,11 @@ import SwiftyJSON
 
 struct MusicItem {
     
-    let id: String
-    let title: String
-    let curatorName: String
-    let description: String?
+    let id: String, title: String, curatorName: String, description: String?
     let type: MediaType
     let playlistType: PlaylistType?
     let artwork: MusicArtwork
+    var tracks: [MediaTrack] = []
     
     init(data: JSON) {
         self.id = data["id"].stringValue

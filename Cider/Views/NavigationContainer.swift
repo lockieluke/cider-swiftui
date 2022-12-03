@@ -28,6 +28,7 @@ struct NavigationContainer: View {
                 if navigationModal.isInDetailedView {
                     DetailedView()
                         .environmentObject(appWindowModal)
+                        .environmentObject(mkModal)
                         .environmentObject(navigationModal)
                 }
             }

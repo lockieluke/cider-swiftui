@@ -117,5 +117,18 @@ class AMAPI {
         return MusicRecommendationSections(datas: responseJson)
     }
     
+    func fetchTracks(id: String, type: MediaType) async throws -> [MediaTrack] {
+        var responseJson: JSON
+        do {
+            responseJson = try await amNetworkingClient.requestJSON("/catalog/\(STOREFRONT_ID!)/\(type.rawValue)/\(id)")
+        } catch {
+            throw AMNetworkingError.unableToFetchTracks(error.localizedDescription)
+        }
+        
+        let data = responseJson["data"].array?[0]
+        let tracks = data?["relationships"]["tracks"]["data"].arrayValue.map{ MediaTrack(data: $0) }
+        
+        return tracks ?? []
+    }
     
 }
