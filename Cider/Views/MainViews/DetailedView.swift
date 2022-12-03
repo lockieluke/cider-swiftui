@@ -93,6 +93,7 @@ struct DetailedView: View {
                                     .frame(width: size.width)
                                     .multilineTextAlignment(.center)
                                     .padding(.top, 2)
+                                    .frame(maxWidth: 150)
                             }
                             .isHidden(!animationFinished)
                             .transition(.move(edge: .bottom))
