@@ -17,9 +17,12 @@ struct MediaTrackRepresentable: View {
     var body: some View {
         ResponsiveLayoutReader { windowProp in
             HStack {
-                Text(mediaItem.title)
-                    .padding()
-                Spacer()
+                Group {
+                    Text("\(mediaItem.title)")
+                    Spacer()
+                    Text("\(mediaItem.duration.minuteSecond)")
+                }
+                .padding()
             }
             .background(
                 RoundedRectangle(cornerRadius: 5)
