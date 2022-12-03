@@ -31,10 +31,7 @@ struct HomeView: View {
                     }
                     .padding(.vertical, 10)
                 }
-                .introspectScrollView { scrollView in
-                    scrollView.autohidesScrollers = true
-                    scrollView.scrollerStyle = .overlay
-                }
+                .transparentScrollbars()
                 .allowsHitTesting(!navigationModal.isInDetailedView)
             } else {
                 ProgressView()
