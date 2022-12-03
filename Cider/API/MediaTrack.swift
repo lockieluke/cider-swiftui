@@ -8,10 +8,12 @@ import SwiftyJSON
 struct MediaTrack {
     
     let id: String, title: String
+    let type: MediaType
     let duration: TimeInterval
     
     init(data: JSON) {
         self.id = data["id"].stringValue
+        self.type = MediaType(rawValue: data["type"].stringValue) ?? .AnyMedia
         
         let attributes = data["attributes"]
         self.title = attributes["name"].stringValue

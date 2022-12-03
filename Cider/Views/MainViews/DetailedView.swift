@@ -117,7 +117,6 @@ struct DetailedView: View {
                                 
                                 HStack {
                                     MediaActionButton(icon: .Play) {
-                                        print(self.reflectedMusicItem.type)
                                         Task {
                                             await self.ciderPlayback.setQueue(id: self.reflectedMusicItem.id, type: self.reflectedMusicItem.type)
                                             await self.ciderPlayback.play()

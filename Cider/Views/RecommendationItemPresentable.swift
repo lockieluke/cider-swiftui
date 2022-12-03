@@ -79,22 +79,8 @@ struct RecommendationItemPresentable: View {
                                 }
                                 .onTapGesture {
                                     Task {
-                                        switch recommendation.type {
-                                            
-                                        case .Album:
-                                            await self.ciderPlayback.setQueue(album: recommendation.id)
-                                            break
-                                            
-                                        case .Playlist:
-                                            await self.ciderPlayback.setQueue(playlist: recommendation.id)
-                                            break
-                                            
-                                        default:
-                                            break
-                                            
-                                        }
-                                        
-//                                        await self.ciderPlayback.play()
+                                        await self.ciderPlayback.setQueue(id: self.recommendation.id, type: self.recommendation.type)
+                                        await self.ciderPlayback.play()
                                     }
                                 }
                             }

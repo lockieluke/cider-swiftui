@@ -11,6 +11,8 @@ struct MediaTrackRepresentable: View {
     
     var mediaItem: MediaTrack
     
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
+    
     @State private var isHovering = false
     @State private var isClicked = false
     
@@ -30,6 +32,12 @@ struct MediaTrackRepresentable: View {
                     .animation(.interactiveSpring(), value: isHovering || isClicked)
                     .frame(width: .infinity)
             )
+            .onTapGesture {
+                Task {
+                    await self.ciderPlayback.setQueue(id: self.mediaItem.id, type: self.mediaItem.type)
+                    await self.ciderPlayback.play()
+                }
+            }
             .onHover { isHovering in
                 self.isHovering = isHovering
             }
