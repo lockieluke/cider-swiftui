@@ -59,7 +59,7 @@ struct SegmentedControl: View {
                     let isSelected = selectedItem == index
                     SegmentedControlItem(item: item.title, icon: items[index].icon, isSelected: isSelected, selectedCB: {
                         self.selectedItem = index
-                        withAnimation(.spring().speed(1.30)) {
+                        withAnimation(.interactiveSpring().speed(0.55)) {
                             self.currentOffsetPosition = offsetPositions[index]
                             self.currentSegmentedSize = segmentedControlsSize[index]
                         }
