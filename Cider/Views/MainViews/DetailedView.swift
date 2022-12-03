@@ -18,6 +18,7 @@ struct DetailedView: View {
     @State private var size: CGSize = .zero
     @State private var animationFinished = false
     @State private var descriptionsShouldLoadIn = false
+    @State private var tracksShouldLoadIn = false
     @State private var bgGlowGradientColours = Gradient(colors: [])
     // copy of the recommendation, this one isn't read only
     @State private var reflectedMusicItem = MusicItem(data: [])
@@ -107,7 +108,7 @@ struct DetailedView: View {
                                     Text("\(description)")
                                         .multilineTextAlignment(.center)
                                         .padding(.top, 2)
-                                        .frame(maxWidth: 150)
+                                        .frame(maxWidth: 300)
                                 }
                                 
                                 playButton
@@ -119,22 +120,28 @@ struct DetailedView: View {
                     
                     Spacer()
                     
-                    ScrollView(.vertical) {
-                        LazyVStack {
-                            ForEach(reflectedMusicItem.tracks, id: \.id) { track in
-                                MediaTrackRepresentable(mediaItem: track)
+                    if tracksShouldLoadIn {
+                        ScrollView(.vertical) {
+                            LazyVStack {
+                                ForEach(reflectedMusicItem.tracks, id: \.id) { track in
+                                    MediaTrackRepresentable(mediaItem: track)
+                                }
                             }
+                            .padding(.vertical)
                         }
-                        .padding(.vertical)
+                        .transparentScrollbars()
+                        .frame(width: .infinity)
+                        .transition(.move(edge: .bottom))
                     }
-                    .transparentScrollbars()
-                    .frame(width: .infinity)
-                    .task {
-                        self.reflectedMusicItem.tracks = try! await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)
+                }
+                .task {
+                    self.reflectedMusicItem.tracks = try! await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)
+                    withAnimation(.spring().delay(0.3)) {
+                        self.tracksShouldLoadIn = true
                     }
-                    .onAppear {
-                        self.reflectedMusicItem = mediaItem
-                    }
+                }
+                .onAppear {
+                    self.reflectedMusicItem = mediaItem
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.leading, 30)
