@@ -7,7 +7,7 @@ import SwiftyJSON
 
 struct MusicItem {
     
-    let id: String, title: String, curatorName: String, description: String?
+    let id: String, title: String, curatorName: String, description: String?, artistName: String
     let type: MediaType
     let playlistType: PlaylistType?
     let artwork: MusicArtwork
@@ -19,6 +19,7 @@ struct MusicItem {
         let attributes = data["attributes"]
         self.title = attributes["name"].stringValue
         self.curatorName = attributes["curatorName"].stringValue
+        self.artistName = attributes["artistName"].stringValue
         self.description = attributes["description"]["standard"].string
         self.playlistType = PlaylistType(rawValue: attributes["playlistType"].stringValue)
         self.artwork = MusicArtwork(data: attributes["artwork"])

@@ -74,7 +74,6 @@ struct DetailedView: View {
                                     .multicolourGlow()
                             )
                             .aspectRatio(1, contentMode: .fill)
-                            .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
                             .onAppear {
                                 self.size = originalSize
                                 withAnimation(.interactiveSpring()) {
@@ -92,6 +91,7 @@ struct DetailedView: View {
                                 }
                             }
                             .padding(.vertical, 10)
+                            .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
                         
                         if descriptionsShouldLoadIn {
                             VStack {
@@ -105,7 +105,7 @@ struct DetailedView: View {
                                             .modifier(SimpleHoverModifier())
                                     }
                                 }
-                                Text("\(reflectedMusicItem.curatorName)")
+                                Text("\(reflectedMusicItem.playlistType == .PersonalMix ? "Made For You" : reflectedMusicItem.artistName)")
                                     .foregroundColor(.gray)
                                 
                                 if let description = reflectedMusicItem.description {
