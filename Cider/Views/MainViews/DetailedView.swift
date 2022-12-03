@@ -29,11 +29,14 @@ struct DetailedView: View {
             HStack {
                 VStack {
                     ResponsiveLayoutReader { windowProps in
+                        let size = CGSize(width: windowProps.size.width * 0.33, height: windowProps.size.height * 0.33)
+                        
                         WebImage(url: mediaItem.artwork.getUrl(width: 600, height: 600))
                             .resizable()
                             .scaledToFit()
                             .cornerRadius(5)
-                            .frame(width: windowProps.size.width * 0.33, height: windowProps.size.height * 0.33)
+                            .frame(width: size.width, height: size.height)
+                            .background(Rectangle().background(Color(nsColor: mediaItem.artwork.bgColour)).aspectRatio(contentMode: .fit).cornerRadius(5))
                             .aspectRatio(1, contentMode: .fill)
                             .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
                             .onTapGesture {

@@ -10,11 +10,13 @@ struct MusicArtwork {
     let width: Int
     let height: Int
     let rawUrl: String
+    let bgColour: NSColor
     
     init(data: JSON) {
         self.width = data["width"].intValue
         self.height = data["height"].intValue
         self.rawUrl = data["url"].stringValue
+        self.bgColour = NSColor(hex: data["bgColor"].stringValue)
     }
     
     func getUrl(_ dimension: CGSize) -> URL {
