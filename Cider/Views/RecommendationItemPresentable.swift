@@ -118,8 +118,12 @@ struct RecommendationItemPresentable: View {
                 }))
                 .scaleEffect(scaleClickingEffect)
                 .onAnimationCompleted(for: scaleClickingEffect) {
-                    self.isInDetailedView = true
-                    withAnimation(.spring()) {
+                    self.navigationModal.navigationActions.backAction = {
+                        withAnimation(.interactiveSpring()) {
+                            self.navigationModal.isInDetailedView = false
+                        }
+                    }
+                    withAnimation(.interactiveSpring(response: 0.55, blendDuration: 100)) {
                         self.navigationModal.detailedViewParams = DetailedViewParams(mediaItem: self.recommendation, geometryMatching: self.cardAnimation, originalSize: self.relativeSize)
                     }
                 }

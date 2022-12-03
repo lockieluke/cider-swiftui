@@ -31,11 +31,11 @@ struct ContentView: View {
                     .environmentObject(ciderPlayback)
                 
                 VStack {
-                    AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top, rootPageChanged: { currentRootPage in
-                        self.navigationModal.currentRootStack = currentRootPage
-                    })
+                    AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top)
                     .environmentObject(appWindowModal)
                     .environmentObject(searchModal)
+                    .environmentObject(navigationModal)
+                    
                     Spacer()
                     PlaybackView()
                         .environmentObject(appWindowModal)

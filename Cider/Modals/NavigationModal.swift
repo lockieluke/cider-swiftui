@@ -21,6 +21,27 @@ struct DetailedViewParams {
     
 }
 
+struct NavigationActions {
+    
+    var enableBack = false {
+        didSet {
+            if !enableBack {
+                self.backAction = nil
+            }
+        }
+    }
+    var enableForward = false {
+        didSet {
+            if !enableForward {
+                self.forwardAction = nil
+            }
+        }
+    }
+    var backAction: (() -> Void)? = nil
+    var forwardAction: (() -> Void)? = nil
+    
+}
+
 class NavigationModal : ObservableObject {
     
     @Published var currentRootStack: RootNavigationType = .Home {
@@ -32,15 +53,19 @@ class NavigationModal : ObservableObject {
         didSet {
             if detailedViewParams != nil {
                 self.isInDetailedView = true
+                self.navigationActions.enableBack = true
             }
         }
     }
     @Published var isInDetailedView: Bool = false {
         didSet {
             if !isInDetailedView {
-                detailedViewParams = nil
+                self.detailedViewParams = nil
+                self.navigationActions.enableBack = false
             }
         }
     }
+    
+    @Published var navigationActions = NavigationActions()
     
 }

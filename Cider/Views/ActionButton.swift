@@ -31,19 +31,20 @@ struct ActionButton: View {
             .fill(Color("PrimaryColour"))
             .opacity(isClicked ? 1 : (isHovered ? 0.7 : 0))
             .cornerRadius(5)
+            .toolTip("\(actionType)")
             .overlay {
                 Image(systemName: actionType.rawValue)
                     .font(.system(size: 13))
                     .foregroundColor(.primary)
+            }
+            .onTapGesture {
+                onClick?()
             }
             .gesture(DragGesture(minimumDistance: 0).onChanged({_ in
                 self.isClicked = true
             }).onEnded({_ in
                 self.isClicked = false
             }))
-            .onTapGesture {
-                onClick?()
-            }
             .onHover { isHovered in
                 self.isHovered = isHovered
             }

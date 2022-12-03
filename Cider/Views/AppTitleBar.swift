@@ -11,9 +11,9 @@ struct AppTitleBar: View {
     
     @EnvironmentObject private var searchModal: SearchModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     var toolbarHeight: CGFloat = 0
-    var rootPageChanged: ((_ currentPage: RootNavigationType) -> Void)? = nil
     
     private var titleBarHeight: CGFloat {
         get {
@@ -33,7 +33,7 @@ struct AppTitleBar: View {
                 items: ["Home", "Library"],
                 icons: [.Home, .Library],
                 segmentedItemChanged: { currentSegmentedItem in
-                    self.rootPageChanged?(RootNavigationType(rawValue: currentSegmentedItem) ?? .AnyView)
+                    self.navigationModal.currentRootStack = RootNavigationType(rawValue: currentSegmentedItem) ?? .AnyView
                 }
             )
             
@@ -44,8 +44,17 @@ struct AppTitleBar: View {
                     .frame(height: 25)
                     .padding(.trailing, 10)
                 if appWindowModal.windowSize.width > 850 {
-                    ActionButton(actionType: .Back)
-                    ActionButton(actionType: .Forward)
+                    if navigationModal.navigationActions.enableBack {
+                        ActionButton(actionType: .Back) {
+                            self.navigationModal.navigationActions.backAction?()
+                        }
+                    }
+                    
+                    if navigationModal.navigationActions.enableForward {
+                        ActionButton(actionType: .Forward) {
+                            self.navigationModal.navigationActions.forwardAction?()
+                        }
+                    }
                 }
                 ActionButton(actionType: .Library)
                 Spacer()

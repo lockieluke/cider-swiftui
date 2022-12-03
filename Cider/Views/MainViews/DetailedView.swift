@@ -66,11 +66,6 @@ struct DetailedView: View {
                             )
                             .aspectRatio(1, contentMode: .fill)
                             .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
-                            .onTapGesture {
-                                withAnimation(.easeIn) {
-                                    self.navigationModal.isInDetailedView = false
-                                }
-                            }
                             .onAppear {
                                 self.size = originalSize
                                 withAnimation(.interactiveSpring()) {
