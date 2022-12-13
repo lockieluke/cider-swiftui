@@ -134,7 +134,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
 extension MusicKitWorker : NSWindowDelegate {
     
     func windowDidBecomeKey(_ notification: Notification) {
-        print("HEY")
+        
     }
     
 }
