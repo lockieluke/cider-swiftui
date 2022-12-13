@@ -32,10 +32,24 @@ class AppMenu {
         let signOutMenu = NSMenuItem(title: "Sign Out...", action: #selector(self.signOut(_:)), keyEquivalent: "")
         signOutMenu.target = self
         
+        let hideOthersMenu = NSMenuItem(title: NSLocalizedString("Hide Other", comment: ""), action: #selector(NSApplication.hideOtherApplications(_:)), keyEquivalent: "h")
+        hideOthersMenu.keyEquivalentModifierMask = [.command, .option]
+        
         appNameMenu.submenu?.items = [
-            signOutMenu,
+            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("About %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: ""),
             .separator(),
-            NSMenuItem(title: "Quit \(appName)", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+            hideOthersMenu,
+            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("Hide %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.hide(_:)), keyEquivalent: "h"),
+            NSMenuItem(title: NSLocalizedString("Show All", comment: ""), action: #selector(NSApplication.unhideAllApplications(_:)), keyEquivalent: ""),
+            .separator(),
+            signOutMenu,
+            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("Quit %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        ]
+        
+        let fileMenu = NSMenuItem()
+        fileMenu.submenu = NSMenu(title: "File")
+        fileMenu.submenu?.items = [
+            NSMenuItem(title: NSLocalizedString("Close Window", comment: ""), action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
         ]
         
         let editMenu = NSMenuItem()
@@ -52,7 +66,22 @@ class AppMenu {
                                               keyEquivalent: "a")
         ]
         
-        menu.items = [appNameMenu, editMenu]
+        let windowMenu = NSMenuItem()
+        windowMenu.submenu = NSMenu(title: "Window")
+        windowMenu.submenu?.items = [
+            NSMenuItem(title: NSLocalizedString("Minimise", comment: ""), action: #selector(NSWindow.miniaturize(_:)), keyEquivalent: ""),
+            NSMenuItem(title: NSLocalizedString("Zoom", comment: ""), action: #selector(NSWindow.zoom(_:)), keyEquivalent: "")
+        ]
+        
+        let helpMenu = NSMenuItem()
+        let helpMenuSearch = NSMenuItem()
+        helpMenuSearch.view = NSTextField()
+        helpMenu.submenu = NSMenu(title: "Help")
+        helpMenu.submenu?.items = [
+            helpMenuSearch
+        ]
+        
+        menu.items = [appNameMenu, fileMenu, editMenu, windowMenu, helpMenu]
     }
     
     @objc func signOut(_ sender: Any) {
