@@ -47,7 +47,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 return
             }
             
-            var requestObj = JSON([
+            let requestObj = JSON([
                 "request-id": requestId
             ])
             let done = {
