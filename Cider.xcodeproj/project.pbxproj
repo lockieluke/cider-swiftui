@@ -34,6 +34,10 @@
 		B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */; };
 		B755C73228C817C000A46FB9 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755C73128C817C000A46FB9 /* Bundle.swift */; };
 		B76887122948F9C600C623C9 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887112948F9C600C623C9 /* Support.swift */; };
+		B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887132949172300C623C9 /* PreferencesPanes.swift */; };
+		B768871729491B1800C623C9 /* GeneralPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */; };
+		B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */; };
+		B768871B2949225200C623C9 /* BasicHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871A2949225200C623C9 /* BasicHoverModifier.swift */; };
 		B77AACE3293AC40900F8E1E2 /* ResponsiveLayoutReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */; };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
 		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; };
@@ -127,6 +131,10 @@
 		B755C72E28C7F00800A46FB9 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = CiderWebAuth/dist/index.js; sourceTree = "<group>"; };
 		B755C73128C817C000A46FB9 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B76887112948F9C600C623C9 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
+		B76887132949172300C623C9 /* PreferencesPanes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesPanes.swift; sourceTree = "<group>"; };
+		B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesPane.swift; sourceTree = "<group>"; };
+		B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperPreferencesPane.swift; sourceTree = "<group>"; };
+		B768871A2949225200C623C9 /* BasicHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHoverModifier.swift; sourceTree = "<group>"; };
 		B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveLayoutReader.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
 		B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
@@ -279,6 +287,7 @@
 		B700C1A928B955B10069FDF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B768871529491AFE00C623C9 /* PreferencesPanes */,
 				B7ECB7C429033AA700B5DF11 /* MainViews */,
 				B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */,
 				B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */,
@@ -300,6 +309,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		B768871529491AFE00C623C9 /* PreferencesPanes */ = {
+			isa = PBXGroup;
+			children = (
+				B76887132949172300C623C9 /* PreferencesPanes.swift */,
+				B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */,
+				B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */,
+			);
+			path = PreferencesPanes;
+			sourceTree = "<group>";
+		};
 		B77AACE4293ACC7600F8E1E2 /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +326,7 @@
 				B77AACE9293AD0F300F8E1E2 /* MultiColourGlow.swift */,
 				B77AACEB293AD90100F8E1E2 /* DisableScrollingModifier.swift */,
 				B77AACF3293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift */,
+				B768871A2949225200C623C9 /* BasicHoverModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -635,7 +655,9 @@
 				B77AACE3293AC40900F8E1E2 /* ResponsiveLayoutReader.swift in Sources */,
 				B7ECB7C328FDFA6700B5DF11 /* Dictionary.swift in Sources */,
 				B76887122948F9C600C623C9 /* Support.swift in Sources */,
+				B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */,
 				B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */,
+				B768871729491B1800C623C9 /* GeneralPreferencesPane.swift in Sources */,
 				B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */,
 				B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */,
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
@@ -647,6 +669,7 @@
 				B77AACF4293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift in Sources */,
 				B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */,
 				B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */,
+				B768871B2949225200C623C9 /* BasicHoverModifier.swift in Sources */,
 				B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */,
 				B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */,
 				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
@@ -659,6 +682,7 @@
 				B75219AE29187526005CF8F0 /* MusicArtwork.swift in Sources */,
 				B77AACEE293B702100F8E1E2 /* MediaTrack.swift in Sources */,
 				B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */,
+				B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */,
 				B77AACEA293AD0F300F8E1E2 /* MultiColourGlow.swift in Sources */,
 				B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */,
 				B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */,

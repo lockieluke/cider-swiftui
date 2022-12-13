@@ -4,6 +4,7 @@
 
 import Foundation
 import AppKit
+import Preferences
 
 class AppMenu {
     
@@ -29,6 +30,15 @@ class AppMenu {
         let appNameMenu = NSMenuItem()
         appNameMenu.submenu = NSMenu(title: "\(appName)")
         
+        // Preferences is renamed to Settings starting on macOS Ventura
+        let preferencesName = "Preferences..."
+        if #available(macOS 13.0, *) {
+            let preferencesName = "Settings..."
+        }
+        
+        let preferencesMenu = NSMenuItem(title: preferencesName, action: #selector(self.showPreferences(_:)), keyEquivalent: ",")
+        preferencesMenu.target = self
+        
         let signOutMenu = NSMenuItem(title: "Sign Out...", action: #selector(self.signOut(_:)), keyEquivalent: "")
         signOutMenu.target = self
         
@@ -37,6 +47,8 @@ class AppMenu {
         
         appNameMenu.submenu?.items = [
             NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("About %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: ""),
+            .separator(),
+            preferencesMenu,
             .separator(),
             hideOthersMenu,
             NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("Hide %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.hide(_:)), keyEquivalent: "h"),
@@ -104,6 +116,15 @@ class AppMenu {
                 }
             }
         }
+    }
+    
+    @objc func showPreferences(_ sender: Any) {
+        PreferencesWindowController(
+            preferencePanes: [PreferencesPanes.GeneralPreferenceViewController(), PreferencesPanes.DeveloperPreferencesViewController(self.mkModal)],
+            style: .toolbarItems,
+            animated: true,
+            hidesToolbarForSingleItem: false
+        ).show()
     }
     
     @objc func openDiscord(_ sender: Any) {
