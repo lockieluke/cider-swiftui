@@ -35,7 +35,9 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         wkConfiguration.userContentController = userContentController
         wkConfiguration.mediaTypesRequiringUserActionForPlayback = []
         wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        #if DEBUG
         wkConfiguration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        #endif
         
         // Hack to enable playback for headless WKWebView
         let windowContainer = NSWindow(contentRect: .zero, styleMask: [.borderless, .nonactivatingPanel, .hudWindow], backing: .buffered, defer: false)
