@@ -48,14 +48,14 @@ struct PlaybackCardView: View {
             .cornerRadius(5)
             
             VStack(alignment: .leading) {
-                if let nowPlayingItem = ciderPlayback.nowPlayingItem {
-                    Text(nowPlayingItem.name)
-                        .font(.system(.headline))
-                    
-                    InteractiveText(nowPlayingItem.artistName)
-                    InteractiveText("Butter")
-                        .foregroundColor(.gray)
-                }
+                let nowPlayingItem = ciderPlayback.nowPlayingItem
+                
+                Text(nowPlayingItem?.name ?? "")
+                    .font(.system(.headline))
+                
+                InteractiveText(nowPlayingItem?.artistName ?? "")
+                InteractiveText("")
+                    .foregroundColor(.gray)
             }
             .padding([.horizontal, .vertical], 10)
         }
