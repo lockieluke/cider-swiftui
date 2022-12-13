@@ -22,7 +22,6 @@ struct PrefValueField: View {
         HStack(alignment: .top) {
             Text("\(label): ")
             Text(value).foregroundColor(.blue).modifier(BasicHoverModifier())
-                .fixedSize(horizontal: false, vertical: true)
                 .onTapGesture {
                     NSPasteboard.general.declareTypes([.string], owner: nil)
                     NSPasteboard.general.setString(value, forType: .string)
@@ -53,7 +52,12 @@ struct DeveloperPreferencesPane: View {
                         PrefValueField("MusicKit Developer Token", developerToken)
                         PrefValueField("MusicKit User Token", userToken)
                     }
+                    
+                    Text("Do not share this information with anyone.  The Cider Team would never, never ask for this.")
+                        .foregroundColor(.red)
+                        .padding(.vertical)
                 }
+                .fixedSize(horizontal: false, vertical: true)
             }
         }
         .enableInjection()
