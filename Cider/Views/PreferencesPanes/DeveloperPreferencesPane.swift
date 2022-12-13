@@ -55,6 +55,7 @@ struct DeveloperPreferencesPane: View {
                     
                     Text("Do not share this information with anyone.  The Cider Team would never, never ask for this.")
                         .foregroundColor(.red)
+                        .preferenceDescription()
                         .padding(.vertical)
                 }
                 .fixedSize(horizontal: false, vertical: true)
