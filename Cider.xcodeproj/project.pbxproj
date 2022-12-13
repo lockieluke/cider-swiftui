@@ -885,6 +885,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8C2C2A2AEA0FC0C88E42E59F /* Pods-CiderPlaybackAgent.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -906,6 +907,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CF52258159134FE837BB1C4 /* Pods-CiderPlaybackAgent.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
