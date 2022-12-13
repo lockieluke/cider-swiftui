@@ -4,9 +4,8 @@
 
 import Foundation
 import WebKit
-import MediaPlayer
 
-class MusicKitWorker : NSObject, WKScriptMessageHandler {
+class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     
     private let wkWebView: WKWebView
     private let windowContainer: NSWindow
@@ -36,6 +35,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
         wkConfiguration.userContentController = userContentController
         wkConfiguration.mediaTypesRequiringUserActionForPlayback = []
         wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        wkConfiguration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         
         // Hack to enable playback for headless WKWebView
         let windowContainer = NSWindow(contentRect: .zero, styleMask: [.borderless, .nonactivatingPanel, .hudWindow], backing: .buffered, defer: false)
@@ -44,7 +44,9 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
         
         let wkWebView = WKWebView(frame: .zero, configuration: wkConfiguration)
         windowContainer.contentView?.addSubview(wkWebView)
+        
         defer {
+            wkWebView.navigationDelegate = self
             wkWebView.configuration.userContentController.add(self, name: "ciderkit")
             wkWebView.loadSimulatedRequest(URLRequest(url: URL(string: "https://beta.music.apple.com")!), responseHTML: self.bootstrapHTML)
         }
@@ -127,6 +129,15 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
         default:
             break
         }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        // hack to show WKInspector of the headless WKWebView without Safari
+        #if DEBUG
+        if let inspector = webView.value(forKey: "_inspector") as? AnyObject {
+            _ = inspector.perform(Selector(("showConsole")))
+        }
+        #endif
     }
     
 }
