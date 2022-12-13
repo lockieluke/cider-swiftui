@@ -32,7 +32,6 @@ extension AMNetworkingError : LocalizedError {
             
         default:
             return nil
-            break
         }
     }
     
