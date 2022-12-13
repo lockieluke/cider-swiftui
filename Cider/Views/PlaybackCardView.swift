@@ -9,7 +9,7 @@ struct InteractiveText: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    @State private var title: String
+    var title: String
     @State private var isHovered: Bool = false
     
     init(_ title: String) {
@@ -48,12 +48,12 @@ struct PlaybackCardView: View {
             .cornerRadius(5)
             
             VStack(alignment: .leading) {
-                let nowPlayingItem = ciderPlayback.nowPlayingItem
+                let nowPlayingState = ciderPlayback.nowPlayingState
                 
-                Text(nowPlayingItem?.name ?? "")
+                Text(nowPlayingState.name ?? "Not Playing")
                     .font(.system(.headline))
                 
-                InteractiveText(nowPlayingItem?.artistName ?? "")
+                InteractiveText(nowPlayingState.artistName ?? "")
                 InteractiveText("")
                     .foregroundColor(.gray)
             }

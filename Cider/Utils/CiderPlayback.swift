@@ -6,16 +6,17 @@ import Foundation
 import Starscream
 import SwiftyJSON
 
-struct NowPlayingItem {
+struct NowPlayingState {
     
-    let name: String
-    let artistName: String
+    var name: String? = nil
+    var artistName: String? = nil
+    var isPlaying = false
     
 }
 
 class CiderPlayback : ObservableObject, WebSocketDelegate {
     
-    @Published var nowPlayingItem: NowPlayingItem? = nil
+    @Published var nowPlayingState = NowPlayingState()
     
     private let logger: Logger
     private let proc: Process
@@ -172,7 +173,12 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 
             case "mediaItemDidChange":
                 let mediaParams = json["mediaParams"]
-                self.nowPlayingItem = NowPlayingItem(name: mediaParams["name"].stringValue, artistName: mediaParams["artistName"].stringValue)
+                
+                self.nowPlayingState = NowPlayingState(
+                    name: mediaParams["name"].string,
+                    artistName: mediaParams["artistName"].string,
+                    isPlaying: true
+                )
                 break
                 
             default:
