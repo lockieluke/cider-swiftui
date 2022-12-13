@@ -76,15 +76,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B7C9CD852908467A00A67CE4 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		B7C9CDA129088F4F00A67CE4 /* Copy JS Scripts */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -434,7 +425,6 @@
 				B7C9CD832908467A00A67CE4 /* Sources */,
 				B7C9CD842908467A00A67CE4 /* Frameworks */,
 				B7C9CD98290884B900A67CE4 /* Build Scripts */,
-				B7C9CD852908467A00A67CE4 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -570,6 +560,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/index.js",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
@@ -606,6 +597,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/index-cpa.js",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
