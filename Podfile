@@ -16,6 +16,7 @@ target 'Cider' do
   pod 'InjectHotReload'
   pod 'RainbowSwift'
   pod 'UIImageColors', :modular_headers => true
+  pod 'Preferences', :git => 'https://github.com/ciderapp/Preferences.git', :branch => 'main'
 end
 
 target 'CiderPlaybackAgent' do

@@ -2,6 +2,7 @@ PODS:
   - ArgumentParserKit (1.0.0)
   - InjectHotReload (1.2.2)
   - Introspect (0.1.4)
+  - Preferences (2.6.0)
   - RainbowSwift (4.0.1)
   - SDWebImage (5.14.2):
     - SDWebImage/Core (= 5.14.2)
@@ -17,6 +18,7 @@ DEPENDENCIES:
   - ArgumentParserKit
   - InjectHotReload
   - Introspect
+  - Preferences (from `https://github.com/ciderapp/Preferences.git`, branch `main`)
   - RainbowSwift
   - SDWebImageSwiftUI
   - Starscream (~> 4.0.0)
@@ -37,11 +39,17 @@ SPEC REPOS:
     - UIImageColors
 
 EXTERNAL SOURCES:
+  Preferences:
+    :branch: main
+    :git: https://github.com/ciderapp/Preferences.git
   Swifter:
     :branch: stable
     :git: https://github.com/ciderapp/swifter.git
 
 CHECKOUT OPTIONS:
+  Preferences:
+    :commit: 5f616c085dce36146994dda4ead9813bf16008cb
+    :git: https://github.com/ciderapp/Preferences.git
   Swifter:
     :commit: 7c7dfba1057005e44c8312f45f3dec834e2e9b21
     :git: https://github.com/ciderapp/swifter.git
@@ -50,6 +58,7 @@ SPEC CHECKSUMS:
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
   InjectHotReload: e524b7c46ec063d84e407e65df5fe251cde19b32
   Introspect: b62c4dd2063072327c21d618ef2bedc3c87bc366
+  Preferences: 40c43ff0b98e62adb6d45cbf8b614b436c32a119
   RainbowSwift: f39edd7a46322888c94336448add80def6d1ed68
   SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
   SDWebImageSwiftUI: 2ecf5ab6f574526326b10ecb155e72a88059d0f0
@@ -58,6 +67,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
 
-PODFILE CHECKSUM: f18316564b470011ffb9ececabac38567a80fca6
+PODFILE CHECKSUM: 209e8b1ab8d59568bfe8f7f6105c386476f81731
 
 COCOAPODS: 1.11.3

@@ -1,0 +1,23 @@
+{
+  "name": "Preferences",
+  "version": "2.6.0",
+  "summary": "⚙ Add a settings window to your macOS app in minutes",
+  "homepage": "https://github.com/sindresorhus/Preferences",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Sindre Sorhus": "sindresorhus@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/sindresorhus/Preferences.git",
+    "tag": "2.6.0"
+  },
+  "platforms": {
+    "osx": "10.13"
+  },
+  "swift_versions": "5.0",
+  "source_files": "Sources/Preferences/**/*",
+  "swift_version": "5.0"
+}
