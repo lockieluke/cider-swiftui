@@ -77,8 +77,17 @@ class AppMenu {
         let helpMenuSearch = NSMenuItem()
         helpMenuSearch.view = NSTextField()
         helpMenu.submenu = NSMenu(title: "Help")
+        
+        let discordMenu = NSMenuItem(title: "Open Discord", action: #selector(self.openDiscord(_:)), keyEquivalent: "")
+        discordMenu.target = self
+        
+        let githubMenu = NSMenuItem(title: "Open GitHub", action: #selector(self.openOrgGitHub(_:)), keyEquivalent: "")
+        githubMenu.target = self
+        
         helpMenu.submenu?.items = [
-            helpMenuSearch
+            helpMenuSearch,
+            discordMenu,
+            githubMenu
         ]
         
         menu.items = [appNameMenu, fileMenu, editMenu, windowMenu, helpMenu]
@@ -95,6 +104,14 @@ class AppMenu {
                 }
             }
         }
+    }
+    
+    @objc func openDiscord(_ sender: Any) {
+        Support.openDiscord()
+    }
+    
+    @objc func openOrgGitHub(_ sender: Any) {
+        Support.openOrgGitHub()
     }
     
     func getMenu() -> NSMenu {
