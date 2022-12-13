@@ -29,6 +29,8 @@ struct InteractiveText: View {
 
 struct PlaybackCardView: View {
     
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
+    
     @ObservedObject private var iO = Inject.observer
     
     var body: some View {
@@ -46,12 +48,14 @@ struct PlaybackCardView: View {
             .cornerRadius(5)
             
             VStack(alignment: .leading) {
-                Text("Permission To Dance")
-                    .font(.system(.headline))
-                
-                InteractiveText("BTS")
-                InteractiveText("Butter")
-                    .foregroundColor(.gray)
+                if let nowPlayingItem = ciderPlayback.nowPlayingItem {
+                    Text(nowPlayingItem.name)
+                        .font(.system(.headline))
+                    
+                    InteractiveText(nowPlayingItem.artistName)
+                    InteractiveText("Butter")
+                        .foregroundColor(.gray)
+                }
             }
             .padding([.horizontal, .vertical], 10)
         }

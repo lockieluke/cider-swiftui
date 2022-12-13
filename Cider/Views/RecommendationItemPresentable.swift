@@ -79,7 +79,7 @@ struct RecommendationItemPresentable: View {
                                 }
                                 .onTapGesture {
                                     Task {
-                                        await self.ciderPlayback.setQueue(id: self.recommendation.id, type: self.recommendation.type)
+                                        await self.ciderPlayback.setQueue(musicItem: self.recommendation)
                                         await self.ciderPlayback.play()
                                     }
                                 }

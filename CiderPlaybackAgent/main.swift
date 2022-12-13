@@ -33,7 +33,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         self.musicKitWorker = MusicKitWorker(userToken: userToken, developerToken: developerToken)
         
-        server["/ws"] = websocket(text: { session, text in        
+        server["/ws"] = websocket(text: { session, text in
             let json = try? JSON(data: text.data(using: .utf8)!)
             guard let route = json?["route"].string,
                   let requestId = json?["request-id"].string
@@ -47,10 +47,13 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 return
             }
             
+            var requestObj = JSON([
+                "request-id": requestId
+            ])
             let done = {
-                session.writeText(JSON([
-                    "request-id": requestId
-                ]).rawString()!)
+                if let rawString = requestObj.rawString() {
+                    session.writeText(rawString)
+                }
             }
             
             switch route {
@@ -87,6 +90,31 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             }
         }, connected: { session in
             print("Cider Client connected")
+            
+            self.musicKitWorker?.addCallback { eventName, dict in
+                var requestObj = JSON()
+                let done = {
+                    if let rawString = requestObj.rawString() {
+                        session.writeText(rawString)
+                    }
+                }
+                
+                switch eventName {
+                    
+                case "mediaItemDidChange":
+                    requestObj["eventName"].string = eventName
+                    requestObj["mediaParams"] = JSON([
+                        "name": dict["name"],
+                        "artistName": dict["artistName"]
+                    ])
+                    break
+                    
+                default:
+                    break
+                    
+                }
+                done()
+            }
         })
         
         server["/shutdown"] = { request in
@@ -103,7 +131,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             
             return .ok(.text("Shutting down"))
         }
-
+        
         let defaultPort = Bundle.main.infoDictionary?["DEFAULT_PORT"] as! Int
         do {
             try server.start(UInt16(agentPort ?? defaultPort))

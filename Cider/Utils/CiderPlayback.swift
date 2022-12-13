@@ -4,8 +4,18 @@
 
 import Foundation
 import Starscream
+import SwiftyJSON
+
+struct NowPlayingItem {
+    
+    let name: String
+    let artistName: String
+    
+}
 
 class CiderPlayback : ObservableObject, WebSocketDelegate {
+    
+    @Published var nowPlayingItem: NowPlayingItem? = nil
     
     private let logger: Logger
     private let proc: Process
@@ -84,16 +94,12 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    func setQueue(album: String) async {
-        await self.setQueue(requestBody: ["album-id": album])
+    func setQueue(musicItem: MusicItem) async {
+        await self.setQueue(requestBody: ["\(musicItem.type.rawValue)-id": musicItem.id])
     }
     
-    func setQueue(playlist: String) async {
-        await self.setQueue(requestBody: ["playlist-id": playlist])
-    }
-    
-    func setQueue(id: String, type: MediaType) async {
-        await self.setQueue(requestBody: ["\(type.rawValue)-id": id])
+    func setQueue(mediaTrack: MediaTrack) async {
+        await self.setQueue(requestBody: ["\(mediaTrack.type.rawValue)-id": mediaTrack.id])
     }
     
     func setQueue(requestBody: [String : Any]? = nil) async {
@@ -156,6 +162,24 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         case .error(let error):
             guard let error = error else { return }
             self.logger.error("WebSockets error: \(error)")
+            break
+            
+        case .text(let message):
+            guard let json = try? JSON(data: message.data(using: .utf8)!),
+                  let eventName = json["eventName"].string else { return }
+            
+            switch eventName {
+                
+            case "mediaItemDidChange":
+                let mediaParams = json["mediaParams"]
+                self.nowPlayingItem = NowPlayingItem(name: mediaParams["name"].stringValue, artistName: mediaParams["artistName"].stringValue)
+                break
+                
+            default:
+                break
+                
+            }
+            
             break
             
         default:

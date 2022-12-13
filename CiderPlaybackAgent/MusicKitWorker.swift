@@ -21,6 +21,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
 """
     private let userToken: String
     private let developerToken: String
+    private var callbacks: [String: ((_ eventName: String, _ dict: [String: AnyObject]) -> Void)] = [:]
     
     init(userToken: String, developerToken: String) {
         guard let jsPath = Bundle.main.executableURL?.deletingLastPathComponent().appendingPathComponent("ciderplaybackagent.js"), let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
@@ -56,6 +57,21 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
         super.init()
     }
     
+    func addCallback(uuid: String = UUID().uuidString, _ callback: @escaping (_ eventName: String, _ dict: [String: AnyObject]) -> Void) {
+        self.callbacks[uuid] = callback
+    }
+    
+    func removeCallback(uuid: String) {
+        self.callbacks.removeValue(forKey: uuid)
+    }
+    
+    func callCallbacks(_ eventName: String, _ dict: [String: AnyObject]) {
+        callbacks.forEach { item in
+            let (_, callback) = item
+            callback(eventName, dict)
+        }
+    }
+    
     func setQueueWithAlbumID(albumID: String) async {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.setQueue({album: albumId})", arguments: ["albumId": albumID], contentWorld: .page)
     }
@@ -67,7 +83,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
     func setQueueWithSongID(songID: String) async {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.setQueue({song: songId})", arguments: ["songId": songID], contentWorld: .page)
     }
-
+    
     func setShuffleMode(_ shuffle: Bool) async {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.mk.shuffleMode = \(shuffle ? 1 : 0)", contentWorld: .page)
     }
@@ -100,8 +116,12 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler {
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         switch message.name {
+            
         case "ciderkit":
-//            guard let dict = message.body as? [String: AnyObject] else { return }
+            guard let dict = message.body as? [String: AnyObject] else { return }
+            guard let eventName = dict["event"] as? String else { return }
+            
+            self.callCallbacks(eventName, dict)
             break
             
         default:

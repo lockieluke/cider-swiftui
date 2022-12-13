@@ -1,6 +1,5 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
-import { waitUntil } from "./utils";
 
 declare let AM_TOKEN: string;
 declare let AM_USER_TOKEN: string;
@@ -35,7 +34,8 @@ type CiderMusicKitInstance = MusicKitInstance & {
         }
     },
     queue: [],
-    queueIsEmpty: boolean
+    queueIsEmpty: boolean,
+    nowPlayingItem: MusicKit.MediaItem
 };
 
 const mkScript = document.createElement('script');
@@ -70,6 +70,18 @@ document.addEventListener('musickitloaded', async function () {
     // Enable High Quality (256 kbps)
     (mk as any).bitrate = MusicKit.PlaybackBitrate.HIGH
 
+    const updateNowPlayingInfo = () => {
+        window.webkit.messageHandlers.ciderkit.postMessage({
+            event: "mediaItemDidChange",
+            name: mk.nowPlayingItem.title,
+            artistName: mk.nowPlayingItem.artistName
+        });
+    }
+
+    mk.addEventListener(MusicKit.Events.mediaItemDidChange, () => {
+        updateNowPlayingInfo();
+    })
+
     window.ciderInterop = {
         mk,
         play: async () => {
@@ -80,6 +92,7 @@ document.addEventListener('musickitloaded', async function () {
             }
 
             console.log(`Initiated play with ${playStatus}`)
+            updateNowPlayingInfo();
         },
         setQueue: async mediaItem => {
             const [err, setQueueResult] = await to(mk.setQueue(mediaItem));
