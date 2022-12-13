@@ -574,11 +574,15 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/index.js,
+				"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/index-cpa.js",
 			);
 			name = "Finalise JS Scripts";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/ciderwebauth.js,
+				$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/ciderplaybackagent.js,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
