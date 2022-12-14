@@ -8,7 +8,9 @@ import InjectHotReload
 struct PlaybackView: View {
     
     @ObservedObject private var iO = Inject.observer
+    
     @EnvironmentObject private var appWindowModal: AppWindowModal
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     @State private var geometrySize = CGSize()
     
@@ -21,6 +23,7 @@ struct PlaybackView: View {
                 }
             
             PlaybackCardView()
+                .environmentObject(ciderPlayback)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack {
