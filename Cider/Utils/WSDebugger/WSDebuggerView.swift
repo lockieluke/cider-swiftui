@@ -74,25 +74,33 @@ struct WSDebuggerView: View {
             
             ScrollView(.vertical) {
                 ScrollViewReader { scrollValue in
-                    VStack(alignment: .leading) {
-                        ForEach(wsModal.traffic, id: \.id) { traffic in
-                            if selectedWSTarget == traffic.target {
-                                WSTrafficView(wsTraffic: traffic)
-                            }
+                    if wsModal.traffic.isEmpty {
+                        VStack(alignment: .center) {
+                            Text("No data has been sent")
+                                .foregroundColor(.secondary)
+                                .frame(maxHeight: .infinity)
+                                .padding()
                         }
-                        
-                        Spacer()
-                            .id("last")
+                    } else {
+                        VStack(alignment: .leading) {
+                            ForEach(wsModal.traffic, id: \.id) { traffic in
+                                if selectedWSTarget == traffic.target {
+                                    WSTrafficView(wsTraffic: traffic)
+                                }
+                            }
+                            
+                            Spacer()
+                                .id("last")
+                        }
+                        .onChange(of: wsModal.traffic.count) { _ in
+                            scrollValue.scrollTo("last")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
                     }
-                    .onChange(of: wsModal.traffic.count) { _ in
-                        print("HEY")
-                        scrollValue.scrollTo("last")
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
                 }
             }
-            .frame(maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.background)
             .cornerRadius(5)
             
