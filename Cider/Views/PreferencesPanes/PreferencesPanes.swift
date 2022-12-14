@@ -26,7 +26,7 @@ struct PreferencesPanes {
     }
     
     
-    static let DeveloperPreferencesViewController: (_ mkModal: MKModal) -> PreferencePane = { mkModal in 
+    static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ prefModal: PrefModal) -> PreferencePane = { mkModal, prefModal in
         let paneView = Preferences.Pane(
             identifier: .developer,
             title: "Developer",
@@ -34,6 +34,7 @@ struct PreferencesPanes {
         ) {
             DeveloperPreferencesPane()
                 .environmentObject(mkModal)
+                .environmentObject(prefModal)
         }
         
         return Preferences.PaneHostingController(pane: paneView)

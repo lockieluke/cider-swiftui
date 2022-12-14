@@ -4,6 +4,7 @@
 
 import Foundation
 import WebKit
+import SwiftyJSON
 
 class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     
@@ -20,9 +21,10 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 """
     private let userToken: String
     private let developerToken: String
+    private let config: JSON
     private var callbacks: [String: ((_ eventName: String, _ dict: [String: AnyObject]) -> Void)] = [:]
     
-    init(userToken: String, developerToken: String) {
+    init(userToken: String, developerToken: String, config: JSON) {
         guard let jsPath = Bundle.main.executableURL?.deletingLastPathComponent().appendingPathComponent("ciderplaybackagent.js"), let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
             fatalError("Unable to load CiderPlaybackAgent scripts")
         }
@@ -57,6 +59,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         self.windowContainer = windowContainer
         self.userToken = userToken
         self.developerToken = developerToken
+        self.config = config
         
         super.init()
     }
@@ -133,13 +136,19 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         }
     }
     
+    func openInspectorInNewWindow() {
+#if DEBUG
+        if self.config["openWebInspectorAutomatically"].boolValue {
+            if let inspector = self.wkWebView.value(forKey: "_inspector") as? AnyObject {
+                _ = inspector.perform(Selector(("showConsole")))
+            }
+        }
+#endif
+    }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // hack to show WKInspector of the headless WKWebView without Safari
-        #if DEBUG
-        if let inspector = webView.value(forKey: "_inspector") as? AnyObject {
-            _ = inspector.perform(Selector(("showConsole")))
-        }
-        #endif
+        self.openInspectorInNewWindow()
     }
     
 }

@@ -26,7 +26,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     private let commClient: NetworkingProvider
     private var isRunning: Bool
     
-    init() {
+    init(prefModal: PrefModal) {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = NetworkingProvider.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
@@ -70,7 +70,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
         
         guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
-        proc.arguments = ["--agent-port", String(agentPort), "--agent-session-id", "\"\(agentSessionId)\""]
+        proc.arguments = [
+            "--agent-port", String(agentPort),
+            "--agent-session-id", "\"\(agentSessionId)\"",
+            "--config", "\(prefModal.prefs.rawJSONString)"
+        ]
         proc.executableURL = execUrl
         proc.standardOutput = pipe
         

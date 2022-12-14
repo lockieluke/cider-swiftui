@@ -13,6 +13,8 @@ struct ContentView: View {
     @EnvironmentObject private var appWindowModal: AppWindowModal
     var authWorker: AuthWorker
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var prefModal: PrefModal
+    
     @StateObject private var searchModal = SearchModal()
     @StateObject private var navigationModal = NavigationModal()
     @StateObject private var personalisedData = PersonalisedData()
@@ -70,6 +72,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback()), appWindowModal: AppWindowModal()))
+        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal())), appWindowModal: AppWindowModal()))
     }
 }

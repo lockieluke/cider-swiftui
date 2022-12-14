@@ -21,6 +21,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         let agentSessionIdOption = argParser.add(option: "--agent-session-id", kind: String.self)
         let userTokenOption = argParser.add(option: "--am-user-token", kind: String.self)
         let developerTokenOption = argParser.add(option: "--am-token", kind: String.self)
+        let configOption = argParser.add(option: "--config", kind: String.self)
         
         guard let parsedArguments = try? argParser.parse(Array(CommandLine.arguments.dropFirst())) else {
             fatalError("Failed to parse arguments: \(CommandLine.arguments.dropFirst())")
@@ -29,9 +30,12 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         guard let agentSessionId = parsedArguments.get(agentSessionIdOption)?.replacingOccurrences(of: "\"", with: "") else { fatalError("Agent session ID is not present") }
         guard let userToken = parsedArguments.get(userTokenOption) else { fatalError("Invalid user token") }
         guard let developerToken = parsedArguments.get(developerTokenOption) else { fatalError("Invalid developer token") }
+        guard let configRaw = parsedArguments.get(configOption) else { fatalError("Invalid config") }
+        
+        guard let config = try? JSON(data: configRaw.data(using: .utf8)!) else { fatalError("Failed to parse config") }
         
         NSApp.setActivationPolicy(.accessory)
-        self.musicKitWorker = MusicKitWorker(userToken: userToken, developerToken: developerToken)
+        self.musicKitWorker = MusicKitWorker(userToken: userToken, developerToken: developerToken, config: config)
         
         server["/ws"] = websocket(text: { session, text in
             let json = try? JSON(data: text.data(using: .utf8)!)

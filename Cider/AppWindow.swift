@@ -12,9 +12,11 @@ class AppWindow {
     private let windowDelegate: AppWindowDelegate
     private let appWindowModal = AppWindowModal()
     private let mkModal: MKModal
-    let ciderPlayback = CiderPlayback()
+    private let prefModal = PrefModal()
     private let authWorker: AuthWorker
     private let appMenu: AppMenu
+    
+    let ciderPlayback: CiderPlayback
     
     class AppWindowDelegate : NSObject, NSWindowDelegate {
         
@@ -32,13 +34,15 @@ class AppWindow {
         let activeScreen = NSScreen.activeScreen
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
-        let mkModal = MKModal(ciderPlayback: self.ciderPlayback)
+        let ciderPlayback = CiderPlayback(prefModal: self.prefModal)
+        let mkModal = MKModal(ciderPlayback: ciderPlayback)
         let authWorker = AuthWorker(mkModal: mkModal, appWindowModal: self.appWindowModal)
         
         let contentView = ContentView(authWorker: authWorker)
             .environmentObject(self.appWindowModal)
             .environmentObject(mkModal)
-            .environmentObject(self.ciderPlayback)
+            .environmentObject(ciderPlayback)
+            .environmentObject(self.prefModal)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         window.contentViewController = NSHostingController(rootView: contentView)
         window.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
@@ -64,7 +68,7 @@ class AppWindow {
         window.isReleasedWhenClosed = false
         window.center()
         
-        let appMenu = AppMenu(window, mkModal: mkModal, authWorker: authWorker)
+        let appMenu = AppMenu(window, mkModal: mkModal, authWorker: authWorker, prefModal: prefModal)
         appMenu.loadMenus()
 
         self.mainWindow = window
@@ -72,6 +76,7 @@ class AppWindow {
         self.authWorker = authWorker
         self.appMenu = appMenu
         self.mkModal = mkModal
+        self.ciderPlayback = ciderPlayback
     }
     
     func show() {

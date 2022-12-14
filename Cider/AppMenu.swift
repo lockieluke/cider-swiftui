@@ -13,8 +13,9 @@ class AppMenu {
     private let window: NSWindow
     private let mkModal: MKModal
     private let authWorker: AuthWorker
+    private let prefModal: PrefModal
     
-    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker) {
+    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, prefModal: PrefModal) {
         let menu = NSMenu()
         
         self.window = window
@@ -22,6 +23,7 @@ class AppMenu {
         self.menu = menu
         self.mkModal = mkModal
         self.authWorker = authWorker
+        self.prefModal = prefModal
     }
     
     func loadMenus() {
@@ -75,7 +77,7 @@ class AppMenu {
             NSMenuItem(title: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v"),
             NSMenuItem.separator(),
             NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)),
-                                              keyEquivalent: "a")
+                       keyEquivalent: "a")
         ]
         
         let windowMenu = NSMenuItem()
@@ -120,7 +122,13 @@ class AppMenu {
     
     @objc func showPreferences(_ sender: Any) {
         PreferencesWindowController(
-            preferencePanes: [PreferencesPanes.GeneralPreferenceViewController(), PreferencesPanes.DeveloperPreferencesViewController(self.mkModal)],
+            preferencePanes: [
+                PreferencesPanes.GeneralPreferenceViewController(),
+                PreferencesPanes.DeveloperPreferencesViewController(
+                    self.mkModal,
+                    self.prefModal
+                )
+            ],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: false

@@ -52,6 +52,6 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
             .environmentObject(AppWindowModal())
-            .environmentObject(MKModal(ciderPlayback: CiderPlayback()))
+            .environmentObject(MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal())))
     }
 }

@@ -38,25 +38,40 @@ struct DeveloperPreferencesPane: View {
     @ObservedObject private var iO = Inject.observer
     
     @EnvironmentObject private var mkModal: MKModal
+    @EnvironmentObject private var prefModal: PrefModal
     
     var body: some View {
         Preferences.Container(contentWidth: 450.0) {
             Preferences.Section(title: "") {
                 VStack(alignment: .leading) {
-                    Text("Debugging Information")
-                        .bold()
-                        .padding(.vertical, 3)
-                    
-                    if let developerToken = mkModal.AM_API.AM_TOKEN,
-                       let userToken = mkModal.AM_API.AM_USER_TOKEN {
-                        PrefValueField("MusicKit Developer Token", developerToken)
-                        PrefValueField("MusicKit User Token", userToken)
+                    Group {
+                        Text("Debugging Information")
+                            .bold()
+                            .padding(.vertical, 3)
+                        
+                        if let developerToken = mkModal.AM_API.AM_TOKEN,
+                           let userToken = mkModal.AM_API.AM_USER_TOKEN {
+                            PrefValueField("MusicKit Developer Token", developerToken)
+                            PrefValueField("MusicKit User Token", userToken)
+                        }
+                        
+                        Text("Do not share this information with anyone.  The Cider Team would never, never ask for this.")
+                            .foregroundColor(.red)
+                            .preferenceDescription()
+                            .padding(.vertical)
                     }
                     
-                    Text("Do not share this information with anyone.  The Cider Team would never, never ask for this.")
-                        .foregroundColor(.red)
-                        .preferenceDescription()
-                        .padding(.vertical)
+                    Group {
+                        Text("Debugging Settings - CiderPlaybackAgent")
+                            .bold()
+                            .padding(.vertical, 3)
+                        
+                        Toggle("When CiderPlaybackAgent is launched, open Web Inspector automatically", isOn: $prefModal.prefs.openWebInspectorAutomatically)
+                            .toggleStyle(.checkbox)
+                        Text("This setting will apply next time \(Bundle.main.displayName!) is launched")
+                            .preferenceDescription()
+                        
+                    }
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }
