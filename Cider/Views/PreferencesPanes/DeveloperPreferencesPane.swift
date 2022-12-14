@@ -47,18 +47,20 @@ struct DeveloperPreferencesPane: View {
                                     .fill(.green)
                                     .frame(width: 7, height: 7)
                                 
-                                VStack(alignment: .leading) {
-                                    Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))")) with Session ID")
-                                    
-                                    Text(ciderPlayback.agentSessionId)
-                                        .foregroundColor(.blue)
-                                        .modifier(BasicHoverModifier())
-                                        .onTapGesture {
-                                            NSPasteboard.general.declareTypes([.string], owner: nil)
-                                            NSPasteboard.general.setString(ciderPlayback.agentSessionId, forType: .string)
-                                        }
+                                if ciderPlayback.isReady {
+                                    VStack(alignment: .leading) {
+                                        Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))")) with Session ID")
+                                        
+                                        Text(ciderPlayback.agentSessionId)
+                                            .foregroundColor(.blue)
+                                            .modifier(BasicHoverModifier())
+                                            .onTapGesture {
+                                                NSPasteboard.general.declareTypes([.string], owner: nil)
+                                                NSPasteboard.general.setString(ciderPlayback.agentSessionId, forType: .string)
+                                            }
+                                    }
+                                    .padding(.leading, 3)
                                 }
-                                .padding(.leading, 3)
                             }
                             .padding(.vertical)
                         }
