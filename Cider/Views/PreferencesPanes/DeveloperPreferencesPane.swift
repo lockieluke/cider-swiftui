@@ -12,6 +12,7 @@ struct DeveloperPreferencesPane: View {
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var prefModal: PrefModal
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
         Preferences.Container(contentWidth: 450.0) {
@@ -41,6 +42,25 @@ struct DeveloperPreferencesPane: View {
                             Text("This setting will apply next time \(Bundle.main.displayName) is launched")
                                 .preferenceDescription()
                             
+                            HStack(alignment: .center) {
+                                Circle()
+                                    .fill(.green)
+                                    .frame(width: 7, height: 7)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))")) with Session ID")
+                                    
+                                    Text(ciderPlayback.agentSessionId)
+                                        .foregroundColor(.blue)
+                                        .modifier(BasicHoverModifier())
+                                        .onTapGesture {
+                                            NSPasteboard.general.declareTypes([.string], owner: nil)
+                                            NSPasteboard.general.setString(ciderPlayback.agentSessionId, forType: .string)
+                                        }
+                                }
+                                .padding(.leading, 3)
+                            }
+                            .padding(.vertical)
                         }
                         
                         Group {
@@ -58,9 +78,10 @@ struct DeveloperPreferencesPane: View {
                     }
                     .fixedSize(horizontal: false, vertical: true)
                 }
-                .fixedSize(horizontal: false, vertical: true)
+                .transparentScrollbars()
             }
         }
+        .frame(height: 600)
         .enableInjection()
     }
     

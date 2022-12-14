@@ -100,6 +100,7 @@ struct WSDebuggerView: View {
                     }
                 }
             }
+            .transparentScrollbars()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.background)
             .cornerRadius(5)

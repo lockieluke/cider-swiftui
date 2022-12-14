@@ -147,7 +147,8 @@ class AppMenu {
                 PreferencesPanes.GeneralPreferenceViewController(),
                 PreferencesPanes.DeveloperPreferencesViewController(
                     self.mkModal,
-                    self.prefModal
+                    self.prefModal,
+                    self.ciderPlayback
                 )
             ],
             style: .toolbarItems,
