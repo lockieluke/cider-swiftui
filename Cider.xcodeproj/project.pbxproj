@@ -39,6 +39,8 @@
 		B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */; };
 		B768871B2949225200C623C9 /* BasicHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871A2949225200C623C9 /* BasicHoverModifier.swift */; };
 		B768871F2949E82A00C623C9 /* PrefModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871E2949E82A00C623C9 /* PrefModal.swift */; };
+		B7688723294A06F600C623C9 /* Diagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688722294A06F500C623C9 /* Diagnostic.swift */; };
+		B7688725294A076300C623C9 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688724294A076300C623C9 /* Process.swift */; };
 		B77AACE3293AC40900F8E1E2 /* ResponsiveLayoutReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */; };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
 		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; };
@@ -137,6 +139,8 @@
 		B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperPreferencesPane.swift; sourceTree = "<group>"; };
 		B768871A2949225200C623C9 /* BasicHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHoverModifier.swift; sourceTree = "<group>"; };
 		B768871E2949E82A00C623C9 /* PrefModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefModal.swift; sourceTree = "<group>"; };
+		B7688722294A06F500C623C9 /* Diagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostic.swift; sourceTree = "<group>"; };
+		B7688724294A076300C623C9 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveLayoutReader.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
 		B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
@@ -282,6 +286,7 @@
 				B7ECB7C228FDFA6700B5DF11 /* Dictionary.swift */,
 				B798562A292ADE13003CA787 /* String.swift */,
 				B77AACF5293B93C200F8E1E2 /* TimeInterval.swift */,
+				B7688724294A076300C623C9 /* Process.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 				B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */,
 				B7D5B9E1292C2F9900046B7F /* Logging.swift */,
 				B76887112948F9C600C623C9 /* Support.swift */,
+				B7688722294A06F500C623C9 /* Diagnostic.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -646,6 +652,7 @@
 				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
 				B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */,
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
+				B7688725294A076300C623C9 /* Process.swift in Sources */,
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
 				B7AAB70528BAE3DC009AABEA /* PlaybackCardView.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
@@ -676,6 +683,7 @@
 				B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */,
 				B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */,
 				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
+				B7688723294A06F600C623C9 /* Diagnostic.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
 				B75219B0291984AD005CF8F0 /* NavigationModal.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,

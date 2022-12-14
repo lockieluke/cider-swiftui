@@ -11,6 +11,52 @@ extension Preferences.PaneIdentifier {
     static let developer = Self("developer")
 }
 
+struct PrefValueField: View {
+    
+    @ObservedObject private var iO = Inject.observer
+    
+    var label: String
+    var value: String
+    
+    init(_ label: String, _ value: String) {
+        self.label = label
+        self.value = value
+    }
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Text("\(label): ")
+            Text(value).foregroundColor(.blue).modifier(BasicHoverModifier())
+                .onTapGesture {
+                    NSPasteboard.general.declareTypes([.string], owner: nil)
+                    NSPasteboard.general.setString(value, forType: .string)
+                }
+        }
+        .padding(.top)
+        .enableInjection()
+    }
+    
+}
+
+struct PrefSectionText: View {
+    
+    @ObservedObject private var iO = Inject.observer
+    
+    var title: String
+    
+    init(_ title: String) {
+        self.title = title
+    }
+    
+    var body: some View {
+        Text(title)
+            .bold()
+            .padding(.vertical, 3)
+            .enableInjection()
+    }
+    
+}
+
 struct PreferencesPanes {
     
     static let GeneralPreferenceViewController: () -> PreferencePane = {
