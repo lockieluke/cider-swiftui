@@ -47,6 +47,7 @@ struct DetailedView: View {
     func playSync(mediaItem: MusicItem, shuffle: Bool = false) {
         Task {
             await self.ciderPlayback.setQueue(musicItem: self.reflectedMusicItem)
+            self.ciderPlayback.updateNowPlayingStateBeforeReady(musicItem: self.reflectedMusicItem)
             await self.ciderPlayback.play(shuffle: shuffle)
         }
     }
@@ -144,7 +145,7 @@ struct DetailedView: View {
                         ScrollView(.vertical) {
                             LazyVStack {
                                 ForEach(reflectedMusicItem.tracks, id: \.id) { track in
-                                    MediaTrackRepresentable(mediaItem: track)
+                                    MediaTrackRepresentable(mediaTrack: track)
                                 }
                             }
                             .padding(.vertical)

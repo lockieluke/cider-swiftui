@@ -9,7 +9,7 @@ struct MediaTrackRepresentable: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    var mediaItem: MediaTrack
+    var mediaTrack: MediaTrack
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
@@ -25,11 +25,11 @@ struct MediaTrackRepresentable: View {
                             .font(.system(size: 14))
                             .foregroundColor(isHovering ? .pink : .primary)
                             .animation(.interactiveSpring(), value: isHovering)
-                        Text("\(mediaItem.title)")
+                        Text("\(mediaTrack.title)")
                             .padding(.horizontal)
                     }
                     Spacer()
-                    Text("\(mediaItem.duration.minuteSecond)")
+                    Text("\(mediaTrack.duration.minuteSecond)")
                 }
                 .padding()
             }
@@ -41,16 +41,8 @@ struct MediaTrackRepresentable: View {
             )
             .onTapGesture {
                 Task {
-                    await self.ciderPlayback.setQueue(mediaTrack: self.mediaItem)
-                    
-                    self.ciderPlayback.nowPlayingState = NowPlayingState(
-                        name: self.mediaItem.title,
-                        artistName: self.mediaItem.artistName,
-                        artworkURL: self.mediaItem.artwork.getUrl(width: 100, height: 100),
-                        isPlaying: false,
-                        isReady: false
-                    )
-                    
+                    await self.ciderPlayback.setQueue(mediaTrack: self.mediaTrack)
+                    self.ciderPlayback.updateNowPlayingStateBeforeReady(mediaTrack: mediaTrack)
                     await self.ciderPlayback.play()
                 }
             }
@@ -68,6 +60,6 @@ struct MediaTrackRepresentable: View {
 
 struct MediaTrackRepresentable_Previews: PreviewProvider {
     static var previews: some View {
-        MediaTrackRepresentable(mediaItem: MediaTrack(data: []))
+        MediaTrackRepresentable(mediaTrack: MediaTrack(data: []))
     }
 }

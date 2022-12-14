@@ -116,7 +116,8 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     requestObj["eventName"].string = eventName
                     requestObj["mediaParams"] = JSON([
                         "name": dict["name"],
-                        "artistName": dict["artistName"]
+                        "artistName": dict["artistName"],
+                        "artworkURL": dict["artworkURL"]
                     ])
                     break
                     

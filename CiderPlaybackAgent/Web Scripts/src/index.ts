@@ -74,7 +74,8 @@ document.addEventListener('musickitloaded', async function () {
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "mediaItemDidChange",
             name: mk.nowPlayingItem.title,
-            artistName: mk.nowPlayingItem.artistName
+            artistName: mk.nowPlayingItem.artistName,
+            artworkURL: mk.nowPlayingItem.artworkURL
         });
     }
 

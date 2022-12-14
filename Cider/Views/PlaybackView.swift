@@ -28,6 +28,8 @@ struct PlaybackView: View {
             
             VStack {
                 PlaybackBar()
+                    .environmentObject(ciderPlayback)
+                
                 HStack {
                     PlaybackButton(icon: .Shuffle)
                     PlaybackButton(icon: .Backward)

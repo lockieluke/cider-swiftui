@@ -153,6 +153,26 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    func updateNowPlayingStateBeforeReady(mediaTrack: MediaTrack) {
+        self.nowPlayingState = NowPlayingState(
+            name: mediaTrack.title,
+            artistName: mediaTrack.artistName,
+            artworkURL: mediaTrack.artwork.getUrl(width: 100, height: 100),
+            isPlaying: false,
+            isReady: false
+        )
+    }
+    
+    func updateNowPlayingStateBeforeReady(musicItem: MusicItem) {
+        self.nowPlayingState = NowPlayingState(
+            name: musicItem.title,
+            artistName: musicItem.artistName,
+            artworkURL: musicItem.artwork.getUrl(width: 100, height: 100),
+            isPlaying: false,
+            isReady: false
+        )
+    }
+    
     func shutdown() async {
         do {
             _ = try await self.commClient.request("/shutdown")
@@ -197,6 +217,12 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 
                 self.nowPlayingState.name = mediaParams["name"].string
                 self.nowPlayingState.artistName = mediaParams["artistName"].string
+                
+                let newArtworkURL = URL(string: mediaParams["artworkURL"].stringValue.replacingOccurrences(of: "{w}", with: "100").replacingOccurrences(of: "{h}", with: "100"))
+                if newArtworkURL != self.nowPlayingState.artworkURL {
+                    self.nowPlayingState.artworkURL = newArtworkURL
+                }
+                
                 self.nowPlayingState.isPlaying = true
                 self.nowPlayingState.isReady = true
                 

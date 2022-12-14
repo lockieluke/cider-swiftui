@@ -612,7 +612,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/index.js",
+				$SRCROOT/CiderWebAuth/dist/index.js,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
@@ -653,7 +653,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/index-cpa.js",
+				"$SRCROOT/CiderPlaybackAgent/Web\\ Scripts/dist/index-cpa.js",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
