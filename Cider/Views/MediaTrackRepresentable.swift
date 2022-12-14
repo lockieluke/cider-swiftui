@@ -42,6 +42,15 @@ struct MediaTrackRepresentable: View {
             .onTapGesture {
                 Task {
                     await self.ciderPlayback.setQueue(mediaTrack: self.mediaItem)
+                    
+                    self.ciderPlayback.nowPlayingState = NowPlayingState(
+                        name: self.mediaItem.title,
+                        artistName: self.mediaItem.artistName,
+                        artworkURL: self.mediaItem.artwork.getUrl(width: 100, height: 100),
+                        isPlaying: false,
+                        isReady: false
+                    )
+                    
                     await self.ciderPlayback.play()
                 }
             }

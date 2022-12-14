@@ -4,6 +4,7 @@
 
 import SwiftUI
 import InjectHotReload
+import SDWebImageSwiftUI
 
 struct InteractiveText: View {
     
@@ -35,21 +36,24 @@ struct PlaybackCardView: View {
     
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: "https://lastfm.freetls.fastly.net/i/u/770x0/f14944a5f6bb6a70a0d1256524da9fc2.jpg#f14944a5f6bb6a70a0d1256524da9fc2")) { image in
-                image
-                    .interpolation(.none)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 50, height: 50)
-            } placeholder: {
-                ProgressView()
+            let nowPlayingState = ciderPlayback.nowPlayingState
+            
+            Group {
+                if let artworkURL = nowPlayingState.artworkURL {
+                    WebImage(url: artworkURL)
+                        .interpolation(.none)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 50, height: 50)
+                        .cornerRadius(5)
+                } else {
+                    RoundedRectangle(cornerRadius: 5)
+                        .fill(.secondary)
+                }
             }
             .frame(width: 50, height: 50)
-            .cornerRadius(5)
             
             VStack(alignment: .leading) {
-                let nowPlayingState = ciderPlayback.nowPlayingState
-                
                 Text(nowPlayingState.name ?? "Not Playing")
                     .font(.system(.headline))
                 

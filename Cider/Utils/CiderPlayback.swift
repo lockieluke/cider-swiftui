@@ -10,7 +10,9 @@ struct NowPlayingState {
     
     var name: String? = nil
     var artistName: String? = nil
+    var artworkURL: URL?
     var isPlaying = false
+    var isReady = true
     
 }
 
@@ -193,11 +195,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             case "mediaItemDidChange":
                 let mediaParams = json["mediaParams"]
                 
-                self.nowPlayingState = NowPlayingState(
-                    name: mediaParams["name"].string,
-                    artistName: mediaParams["artistName"].string,
-                    isPlaying: true
-                )
+                self.nowPlayingState.name = mediaParams["name"].string
+                self.nowPlayingState.artistName = mediaParams["artistName"].string
+                self.nowPlayingState.isPlaying = true
+                self.nowPlayingState.isReady = true
+                
                 break
                 
             default:
