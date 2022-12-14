@@ -5,14 +5,26 @@
 import Foundation
 import SwiftyJSON
 
+enum AudioQuality: Int {
+    
+    case Standard = 64, High = 256
+    
+}
+
 struct Prefs {
     
     var openWebInspectorAutomatically = false
+    var audioQuality: AudioQuality = .Standard
     
     var json: JSON {
         get {
             return JSON([
-                "openWebInspectorAutomatically": openWebInspectorAutomatically
+                "debug": [
+                    "openWebInspectorAutomatically": openWebInspectorAutomatically
+                ],
+                "audio": [
+                    "quality": audioQuality.rawValue
+                ]
             ])
         }
     }
@@ -68,7 +80,8 @@ class PrefModal: ObservableObject {
                 let json = try JSON(data: configData)
                 
                 self.prefs = Prefs(
-                    openWebInspectorAutomatically: json["openWebInspectorAutomatically"].bool ?? false
+                    openWebInspectorAutomatically: json["debug"]["openWebInspectorAutomatically"].bool ?? false,
+                    audioQuality: AudioQuality(rawValue: json["audio"]["quality"].int ?? 64) ?? .Standard
                 )
             } catch {
                 self.logger.error("Failed to read from config file: \(error)", displayCross: true)

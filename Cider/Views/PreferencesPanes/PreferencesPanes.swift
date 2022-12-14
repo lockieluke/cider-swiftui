@@ -8,6 +8,7 @@ import InjectHotReload
 
 extension Preferences.PaneIdentifier {
     static let general = Self("general")
+    static let audio = Self("audio")
     static let developer = Self("developer")
 }
 
@@ -82,6 +83,20 @@ struct PreferencesPanes {
                 .environmentObject(mkModal)
                 .environmentObject(prefModal)
                 .environmentObject(ciderPlayback)
+        }
+        
+        return Preferences.PaneHostingController(pane: paneView)
+    }
+    
+    static let AudioPreferencesViewController: (_ ciderPlayback: CiderPlayback, _ prefModal: PrefModal) -> PreferencePane = { ciderPlayback, prefModal in
+        let paneView = Preferences.Pane(
+            identifier: .audio,
+            title: "Audio",
+            toolbarIcon: NSImage(systemSymbolName: "waveform", accessibilityDescription: "Audio Preferences")!
+        ) {
+            AudioPreferencesPane()
+                .environmentObject(ciderPlayback)
+                .environmentObject(prefModal)
         }
         
         return Preferences.PaneHostingController(pane: paneView)

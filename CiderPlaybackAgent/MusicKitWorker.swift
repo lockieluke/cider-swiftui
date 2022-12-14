@@ -99,9 +99,21 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.play()", arguments: [:], contentWorld: .page)
     }
     
+    func setAudioQuality(audioQuality: Int) async {
+        _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.bitrate = \(audioQuality)", contentWorld: .page)
+    }
+    
     private func asyncRunMKJS(_ script: String) async {
         do {
             _ = try await self.wkWebView.evaluateJavaScriptAsync("window.ciderInterop.mk.\(script)")
+        } catch {
+            print("Error running JavaScript: \(error)")
+        }
+    }
+    
+    private func syncRunMKJS(_ script: String) {
+        do {
+            _ = try self.wkWebView.evaluateJavaScript("window.ciderInterop.mk.\(script)")
         } catch {
             print("Error running JavaScript: \(error)")
         }
@@ -138,7 +150,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     
     func openInspectorInNewWindow() {
 #if DEBUG
-        if self.config["openWebInspectorAutomatically"].boolValue {
+        if self.config["debug"]["openWebInspectorAutomatically"].boolValue {
             if let inspector = self.wkWebView.value(forKey: "_inspector") as? AnyObject {
                 _ = inspector.perform(Selector(("showConsole")))
             }
@@ -149,6 +161,10 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // hack to show WKInspector of the headless WKWebView without Safari
         self.openInspectorInNewWindow()
+        
+        if let audioQuality = self.config["audio"]["quality"].int {
+            self.syncRunMKJS("bitrate = \(audioQuality)")
+        }
     }
     
 }

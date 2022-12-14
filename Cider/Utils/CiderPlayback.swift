@@ -127,6 +127,16 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    func setAudioQuality(_ quality: AudioQuality) async {
+        do {
+            _ = try await self.wsCommClient.request("/set-audio-quality", body: [
+                "quality": quality.rawValue
+            ])
+        } catch {
+            self.logger.error("Failed to set audio quality to \(quality.rawValue)", displayCross: true)
+        }
+    }
+    
     func start() {
         if self.isRunning {
             return

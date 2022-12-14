@@ -66,6 +66,13 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 session.writeText("CiderPlaybackAgent on port \(agentPort?.formatted() ?? "Default Port")")
                 break
                 
+            case "/set-audio-quality":
+                Task {
+                    await self.musicKitWorker?.setAudioQuality(audioQuality: json?["quality"].int ?? 64)
+                    done()
+                }
+                break
+                
             case "/set-queue":
                 Task {
                     if let albumId = json?["album-id"].string {

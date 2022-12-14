@@ -145,6 +145,10 @@ class AppMenu {
         PreferencesWindowController(
             preferencePanes: [
                 PreferencesPanes.GeneralPreferenceViewController(),
+                PreferencesPanes.AudioPreferencesViewController(
+                    self.ciderPlayback,
+                    self.prefModal
+                ),
                 PreferencesPanes.DeveloperPreferencesViewController(
                     self.mkModal,
                     self.prefModal,
