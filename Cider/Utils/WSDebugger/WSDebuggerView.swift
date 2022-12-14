@@ -98,6 +98,11 @@ struct WSDebuggerView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                     }
+                    
+                    Color.clear
+                        .onAppear {
+                            scrollValue.scrollTo("last")
+                        }
                 }
             }
             .transparentScrollbars()
