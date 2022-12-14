@@ -52,13 +52,13 @@ struct DeveloperPreferencesPane: View {
                             Memory: \(ProcessInfo.processInfo.physicalMemory / 1024 / 1024 / 1024) GB
                             Serial Number: \(Diagnostic.macSerialNumber ?? "Unable to retrieve serial number")
                             OS: \(Diagnostic.macOSName) \(Diagnostic.macOSFullVersionString)
+                            Cider: \(Bundle.main.version)
                             """)
                         }
                     }
                     .fixedSize(horizontal: false, vertical: true)
                 }
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(maxHeight: 750)
             }
         }
         .enableInjection()
