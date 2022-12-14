@@ -50,9 +50,7 @@ class AppWindow {
         window.backgroundColor = .clear
         window.titlebarAppearsTransparent = true
         window.titleVisibility = .hidden
-        if let displayName = Bundle.main.displayName {
-            window.title = displayName
-        }
+        window.title = Bundle.main.displayName
         
         self.windowDelegate = AppWindowDelegate()
         window.delegate = windowDelegate

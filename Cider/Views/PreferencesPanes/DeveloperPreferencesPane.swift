@@ -68,7 +68,7 @@ struct DeveloperPreferencesPane: View {
                         
                         Toggle("When CiderPlaybackAgent is launched, open Web Inspector automatically", isOn: $prefModal.prefs.openWebInspectorAutomatically)
                             .toggleStyle(.checkbox)
-                        Text("This setting will apply next time \(Bundle.main.displayName!) is launched")
+                        Text("This setting will apply next time \(Bundle.main.displayName) is launched")
                             .preferenceDescription()
                         
                     }

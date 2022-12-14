@@ -38,7 +38,7 @@ class PrefModal: ObservableObject {
     var appPrefsDir: URL {
         get {
             do {
-                return try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent(Bundle.main.displayName!)
+                return try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent(Bundle.main.displayName)
             } catch {
                 return URL(string: FileManager.default.currentDirectoryPath)!.appendingPathComponent("Cider/config.json")
             }

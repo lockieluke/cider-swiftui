@@ -103,9 +103,7 @@ final class AuthWorker {
         wkWebView?.customUserAgent = AuthWorker.USER_AGENT
         
         self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false)
-        if let displayName = Bundle.main.displayName {
-            authWindow.title = "Sign In - \(displayName)"
-        }
+        authWindow.title = "Sign In - \(Bundle.main.displayName)"
         authWindow.isMovable = false
         authWindow.isMovableByWindowBackground = false
         
