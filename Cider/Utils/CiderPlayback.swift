@@ -17,11 +17,13 @@ struct NowPlayingState {
 class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     @Published var nowPlayingState = NowPlayingState()
+    @Published var isReady = false
+    
+    let agentPort: UInt16
+    let agentSessionId: String
     
     private let logger: Logger
     private let proc: Process
-    private let agentPort: UInt16
-    private let agentSessionId: String
     private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
     private var isRunning: Bool
@@ -30,7 +32,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = NetworkingProvider.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
-        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, defaultHeaders:  [
+        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, wsTarget: .CiderPlaybackAgent, defaultHeaders:  [
             "Agent-Session-ID": agentSessionId,
             "User-Agent": "Cider SwiftUI"
         ])
@@ -161,6 +163,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         switch event {
             
         case .connected:
+            self.isReady = true
             self.logger.success("Connected to CiderPlaybackAgent", displayTick: true)
             break
             
@@ -172,6 +175,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         case .text(let message):
             guard let json = try? JSON(data: message.data(using: .utf8)!),
                   let eventName = json["eventName"].string else { return }
+            
+            WSModal.shared.traffic.append(WSTrafficRecord(target: .CiderPlaybackAgent, rawJSONString: message, dateSent: .now, trafficType: .Receive, id: UUID().uuidString))
             
             switch eventName {
                 

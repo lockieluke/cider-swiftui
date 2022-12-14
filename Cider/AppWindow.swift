@@ -13,6 +13,7 @@ class AppWindow {
     private let appWindowModal = AppWindowModal()
     private let mkModal: MKModal
     private let prefModal = PrefModal()
+    private let wsModal = WSModal.shared
     private let authWorker: AuthWorker
     private let appMenu: AppMenu
     
@@ -66,7 +67,7 @@ class AppWindow {
         window.isReleasedWhenClosed = false
         window.center()
         
-        let appMenu = AppMenu(window, mkModal: mkModal, authWorker: authWorker, prefModal: prefModal)
+        let appMenu = AppMenu(window, mkModal: mkModal, authWorker: authWorker, prefModal: prefModal, wsModal: wsModal, ciderPlayback: ciderPlayback)
         appMenu.loadMenus()
 
         self.mainWindow = window

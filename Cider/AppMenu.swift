@@ -14,8 +14,10 @@ class AppMenu {
     private let mkModal: MKModal
     private let authWorker: AuthWorker
     private let prefModal: PrefModal
+    private let wsModal: WSModal
+    private let ciderPlayback: CiderPlayback
     
-    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, prefModal: PrefModal) {
+    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, prefModal: PrefModal, wsModal: WSModal, ciderPlayback: CiderPlayback) {
         let menu = NSMenu()
         
         self.window = window
@@ -24,6 +26,8 @@ class AppMenu {
         self.mkModal = mkModal
         self.authWorker = authWorker
         self.prefModal = prefModal
+        self.wsModal = wsModal
+        self.ciderPlayback = ciderPlayback
     }
     
     func loadMenus() {
@@ -80,6 +84,14 @@ class AppMenu {
                        keyEquivalent: "a")
         ]
         
+        #if DEBUG
+        let developerMenu = NSMenuItem()
+        developerMenu.submenu = NSMenu(title: "Developer")
+        developerMenu.submenu?.items = [
+            wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: ""))
+        ]
+        #endif
+        
         let windowMenu = NSMenuItem()
         windowMenu.submenu = NSMenu(title: "Window")
         windowMenu.submenu?.items = [
@@ -104,7 +116,16 @@ class AppMenu {
             githubMenu
         ]
         
+        #if DEBUG
+        menu.items = [appNameMenu, fileMenu, editMenu, developerMenu, windowMenu, helpMenu]
+        #else
         menu.items = [appNameMenu, fileMenu, editMenu, windowMenu, helpMenu]
+        #endif
+    }
+    
+    func wrapMenuItem(_ menuItem: NSMenuItem) -> NSMenuItem {
+        menuItem.target = self
+        return menuItem
     }
     
     @objc func signOut(_ sender: Any) {
@@ -141,6 +162,11 @@ class AppMenu {
     
     @objc func openOrgGitHub(_ sender: Any) {
         Support.openOrgGitHub()
+    }
+    
+    @objc func openWSDebugger(_ sender: Any) {
+        let wsDebugger = WSDebugger(wsModal: self.wsModal, ciderPlayback: self.ciderPlayback)
+        wsDebugger.open()
     }
     
     func getMenu() -> NSMenu {

@@ -41,6 +41,9 @@
 		B768871F2949E82A00C623C9 /* PrefModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871E2949E82A00C623C9 /* PrefModal.swift */; };
 		B7688723294A06F600C623C9 /* Diagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688722294A06F500C623C9 /* Diagnostic.swift */; };
 		B7688725294A076300C623C9 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688724294A076300C623C9 /* Process.swift */; };
+		B7688728294A314400C623C9 /* WSDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688727294A314400C623C9 /* WSDebugger.swift */; };
+		B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688729294A321200C623C9 /* WSDebuggerView.swift */; };
+		B768872C294A359400C623C9 /* WSModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768872B294A359400C623C9 /* WSModal.swift */; };
 		B77AACE3293AC40900F8E1E2 /* ResponsiveLayoutReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */; };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
 		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; };
@@ -141,6 +144,9 @@
 		B768871E2949E82A00C623C9 /* PrefModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefModal.swift; sourceTree = "<group>"; };
 		B7688722294A06F500C623C9 /* Diagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostic.swift; sourceTree = "<group>"; };
 		B7688724294A076300C623C9 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
+		B7688727294A314400C623C9 /* WSDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSDebugger.swift; sourceTree = "<group>"; };
+		B7688729294A321200C623C9 /* WSDebuggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSDebuggerView.swift; sourceTree = "<group>"; };
+		B768872B294A359400C623C9 /* WSModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSModal.swift; sourceTree = "<group>"; };
 		B77AACE2293AC40900F8E1E2 /* ResponsiveLayoutReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveLayoutReader.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
 		B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
@@ -326,6 +332,15 @@
 			path = PreferencesPanes;
 			sourceTree = "<group>";
 		};
+		B7688726294A313500C623C9 /* WSDebugger */ = {
+			isa = PBXGroup;
+			children = (
+				B7688727294A314400C623C9 /* WSDebugger.swift */,
+				B7688729294A321200C623C9 /* WSDebuggerView.swift */,
+			);
+			path = WSDebugger;
+			sourceTree = "<group>";
+		};
 		B77AACE4293ACC7600F8E1E2 /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +356,7 @@
 		B7AAB6F728BA2DBF009AABEA /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B7688726294A313500C623C9 /* WSDebugger */,
 				B7C651D528C4B8E200D32DDC /* AuthWorker.swift */,
 				B706050C28BE0B4F002AD76C /* AMAPI.swift */,
 				B7C651D328C415F000D32DDC /* AppleAuth.swift */,
@@ -365,6 +381,7 @@
 				B75219AF291984AD005CF8F0 /* NavigationModal.swift */,
 				B75219BF291F0742005CF8F0 /* PersonalisedData.swift */,
 				B768871E2949E82A00C623C9 /* PrefModal.swift */,
+				B768872B294A359400C623C9 /* WSModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -651,6 +668,7 @@
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
 				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
 				B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */,
+				B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */,
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
 				B7688725294A076300C623C9 /* Process.swift in Sources */,
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
@@ -670,6 +688,7 @@
 				B768871729491B1800C623C9 /* GeneralPreferencesPane.swift in Sources */,
 				B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */,
 				B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */,
+				B7688728294A314400C623C9 /* WSDebugger.swift in Sources */,
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
 				B77AACF6293B93C200F8E1E2 /* TimeInterval.swift in Sources */,
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
@@ -707,6 +726,7 @@
 				B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */,
 				B725013A28C2624300992F57 /* NSColor.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
+				B768872C294A359400C623C9 /* WSModal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

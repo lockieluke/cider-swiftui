@@ -34,6 +34,7 @@ class CiderWSProvider {
     }
     
     private let baseURL: URL
+    private let wsTarget: WSTarget
     private let logger: Logger
     private var defaultBody: JSON?
     private var defaultHeaders: [String : String]?
@@ -47,7 +48,7 @@ class CiderWSProvider {
         }
     }
     
-    init(baseURL: URL, defaultBody: JSON? = nil, defaultHeaders: [String : String]? = nil) {
+    init(baseURL: URL, wsTarget: WSTarget = .Unknown, defaultBody: JSON? = nil, defaultHeaders: [String : String]? = nil) {
         var request = URLRequest(url: baseURL)
         request.timeoutInterval = 5
         request.allHTTPHeaderFields = defaultHeaders
@@ -58,6 +59,7 @@ class CiderWSProvider {
         self.defaultBody = defaultBody
         self.defaultHeaders = defaultHeaders
         self.socket = socket
+        self.wsTarget = wsTarget
     }
     
     deinit {
@@ -106,6 +108,7 @@ class CiderWSProvider {
                     let responseBody = try? JSON(data: text.data(using: .utf8)!)
                     DispatchQueue.main.async {
                         if responseBody?["request-id"].stringValue == requestId {
+                            WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: text, dateSent: .now, trafficType: .Receive, id: requestId))
                             continuation.resume()
                         }
                     }
@@ -121,6 +124,7 @@ class CiderWSProvider {
                 return
             }
 
+            WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: requestBodyString, dateSent: .now, trafficType: .Send, id: requestId))
             self.socket.write(string: requestBodyString)
         }
     }
