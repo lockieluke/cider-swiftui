@@ -23,7 +23,8 @@ struct WSTrafficRecord {
     let rawJSONString: String
     let dateSent: Date
     var trafficType: WSTrafficType = .Bi
-    let id: String
+    let requestId: String
+    let identifiableKey: String = UUID().uuidString
     
     
 }

@@ -220,9 +220,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             
         case .text(let message):
             guard let json = try? JSON(data: message.data(using: .utf8)!),
-                  let eventName = json["eventName"].string else { return }
+                  let eventName = json["eventName"].string,
+                  let requestId = json["requestId"].string
+            else { return }
             
-            WSModal.shared.traffic.append(WSTrafficRecord(target: .CiderPlaybackAgent, rawJSONString: message, dateSent: .now, trafficType: .Receive, id: UUID().uuidString))
+            WSModal.shared.traffic.append(WSTrafficRecord(target: .CiderPlaybackAgent, rawJSONString: message, dateSent: .now, trafficType: .Receive, requestId: requestId))
             
             switch eventName {
                 

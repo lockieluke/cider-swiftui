@@ -41,6 +41,7 @@ struct WSTrafficView: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(wsTraffic.rawJSONString)
+                    .textSelection(.enabled)
                 Text(viewDate)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -83,7 +84,7 @@ struct WSDebuggerView: View {
                         }
                     } else {
                         VStack(alignment: .leading) {
-                            ForEach(wsModal.traffic, id: \.id) { traffic in
+                            ForEach(wsModal.traffic, id: \.identifiableKey) { traffic in
                                 if selectedWSTarget == traffic.target {
                                     WSTrafficView(wsTraffic: traffic)
                                 }
