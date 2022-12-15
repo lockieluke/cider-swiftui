@@ -462,7 +462,7 @@
 		315E10340FEC2B778176816FAE431949 /* Errno.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Errno.swift; path = Xcode/Sources/Errno.swift; sourceTree = "<group>"; };
 		316CE9EE7D1B9CEE50770F90F6841187 /* String+Rainbow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Rainbow.swift"; path = "Sources/String+Rainbow.swift"; sourceTree = "<group>"; };
 		31CF5C5F6A05CB0C87AAD65CD86BA18C /* SDDisplayLink.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDDisplayLink.h; path = SDWebImage/Private/SDDisplayLink.h; sourceTree = "<group>"; };
-		31F661B27BA2CA3D2D9B88B526E31869 /* ArgumentParserKit */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = ArgumentParserKit; path = libArgumentParserKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		31F661B27BA2CA3D2D9B88B526E31869 /* libArgumentParserKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libArgumentParserKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		327FC55449DDD8A6DFC8E566FF9D7595 /* AppKitIntrospectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppKitIntrospectionView.swift; path = Introspect/AppKitIntrospectionView.swift; sourceTree = "<group>"; };
 		32E237216AABD6E552D11BB32FF2EA28 /* FoundationSecurity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FoundationSecurity.swift; path = Sources/Security/FoundationSecurity.swift; sourceTree = "<group>"; };
 		333C959D5D132A4DD7F51D33B0A6D870 /* ArgumentParserKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ArgumentParserKit.release.xcconfig; sourceTree = "<group>"; };
@@ -516,7 +516,7 @@
 		560C8B4E633F952970776F0A0EE0B534 /* RainbowSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RainbowSwift-prefix.pch"; sourceTree = "<group>"; };
 		5658E52AC9C6521CCC16A10A6937C7A3 /* InjectHotReload */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = InjectHotReload; path = InjectHotReload.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57466284913298BD394A989092E61050 /* SDWeakProxy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWeakProxy.m; path = SDWebImage/Private/SDWeakProxy.m; sourceTree = "<group>"; };
-		575B4FEF97C798B19B4D4572DB58FB83 /* UIImageColors */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = UIImageColors; path = UIImageColors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		575B4FEF97C798B19B4D4572DB58FB83 /* UIImageColors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIImageColors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		587CC8FD90D615893EBF8B0A5FCC80E5 /* ByteString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ByteString.swift; path = ArgumentParserKit/Classes/internal/Basic/ByteString.swift; sourceTree = "<group>"; };
 		588F6FF2D2A8594896F573345FC020DF /* SDImageCacheDefine.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageCacheDefine.m; path = SDWebImage/Core/SDImageCacheDefine.m; sourceTree = "<group>"; };
 		5A3C9B84E0132F310CFE97C2FEBCA78C /* SwiftyJSON-framework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "SwiftyJSON-framework.release.xcconfig"; sourceTree = "<group>"; };
@@ -622,7 +622,7 @@
 		9BFF27D9032498580BEB53F15DC379B4 /* Preferences-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Preferences-prefix.pch"; sourceTree = "<group>"; };
 		9D00F94C7E45DFAD11D863082E21DFFF /* SDWebImageCacheKeyFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCacheKeyFilter.h; path = SDWebImage/Core/SDWebImageCacheKeyFilter.h; sourceTree = "<group>"; };
 		9D9406EEA47555340E435D317E610DED /* UIImageView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "SDWebImage/Core/UIImageView+WebCache.m"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D9EB13B83406414DE266AF3C800C0DA /* CollectionExtensions+split.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CollectionExtensions+split.swift"; path = "ArgumentParserKit/Classes/internal/Utility/CollectionExtensions+split.swift"; sourceTree = "<group>"; };
 		A06061CF1C179B8A9D02F99DC0D873AD /* SDWebImageSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SDWebImageSwiftUI.debug.xcconfig; sourceTree = "<group>"; };
 		A0EA64F70EE6CE28048FF021EC0852D5 /* SDFileAttributeHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDFileAttributeHelper.h; path = SDWebImage/Private/SDFileAttributeHelper.h; sourceTree = "<group>"; };
@@ -885,7 +885,6 @@
 				7C3061F31D92F61AB52C65D42840E867 /* Utilities.swift */,
 				6B7C37E2B3BA2E1E6D55CD760939CCBC /* Support Files */,
 			);
-			name = Preferences;
 			path = Preferences;
 			sourceTree = "<group>";
 		};
@@ -913,7 +912,6 @@
 				BF340263563DD3B4956A758EAB55561E /* SwiftyJSON.swift */,
 				E33EA94060114D6DCB3DE001D9CB0DF1 /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -926,7 +924,6 @@
 				7278F082431A4016E4DAFDFB0891CC87 /* SwiftUI.swift */,
 				7C62D5F39914EB6EE47C445D145249E8 /* Support Files */,
 			);
-			name = InjectHotReload;
 			path = InjectHotReload;
 			sourceTree = "<group>";
 		};
@@ -948,7 +945,7 @@
 		4F529C9E052FB6A71F5A1F5C4598EDD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				31F661B27BA2CA3D2D9B88B526E31869 /* ArgumentParserKit */,
+				31F661B27BA2CA3D2D9B88B526E31869 /* libArgumentParserKit.a */,
 				5658E52AC9C6521CCC16A10A6937C7A3 /* InjectHotReload */,
 				D0A70003FD5E49B30CA83DAAFE03116B /* Introspect */,
 				B78B34A290EF816804F5049065A3948D /* Pods-Cider */,
@@ -961,7 +958,7 @@
 				E7E98885A0FEF49E9EE8975449969BEB /* Swifter */,
 				993019B705E07E443BC84520CE422AA6 /* SwiftyJSON-framework */,
 				CF45AECD6CF14C1B25872EA81729BC8F /* SwiftyJSON-library */,
-				575B4FEF97C798B19B4D4572DB58FB83 /* UIImageColors */,
+				575B4FEF97C798B19B4D4572DB58FB83 /* UIImageColors.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -982,7 +979,6 @@
 				02148AB9376939C8E6F485D8BE8B0079 /* Style.swift */,
 				33EC4BACFDB62CDE0BF286C4B46EA21F /* Support Files */,
 			);
-			name = RainbowSwift;
 			path = RainbowSwift;
 			sourceTree = "<group>";
 		};
@@ -1036,7 +1032,6 @@
 				83D5EB7BE4CB29F942BE22F5BC2B6D3A /* Core */,
 				63B5BDA25398F2242937CD62C0B5DBBF /* Support Files */,
 			);
-			name = SDWebImage;
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
@@ -1112,7 +1107,6 @@
 				DB036D7BA5CD7244A4719D0B7CF98CF6 /* URL.swift */,
 				60873EAA98D24F58693F61678EEFDECC /* Support Files */,
 			);
-			name = ArgumentParserKit;
 			path = ArgumentParserKit;
 			sourceTree = "<group>";
 		};
@@ -1313,7 +1307,6 @@
 				8AC73CAB9A89F362A04627C2ED33EB8C /* ViewExtensions.swift */,
 				DE0AF7E33F156DBE6D54C72AB0B5B052 /* Support Files */,
 			);
-			name = Introspect;
 			path = Introspect;
 			sourceTree = "<group>";
 		};
@@ -1339,7 +1332,6 @@
 				E262ABDCE3FB667BFB2B346C2BF8F5A8 /* WebImage.swift */,
 				C9881FDB8D1CD77ECE5C1341D4E9BFD8 /* Support Files */,
 			);
-			name = SDWebImageSwiftUI;
 			path = SDWebImageSwiftUI;
 			sourceTree = "<group>";
 		};
@@ -1357,7 +1349,6 @@
 				18F49F2521F44E34E1B14BC92B4EA2D2 /* UIImageColors.swift */,
 				AB87DE9AB3566A61F637ED27B9EB9262 /* Support Files */,
 			);
-			name = UIImageColors;
 			path = UIImageColors;
 			sourceTree = "<group>";
 		};
@@ -1401,7 +1392,6 @@
 				DB061C1AC423789A060D16FCF5500F14 /* WebSockets.swift */,
 				B2631FFA0FD7632CEFB7D4E8BA25A1DA /* Support Files */,
 			);
-			name = Swifter;
 			path = Swifter;
 			sourceTree = "<group>";
 		};
@@ -1494,7 +1484,6 @@
 				7FDC6793BAD5C84BFBEFE548DB4B1DDD /* WSEngine.swift */,
 				80FB997C73E235871C0EC18D1A8C2F26 /* Support Files */,
 			);
-			name = Starscream;
 			path = Starscream;
 			sourceTree = "<group>";
 		};
@@ -1859,7 +1848,7 @@
 			);
 			name = ArgumentParserKit;
 			productName = ArgumentParserKit;
-			productReference = 31F661B27BA2CA3D2D9B88B526E31869 /* ArgumentParserKit */;
+			productReference = 31F661B27BA2CA3D2D9B88B526E31869 /* libArgumentParserKit.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		BDB3D9762DE1E9282191B6B26703E4DE /* UIImageColors */ = {
@@ -1877,7 +1866,7 @@
 			);
 			name = UIImageColors;
 			productName = UIImageColors;
-			productReference = 575B4FEF97C798B19B4D4572DB58FB83 /* UIImageColors */;
+			productReference = 575B4FEF97C798B19B4D4572DB58FB83 /* UIImageColors.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		BE5A93BC466289DFDC0E79FA5AEFD079 /* SwiftyJSON-framework */ = {
@@ -1962,6 +1951,14 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					ACC90F9D64F5B2E66D26F066189E7EF2 = {
+						LastSwiftMigration = "";
+					};
+					BDB3D9762DE1E9282191B6B26703E4DE = {
+						LastSwiftMigration = "";
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 13.0";
@@ -2837,7 +2834,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -2863,7 +2860,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -3125,6 +3122,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3325,6 +3323,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
