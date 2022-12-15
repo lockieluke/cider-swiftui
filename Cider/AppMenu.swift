@@ -40,7 +40,7 @@ class AppMenu {
         var preferencesName = "Preferences..."
         if #available(macOS 13.0, *) {
             preferencesName = "Settings..."
-        }
+        }   
         
         let preferencesMenu = NSMenuItem(title: preferencesName, action: #selector(self.showPreferences(_:)), keyEquivalent: ",")
         preferencesMenu.target = self

@@ -154,7 +154,7 @@
         imageFormat = SDImageFormatSVG;
     } else if (CFStringCompare(uttype, kSDUTTypeBMP, 0) == kCFCompareEqualTo) {
         imageFormat = SDImageFormatBMP;
-    } else if (UTTypeConformsTo(uttype, kSDUTTypeRAW)) {
+    } else if (CFStringCompare(uttype, kSDUTTypeRAW, 0) == kCFCompareEqualTo) {
         imageFormat = SDImageFormatRAW;
     } else {
         imageFormat = SDImageFormatUndefined;
