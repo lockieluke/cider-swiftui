@@ -37,9 +37,9 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         wkConfiguration.userContentController = userContentController
         wkConfiguration.mediaTypesRequiringUserActionForPlayback = []
         wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
-        #if DEBUG
+#if DEBUG
         wkConfiguration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-        #endif
+#endif
         
         // Hack to enable playback for headless WKWebView
         let windowContainer = NSWindow(contentRect: .zero, styleMask: [.borderless, .nonactivatingPanel, .hudWindow], backing: .buffered, defer: false)
@@ -62,6 +62,29 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         self.config = config
         
         super.init()
+        self.setupMenus()
+    }
+    
+    func setupMenus() {
+        let menu = NSMenu()
+        
+        let undoManager = self.windowContainer.undoManager
+        let editMenu = NSMenuItem()
+        editMenu.submenu = NSMenu(title: "Edit")
+        editMenu.submenu?.items = [
+            NSMenuItem(title: undoManager?.undoMenuItemTitle ?? "Undo", action: Selector(("undo:")), keyEquivalent: "z"),
+            NSMenuItem(title: undoManager?.redoMenuItemTitle ?? "Redo", action: Selector(("redo:")), keyEquivalent: "Z"),
+            .separator(),
+            NSMenuItem(title: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x"),
+            NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c"),
+            NSMenuItem(title: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v"),
+            NSMenuItem.separator(),
+            NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)),
+                       keyEquivalent: "a")
+        ]
+        
+        menu.items = [editMenu]
+        NSApp.mainMenu = menu
     }
     
     func addCallback(uuid: String = UUID().uuidString, _ callback: @escaping (_ eventName: String, _ dict: [String: AnyObject]) -> Void) {
