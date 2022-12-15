@@ -35,7 +35,9 @@ struct PlaybackView: View {
                 HStack {
                     PlaybackButton(icon: .Shuffle)
                     PlaybackButton(icon: .Backward)
-                    PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, size: 23)
+                    PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, size: 23) {
+                        self.ciderPlayback.togglePlaybackSync()
+                    }
                     PlaybackButton(icon: .Forward)
                     PlaybackButton(icon: .Repeat)
                 }
@@ -81,8 +83,15 @@ struct PlaybackButton: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    var icon: PlaybackButtonIcon
-    var size = CGFloat(18)
+    private var icon: PlaybackButtonIcon
+    private var size = CGFloat(18)
+    private var onClick: (() -> Void)? = nil
+    
+    init(icon: PlaybackButtonIcon, size: CGFloat = 18, onClick: (() -> Void)? = nil) {
+        self.icon = icon
+        self.size = size
+        self.onClick = onClick
+    }
     
     @State private var isHovered = false
     @State private var bouncyFontSize = CGFloat(18)
@@ -101,6 +110,7 @@ struct PlaybackButton: View {
             }).onEnded({ _ in
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 1)) {
                     self.bouncyFontSize = size
+                    self.onClick?()
                 }
             }))
             .onHover { isHovered in

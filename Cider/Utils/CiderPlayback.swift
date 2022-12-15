@@ -129,6 +129,20 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    func pause() async {
+        do {
+            _ = try await self.wsCommClient.request("/pause")
+        } catch {
+            self.logger.error("Pause failed \(error)", displayCross: true)
+        }
+    }
+    
+    func togglePlaybackSync() {
+        Task {
+            await (self.nowPlayingState.isPlaying ? self.pause() : self.play())
+        }
+    }
+    
     func setAudioQuality(_ quality: AudioQuality) async {
         do {
             _ = try await self.wsCommClient.request("/set-audio-quality", body: [
@@ -226,6 +240,24 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 self.nowPlayingState.isPlaying = true
                 self.nowPlayingState.isReady = true
                 
+                break
+                
+            case "playbackStateDidChange":
+                switch json["playbackState"].string {
+                    
+                case "paused":
+                    self.nowPlayingState.isPlaying = false
+                    break
+                    
+                case "playing":
+                    self.nowPlayingState.isPlaying = true
+                    self.nowPlayingState.isReady = true
+                    break
+                    
+                default:
+                    break
+                    
+                }
                 break
                 
             default:

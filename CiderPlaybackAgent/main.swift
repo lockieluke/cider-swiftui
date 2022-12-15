@@ -96,6 +96,13 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 }
                 break
                 
+            case "/pause":
+                Task {
+                    await self.musicKitWorker?.pause()
+                    done()
+                }
+                break
+                
             default:
                 break
             }
@@ -110,15 +117,19 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     }
                 }
                 
+                requestObj["eventName"].string = eventName
                 switch eventName {
                     
                 case "mediaItemDidChange":
-                    requestObj["eventName"].string = eventName
                     requestObj["mediaParams"] = JSON([
                         "name": dict["name"],
                         "artistName": dict["artistName"],
                         "artworkURL": dict["artworkURL"]
                     ])
+                    break
+                    
+                case "playbackStateDidChange":
+                    requestObj["playbackState"].string = String(describing: dict["playbackState"] ?? "unknown" as AnyObject)
                     break
                     
                 default:

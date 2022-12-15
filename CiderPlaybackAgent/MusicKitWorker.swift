@@ -99,24 +99,24 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.play()", arguments: [:], contentWorld: .page)
     }
     
+    func pause() async {
+        await self.asyncRunMKJS("pause()")
+    }
+    
     func setAudioQuality(audioQuality: Int) async {
         _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.bitrate = \(audioQuality)", contentWorld: .page)
     }
     
     private func asyncRunMKJS(_ script: String) async {
         do {
-            _ = try await self.wkWebView.evaluateJavaScriptAsync("window.ciderInterop.mk.\(script)")
+            _ = try await self.wkWebView.callAsyncJavaScript("return await window.ciderInterop.mk.\(script)", contentWorld: .page)
         } catch {
             print("Error running JavaScript: \(error)")
         }
     }
     
     private func syncRunMKJS(_ script: String) {
-        do {
-            _ = try self.wkWebView.evaluateJavaScript("window.ciderInterop.mk.\(script)")
-        } catch {
-            print("Error running JavaScript: \(error)")
-        }
+        self.wkWebView.evaluateJavaScript("window.ciderInterop.mk.\(script)")
     }
     
     private func asyncRunJS(_ script: String) async {

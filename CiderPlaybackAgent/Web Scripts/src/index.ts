@@ -83,6 +83,13 @@ document.addEventListener('musickitloaded', async function () {
         updateNowPlayingInfo();
     })
 
+    mk.addEventListener(MusicKit.Events.playbackStateDidChange, () => {
+        window.webkit.messageHandlers.ciderkit.postMessage({
+            event: "playbackStateDidChange",
+            playbackState: MusicKit.PlaybackStates[mk.playbackState]
+        });
+    })
+
     window.ciderInterop = {
         mk,
         play: async () => {
@@ -92,8 +99,7 @@ document.addEventListener('musickitloaded', async function () {
                 return;
             }
 
-            console.log(`Initiated play with`)
-            updateNowPlayingInfo();
+            console.log("Initiated play");
         },
         setQueue: async mediaItem => {
             const [err, setQueueResult] = await to(mk.setQueue(mediaItem));
