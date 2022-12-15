@@ -648,12 +648,13 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$SRCROOT/CiderPlaybackAgent/Web Scripts/src/",
 			);
 			name = "Build Scripts";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$SRCROOT/CiderPlaybackAgent/Web\\ Scripts/dist/index-cpa.js",
+				"$SRCROOT/CiderPlaybackAgent/Web Scripts/dist/index-cpa.js",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
