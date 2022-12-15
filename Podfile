@@ -13,7 +13,6 @@ target 'Cider' do
   # Pods for Cider
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'master'
   pod 'Introspect'
-  # pod 'SwiftHTTP', :git => 'https://github.com/rahul-racha/SwiftHTTP.git', :branch => 'issue-305'
   pod 'Starscream'
   pod 'SDWebImageSwiftUI'
   pod 'InjectHotReload'
