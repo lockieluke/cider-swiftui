@@ -17,6 +17,14 @@ target 'Cider' do
   pod 'RainbowSwift'
   pod 'UIImageColors', :modular_headers => true
   pod 'Preferences', :git => 'https://github.com/ciderapp/Preferences.git', :branch => 'main'
+
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '12.3'
+      end
+    end
+  end
 end
 
 target 'CiderPlaybackAgent' do
