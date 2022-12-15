@@ -25,7 +25,6 @@ target 'Cider' do
 end
 
 target 'CiderPlaybackAgent' do
-  # use_frameworks!
   # own private fork of Swifter
   pod 'Swifter', :git => 'https://github.com/ciderapp/swifter.git', :branch => 'stable'
   pod 'ArgumentParserKit'
