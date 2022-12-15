@@ -67,9 +67,6 @@ document.addEventListener('musickitloaded', async function () {
     storekit.userTokenIsValid = true;
     await mk.authorize();
 
-    // Enable High Quality (256 kbps)
-    (mk as any).bitrate = MusicKit.PlaybackBitrate.HIGH
-
     const updateNowPlayingInfo = () => {
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "mediaItemDidChange",
