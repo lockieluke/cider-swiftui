@@ -86,13 +86,13 @@ document.addEventListener('musickitloaded', async function () {
     window.ciderInterop = {
         mk,
         play: async () => {
-            const [err, playStatus] = await to(mk.play());
+            const [err] = await to(mk.play());
             if (err) {
                 console.error(`Failed to initiate play ${err}`);
                 return;
             }
 
-            console.log(`Initiated play with ${playStatus}`)
+            console.log(`Initiated play with`)
             updateNowPlayingInfo();
         },
         setQueue: async mediaItem => {
