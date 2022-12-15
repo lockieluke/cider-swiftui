@@ -11,10 +11,10 @@ target 'Cider' do
   use_frameworks!
 
   # Pods for Cider
-  pod 'SwiftyJSON', '~> 4.0'
+  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'master'
   pod 'Introspect'
   # pod 'SwiftHTTP', :git => 'https://github.com/rahul-racha/SwiftHTTP.git', :branch => 'issue-305'
-  pod 'Starscream', '~> 4.0.0'
+  pod 'Starscream'
   pod 'SDWebImageSwiftUI'
   pod 'InjectHotReload'
   pod 'RainbowSwift'
@@ -35,5 +35,5 @@ target 'CiderPlaybackAgent' do
   # own private fork of Swifter
   pod 'Swifter', :git => 'https://github.com/ciderapp/swifter.git', :branch => 'stable'
   pod 'ArgumentParserKit'
-  pod 'SwiftyJSON', '~> 4.0'
+  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'master'
 end

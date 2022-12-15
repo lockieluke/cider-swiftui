@@ -11,7 +11,7 @@ PODS:
     - SDWebImage (~> 5.10)
   - Starscream (4.0.4)
   - Swifter (1.5.0)
-  - SwiftyJSON (4.3.0)
+  - SwiftyJSON (5.0.1)
   - UIImageColors (2.1.0)
 
 DEPENDENCIES:
@@ -21,9 +21,9 @@ DEPENDENCIES:
   - Preferences (from `https://github.com/ciderapp/Preferences.git`, branch `main`)
   - RainbowSwift
   - SDWebImageSwiftUI
-  - Starscream (~> 4.0.0)
+  - Starscream
   - Swifter (from `https://github.com/ciderapp/swifter.git`, branch `stable`)
-  - SwiftyJSON (~> 4.0)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `master`)
   - UIImageColors
 
 SPEC REPOS:
@@ -35,7 +35,6 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageSwiftUI
     - Starscream
-    - SwiftyJSON
     - UIImageColors
 
 EXTERNAL SOURCES:
@@ -45,6 +44,9 @@ EXTERNAL SOURCES:
   Swifter:
     :branch: stable
     :git: https://github.com/ciderapp/swifter.git
+  SwiftyJSON:
+    :branch: master
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
   Preferences:
@@ -53,6 +55,9 @@ CHECKOUT OPTIONS:
   Swifter:
     :commit: 7c7dfba1057005e44c8312f45f3dec834e2e9b21
     :git: https://github.com/ciderapp/swifter.git
+  SwiftyJSON:
+    :commit: af1f7a2007d607fbe735c445f19080df4260fe8e
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
@@ -64,9 +69,9 @@ SPEC CHECKSUMS:
   SDWebImageSwiftUI: 2ecf5ab6f574526326b10ecb155e72a88059d0f0
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   Swifter: aa3514bbb8df8980c118f7bb1b80f2da24e39c2b
-  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
 
-PODFILE CHECKSUM: a83c05995b8c3c084f13fd0815c5a829be8f43df
+PODFILE CHECKSUM: 461d50fa0dfff066e73299f7809b8f388e9bd2f2
 
 COCOAPODS: 1.11.3
