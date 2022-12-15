@@ -37,9 +37,9 @@ class AppMenu {
         appNameMenu.submenu = NSMenu(title: "\(appName)")
         
         // Preferences is renamed to Settings starting on macOS Ventura
-        let preferencesName = "Preferences..."
+        var preferencesName = "Preferences..."
         if #available(macOS 13.0, *) {
-            let preferencesName = "Settings..."
+            preferencesName = "Settings..."
         }
         
         let preferencesMenu = NSMenuItem(title: preferencesName, action: #selector(self.showPreferences(_:)), keyEquivalent: ",")
