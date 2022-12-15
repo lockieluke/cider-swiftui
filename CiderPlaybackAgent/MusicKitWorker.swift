@@ -168,11 +168,3 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     }
     
 }
-
-extension MusicKitWorker : NSWindowDelegate {
-    
-    func windowDidBecomeKey(_ notification: Notification) {
-        
-    }
-    
-}
