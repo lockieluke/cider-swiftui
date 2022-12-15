@@ -27,13 +27,15 @@ struct PlaybackView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack {
+                let nowPlayingState = self.ciderPlayback.nowPlayingState
+                
                 PlaybackBar()
                     .environmentObject(ciderPlayback)
                 
                 HStack {
                     PlaybackButton(icon: .Shuffle)
                     PlaybackButton(icon: .Backward)
-                    PlaybackButton(icon: .Play, size: 23)
+                    PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, size: 23)
                     PlaybackButton(icon: .Forward)
                     PlaybackButton(icon: .Repeat)
                 }
