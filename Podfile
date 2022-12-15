@@ -32,9 +32,28 @@ target 'CiderPlaybackAgent' do
 end
 
 post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['DEAD_CODE_STRIPPING'] = 'YES'
+  end
+
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '12.3'
+      config.build_settings['SWIFT_VERSION'] = '5'
+      config.build_settings['DEAD_CODE_STRIPPING'] = 'YES'
+      config.build_settings.delete 'ARCHS'
+    end
+  end
+
+
+  Dir["**/*.xcodeproj"].select { |project_path| !project_path.to_s.start_with?('Pods') }.each do |project_path|
+    proj = Xcodeproj::Project.open project_path
+    proj.targets.each do |target|
+      if target.name == "CiderPlaybackAgent"
+        target.build_configurations.each do |config|
+          config.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = 'NO'
+        end
+      end
     end
   end
 end
