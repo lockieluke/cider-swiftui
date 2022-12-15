@@ -245,7 +245,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             case "playbackStateDidChange":
                 switch json["playbackState"].string {
                     
-                case "paused":
+                case "paused", "stopped":
                     self.nowPlayingState.isPlaying = false
                     break
                     

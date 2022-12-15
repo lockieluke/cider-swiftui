@@ -40,7 +40,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         server["/ws"] = websocket(text: { session, text in
             let json = try? JSON(data: text.data(using: .utf8)!)
             guard let route = json?["route"].string,
-                  let requestId = json?["request-id"].string
+                  let requestId = json?["requestId"].string
             else {
                 session.writeCloseFrame()
                 return
@@ -52,7 +52,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             }
             
             let requestObj = JSON([
-                "request-id": requestId
+                "requestId": requestId
             ])
             let done = {
                 if let rawString = requestObj.rawString() {
@@ -60,21 +60,18 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 }
             }
             
-            switch route {
-                
-            case "/":
-                session.writeText("CiderPlaybackAgent on port \(agentPort?.formatted() ?? "Default Port")")
-                break
-                
-            case "/set-audio-quality":
-                Task {
+            Task {
+                switch route {
+                    
+                case "/":
+                    session.writeText("CiderPlaybackAgent on port \(agentPort?.formatted() ?? "Default Port")")
+                    break
+                    
+                case "/set-audio-quality":
                     await self.musicKitWorker?.setAudioQuality(audioQuality: json?["quality"].int ?? 64)
-                    done()
-                }
-                break
-                
-            case "/set-queue":
-                Task {
+                    break
+                    
+                case "/set-queue":
                     if let albumId = json?["album-id"].string {
                         await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
                     } else if let playlistId = json?["playlists-id"].string {
@@ -82,29 +79,24 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     } else if let songId = json?["songs-id"].string {
                         await self.musicKitWorker?.setQueueWithSongID(songID: songId)
                     }
-                    done()
-                }
-                break
-                
-            case "/play":
-                Task {
+                    break
+                    
+                case "/play":
                     if let shuffle = json?["shuffle"].bool {
                         await self.musicKitWorker?.setShuffleMode(shuffle)
                     }
                     await self.musicKitWorker?.play()
-                    done()
-                }
-                break
-                
-            case "/pause":
-                Task {
+                    break
+                    
+                case "/pause":
                     await self.musicKitWorker?.pause()
-                    done()
+                    break
+                    
+                default:
+                    break
                 }
-                break
                 
-            default:
-                break
+                done()
             }
         }, connected: { session in
             print("Cider Client connected")
@@ -117,6 +109,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     }
                 }
                 
+                requestObj["requestId"].string = UUID().uuidString
                 requestObj["eventName"].string = eventName
                 switch eventName {
                     

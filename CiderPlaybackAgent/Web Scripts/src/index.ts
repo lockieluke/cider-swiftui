@@ -84,9 +84,11 @@ document.addEventListener('musickitloaded', async function () {
     })
 
     mk.addEventListener(MusicKit.Events.playbackStateDidChange, () => {
+        const state = MusicKit.PlaybackStates[mk.playbackState];
+        console.log(`Playback State changed ${state}`);
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "playbackStateDidChange",
-            playbackState: MusicKit.PlaybackStates[mk.playbackState]
+            playbackState: state
         });
     })
 

@@ -28,7 +28,7 @@ class CiderWSProvider {
     
     struct WebSocketCallbackEvent {
         
-        let onEvent: (WebSocketEvent) -> Void
+        let onEvent: (_ responseBody: JSON) -> Void
         let id: String
         
     }
@@ -69,8 +69,29 @@ class CiderWSProvider {
     func connect() {
         socket.onEvent = { event in
             self.isReady = true
-            self.callbacksPool.forEach { callback in
-                callback.onEvent(event)
+            
+            switch event {
+            case .text(let text):
+                guard let json = try? JSON(data: text.data(using: .utf8)!) else {
+                    self.logger.error("Could not parse response body from WS: \(text)")
+                    return
+                }
+                guard let requestId = json["requestId"].string else {
+                    self.logger.error("WS Response does not contain requestId: \(text)")
+                    return
+                }
+                
+                WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: text, dateSent: .now, trafficType: .Receive, id: requestId))
+                
+                self.callbacksPool.forEach { callback in
+                    if callback.id == requestId {
+                        callback.onEvent(json)
+                    }
+                }
+                break
+                
+            default:
+                break
             }
         }
         self.socket.connect()
@@ -78,7 +99,7 @@ class CiderWSProvider {
     
     func request(_ route: String, body: [String: Any]? = nil) async throws {
         let lock = NSLock()
-        return try await withUnsafeThrowingContinuation() { continuation in
+        return try await withUnsafeThrowingContinuation { continuation in
             if !self.isReady {
                 continuation.resume(throwing: CiderWSError.wsNotConnected("WebSockets connection is not ready"))
                 return
@@ -86,7 +107,7 @@ class CiderWSProvider {
             let requestId = UUID().uuidString
             var requestBody = JSON([
                 "route": route.unescaped,
-                "request-id": requestId
+                "requestId": requestId
             ])
             if let body = body {
                 try? requestBody.merge(with: JSON(body))
@@ -95,27 +116,15 @@ class CiderWSProvider {
                 try? requestBody.merge(with: defaultBody)
             }
             
-            self.callbacksPool.append(WebSocketCallbackEvent(onEvent: { event in
+            self.callbacksPool.append(WebSocketCallbackEvent(onEvent: { responseBody in
                 defer {
                     self.callbacksPool.removeAll(where: { callback in callback.id == requestId })
                     lock.unlock()
                 }
                 lock.lock()
                 
-                switch event {
-                    
-                case .text(let text):
-                    let responseBody = try? JSON(data: text.data(using: .utf8)!)
-                    DispatchQueue.main.async {
-                        if responseBody?["request-id"].stringValue == requestId {
-                            WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: text, dateSent: .now, trafficType: .Receive, id: requestId))
-                            continuation.resume()
-                        }
-                    }
-                    break
-                    
-                default:
-                    break
+                DispatchQueue.main.async {
+                    continuation.resume()
                 }
             }, id: requestId))
             guard let requestBodyString = requestBody.rawString(.utf8) else {
