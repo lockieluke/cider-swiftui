@@ -85,7 +85,6 @@ document.addEventListener('musickitloaded', async function () {
 
     mk.addEventListener(MusicKit.Events.playbackStateDidChange, () => {
         const state = MusicKit.PlaybackStates[mk.playbackState];
-        console.log(`Playback State changed ${state}`);
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "playbackStateDidChange",
             playbackState: state
@@ -100,8 +99,6 @@ document.addEventListener('musickitloaded', async function () {
                 console.error(`Failed to initiate play ${err}`);
                 return;
             }
-
-            console.log("Initiated play");
         },
         setQueue: async mediaItem => {
             const [err, setQueueResult] = await to(mk.setQueue(mediaItem));
@@ -109,8 +106,6 @@ document.addEventListener('musickitloaded', async function () {
                 console.error(`Failed to set queue ${err}`);
                 return;
             }
-
-            console.log(`Initiated setQueue with ${setQueueResult.length} items`);
         }
     };
 })
