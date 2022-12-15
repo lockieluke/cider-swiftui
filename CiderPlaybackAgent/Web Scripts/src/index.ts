@@ -98,7 +98,7 @@ document.addEventListener('musickitloaded', async function () {
             }
         },
         setQueue: async mediaItem => {
-            const [err, setQueueResult] = await to(mk.setQueue(mediaItem));
+            const [err] = await to(mk.setQueue(mediaItem));
             if (err) {
                 console.error(`Failed to set queue ${err}`);
                 return;
