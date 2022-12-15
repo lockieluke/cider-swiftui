@@ -3,6 +3,9 @@ source 'https://github.com/CocoaPods/Specs.git'
 # Uncomment the next line to define a global platform for your project
 platform :osx, '12.3'
 
+# Disable all warnings from Pods
+inhibit_all_warnings!
+
 # Patch Plugin
 plugin 'cocoapods-patch'
 
