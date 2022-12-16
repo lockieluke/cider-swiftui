@@ -48,6 +48,7 @@ pod install
 
 Xcode needs your developer account for signing the app before it can be run on your Mac and this has to be done before you can build Cider
 
+![Screenshot of Xcode](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/1.png?raw=true)
 
 
 You have to first open the project with Xcode
@@ -62,13 +63,13 @@ pod open
 
 Go into Cider's build settings in Xcode
 
-![](/Users/sherlockluk/Library/Application%20Support/marktext/images/2022-12-16-18-45-27-image.png)
+![Screenshot of Xcode build settings](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/2.png?raw=true)
 
 Search for `signing` and change **Development Team** to your name
 
 <sub>Make sure you have already signed into Xcode, change **Development Team** to Cider's internal developer account if you're a member of the Cider Team</sub>
 
-![](/Users/sherlockluk/Library/Application%20Support/marktext/images/2022-12-16-18-48-09-image.png)
+![Screenshot of Xcode's Signing Identity setting](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/3.png?raw=true)
 
 You should be good to go!
 
@@ -102,7 +103,7 @@ pod open
 
 Hit the **Command+B** or Click **Product** -> **Build**
 
-![](/Users/sherlockluk/Library/Application%20Support/marktext/images/2022-12-16-19-00-42-image.png)
+![Screenshot of Xcode's build menu item](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/4.png?raw=true)
 
 
 
