@@ -12,7 +12,7 @@ git clone https://github.com/ciderapp/project2-swiftui.git Cider-macOS
 
 ## Setting up the project
 
-*<sub>Make sure you have [Xcode Command Line Tool]([Sign In - Apple](https://developer.apple.com/downloads/))(Xcode preferrably), [Task](https://taskfile.dev/), [Yarn](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
+*<sub>Make sure you have [Xcode Command Line Tool](https://developer.apple.com/downloads/)(Xcode preferrably), [Task](https://taskfile.dev/), [Yarn](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
 
 Navigate into the project directory
 
@@ -50,7 +50,6 @@ Xcode needs your developer account for signing the app before it can be run on y
 
 ![Screenshot of Xcode](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/1.png?raw=true)
 
-
 You have to first open the project with Xcode
 
 ```shell
@@ -58,8 +57,6 @@ pod open
 ```
 
 <sub>This command can also be used for opening the `.xcworkspace` project during development</sub>
-
-
 
 Go into Cider's build settings in Xcode
 
@@ -72,8 +69,6 @@ Search for `signing` and change **Development Team** to your name
 ![Screenshot of Xcode's Signing Identity setting](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/3.png?raw=true)
 
 You should be good to go!
-
-
 
 ## Build Cider!
 
@@ -105,8 +100,6 @@ Hit the **Command+B** or Click **Product** -> **Build**
 
 ![Screenshot of Xcode's build menu item](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/4.png?raw=true)
 
-
-
 ## Run Cider 🥳
 
 Once Xcode/Command Line has finished building Cider, you can now run Cider on your Mac!
@@ -125,17 +118,11 @@ Assuming you already have Xcode opened, just simply click on the **Play** button
 
 ![](/Users/sherlockluk/Library/Application%20Support/marktext/images/2022-12-16-19-04-52-image.png)
 
-
-
 Voila! Cider should now be live on your Mac, happy hacking 🥰
-
-
 
 ## Final words
 
 Please do not hesitate to open an issue if you face any problems when building or developing Cider, we truly want everyone to be able to contribute to Cider and make Cider truly perfect!
-
-
 
 ## Credits
 
@@ -144,5 +131,3 @@ Please do not hesitate to open an issue if you face any problems when building o
 [lockieluke](https://github.com/lockieluke) Lead Developement of Cider for macOS
 
 and all contributors that have helped us on GitHub
-
-
