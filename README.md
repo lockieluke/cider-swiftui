@@ -12,7 +12,7 @@ git clone https://github.com/ciderapp/project2-swiftui.git Cider-macOS
 
 ## Setting up the project
 
-*<sub>Make sure you have [Xcode Command Line Tool]([Sign In - Apple](https://developer.apple.com/downloads/))(Xcode preferrably), [Task](https://taskfile.dev/), [Yarn](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby]([Ruby Programming Language](https://www.ruby-lang.org/en/)), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
+*<sub>Make sure you have [Xcode Command Line Tool]([Sign In - Apple](https://developer.apple.com/downloads/))(Xcode preferrably), [Task](https://taskfile.dev/), [Yarn](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
 
 Navigate into the project directory
 
