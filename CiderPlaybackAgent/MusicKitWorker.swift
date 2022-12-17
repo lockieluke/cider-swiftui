@@ -126,6 +126,14 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         await self.asyncRunMKJS("pause()")
     }
     
+    func previous() async {
+        await self.asyncRunMKJS("skipToPreviousItem()")
+    }
+    
+    func next() async {
+        await self.asyncRunMKJS("skipToNextItem()")
+    }
+    
     func setAudioQuality(audioQuality: Int) async {
         _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.bitrate = \(audioQuality)", contentWorld: .page)
     }

@@ -137,6 +137,17 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    enum SkipType {
+        case Previous, Next
+    }
+    func skip(type: SkipType) async {
+        do {
+            _ = try await self.wsCommClient.request(type == .Previous ? "/previous" : "/next")
+        } catch {
+            self.logger.error("Skip failed \(error)", displayCross: true)
+        }
+    }
+    
     func togglePlaybackSync() {
         Task {
             await (self.nowPlayingState.isPlaying ? self.pause() : self.play())

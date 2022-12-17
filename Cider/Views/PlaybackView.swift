@@ -34,11 +34,19 @@ struct PlaybackView: View {
                 
                 HStack {
                     PlaybackButton(icon: .Shuffle)
-                    PlaybackButton(icon: .Backward)
+                    PlaybackButton(icon: .Backward) {
+                        Task {
+                            await self.ciderPlayback.skip(type: .Previous)
+                        }
+                    }
                     PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, size: 23) {
                         self.ciderPlayback.togglePlaybackSync()
                     }
-                    PlaybackButton(icon: .Forward)
+                    PlaybackButton(icon: .Forward) {
+                        Task {
+                            await self.ciderPlayback.skip(type: .Next)
+                        }
+                    }
                     PlaybackButton(icon: .Repeat)
                 }
             }
