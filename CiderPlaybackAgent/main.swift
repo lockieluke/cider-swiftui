@@ -72,7 +72,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     break
                     
                 case "/set-queue":
-                    if let albumId = json?["album-id"].string {
+                    if let albumId = json?["albums-id"].string {
                         await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)
                     } else if let playlistId = json?["playlists-id"].string {
                         await self.musicKitWorker?.setQueueWithPlaylistID(playlistID: playlistId)
@@ -90,6 +90,14 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     
                 case "/pause":
                     await self.musicKitWorker?.pause()
+                    break
+                    
+                case "/previous":
+                    await self.musicKitWorker?.previous()
+                    break
+                    
+                case "/next":
+                    await self.musicKitWorker?.next()
                     break
                     
                 default:
