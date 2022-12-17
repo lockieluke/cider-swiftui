@@ -17,6 +17,9 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         FirebaseConfiguration.shared.setLoggerLevel(.min)
+        #if DEBUG
+        Analytics.setAnalyticsCollectionEnabled(false)
+        #endif
         FirebaseApp.configure()
         
         self.appWindow = AppWindow()
