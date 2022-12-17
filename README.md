@@ -94,9 +94,13 @@ Open the `.xcworkspace` project if you haven't already
 pod open
 ```
 
+You'll have to select **Cider** as the build target before you can actually build Cider, make sure it's not **CiderPlaybackAgent**
+
+![Screenshot of selecting build targets](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/3.png?raw=true)
+
 Hit the **Command+B** or Click **Product** -> **Build**
 
-![Screenshot of Xcode's build menu item](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/3.png?raw=true)
+![Screenshot of Xcode's build menu item](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/4.png?raw=true)
 
 ## Run Cider 🥳
 
