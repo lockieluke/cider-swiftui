@@ -22,6 +22,11 @@ target 'Cider' do
   pod 'RainbowSwift'
   pod 'UIImageColors', :modular_headers => true
   pod 'Preferences', :git => 'https://github.com/ciderapp/Preferences.git', :branch => 'main'
+
+  # Firebase
+  pod 'FirebaseAuth'
+  pod 'FirebaseFirestore'
+  pod 'FirebaseAnalytics'
 end
 
 target 'CiderPlaybackAgent' do

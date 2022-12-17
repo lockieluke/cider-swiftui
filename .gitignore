@@ -1,6 +1,6 @@
-.DS_Store
 .idea/
 .task/
+Cider/GoogleService-Info.plist
 
 #########################
 # .gitignore file for Xcode4 and Xcode5 Source projects

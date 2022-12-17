@@ -3,6 +3,10 @@
 //  
 
 import Foundation
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+import FirebaseAnalytics
 import AppKit
 import SwiftUI
 
@@ -12,6 +16,9 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     private var appMenu: AppMenu!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        FirebaseConfiguration.shared.setLoggerLevel(.min)
+        FirebaseApp.configure()
+        
         self.appWindow = AppWindow()
         
         // might be useful for cleaning up child processes when process gets killed
