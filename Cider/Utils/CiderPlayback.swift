@@ -14,6 +14,13 @@ struct NowPlayingState {
     var isPlaying = false
     var isReady = true
     
+    mutating func reset() {
+        self.name = nil
+        self.artworkURL = nil
+        self.artistName = nil
+        self.isPlaying = false
+    }
+    
 }
 
 class CiderPlayback : ObservableObject, WebSocketDelegate {
@@ -258,8 +265,12 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             case "playbackStateDidChange":
                 switch json["playbackState"].string {
                     
-                case "paused", "stopped":
+                case "paused":
                     self.nowPlayingState.isPlaying = false
+                    break
+                    
+                case "stopped":
+                    self.nowPlayingState.reset()
                     break
                     
                 case "playing":
