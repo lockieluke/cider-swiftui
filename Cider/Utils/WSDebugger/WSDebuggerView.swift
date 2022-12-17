@@ -116,7 +116,7 @@ struct WSDebuggerView: View {
                     Circle()
                         .fill(.green)
                         .frame(width: 7, height: 7)
-                    Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))"))")
+                    Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))")) - \(wsModal.traffic.filter { $0.target == .CiderPlaybackAgent }.count) requests")
                 }
             }
         }
