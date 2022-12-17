@@ -27,6 +27,8 @@ tasks:
 
   install-pod-plugins:
     desc: "Install all CocoaPods plugin dependencies"
+    preconditions:
+      - test -x $(which bundle)
     cmds:
       - bundle install
 
