@@ -68,15 +68,20 @@ document.addEventListener('musickitloaded', async function () {
     await mk.authorize();
 
     const updateNowPlayingInfo = () => {
+        const nowPlayingItem = mk.nowPlayingItem;
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "mediaItemDidChange",
-            name: mk.nowPlayingItem.title,
-            artistName: mk.nowPlayingItem.artistName,
-            artworkURL: mk.nowPlayingItem.artworkURL
+            name: nowPlayingItem.attributes.name,
+            artistName: nowPlayingItem.attributes.artistName,
+            artworkURL: nowPlayingItem.attributes.artwork.url
         });
     }
 
     mk.addEventListener(MusicKit.Events.mediaItemDidChange, () => {
+        updateNowPlayingInfo();
+    })
+
+    mk.addEventListener(MusicKit.Events.metadataDidChange, () => {
         updateNowPlayingInfo();
     })
 
