@@ -58,15 +58,11 @@ pod open
 
 <sub>This command can also be used for opening the `.xcworkspace` project during development</sub>
 
-Go into Cider's build settings in Xcode
+Go into Cider's build settings in Xcode, search for `signing` and change **Development Team** to your name
+
+Make sure you have already signed into Xcode, change **Development Team** to Cider's internal developer account if you're a member of the Cider Team
 
 ![Screenshot of Xcode build settings](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/2.png?raw=true)
-
-Search for `signing` and change **Development Team** to your name
-
-<sub>Make sure you have already signed into Xcode, change **Development Team** to Cider's internal developer account if you're a member of the Cider Team</sub>
-
-![Screenshot of Xcode's Signing Identity setting](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/3.png?raw=true)
 
 You should be good to go!
 
@@ -98,7 +94,7 @@ pod open
 
 Hit the **Command+B** or Click **Product** -> **Build**
 
-![Screenshot of Xcode's build menu item](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/4.png?raw=true)
+![Screenshot of Xcode's build menu item](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/3.png?raw=true)
 
 ## Run Cider 🥳
 
@@ -116,7 +112,7 @@ task run-xc
 
 Assuming you already have Xcode opened, just simply click on the **Play** button
 
-![](/Users/sherlockluk/Library/Application%20Support/marktext/images/2022-12-16-19-04-52-image.png)
+![Screenshot of Xcode's play button](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/4.png?raw=true)
 
 Voila! Cider should now be live on your Mac, happy hacking 🥰
 
