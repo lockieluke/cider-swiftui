@@ -32,7 +32,9 @@ task install-js-deps
 
 ### Install CocoaPods plugins and dependencies
 
-Cider for macOS uses CocoaPods for dependency and some plugins are used for making the workflow easier
+Cider for macOS uses CocoaPods for dependency management and some plugins are used for making the workflow easier
+
+<sub>We don't like SPM, it's too unreliable</sub>
 
 ```shell
 task install-pod-plugins
