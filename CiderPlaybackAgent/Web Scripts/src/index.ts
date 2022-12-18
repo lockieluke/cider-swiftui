@@ -77,16 +77,16 @@ document.addEventListener('musickitloaded', async function () {
         });
     }
 
-    mk.addEventListener(MusicKit.Events.mediaItemDidChange, () => {
+    mk.addEventListener('mediaItemDidChange', () => {
         updateNowPlayingInfo();
     })
 
-    mk.addEventListener(MusicKit.Events.metadataDidChange, () => {
+    mk.addEventListener('metadataDidChange', () => {
         updateNowPlayingInfo();
     })
 
-    mk.addEventListener(MusicKit.Events.playbackStateDidChange, () => {
-        const state = MusicKit.PlaybackStates[mk.playbackState];
+    mk.addEventListener('playbackStateDidChange', () => {
+        const state = MusicKit.PlaybackState[mk.playbackState];
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "playbackStateDidChange",
             playbackState: state

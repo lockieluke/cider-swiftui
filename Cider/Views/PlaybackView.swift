@@ -33,7 +33,11 @@ struct PlaybackView: View {
                     .environmentObject(ciderPlayback)
                 
                 HStack {
-                    PlaybackButton(icon: .Shuffle)
+                    PlaybackButton(icon: .Shuffle, highlighted: $ciderPlayback.playbackBehaviour.shuffle) {
+                        Task {
+                            await self.ciderPlayback.setShuffleMode(!self.ciderPlayback.playbackBehaviour.shuffle)
+                        }
+                    }
                     PlaybackButton(icon: .Backward) {
                         Task {
                             await self.ciderPlayback.skip(type: .Previous)
@@ -95,14 +99,16 @@ struct PlaybackButton: View {
     private var size = CGFloat(18)
     private var onClick: (() -> Void)? = nil
     
-    init(icon: PlaybackButtonIcon, size: CGFloat = 18, onClick: (() -> Void)? = nil) {
+    @State private var isHovered = false
+    @State private var bouncyFontSize = CGFloat(18)
+    @Binding private var highlighted: Bool
+    
+    init(icon: PlaybackButtonIcon, highlighted: Binding<Bool> = .constant(false), size: CGFloat = 18, onClick: (() -> Void)? = nil) {
         self.icon = icon
+        self._highlighted = highlighted
         self.size = size
         self.onClick = onClick
     }
-    
-    @State private var isHovered = false
-    @State private var bouncyFontSize = CGFloat(18)
     
     var body: some View {
         Image(systemName: icon.rawValue)
@@ -111,6 +117,7 @@ struct PlaybackButton: View {
             .frame(width: 30, height: 30)
             .padding(.horizontal, 5)
             .contentShape(Rectangle())
+            .background(RoundedRectangle(cornerRadius: 5).fill(.thinMaterial).isHidden(!highlighted))
             .gesture(DragGesture(minimumDistance: 0).onChanged({ _ in
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 1)) {
                     self.bouncyFontSize = size - 5

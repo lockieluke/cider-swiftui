@@ -8,8 +8,7 @@
     "outDir": "dist",
     "alwaysStrict": true,
     "typeRoots": [
-      "node_modules/@types",
-      "node_modules/musickit-typescript"
+      "node_modules/@types"
     ]
   },
   "exclude": [

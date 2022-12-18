@@ -23,9 +23,16 @@ struct NowPlayingState {
     
 }
 
+struct PlaybackBehaviour {
+    
+    var shuffle: Bool = false
+    
+}
+
 class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     @Published var nowPlayingState = NowPlayingState()
+    @Published var playbackBehaviour = PlaybackBehaviour()
     @Published var isReady = false
     
     let agentPort: UInt16
@@ -126,7 +133,19 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    func setShuffleMode(_ shuffle: Bool) async {
+        self.playbackBehaviour.shuffle = shuffle
+        do {
+            _ = try await self.wsCommClient.request("/set-shuffle-mode", body: [
+                "shuffle": shuffle
+            ])
+        } catch {
+            self.logger.error("Set shuffle mode failed \(error)", displayCross: true)
+        }
+    }
+    
     func play(shuffle: Bool = false) async {
+        self.playbackBehaviour.shuffle = shuffle
         do {
             _ = try await self.wsCommClient.request("/play", body: [
                 "shuffle": shuffle
