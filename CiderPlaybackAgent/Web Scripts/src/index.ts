@@ -35,7 +35,9 @@ type CiderMusicKitInstance = MusicKitInstance & {
     },
     queue: [],
     queueIsEmpty: boolean,
-    nowPlayingItem: MusicKit.MediaItem
+    nowPlayingItem: MusicKit.MediaItem,
+    currentPlaybackTime: number,
+    currentPlaybackTimeRemaining: number
 };
 
 const mkScript = document.createElement('script');
@@ -86,11 +88,30 @@ document.addEventListener('musickitloaded', async function () {
     })
 
     mk.addEventListener('playbackStateDidChange', () => {
-        const state = MusicKit.PlaybackState[mk.playbackState];
+        const state = MusicKit.PlaybackStates[mk.playbackState];
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "playbackStateDidChange",
             playbackState: state
         });
+    })
+
+    mk.addEventListener('playbackDurationDidChange', (event: { duration: number }) => {
+        window.webkit.messageHandlers.ciderkit.postMessage({
+            event: "playbackDurationDidChange",
+            duration: event.duration
+        });
+    })
+
+    mk.addEventListener('playbackTimeDidChange', () => {
+        window.webkit.messageHandlers.ciderkit.postMessage({
+            event: "playbackTimeDidChange",
+            currentTime: mk.currentPlaybackTime,
+            remainingTime: mk.currentPlaybackTimeRemaining
+        });
+    })
+
+    mk.addEventListener('mediaPlaybackError', event => {
+        console.error(`Error playing media: ${event}`);
     })
 
     window.ciderInterop = {

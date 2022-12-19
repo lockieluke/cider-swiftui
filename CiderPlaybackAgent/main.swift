@@ -145,6 +145,15 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     requestObj["playbackState"].string = String(describing: dict["playbackState"] ?? "unknown" as AnyObject)
                     break
                     
+                case "playbackTimeDidChange":
+                    requestObj["currentTime"].int = dict["currentTime"] as? Int
+                    requestObj["remainingTime"].int = dict["remainingTime"] as? Int
+                    break
+                    
+                case "playbackDurationDidChange":
+                    requestObj["duration"].int = dict["duration"] as? Int
+                    break
+                    
                 default:
                     break
                     

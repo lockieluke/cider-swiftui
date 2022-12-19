@@ -13,12 +13,20 @@ struct NowPlayingState {
     var artworkURL: URL?
     var isPlaying = false
     var isReady = true
+    var hasItemToPlay = false
+    var currentTime: TimeInterval?
+    var remainingTime: TimeInterval?
+    var duration: TimeInterval?
     
     mutating func reset() {
         self.name = nil
         self.artworkURL = nil
         self.artistName = nil
         self.isPlaying = false
+        self.isReady = true
+        self.hasItemToPlay = false
+        self.currentTime = nil
+        self.remainingTime = nil
     }
     
 }
@@ -310,6 +318,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     break
                     
                 case "playing":
+                    self.nowPlayingState.hasItemToPlay = true
                     self.nowPlayingState.isPlaying = true
                     self.nowPlayingState.isReady = true
                     break
@@ -318,6 +327,15 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     break
                     
                 }
+                break
+                
+            case "playbackTimeDidChange":
+                self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].int ?? 0)
+                self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
+                break
+                
+            case "playbackDurationDidChange":
+                self.nowPlayingState.duration = TimeInterval(json["duration"].int ?? 0)
                 break
                 
             default:

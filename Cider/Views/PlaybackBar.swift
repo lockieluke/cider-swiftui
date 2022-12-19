@@ -13,12 +13,18 @@ struct PlaybackBar: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
-        ZStack {
+        HStack {
             let nowPlayingState = ciderPlayback.nowPlayingState
-            
-            RoundedRectangle(cornerRadius: 5)
-                .fill(nowPlayingState.isReady ? .red : .blue)
-                .frame(width: appWindowModal.windowSize.width / 3, height: 5)
+            Text("\(nowPlayingState.currentTime?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
+            ZStack {
+                
+                HStack {
+                    RoundedRectangle(cornerRadius: 5)
+                        .fill(nowPlayingState.isReady ? .red : .blue)
+                        .frame(width: appWindowModal.windowSize.width / 3, height: 5)
+                }
+            }
+            Text("\(nowPlayingState.duration?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
         }
         .padding(.vertical, 10)
         .enableInjection()
