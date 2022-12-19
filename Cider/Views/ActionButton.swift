@@ -31,7 +31,7 @@ struct ActionButton: View {
             .fill(Color("PrimaryColour"))
             .opacity(isClicked ? 1 : (isHovered ? 0.7 : 0))
             .cornerRadius(5)
-            .toolTip("\(actionType)")
+            .tooltip("\(actionType)")
             .overlay {
                 Image(systemName: actionType.rawValue)
                     .font(.system(size: 13))

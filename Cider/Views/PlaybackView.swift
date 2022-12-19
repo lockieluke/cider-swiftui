@@ -176,7 +176,7 @@ struct PlaybackButton: View {
             .enableInjection()
         
         if let tooltip = tooltip {
-            view.background(Color.clear.toolTip(tooltip))
+            view.background(Color.clear.tooltip(tooltip))
         } else {
             view
         }

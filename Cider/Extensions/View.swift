@@ -208,7 +208,7 @@ extension View {
         }
     }
     
-    func toolTip(_ toolTip: String) -> some View {
+    func tooltip(_ toolTip: String) -> some View {
         if #available(macOS 13.0, *) {
             return self.help(toolTip)
         } else {

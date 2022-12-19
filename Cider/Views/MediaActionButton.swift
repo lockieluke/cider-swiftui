@@ -29,7 +29,7 @@ struct MediaActionButton: View {
                 .foregroundColor(.white)
         }
         .buttonStyle(.borderless)
-        .toolTip("\(icon)")
+        .tooltip("\(icon)")
         .frame(width: 25, height: 25)
         .background(RoundedRectangle(cornerRadius: 20).fill(Color.pink))
         .modifier(SimpleHoverModifier())

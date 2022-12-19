@@ -108,7 +108,7 @@ struct DetailedView: View {
                                     if reflectedMusicItem.playlistType == .PersonalMix {
                                         Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: reflectedMusicItem.artwork.bgColour))
                                             .font(.system(size: 18))
-                                            .toolTip("Playlist curated by Apple Music")
+                                            .tooltip("Playlist curated by Apple Music")
                                             .modifier(SimpleHoverModifier())
                                     }
                                 }
