@@ -170,7 +170,6 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     func clearAndPlay(shuffle: Bool = false, musicItem: MusicItem? = nil, mediaTrack: MediaTrack? = nil) async {
-        self.nowPlayingState.reset()
         if let musicItem = musicItem {
             self.updateNowPlayingStateBeforeReady(musicItem: musicItem)
         }
