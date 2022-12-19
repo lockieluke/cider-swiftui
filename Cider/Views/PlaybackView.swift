@@ -81,12 +81,11 @@ struct PlaybackView: View {
                             await self.ciderPlayback.skip(type: .Next)
                         }
                     }
-                    PlaybackButton(icon: repeatModeIcon) {
+                    PlaybackButton(icon: repeatModeIcon, tooltip: nextRepeatModeTooltip) {
                         Task {
                             await self.ciderPlayback.setRepeatMode(playbackBehaviour.repeatMode.next())
                         }
                     }
-                    .background(Color.clear.toolTip(nextRepeatModeTooltip))
                 }
             }
             
@@ -133,6 +132,7 @@ struct PlaybackButton: View {
     @ObservedObject private var iO = Inject.observer
     
     private var icon: PlaybackButtonIcon
+    private let tooltip: String?
     private var size = CGFloat(18)
     private var onClick: (() -> Void)? = nil
     
@@ -140,15 +140,16 @@ struct PlaybackButton: View {
     @State private var bouncyFontSize = CGFloat(18)
     @Binding private var highlighted: Bool
     
-    init(icon: PlaybackButtonIcon, highlighted: Binding<Bool> = .constant(false), size: CGFloat = 18, onClick: (() -> Void)? = nil) {
+    init(icon: PlaybackButtonIcon, tooltip: String? = nil, highlighted: Binding<Bool> = .constant(false), size: CGFloat = 18, onClick: (() -> Void)? = nil) {
         self.icon = icon
+        self.tooltip = tooltip
         self._highlighted = highlighted
         self.size = size
         self.onClick = onClick
     }
     
     var body: some View {
-        Image(systemName: icon.rawValue)
+        let view = Image(systemName: icon.rawValue)
             .animatableSystemFont(size: bouncyFontSize)
             .foregroundColor(.secondary.opacity(isHovered ? 0.5 : 1))
             .frame(width: 30, height: 30)
@@ -173,6 +174,12 @@ struct PlaybackButton: View {
             }
             .fixedSize()
             .enableInjection()
+        
+        if let tooltip = tooltip {
+            view.background(Color.clear.toolTip(tooltip))
+        } else {
+            view
+        }
     }
     
 }
