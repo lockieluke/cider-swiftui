@@ -53,6 +53,7 @@ class CiderWSProvider {
         request.timeoutInterval = 5
         request.allHTTPHeaderFields = defaultHeaders
         let socket = WebSocket(request: request, engine: NativeEngine())
+        socket.callbackQueue = DispatchQueue(label: "com.cidercollective.cider.ws", qos: .userInteractive)
         
         self.baseURL = baseURL
         self.logger = Logger(label: "CiderWSProvider \(baseURL)")
