@@ -104,6 +104,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     await self.musicKitWorker?.pause()
                     break
                     
+                case "/stop":
+                    await self.musicKitWorker?.stop()
+                    break
+                    
                 case "/previous":
                     await self.musicKitWorker?.previous()
                     break

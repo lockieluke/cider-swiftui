@@ -130,6 +130,10 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         await self.asyncRunMKJS("pause()")
     }
     
+    func stop() async {
+        await self.asyncRunMKJS("stop()")
+    }
+    
     func previous() async {
         await self.asyncRunMKJS("skipToPreviousItem()")
     }

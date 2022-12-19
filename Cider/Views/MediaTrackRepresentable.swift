@@ -42,8 +42,7 @@ struct MediaTrackRepresentable: View {
             .onTapGesture {
                 Task {
                     await self.ciderPlayback.setQueue(mediaTrack: self.mediaTrack)
-                    self.ciderPlayback.updateNowPlayingStateBeforeReady(mediaTrack: mediaTrack)
-                    await self.ciderPlayback.play()
+                    await self.ciderPlayback.clearAndPlay(mediaTrack: self.mediaTrack)
                 }
             }
             .onHover { isHovering in

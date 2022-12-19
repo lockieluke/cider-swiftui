@@ -169,6 +169,20 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    func clearAndPlay(shuffle: Bool = false, musicItem: MusicItem? = nil, mediaTrack: MediaTrack? = nil) async {
+        self.nowPlayingState.reset()
+        if let musicItem = musicItem {
+            self.updateNowPlayingStateBeforeReady(musicItem: musicItem)
+        }
+        
+        if let mediaTrack = mediaTrack {
+            self.updateNowPlayingStateBeforeReady(mediaTrack: mediaTrack)
+        }
+        
+        await self.stop()
+        await self.play(shuffle: shuffle)
+    }
+    
     func play(shuffle: Bool = false) async {
         self.playbackBehaviour.shuffle = shuffle
         do {
@@ -185,6 +199,14 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             _ = try await self.wsCommClient.request("/pause")
         } catch {
             self.logger.error("Pause failed \(error)", displayCross: true)
+        }
+    }
+    
+    func stop() async {
+        do {
+            _ = try await self.wsCommClient.request("/stop")
+        } catch {
+            self.logger.error("Stop failed \(error)", displayCross: true)
         }
     }
     
