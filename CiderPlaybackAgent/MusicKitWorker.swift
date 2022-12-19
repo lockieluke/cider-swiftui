@@ -118,6 +118,10 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.shuffleMode = MusicKit.PlayerShuffleMode[\"\(shuffle ? "songs" : "off")\"]", contentWorld: .page)
     }
     
+    func setRepeatMode(_ repeatMode: String) async {
+        _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.repeatMode = MusicKit.PlayerRepeatMode[\"\(repeatMode)\"]", contentWorld: .page)
+    }
+    
     func play() async {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.play()", arguments: [:], contentWorld: .page)
     }

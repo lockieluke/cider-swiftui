@@ -56,6 +56,7 @@
 		B77AACF6293B93C200F8E1E2 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF5293B93C200F8E1E2 /* TimeInterval.swift */; };
 		B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */; };
 		B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */; };
+		B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77C91AD294FCCE100124B47 /* CaseIterable.swift */; };
 		B798562929285218003CA787 /* WKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562829285218003CA787 /* WKWebView.swift */; };
 		B798562B292ADE13003CA787 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562A292ADE13003CA787 /* String.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
@@ -161,6 +162,7 @@
 		B77AACF5293B93C200F8E1E2 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaActionButton.swift; sourceTree = "<group>"; };
 		B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B77C91AD294FCCE100124B47 /* CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
 		B798561E29259D85003CA787 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B79856202925A3C3003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B79856222925A453003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +300,7 @@
 				B798562A292ADE13003CA787 /* String.swift */,
 				B77AACF5293B93C200F8E1E2 /* TimeInterval.swift */,
 				B7688724294A076300C623C9 /* Process.swift */,
+				B77C91AD294FCCE100124B47 /* CaseIterable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -704,6 +707,7 @@
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B77AACF2293B871700F8E1E2 /* MediaTrackRepresentable.swift in Sources */,
 				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
+				B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */,
 				B77AACF4293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift in Sources */,
 				B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */,
 				B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */,

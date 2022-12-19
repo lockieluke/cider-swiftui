@@ -14,6 +14,35 @@ struct PlaybackView: View {
     
     @State private var geometrySize = CGSize()
     
+    var repeatModeIcon: PlaybackButtonIcon {
+        switch self.ciderPlayback.playbackBehaviour.repeatMode {
+            
+        case .None:
+            return .Repeat
+            
+        case .One:
+            return .RepeatOnce
+            
+        case .All:
+            return .RepeatAll
+            
+        }
+    }
+    
+    var nextRepeatModeTooltip: String {
+        switch self.$ciderPlayback.playbackBehaviour.repeatMode.wrappedValue.next() {
+            
+        case .None:
+            return "Don't Repeat"
+            
+        case .One:
+            return "Repeat Once"
+            
+        case .All:
+            return "Repeat All"
+        }
+    }
+    
     var body: some View {
         ZStack {
             VisualEffectBackground()
@@ -28,14 +57,15 @@ struct PlaybackView: View {
             
             VStack {
                 let nowPlayingState = self.ciderPlayback.nowPlayingState
+                let playbackBehaviour = self.ciderPlayback.playbackBehaviour
                 
                 PlaybackBar()
                     .environmentObject(ciderPlayback)
                 
                 HStack {
-                    PlaybackButton(icon: .Shuffle, highlighted: $ciderPlayback.playbackBehaviour.shuffle) {
+                    PlaybackButton(icon: .Shuffle, highlighted: self.$ciderPlayback.playbackBehaviour.shuffle) {
                         Task {
-                            await self.ciderPlayback.setShuffleMode(!self.ciderPlayback.playbackBehaviour.shuffle)
+                            await self.ciderPlayback.setShuffleMode(!playbackBehaviour.shuffle)
                         }
                     }
                     PlaybackButton(icon: .Backward) {
@@ -51,7 +81,12 @@ struct PlaybackView: View {
                             await self.ciderPlayback.skip(type: .Next)
                         }
                     }
-                    PlaybackButton(icon: .Repeat)
+                    PlaybackButton(icon: repeatModeIcon) {
+                        Task {
+                            await self.ciderPlayback.setRepeatMode(playbackBehaviour.repeatMode.next())
+                        }
+                    }
+                    .background(Color.clear.toolTip(nextRepeatModeTooltip))
                 }
             }
             
@@ -87,6 +122,8 @@ enum PlaybackButtonIcon : String {
     case Backward = "backward.fill";
     case Forward = "forward.fill";
     case Repeat = "repeat";
+    case RepeatOnce = "repeat.1";
+    case RepeatAll = "infinity"
     case Shuffle = "shuffle";
     
 }

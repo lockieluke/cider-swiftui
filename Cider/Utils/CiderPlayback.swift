@@ -23,9 +23,14 @@ struct NowPlayingState {
     
 }
 
+enum RepeatMode: String, CaseIterable {
+    case None = "none", One = "one", All = "all"
+}
+
 struct PlaybackBehaviour {
     
     var shuffle: Bool = false
+    var repeatMode: RepeatMode = .None
     
 }
 
@@ -141,6 +146,18 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             ])
         } catch {
             self.logger.error("Set shuffle mode failed \(error)", displayCross: true)
+        }
+    }
+    
+    
+    func setRepeatMode(_ repeatMode: RepeatMode) async {
+        self.playbackBehaviour.repeatMode = repeatMode
+        do {
+            _ = try await self.wsCommClient.request("/set-repeat-mode", body: [
+                "repeat-mode": repeatMode.rawValue
+            ])
+        } catch {
+            self.logger.error("Set repeat mode failed \(error)", displayCross: true)
         }
     }
     

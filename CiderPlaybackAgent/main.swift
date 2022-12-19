@@ -87,6 +87,12 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     }
                     break
                     
+                case "/set-repeat-mode":
+                    if let repeatMode = json?["repeat-mode"].string {
+                        await self.musicKitWorker?.setRepeatMode(repeatMode)
+                    }
+                    break
+                    
                 case "/play":
                     if let shuffle = json?["shuffle"].bool {
                         await self.musicKitWorker?.setShuffleMode(shuffle)
