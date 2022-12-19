@@ -63,20 +63,20 @@ struct PlaybackView: View {
                     .environmentObject(ciderPlayback)
                 
                 HStack {
-                    PlaybackButton(icon: .Shuffle, highlighted: self.$ciderPlayback.playbackBehaviour.shuffle) {
+                    PlaybackButton(icon: .Shuffle, tooltip: playbackBehaviour.shuffle ? "Don't Shuffle" : "Shuffle", highlighted: self.$ciderPlayback.playbackBehaviour.shuffle) {
                         Task {
                             await self.ciderPlayback.setShuffleMode(!playbackBehaviour.shuffle)
                         }
                     }
-                    PlaybackButton(icon: .Backward) {
+                    PlaybackButton(icon: .Backward, tooltip: "Previous") {
                         Task {
                             await self.ciderPlayback.skip(type: .Previous)
                         }
                     }
-                    PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, size: 23) {
+                    PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, tooltip: nowPlayingState.isPlaying ? "Pause" : "Play", size: 23) {
                         self.ciderPlayback.togglePlaybackSync()
                     }
-                    PlaybackButton(icon: .Forward) {
+                    PlaybackButton(icon: .Forward, tooltip: "Next") {
                         Task {
                             await self.ciderPlayback.skip(type: .Next)
                         }
