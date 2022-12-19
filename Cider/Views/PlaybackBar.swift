@@ -14,15 +14,34 @@ struct PlaybackBar: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     @State private var currentTimeValue: Double = 0.0
+    @State private var playbackBarWidth: CGFloat = .zero
     
     var body: some View {
         HStack {
             let nowPlayingState = ciderPlayback.nowPlayingState
+            let overlayBarWidth = currentTimeValue / (nowPlayingState.duration ?? 1)
             Text("\(nowPlayingState.currentTime?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
             ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...Double(nowPlayingState.duration ?? 0), step: 1)
                 .valueSliderStyle(HorizontalValueSliderStyle(
                     track: HorizontalRangeTrack(
-                        view: Capsule().foregroundColor(.blue).background(.pink)
+                        view: ZStack(alignment: .leading) {
+                            Capsule()
+                                .foregroundColor(Color("PrimaryColour"))
+                                .overlay {
+                                    GeometryReader { geometry in
+                                        Color.clear
+                                            .onChange(of: geometry.size) { newSize in
+                                                self.playbackBarWidth = newSize.width
+                                            }
+                                            .onAppear {
+                                                self.playbackBarWidth = geometry.size.width
+                                            }
+                                    }
+                                }
+                            
+                            Capsule().foregroundColor(.pink)
+                                .frame(width: playbackBarWidth * CGFloat(overlayBarWidth) + 1)
+                        }
                     )
                     .frame(height: 5),
                     thumb: Circle().hideWithoutDestroying(!nowPlayingState.hasItemToPlay || !nowPlayingState.isReady),
