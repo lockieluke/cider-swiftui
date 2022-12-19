@@ -209,7 +209,11 @@ extension View {
     }
     
     func toolTip(_ toolTip: String) -> some View {
-        return self.overlay(TooltipView(tooltip: toolTip))
+        if #available(macOS 13.0, *) {
+            return self.help(toolTip)
+        } else {
+            return self.overlay(TooltipView(tooltip: toolTip))
+        }
     }
     
     func multicolourGlow(gradientColours: Gradient = Gradient(colors: [])) -> some View {
