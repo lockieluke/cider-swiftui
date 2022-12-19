@@ -40,7 +40,7 @@ struct PlaybackBar: View {
                                 }
                             
                             Capsule().foregroundColor(.pink)
-                                .frame(width: playbackBarWidth * CGFloat(overlayBarWidth) + 1)
+                                .frame(width: currentTimeValue == 0 ? 0 : playbackBarWidth * CGFloat(overlayBarWidth) + 1)
                         }
                     )
                     .frame(height: 5),
