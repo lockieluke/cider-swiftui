@@ -6,10 +6,9 @@ import Foundation
 import AppKit
 import SwiftUI
 
-class AppWindow {
+class AppWindow: NSObject, NSWindowDelegate {
     
     private let mainWindow: NSWindow
-    private let windowDelegate: AppWindowDelegate
     private let appWindowModal = AppWindowModal()
     private let mkModal: MKModal
     private let prefModal = PrefModal()
@@ -19,23 +18,11 @@ class AppWindow {
     
     let ciderPlayback: CiderPlayback
     
-    class AppWindowDelegate : NSObject, NSWindowDelegate {
-        
-        func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-            return [.fullScreen, .autoHideDock, .autoHideToolbar, .autoHideMenuBar]
-        }
-        
-        func windowShouldClose(_ sender: NSWindow) -> Bool {
-            return true
-        }
-        
-    }
-    
-    init() {
+    override init() {
         let activeScreen = NSScreen.activeScreen
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
-        let ciderPlayback = CiderPlayback(prefModal: self.prefModal)
+        let ciderPlayback = CiderPlayback(prefModal: self.prefModal, appWindowModal: self.appWindowModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback)
         let authWorker = AuthWorker(mkModal: mkModal, appWindowModal: self.appWindowModal)
         
@@ -53,8 +40,9 @@ class AppWindow {
         window.titleVisibility = .hidden
         window.title = Bundle.main.displayName
         
-        self.windowDelegate = AppWindowDelegate()
-        window.delegate = windowDelegate
+        defer {
+            window.delegate = self
+        }
         
         let toolbar = NSToolbar()
         window.showsToolbarButton = false
@@ -76,6 +64,8 @@ class AppWindow {
         self.appMenu = appMenu
         self.mkModal = mkModal
         self.ciderPlayback = ciderPlayback
+        
+        super.init()
     }
     
     func show() {
@@ -84,10 +74,37 @@ class AppWindow {
             mainWindow.makeMain()
         }
         NSApp.mainMenu = appMenu.getMenu()
+        
+        self.appWindowModal.isFocused = true
+        self.appWindowModal.isVisibleInViewport = true
     }
     
     func getWindow() -> NSWindow {
         return self.mainWindow
+    }
+    
+    func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
+        return [.fullScreen, .autoHideDock, .autoHideToolbar, .autoHideMenuBar]
+    }
+    
+    func windowDidBecomeKey(_ notification: Notification) {
+        self.appWindowModal.isFocused = true
+    }
+    
+    func windowDidResignKey(_ notification: Notification) {
+        self.appWindowModal.isFocused = false
+    }
+    
+    func windowDidExpose(_ notification: Notification) {
+        self.appWindowModal.isVisibleInViewport = true
+    }
+    
+    func windowDidChangeOcclusionState(_ notification: Notification) {
+        self.appWindowModal.isVisibleInViewport = self.mainWindow.isVisible && self.mainWindow.occlusionState.contains(.visible) && self.mainWindow.isOnActiveSpace
+    }
+    
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        return true
     }
     
 }

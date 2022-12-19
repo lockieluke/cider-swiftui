@@ -72,6 +72,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal())), appWindowModal: AppWindowModal()))
+        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal(), appWindowModal: AppWindowModal())), appWindowModal: AppWindowModal()))
     }
 }

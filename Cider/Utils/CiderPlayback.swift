@@ -52,12 +52,13 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     let agentSessionId: String
     
     private let logger: Logger
+    private let appWindowModal: AppWindowModal
     private let proc: Process
     private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
     private var isRunning: Bool
     
-    init(prefModal: PrefModal) {
+    init(prefModal: PrefModal, appWindowModal: AppWindowModal) {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = NetworkingProvider.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
@@ -110,6 +111,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         proc.standardOutput = pipe
         
         self.logger = logger
+        self.appWindowModal = appWindowModal
         self.agentSessionId = agentSessionId
         self.proc = proc
         self.agentPort = agentPort
@@ -351,8 +353,12 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 break
                 
             case "playbackTimeDidChange":
-                self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].intValue + 1)
-                self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
+                DispatchQueue.global(qos: .userInteractive).async {
+                    if self.appWindowModal.isFocused || self.appWindowModal.isVisibleInViewport {
+                        self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].intValue + 1)
+                        self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
+                    }
+                }
                 break
                 
             case "playbackDurationDidChange":
