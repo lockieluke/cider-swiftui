@@ -351,7 +351,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 break
                 
             case "playbackTimeDidChange":
-                self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].int ?? 0)
+                self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].intValue + 1)
                 self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
                 break
                 
