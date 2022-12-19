@@ -16,8 +16,9 @@ class AppMenu {
     private let prefModal: PrefModal
     private let wsModal: WSModal
     private let ciderPlayback: CiderPlayback
+    private let appWindowModal: AppWindowModal
     
-    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, prefModal: PrefModal, wsModal: WSModal, ciderPlayback: CiderPlayback) {
+    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, prefModal: PrefModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal) {
         let menu = NSMenu()
         
         self.window = window
@@ -28,6 +29,7 @@ class AppMenu {
         self.prefModal = prefModal
         self.wsModal = wsModal
         self.ciderPlayback = ciderPlayback
+        self.appWindowModal = appWindowModal
     }
     
     func loadMenus() {
@@ -170,7 +172,12 @@ class AppMenu {
     }
     
     @objc func openWSDebugger(_ sender: Any) {
-        let wsDebugger = WSDebugger(wsModal: self.wsModal, ciderPlayback: self.ciderPlayback)
+        let wsDebugger = WSDebugger(
+            wsModal: self.wsModal,
+            ciderPlayback: self.ciderPlayback,
+            prefModal: self.prefModal,
+            appWindowModal: self.appWindowModal
+        )
         wsDebugger.open()
     }
     

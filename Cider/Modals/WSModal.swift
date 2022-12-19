@@ -3,6 +3,7 @@
 //  
 
 import Foundation
+import SwiftyJSON
 
 enum WSTarget: String,  CaseIterable, Identifiable {
     
@@ -21,11 +22,18 @@ struct WSTrafficRecord {
     
     var target: WSTarget = .Unknown
     let rawJSONString: String
+    var json: JSON {
+        get {
+            guard let data = rawJSONString.data(using: .utf8),
+                  let jsonObj = try? JSON(data: data) else { return JSON([]) }
+            
+            return jsonObj
+        }
+    }
     let dateSent: Date
     var trafficType: WSTrafficType = .Bi
     let requestId: String
     let identifiableKey: String = UUID().uuidString
-    
     
 }
 

@@ -10,7 +10,7 @@ class WSDebugger {
     
     private let window: NSWindow
     
-    init(wsModal: WSModal, ciderPlayback: CiderPlayback) {
+    init(wsModal: WSModal, ciderPlayback: CiderPlayback, prefModal: PrefModal, appWindowModal: AppWindowModal) {
         let window = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 480, height: 360), styleMask: [.closable, .miniaturizable, .resizable, .titled, .unifiedTitleAndToolbar], backing: .buffered, defer: false)
         window.title = "WebSockets Debugger - \(Bundle.main.displayName)"
         window.isReleasedWhenClosed = false
@@ -18,6 +18,8 @@ class WSDebugger {
         let vc = WSDebuggerView()
             .environmentObject(wsModal)
             .environmentObject(ciderPlayback)
+            .environmentObject(prefModal)
+            .environmentObject(appWindowModal)
             .frame(minWidth: 480, maxWidth: .infinity, minHeight: 360, maxHeight: .infinity)
         window.contentViewController = NSHostingController(rootView: vc)
         

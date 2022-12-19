@@ -14,13 +14,15 @@ enum AudioQuality: Int {
 struct Prefs {
     
     var openWebInspectorAutomatically = false
+    var hideFrequentWSRequests = true
     var audioQuality: AudioQuality = .Standard
     
     var json: JSON {
         get {
             return JSON([
                 "debug": [
-                    "openWebInspectorAutomatically": openWebInspectorAutomatically
+                    "openWebInspectorAutomatically": openWebInspectorAutomatically,
+                    "hideFrequentWSRequests": hideFrequentWSRequests
                 ],
                 "audio": [
                     "quality": audioQuality.rawValue
@@ -81,6 +83,7 @@ class PrefModal: ObservableObject {
                 
                 self.prefs = Prefs(
                     openWebInspectorAutomatically: json["debug"]["openWebInspectorAutomatically"].bool ?? false,
+                    hideFrequentWSRequests: json["debug"]["hideFrequentWSRequests"].bool ?? true,
                     audioQuality: AudioQuality(rawValue: json["audio"]["quality"].int ?? 64) ?? .Standard
                 )
             } catch {

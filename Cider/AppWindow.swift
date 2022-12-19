@@ -55,7 +55,14 @@ class AppWindow: NSObject, NSWindowDelegate {
         window.isReleasedWhenClosed = false
         window.center()
         
-        let appMenu = AppMenu(window, mkModal: mkModal, authWorker: authWorker, prefModal: prefModal, wsModal: wsModal, ciderPlayback: ciderPlayback)
+        let appMenu = AppMenu(window,
+                              mkModal: mkModal,
+                              authWorker: authWorker,
+                              prefModal: self.prefModal,
+                              wsModal: self.wsModal,
+                              ciderPlayback: ciderPlayback,
+                              appWindowModal: self.appWindowModal
+        )
         appMenu.loadMenus()
 
         self.mainWindow = window

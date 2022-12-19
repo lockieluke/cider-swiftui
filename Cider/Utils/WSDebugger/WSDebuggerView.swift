@@ -62,8 +62,12 @@ struct WSDebuggerView: View {
     @ObservedObject private var iO = Inject.observer
     @EnvironmentObject private var wsModal: WSModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var prefModal: PrefModal
+    @EnvironmentObject private var appWindowModal: AppWindowModal
     
     @State private var selectedWSTarget: WSTarget = .CiderPlaybackAgent
+    
+    private let PERFORMANCE_DEMANDING_EVENT_NAMES = ["playbackTimeDidChange"]
     
     var body: some View {
         VStack {
@@ -73,50 +77,33 @@ struct WSDebuggerView: View {
                 }
             }
             
-            ScrollView(.vertical) {
-                ScrollViewReader { scrollValue in
-                    if wsModal.traffic.isEmpty {
-                        VStack(alignment: .center) {
-                            Text("No data has been sent")
-                                .foregroundColor(.secondary)
-                                .frame(maxHeight: .infinity)
-                                .padding()
-                        }
-                    } else {
-                        VStack(alignment: .leading) {
-                            ForEach(wsModal.traffic, id: \.identifiableKey) { traffic in
-                                if selectedWSTarget == traffic.target {
-                                    WSTrafficView(wsTraffic: traffic)
+            if appWindowModal.isVisibleInViewport {
+                ScrollView(.vertical) {
+                    LazyVStack(alignment: .leading) {
+                        ForEach(wsModal.traffic, id: \.identifiableKey) { traffic in
+                            if selectedWSTarget == traffic.target {
+                                let eventName = traffic.json["eventName"].stringValue
+                                let wsTrafficView = WSTrafficView(wsTraffic: traffic)
+                                if PERFORMANCE_DEMANDING_EVENT_NAMES.contains(eventName) {
+                                    if !self.prefModal.prefs.hideFrequentWSRequests {
+                                        wsTrafficView
+                                    }
+                                } else {
+                                    wsTrafficView
                                 }
                             }
-                            
-                            Spacer()
-                                .id("last")
                         }
-                        .onChange(of: wsModal.traffic.count) { _ in
-                            scrollValue.scrollTo("last")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
                     }
-                    
-                    Color.clear
-                        .onAppear {
-                            scrollValue.scrollTo("last")
-                        }
                 }
             }
-            .transparentScrollbars()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(.background)
-            .cornerRadius(5)
             
             if ciderPlayback.isReady {
+                Toggle("Hide requests that are frequently sent", isOn: $prefModal.prefs.hideFrequentWSRequests)
                 HStack {
                     Circle()
                         .fill(.green)
                         .frame(width: 7, height: 7)
-                    Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))")) - \(wsModal.traffic.filter { $0.target == .CiderPlaybackAgent }.count) requests")
+                    Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))")) - \(appWindowModal.isVisibleInViewport ? String(wsModal.traffic.filter { $0.target == .CiderPlaybackAgent }.count) : "Not Counting") requests")
                 }
             }
         }
