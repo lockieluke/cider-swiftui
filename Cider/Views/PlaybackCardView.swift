@@ -41,7 +41,6 @@ struct PlaybackCardView: View {
             Group {
                 if let artworkURL = nowPlayingState.artworkURL {
                     WebImage(url: artworkURL)
-                        .interpolation(.none)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 50, height: 50)
