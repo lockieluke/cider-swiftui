@@ -30,6 +30,10 @@ extension TimeInterval {
         Int(truncatingRemainder(dividingBy: 60))
     }
     
+    var totalSeconds: Int {
+        Int(self) % 60
+    }
+    
     var millisecond: Int {
         Int((self*1000).truncatingRemainder(dividingBy: 1000))
     }

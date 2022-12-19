@@ -765,6 +765,7 @@ PODS:
     - SDWebImage (~> 5.10)
   - Starscream (4.0.4)
   - Swifter (1.5.0)
+  - SwiftUISliders (2.1.0)
   - SwiftyJSON (5.0.1)
   - UIImageColors (2.1.0)
 
@@ -780,6 +781,7 @@ DEPENDENCIES:
   - SDWebImageSwiftUI
   - Starscream
   - Swifter (from `https://github.com/ciderapp/swifter.git`, branch `stable`)
+  - SwiftUISliders (from `https://github.com/ciderapp/swiftui-sliders.git`, branch `main`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `master`)
   - UIImageColors
 
@@ -818,6 +820,9 @@ EXTERNAL SOURCES:
   Swifter:
     :branch: stable
     :git: https://github.com/ciderapp/swifter.git
+  SwiftUISliders:
+    :branch: main
+    :git: https://github.com/ciderapp/swiftui-sliders.git
   SwiftyJSON:
     :branch: master
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
@@ -829,6 +834,9 @@ CHECKOUT OPTIONS:
   Swifter:
     :commit: 7c7dfba1057005e44c8312f45f3dec834e2e9b21
     :git: https://github.com/ciderapp/swifter.git
+  SwiftUISliders:
+    :commit: cb0c4c4458301b9610df96737a89f440fab426ea
+    :git: https://github.com/ciderapp/swiftui-sliders.git
   SwiftyJSON:
     :commit: af1f7a2007d607fbe735c445f19080df4260fe8e
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
@@ -860,9 +868,10 @@ SPEC CHECKSUMS:
   SDWebImageSwiftUI: 2ecf5ab6f574526326b10ecb155e72a88059d0f0
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   Swifter: aa3514bbb8df8980c118f7bb1b80f2da24e39c2b
+  SwiftUISliders: c623a7e02d1821d0ec8362adf15f055e9aed2c7f
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
 
-PODFILE CHECKSUM: a4730cc005978a1450fdbc4a6c50cc467ce5aa13
+PODFILE CHECKSUM: 9f6aba13ccaed48d4aea46eb01bf2661237f61e0
 
 COCOAPODS: 1.11.3

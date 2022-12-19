@@ -3,6 +3,7 @@
 //  
 
 import SwiftUI
+import SwiftUISliders
 import InjectHotReload
 
 struct PlaybackBar: View {
@@ -12,21 +13,30 @@ struct PlaybackBar: View {
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
+    @State private var currentTimeValue: Double = 0.0
+    
     var body: some View {
         HStack {
             let nowPlayingState = ciderPlayback.nowPlayingState
             Text("\(nowPlayingState.currentTime?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
-            ZStack {
-                
-                HStack {
-                    RoundedRectangle(cornerRadius: 5)
-                        .fill(nowPlayingState.isReady ? .red : .blue)
-                        .frame(width: appWindowModal.windowSize.width / 3, height: 5)
-                }
-            }
+            ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...Double(nowPlayingState.duration ?? 0), step: 1)
+                .valueSliderStyle(HorizontalValueSliderStyle(
+                    track: HorizontalRangeTrack(
+                        view: Capsule().foregroundColor(.blue).background(.pink)
+                    )
+                    .frame(height: 5),
+                    thumb: Circle().hideWithoutDestroying(!nowPlayingState.hasItemToPlay || !nowPlayingState.isReady),
+                    thumbSize: CGSize(width: 8, height: 8),
+                    thumbInteractiveSize: CGSize(width: 10, height: 10),
+                    options: .interactiveTrack
+                ))
+                .frame(width: appWindowModal.windowSize.width / 3, height: 5)
             Text("\(nowPlayingState.duration?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
         }
         .padding(.vertical, 10)
+        .onChange(of: self.ciderPlayback.nowPlayingState.currentTime) { newCurrentTime in
+            self.currentTimeValue = Double(newCurrentTime ?? 0)
+        }
         .enableInjection()
     }
 }

@@ -1,0 +1,6 @@
+framework module SwiftUISliders {
+  umbrella header "SwiftUISliders-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -22,6 +22,7 @@ target 'Cider' do
   pod 'RainbowSwift'
   pod 'UIImageColors', :modular_headers => true
   pod 'Preferences', :git => 'https://github.com/ciderapp/Preferences.git', :branch => 'main'
+  pod 'SwiftUISliders', :git => 'https://github.com/ciderapp/swiftui-sliders.git', :branch => 'main'
 
   # Firebase
   pod 'FirebaseAuth'
