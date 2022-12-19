@@ -15,6 +15,7 @@ struct PlaybackBar: View {
     
     @State private var currentTimeValue: Double = 0.0
     @State private var playbackBarWidth: CGFloat = .zero
+    @State private var playbackGradientRadius = false
     
     var body: some View {
         HStack {
@@ -26,7 +27,14 @@ struct PlaybackBar: View {
                     track: HorizontalRangeTrack(
                         view: ZStack(alignment: .leading) {
                             Capsule()
-                                .foregroundColor(Color("PrimaryColour"))
+                                .foregroundColor(nowPlayingState.isReady ? Color("PrimaryColour") : .clear)
+                                .background(nowPlayingState.isReady ? Color.clear.erasedToAnyView() : LinearGradient(colors: [.pink, .red], startPoint: playbackGradientRadius ? .leading : .trailing, endPoint: playbackGradientRadius ? .trailing : .leading)
+                                    .onAppear {
+                                        withAnimation(.linear.repeatForever(autoreverses: false)) {
+                                            self.playbackGradientRadius.toggle()
+                                        }
+                                    }
+                                    .erasedToAnyView())
                                 .overlay {
                                     GeometryReader { geometry in
                                         Color.clear
