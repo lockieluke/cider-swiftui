@@ -5,6 +5,7 @@
 import Foundation
 import Starscream
 import SwiftyJSON
+import Throttler
 
 struct NowPlayingState {
     
@@ -211,6 +212,16 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    func seekToTime(seconds: Int) async {
+        do {
+            _ = try await self.wsCommClient.request("/seek-to-time", body: [
+                "seconds": seconds
+            ])
+        } catch {
+            self.logger.error("Seek to time \(error)", displayCross: true)
+        }
+    }
+    
     enum SkipType {
         case Previous, Next
     }
@@ -354,9 +365,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 
             case "playbackTimeDidChange":
                 DispatchQueue.global(qos: .userInteractive).async {
-                    if self.appWindowModal.isFocused || self.appWindowModal.isVisibleInViewport {
-                        self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].intValue + 1)
-                        self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
+                    Throttler.throttle(shouldRunImmediately: true) {
+                        if self.appWindowModal.isFocused || self.appWindowModal.isVisibleInViewport {
+                            self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].intValue + 1)
+                            self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
+                        }
                     }
                 }
                 break

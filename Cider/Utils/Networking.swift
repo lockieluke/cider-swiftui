@@ -81,7 +81,9 @@ class CiderWSProvider {
                     return
                 }
                 
-                WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: text, dateSent: .now, trafficType: .Receive, requestId: requestId))
+                DispatchQueue.main.async {
+                    WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: text, dateSent: .now, trafficType: .Receive, requestId: requestId))
+                }
                 
                 self.callbacksPool.forEach { callback in
                     if callback.id == requestId {
@@ -133,7 +135,9 @@ class CiderWSProvider {
                 return
             }
 
-            WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: requestBodyString, dateSent: .now, trafficType: .Send, requestId: requestId))
+            DispatchQueue.main.async {
+                WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: requestBodyString, dateSent: .now, trafficType: .Send, requestId: requestId))
+            }
             self.socket.write(string: requestBodyString)
         }
     }
