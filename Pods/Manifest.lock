@@ -767,7 +767,9 @@ PODS:
   - Swifter (1.5.0)
   - SwiftUISliders (2.1.0)
   - SwiftyJSON (5.0.1)
+  - Throttler (1.0.6)
   - UIImageColors (2.1.0)
+  - Watchdog (5.2)
 
 DEPENDENCIES:
   - ArgumentParserKit
@@ -783,7 +785,9 @@ DEPENDENCIES:
   - Swifter (from `https://github.com/ciderapp/swifter.git`, branch `stable`)
   - SwiftUISliders (from `https://github.com/ciderapp/swiftui-sliders.git`, branch `main`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `master`)
+  - Throttler (from `.coke/pods/boraseoksoon/Throttler`)
   - UIImageColors
+  - Watchdog
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -812,6 +816,7 @@ SPEC REPOS:
     - SDWebImageSwiftUI
     - Starscream
     - UIImageColors
+    - Watchdog
 
 EXTERNAL SOURCES:
   Preferences:
@@ -826,6 +831,8 @@ EXTERNAL SOURCES:
   SwiftyJSON:
     :branch: master
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+  Throttler:
+    :path: ".coke/pods/boraseoksoon/Throttler"
 
 CHECKOUT OPTIONS:
   Preferences:
@@ -870,8 +877,10 @@ SPEC CHECKSUMS:
   Swifter: aa3514bbb8df8980c118f7bb1b80f2da24e39c2b
   SwiftUISliders: c623a7e02d1821d0ec8362adf15f055e9aed2c7f
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  Throttler: 7d4968679264f280a3b0fd9bfc30cbb488901550
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
+  Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
 
-PODFILE CHECKSUM: 9f6aba13ccaed48d4aea46eb01bf2661237f61e0
+PODFILE CHECKSUM: 288813ee787b4452698ec999737a3bbf50219003
 
 COCOAPODS: 1.11.3

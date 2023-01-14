@@ -9,13 +9,19 @@ import FirebaseAuth
 import FirebaseAnalytics
 import AppKit
 import SwiftUI
+import Watchdog
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var appWindow: AppWindow!
     private var appMenu: AppMenu!
+    private var watchdog: Watchdog!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+//        #if DEBUG
+//        let watchdog = Watchdog(threshold: 0.8, strictMode: true)
+//        #endif
+        
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         #if DEBUG
         Analytics.setAnalyticsCollectionEnabled(false)
@@ -38,6 +44,8 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         signal(SIGSTOP, terminatedCallback)
         
         appWindow.show()
+        
+//        self.watchdog = watchdog
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

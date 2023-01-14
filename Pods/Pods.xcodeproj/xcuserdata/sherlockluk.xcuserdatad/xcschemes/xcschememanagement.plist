@@ -134,7 +134,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Throttler.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UIImageColors.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Watchdog.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

@@ -134,6 +134,16 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         await self.asyncRunMKJS("stop()")
     }
     
+    func seekToTime(seconds: Int) async {
+        _ = try? await self.wkWebView.callAsyncJavaScript("""
+        let wasPlaying = window.ciderInterop.mk.isPlaying
+        window.ciderInterop.mk.pause()
+        await window.ciderInterop.mk.seekToTime(\(seconds))
+        if (wasPlaying)
+            await window.ciderInterop.mk.play()
+        """, contentWorld: .page)
+    }
+    
     func previous() async {
         await self.asyncRunMKJS("skipToPreviousItem()")
     }

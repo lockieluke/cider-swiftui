@@ -1,0 +1,24 @@
+{
+  "name": "Throttler",
+  "version": "1.0.6",
+  "summary": "Throttler is a library helping you debounce and throttle without having to go to reactive (RxSwift, Combine)",
+  "homepage": "https://github.com/boraseoksoon/Throttler",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "boraseoksoon": "boraseoksoon@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/boraseoksoon/Throttler.git",
+    "tag": "1.0.6"
+  },
+  "platforms": {
+    "osx": "10.15",
+    "ios": "13.0"
+  },
+  "swift_versions": "5.3",
+  "source_files": "Sources/Throttler/",
+  "swift_version": "5.3"
+}

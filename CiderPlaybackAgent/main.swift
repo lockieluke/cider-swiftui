@@ -108,6 +108,12 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     await self.musicKitWorker?.stop()
                     break
                     
+                case "/seek-to-time":
+                    if let seconds = json?["seconds"].int {
+                        await self.musicKitWorker?.seekToTime(seconds: seconds)
+                    }
+                    break
+                    
                 case "/previous":
                     await self.musicKitWorker?.previous()
                     break

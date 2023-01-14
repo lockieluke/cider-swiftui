@@ -23,6 +23,8 @@ target 'Cider' do
   pod 'UIImageColors', :modular_headers => true
   pod 'Preferences', :git => 'https://github.com/ciderapp/Preferences.git', :branch => 'main'
   pod 'SwiftUISliders', :git => 'https://github.com/ciderapp/swiftui-sliders.git', :branch => 'main'
+  pod 'Watchdog'
+  pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
 
   # Firebase
   pod 'FirebaseAuth'
