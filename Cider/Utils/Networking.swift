@@ -5,6 +5,7 @@
 import Foundation
 import SwiftyJSON
 import Starscream
+import Throttler
 
 enum HTTPMethod : String {
     case GET = "GET",
@@ -136,7 +137,9 @@ class CiderWSProvider {
             }
 
             DispatchQueue.main.async {
-                WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: requestBodyString, dateSent: .now, trafficType: .Send, requestId: requestId))
+                Throttler.throttle(delay: .milliseconds(100), shouldRunImmediately: false) {
+                    WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: requestBodyString, dateSent: .now, trafficType: .Send, requestId: requestId))
+                }
             }
             self.socket.write(string: requestBodyString)
         }
