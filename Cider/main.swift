@@ -46,6 +46,8 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         signal(SIGSTOP, terminatedCallback)
         
         appWindow.show()
+        
+//        self.watchdog = watchdog
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

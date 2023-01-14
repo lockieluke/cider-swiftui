@@ -27,7 +27,7 @@ struct PlaybackBar: View {
             Text("\(isEditingTrack ? currentTimeValue.minuteSecond : (nowPlayingState.currentTime?.minuteSecond ?? "0:00"))").isHidden(!nowPlayingState.hasItemToPlay)
             ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...(nowPlayingState.duration ?? 0), step: 1, onEditingChanged: { isEditing in
                 if isEditing != self.isEditingTrack {
-                    Debouncer.debounce(delay: .milliseconds(100),shouldRunImmediately: false) {
+                    Debouncer.debounce(delay: .milliseconds(100), shouldRunImmediately: false) {
                         DispatchQueue.main.async {
                             Task {
                                 await self.ciderPlayback.seekToTime(seconds: Int(currentTimeValue))
