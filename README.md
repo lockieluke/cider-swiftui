@@ -12,7 +12,7 @@ git clone https://github.com/ciderapp/project2-swiftui.git Cider-macOS
 
 ## Setting up the project
 
-*<sub>Make sure you have [Xcode Command Line Tool](https://developer.apple.com/downloads/)(Xcode preferrably), [Task](https://taskfile.dev/), [Yarn](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
+*<sub>Make sure you have [Xcode Command Line Tool](https://developer.apple.com/downloads/)(Xcode preferrably), [Task](https://taskfile.dev/), [Yarn](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/), [Coke](https://github.com/ciderapp/coke), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
 
 Navigate into the project directory
 
@@ -38,6 +38,12 @@ Cider for macOS uses CocoaPods for dependency management and some plugins are us
 
 ```shell
 task install-pod-plugins
+```
+
+Prefetch CocoaPods dependencies that were pulled in using `coke`
+
+```shell
+coke install
 ```
 
 After all plugins have been installed, CocoaPods dependencies(Pods) can now be installed
