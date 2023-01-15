@@ -74,7 +74,7 @@ struct PlaybackBar: View {
                 .background {
                     Rectangle()
                         .fill(.clear)
-                        .frame(width: playbackBarWidth, height: 15)
+                        .frame(width: playbackBarWidth, height: 30)
                         .onHover { isHovering in
                             self.shouldShowThumb = isHovering
                         }
