@@ -22,7 +22,7 @@ target 'Cider' do
   pod 'RainbowSwift'
   pod 'UIImageColors', :modular_headers => true
   pod "Preferences", :path => '.coke/pods/sindresorhus/Preferences'
-  pod 'SwiftUISliders', :git => 'https://github.com/ciderapp/swiftui-sliders.git', :branch => 'main'
+  pod "SwiftUISliders", :path => '.coke/pods/spacenation/swiftui-sliders'
   pod 'Watchdog'
   pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
 

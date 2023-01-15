@@ -1,5 +1,5 @@
 {
-  "name": "SwiftUISliders",
+  "name": "swiftui-sliders",
   "version": "2.1.0",
   "summary": "🚀 SwiftUI Sliders with custom styles",
   "homepage": "https://github.com/spacenation/swiftui-sliders",
@@ -19,6 +19,6 @@
     "ios": "14.0"
   },
   "swift_versions": "5.0",
-  "source_files": "Sources/**/*",
+  "source_files": "Sources/",
   "swift_version": "5.0"
 }
