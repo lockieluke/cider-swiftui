@@ -5,10 +5,10 @@
   "homepage": "https://github.com/sindresorhus/Preferences",
   "license": {
     "type": "MIT",
-    "file": "LICENSE"
+    "file": "license"
   },
   "authors": {
-    "Sindre Sorhus": "sindresorhus@gmail.com"
+    "sindresorhus": "sindresorhus@gmail.com"
   },
   "source": {
     "git": "https://github.com/sindresorhus/Preferences.git",
@@ -18,6 +18,6 @@
     "osx": "10.13"
   },
   "swift_versions": "5.0",
-  "source_files": "Sources/Preferences/**/*",
+  "source_files": "Sources/Preferences/",
   "swift_version": "5.0"
 }

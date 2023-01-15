@@ -21,7 +21,7 @@ target 'Cider' do
   pod 'InjectHotReload'
   pod 'RainbowSwift'
   pod 'UIImageColors', :modular_headers => true
-  pod 'Preferences', :git => 'https://github.com/ciderapp/Preferences.git', :branch => 'main'
+  pod "Preferences", :path => '.coke/pods/sindresorhus/Preferences'
   pod 'SwiftUISliders', :git => 'https://github.com/ciderapp/swiftui-sliders.git', :branch => 'main'
   pod 'Watchdog'
   pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
