@@ -3,6 +3,7 @@
 //  
 
 import SwiftUI
+import Throttler
 import InjectHotReload
 
 struct ContentView: View {
@@ -50,7 +51,7 @@ struct ContentView: View {
                 NSApp.keyWindow?.makeFirstResponder(nil)
             }
             .onChange(of: geometry.size) { newSize in
-                appWindowModal.windowSize = newSize
+                self.appWindowModal.windowSize = newSize
             }
             .task {
                 await self.authWorker.presentAuthView() { userToken in
