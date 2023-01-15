@@ -54,7 +54,9 @@ struct PlaybackBar: View {
                                 GeometryReader { geometry in
                                     Color.clear
                                         .onChange(of: geometry.size) { newSize in
-                                            self.playbackBarWidth = newSize.width
+                                            Debouncer.debounce {
+                                                self.playbackBarWidth = newSize.width
+                                            }
                                         }
                                         .onAppear {
                                             self.playbackBarWidth = geometry.size.width
