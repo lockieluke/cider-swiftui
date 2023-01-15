@@ -5,6 +5,7 @@
 import SwiftUI
 import Preferences
 import InjectHotReload
+import Throttler
 
 struct AudioPreferencesPane: View {
     
@@ -40,8 +41,10 @@ struct AudioPreferencesPane: View {
                             Text("Standard 64kbps").tag(AudioQuality.Standard)
                         }
                         .onChange(of: prefModal.prefs.audioQuality) { audioQuality in
-                            Task {
-                                await self.ciderPlayback.setAudioQuality(audioQuality)
+                            Debouncer.debounce {
+                                Task {
+                                    await self.ciderPlayback.setAudioQuality(audioQuality)
+                                }
                             }
                         }
                         
