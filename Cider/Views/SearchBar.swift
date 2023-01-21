@@ -13,31 +13,33 @@ struct SearchBar: View {
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        TextField("Search", text: $searchModal.currentSearchText)
-            .textFieldStyle(.plain)
-            .padding(.horizontal, 10)
-            .frame(height: 30)
-            .contentShape(Rectangle())
-            .overlay {
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color("SecondaryColour"))
-                    .onTapGesture {
-                        self.isFocused = true
-                    }
-            }
-            .focused($isFocused)
-            .onHover { isHovered in
-                if isHovered {
-                    NSCursor.iBeam.push()
-                } else {
-                    NSCursor.pop()
+        PatchedGeometryReader { geometry in
+            TextField("Search", text: $searchModal.currentSearchText)
+                .textFieldStyle(.plain)
+                .padding(.horizontal, 10)
+                .frame(width: geometry.size.width * 0.2, height: 30)
+                .contentShape(Rectangle())
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color("SecondaryColour"))
+                        .onTapGesture {
+                            self.isFocused = true
+                        }
                 }
-            }
-            .onAppear {
-                self.isFocused = true
-            }
-            .padding(.horizontal, 10)
-            .enableInjection()
+                .focused($isFocused)
+                .onHover { isHovered in
+                    if isHovered {
+                        NSCursor.iBeam.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                }
+                .onAppear {
+                    self.isFocused = true
+                }
+                .padding(.horizontal, 10)
+        }
+        .enableInjection()
     }
 }
 

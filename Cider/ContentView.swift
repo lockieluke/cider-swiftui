@@ -50,9 +50,6 @@ struct ContentView: View {
             .onTapGesture {
                 NSApp.keyWindow?.makeFirstResponder(nil)
             }
-            .onChange(of: geometry.size) { newSize in
-                self.appWindowModal.windowSize = newSize
-            }
             .task {
                 await self.authWorker.presentAuthView() { userToken in
                     self.mkModal.authenticateWithToken(userToken: userToken)

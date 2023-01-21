@@ -26,10 +26,6 @@ struct DetailedView: View {
     // copy of the recommendation, this one isn't read only
     @State private var reflectedMusicItem = MusicItem(data: [])
     
-    func calculateRelativeSize() {
-        self.size = CGSize(width: appWindowModal.windowSize.width * 0.03, height: appWindowModal.windowSize.height * 0.03)
-    }
-    
     var addToLibrary: some View {
         Button {
             
@@ -58,10 +54,10 @@ struct DetailedView: View {
         let animationNamespace = self.detailedViewParams.geometryMatching
         let originalSize = self.detailedViewParams.originalSize
         
-        ResponsiveLayoutReader { windowProps in
+        PatchedGeometryReader { geometry in
             HStack(spacing: 0) {
                 VStack {
-                    let size = CGSize(width: windowProps.size.width * 0.33, height: windowProps.size.height * 0.33)
+                    let sqaureSize = geometry.minRelative * 0.4
                     
                     // there's a slight delay before copying the state to reflectedMediaItem, use original mediaItem data to fetch the image
                     WebImage(url: mediaItem.artwork.getUrl(width: 600, height: 600))
@@ -74,7 +70,7 @@ struct DetailedView: View {
                         .resizable()
                         .scaledToFit()
                         .cornerRadius(5)
-                        .frame(width: size.width, height: size.height)
+                        .frame(width: sqaureSize)
                         .background(
                             Rectangle()
                                 .background(Color(nsColor: reflectedMusicItem.artwork.bgColour))
@@ -99,7 +95,7 @@ struct DetailedView: View {
                                 }
                             }
                         }
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 5)
                         .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
                     
                     if descriptionsShouldLoadIn {
@@ -120,7 +116,6 @@ struct DetailedView: View {
                             if let description = reflectedMusicItem.description {
                                 Text("\(description)")
                                     .multilineTextAlignment(.center)
-                                    .padding(.vertical, 2)
                                     .frame(maxWidth: 300)
                             }
                             
@@ -172,11 +167,10 @@ struct DetailedView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.leading, 30)
-        }
-        .environmentObject(appWindowModal)
-        .onDisappear {
-            self.reflectedMusicItem.tracks = []
-            self.reflectedMusicItem = MusicItem(data: [])
+            .onDisappear {
+                self.reflectedMusicItem.tracks = []
+                self.reflectedMusicItem = MusicItem(data: [])
+            }
         }
         .enableInjection()
     }

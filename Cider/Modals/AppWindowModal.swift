@@ -7,7 +7,6 @@ import AppKit
 
 class AppWindowModal : ObservableObject {
 
-    @Published var windowSize = CGSize()
     @Published var nsWindow: NSWindow?
     @Published var isFocused: Bool = false
     @Published var isVisibleInViewport: Bool = false

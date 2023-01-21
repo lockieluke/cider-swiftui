@@ -12,8 +12,6 @@ struct PlaybackView: View {
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
-    @State private var geometrySize = CGSize()
-    
     var repeatModeIcon: PlaybackButtonIcon {
         switch self.ciderPlayback.playbackBehaviour.repeatMode {
             
@@ -46,7 +44,6 @@ struct PlaybackView: View {
     var body: some View {
         ZStack {
             VisualEffectBackground()
-                .frame(width: appWindowModal.windowSize.width, height: geometrySize.height)
                 .overlay {
                     Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
                 }
@@ -87,6 +84,7 @@ struct PlaybackView: View {
                         }
                     }
                 }
+                .padding(.bottom, 20)
             }
             
             HStack {
@@ -97,19 +95,6 @@ struct PlaybackView: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.horizontal, 20)
         }
-        .overlay {
-            GeometryReader { geometry in
-                EmptyView()
-                    .onChange(of: geometry.size) { newSize in
-                        self.geometrySize = newSize
-                    }
-                    .onAppear {
-                        self.geometrySize = geometry.size
-                    }
-            }
-        }
-        .frame(height: 100)
-        .frame(maxWidth: .infinity)
         .enableInjection()
     }
 }

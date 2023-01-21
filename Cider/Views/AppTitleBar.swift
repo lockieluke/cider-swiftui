@@ -24,10 +24,13 @@ struct AppTitleBar: View {
     var body: some View {
         ZStack {
             VisualEffectBackground()
-                .frame(width: appWindowModal.windowSize.width, height: titleBarHeight)
+                .frame(height: titleBarHeight)
                 .overlay {
                     Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
                 }
+                .gesture(TapGesture(count: 2).onEnded {
+                    appWindowModal.nsWindow?.zoom(nil)
+                })
             
             SegmentedControl(
                 items: [
@@ -45,29 +48,26 @@ struct AppTitleBar: View {
                 Divider()
                     .frame(height: 25)
                     .padding(.trailing, 10)
-                if appWindowModal.windowSize.width > 850 {
-                    if navigationModal.navigationActions.enableBack {
-                        ActionButton(actionType: .Back) {
-                            self.navigationModal.navigationActions.backAction?()
-                        }
-                    }
-                    
-                    if navigationModal.navigationActions.enableForward {
-                        ActionButton(actionType: .Forward) {
-                            self.navigationModal.navigationActions.forwardAction?()
-                        }
+                
+                if navigationModal.navigationActions.enableBack {
+                    ActionButton(actionType: .Back) {
+                        self.navigationModal.navigationActions.backAction?()
                     }
                 }
+                
+                if navigationModal.navigationActions.enableForward {
+                    ActionButton(actionType: .Forward) {
+                        self.navigationModal.navigationActions.forwardAction?()
+                    }
+                }
+                
                 ActionButton(actionType: .Library)
                 Spacer()
             }
             
-            HStack(spacing: 0) {
-                Spacer()
-                    .frame(width: appWindowModal.windowSize.width * 0.8)
-                SearchBar()
-                    .environmentObject(searchModal)
-            }
+            SearchBar()
+                .environmentObject(searchModal)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
         }
         .frame(height: 40)
         .enableInjection()

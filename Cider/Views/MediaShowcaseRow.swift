@@ -4,6 +4,7 @@
 
 import SwiftUI
 import InjectHotReload
+import Introspect
 
 struct MediaShowcaseRow: View {
     
@@ -17,29 +18,31 @@ struct MediaShowcaseRow: View {
     var recommendationSection: MusicRecommendationSection?
     
     var body: some View {
-        VStack {
-            Text(rowTitle ?? "No Title")
-                .font(.system(size: 15).bold())
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 15)
-                .padding(.top, 10)
-            ScrollView([.horizontal]) {
-                LazyHStack {
-                    if let recommendations = recommendationSection?.recommendations {
-                        ForEach(recommendations, id: \.title) { recommendation in
-                            RecommendationItemPresentable(recommendation: recommendation)
-                                .environmentObject(appWindowModal)
-                                .environmentObject(ciderPlayback)
-                                .environmentObject(navigationModal)
+        PatchedGeometryReader { geometry in
+            VStack {
+                Text(rowTitle ?? "No Title")
+                    .font(.system(size: 15).bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 15)
+                    .padding(.top, 10)
+                ScrollView([.horizontal]) {
+                    LazyHStack {
+                        if let recommendations = recommendationSection?.recommendations {
+                            ForEach(recommendations, id: \.title) { recommendation in
+                                RecommendationItemPresentable(recommendation: recommendation, maxRelative: max(geometry.size.width, geometry.size.height))
+                                    .environmentObject(appWindowModal)
+                                    .environmentObject(ciderPlayback)
+                                    .environmentObject(navigationModal)
+                            }
                         }
                     }
+                    .introspectScrollView { scrollView in
+                        scrollView.autohidesScrollers = true
+                        scrollView.scrollerStyle = .overlay
+                    }
                 }
-                .introspectScrollView { scrollView in
-                    scrollView.autohidesScrollers = true
-                    scrollView.scrollerStyle = .overlay
-                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .enableInjection()
     }

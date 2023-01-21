@@ -17,42 +17,40 @@ struct MediaTrackRepresentable: View {
     @State private var isClicked = false
     
     var body: some View {
-        ResponsiveLayoutReader { windowProp in
-            HStack {
-                Group {
-                    HStack {
-                        Image(systemName: "play.fill")
-                            .font(.system(size: 14))
-                            .foregroundColor(isHovering ? .pink : .primary)
-                            .animation(.interactiveSpring(), value: isHovering)
-                        Text("\(mediaTrack.title)")
-                            .padding(.horizontal)
-                    }
-                    Spacer()
-                    Text("\(mediaTrack.duration.minuteSecond)")
+        HStack {
+            Group {
+                HStack {
+                    Image(systemName: "play.fill")
+                        .font(.system(size: 14))
+                        .foregroundColor(isHovering ? .pink : .primary)
+                        .animation(.interactiveSpring(), value: isHovering)
+                    Text("\(mediaTrack.title)")
+                        .padding(.horizontal)
                 }
-                .padding()
+                Spacer()
+                Text("\(mediaTrack.duration.minuteSecond)")
             }
-            .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(isHovering ? Color("SecondaryColour").opacity(isClicked ? 0.7 : 0.5) : Color.clear)
-                    .animation(.interactiveSpring(), value: isHovering || isClicked)
-                    .frame(width: .infinity)
-            )
-            .onTapGesture {
-                Task {
-                    await self.ciderPlayback.setQueue(mediaTrack: self.mediaTrack)
-                    await self.ciderPlayback.clearAndPlay(mediaTrack: self.mediaTrack)
-                }
-            }
-            .onHover { isHovering in
-                self.isHovering = isHovering
-            }
-            .modifier(PressActions(onEvent: { isPressed in
-                self.isClicked = isPressed
-            }))
-            .padding(.horizontal)
+            .padding()
         }
+        .background(
+            RoundedRectangle(cornerRadius: 5)
+                .fill(isHovering ? Color("SecondaryColour").opacity(isClicked ? 0.7 : 0.5) : Color.clear)
+                .animation(.interactiveSpring(), value: isHovering || isClicked)
+                .frame(width: .infinity)
+        )
+        .onTapGesture {
+            Task {
+                await self.ciderPlayback.setQueue(mediaTrack: self.mediaTrack)
+                await self.ciderPlayback.clearAndPlay(mediaTrack: self.mediaTrack)
+            }
+        }
+        .onHover { isHovering in
+            self.isHovering = isHovering
+        }
+        .modifier(PressActions(onEvent: { isPressed in
+            self.isClicked = isPressed
+        }))
+        .padding(.horizontal)
         .enableInjection()
     }
 }

@@ -21,85 +21,88 @@ struct PlaybackBar: View {
     @State private var isEditingTrack = false
     
     var body: some View {
-        HStack {
-            let nowPlayingState = ciderPlayback.nowPlayingState
-            let overlayBarWidth = currentTimeValue / (nowPlayingState.duration ?? 1)
-            let playbackBarWidth = currentTimeValue == 0 ? 0 : playbackBarWidth * CGFloat(overlayBarWidth) + 1
-            Text("\(isEditingTrack ? currentTimeValue.minuteSecond : (nowPlayingState.currentTime?.minuteSecond ?? "0:00"))").isHidden(!nowPlayingState.hasItemToPlay)
-            ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...(nowPlayingState.duration ?? 0), step: 1, onEditingChanged: { isEditing in
-                if isEditing != self.isEditingTrack {
-                    Debouncer.debounce(delay: .milliseconds(100), shouldRunImmediately: false) {
-                        DispatchQueue.main.async {
-                            Task {
-                                await self.ciderPlayback.seekToTime(seconds: Int(currentTimeValue))
-                                self.isEditingTrack = isEditing
+        PatchedGeometryReader { geometry in
+            HStack {
+                let nowPlayingState = ciderPlayback.nowPlayingState
+                let overlayBarWidth = currentTimeValue / (nowPlayingState.duration ?? 1)
+                let playbackBarWidth = currentTimeValue == 0 ? 0 : playbackBarWidth * CGFloat(overlayBarWidth) + 1
+                Text("\(isEditingTrack ? currentTimeValue.minuteSecond : (nowPlayingState.currentTime?.minuteSecond ?? "0:00"))").isHidden(!nowPlayingState.hasItemToPlay)
+                
+                ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...(nowPlayingState.duration ?? 0), step: 1, onEditingChanged: { isEditing in
+                    if isEditing != self.isEditingTrack {
+                        Debouncer.debounce(delay: .milliseconds(100), shouldRunImmediately: false) {
+                            DispatchQueue.main.async {
+                                Task {
+                                    await self.ciderPlayback.seekToTime(seconds: Int(currentTimeValue))
+                                    self.isEditingTrack = isEditing
+                                }
                             }
                         }
                     }
-                }
-            })
-            .valueSliderStyle(HorizontalValueSliderStyle(
-                track: HorizontalRangeTrack(
-                    view: ZStack(alignment: .leading) {
-                        Capsule()
-                            .foregroundColor(nowPlayingState.isReady ? Color("PrimaryColour") : .clear)
-                            .background(nowPlayingState.isReady ? Color.clear.erasedToAnyView() : LinearGradient(colors: [.pink, .red], startPoint: playbackGradientRadius ? .leading : .trailing, endPoint: playbackGradientRadius ? .trailing : .leading)
-                                .onAppear {
-                                    withAnimation(.linear.repeatForever(autoreverses: false)) {
-                                        self.playbackGradientRadius.toggle()
+                })
+                .valueSliderStyle(HorizontalValueSliderStyle(
+                    track: HorizontalRangeTrack(
+                        view: ZStack(alignment: .leading) {
+                            Capsule()
+                                .foregroundColor(nowPlayingState.isReady ? Color("PrimaryColour") : .clear)
+                                .background(nowPlayingState.isReady ? Color.clear.erasedToAnyView() : LinearGradient(colors: [.pink, .red], startPoint: playbackGradientRadius ? .leading : .trailing, endPoint: playbackGradientRadius ? .trailing : .leading)
+                                    .onAppear {
+                                        withAnimation(.linear.repeatForever(autoreverses: false)) {
+                                            self.playbackGradientRadius.toggle()
+                                        }
+                                    }
+                                    .erasedToAnyView())
+                                .overlay {
+                                    GeometryReader { geometry in
+                                        Color.clear
+                                            .onChange(of: geometry.size) { newSize in
+                                                Debouncer.debounce {
+                                                    self.playbackBarWidth = newSize.width
+                                                }
+                                            }
+                                            .onAppear {
+                                                self.playbackBarWidth = geometry.size.width
+                                            }
                                     }
                                 }
-                                .erasedToAnyView())
-                            .overlay {
-                                GeometryReader { geometry in
-                                    Color.clear
-                                        .onChange(of: geometry.size) { newSize in
-                                            Debouncer.debounce {
-                                                self.playbackBarWidth = newSize.width
-                                            }
-                                        }
-                                        .onAppear {
-                                            self.playbackBarWidth = geometry.size.width
-                                        }
-                                }
-                            }
-                        
-                        Capsule().foregroundColor(.pink)
-                            .frame(width: playbackBarWidth)
-                    }
-                )
-                .onHover { isHovering in
-                    self.shouldShowThumb = isHovering
-                }
-                .background {
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(width: playbackBarWidth, height: 30)
-                        .onHover { isHovering in
-                            self.shouldShowThumb = isHovering
+                            
+                            Capsule().foregroundColor(.pink)
+                                .frame(width: playbackBarWidth)
                         }
-                        .allowsHitTesting(false)
-                }
-                .frame(height: 5),
-                thumb: Circle()
+                    )
                     .onHover { isHovering in
                         self.shouldShowThumb = isHovering
                     }
-                    .hideWithoutDestroying(!nowPlayingState.hasItemToPlay || !shouldShowThumb)
-                ,
-                thumbSize: CGSize(width: 8, height: 8),
-                thumbInteractiveSize: CGSize(width: 10, height: 10),
-                options: .interactiveTrack
-            ))
-            .frame(width: appWindowModal.windowSize.width / 3, height: 5)
-            Text("\(nowPlayingState.duration?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
-        }
-        .padding(.vertical, 10)
-        .onChange(of: self.ciderPlayback.nowPlayingState.currentTime) { newCurrentTime in
-            if newCurrentTime == self.ciderPlayback.nowPlayingState.duration {
-                self.ciderPlayback.nowPlayingState.reset()
-            } else if !isEditingTrack {
-                self.currentTimeValue = Double(newCurrentTime ?? 0)
+                        .background {
+                            Rectangle()
+                                .fill(.clear)
+                                .frame(width: playbackBarWidth, height: 30)
+                                .onHover { isHovering in
+                                    self.shouldShowThumb = isHovering
+                                }
+                                .allowsHitTesting(false)
+                        }
+                        .frame(height: 5),
+                    thumb: Circle()
+                        .onHover { isHovering in
+                            self.shouldShowThumb = isHovering
+                        }
+                        .hideWithoutDestroying(!nowPlayingState.hasItemToPlay || !shouldShowThumb)
+                    ,
+                    thumbSize: CGSize(width: 8, height: 8),
+                    thumbInteractiveSize: CGSize(width: 10, height: 10),
+                    options: .interactiveTrack
+                ))
+                .frame(width: geometry.minRelative * 20, height: 5)
+                
+                Text("\(nowPlayingState.duration?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
+            }
+            .onChange(of: self.ciderPlayback.nowPlayingState.currentTime) { newCurrentTime in
+                if newCurrentTime == self.ciderPlayback.nowPlayingState.duration {
+                    self.ciderPlayback.nowPlayingState.reset()
+                } else if !isEditingTrack {
+                    self.currentTimeValue = Double(newCurrentTime ?? 0)
+                }
             }
         }
         .enableInjection()

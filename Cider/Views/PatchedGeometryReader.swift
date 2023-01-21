@@ -18,6 +18,7 @@ struct PatchedGeometryProxy {
     
     var size: CGSize = .zero
     var minRelative: CGFloat = .zero
+    var maxRelative: CGFloat = .zero
     
 }
 
@@ -39,7 +40,7 @@ struct PatchedGeometryReader<Content: View>: View {
                         self.geometryProxy = PatchedGeometryProxy(size: newSize, minRelative: min(newSize.width, newSize.height))
                     }
                     .onAppear {
-                        self.geometryProxy = PatchedGeometryProxy(size: geometry.size, minRelative: min(geometry.size.width, geometry.size.height))
+                        self.geometryProxy = PatchedGeometryProxy(size: geometry.size, minRelative: min(geometry.size.width, geometry.size.height), maxRelative: max(geometry.size.width, geometry.size.height))
                     }
             }
             
