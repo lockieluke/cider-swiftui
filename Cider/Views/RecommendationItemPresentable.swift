@@ -5,6 +5,7 @@
 import SwiftUI
 import InjectHotReload
 import SDWebImageSwiftUI
+import Throttler
 
 struct RecommendationItemPresentable: View {
     
@@ -23,8 +24,6 @@ struct RecommendationItemPresentable: View {
     @State private var absXY = CGPoint()
     @State private var isHovering = false
     @State private var isHoveringPlay = false
-    @State private var scaleClickingEffect = 1.0
-    @State private var isInDetailedView = false
     
     @Namespace private var cardAnimation
     
@@ -94,25 +93,9 @@ struct RecommendationItemPresentable: View {
                 .onHover { isHovering in
                     self.isHovering = isHovering
                 }
-                .modifier(PressActions(onEvent: { isPressed in
-                    let newValue = isPressed ? 0.95 : 1
-                    if newValue != scaleClickingEffect {
-                        withAnimation(.spring()) {
-                            self.scaleClickingEffect = newValue
-                        }
-                    }
-                }))
-                .scaleEffect(scaleClickingEffect)
-                .onAnimationCompleted(for: scaleClickingEffect) {
-                    if scaleClickingEffect == 1 {
-                        self.navigationModal.navigationActions.backAction = {
-                            withAnimation(.interactiveSpring()) {
-                                self.navigationModal.isInDetailedView = false
-                            }
-                        }
-                        withAnimation(.interactiveSpring(response: 0.55, blendDuration: 100)) {
-                            self.navigationModal.detailedViewParams = DetailedViewParams(mediaItem: self.recommendation, geometryMatching: self.cardAnimation, originalSize: self.relativeSize)
-                        }
+                .onTapGesture {
+                    withAnimation(.interactiveSpring(response: 0.55, blendDuration: 100)) {
+                        self.navigationModal.appendViewStack(NavigationStack(stackType: .Media, isPresent: true, params: DetailedViewParams(mediaItem: self.recommendation, geometryMatching: self.cardAnimation, originalSize: self.relativeSize)))
                     }
                 }
             
@@ -125,13 +108,8 @@ struct RecommendationItemPresentable: View {
             }
         })
         .onChange(of: appWindowModal.windowSize) { newWindowSize in
-            if !self.isInDetailedView {
+            if self.navigationModal.currentRootStack == .Home {
                 self.resizeCover()
-            }
-        }
-        .onChange(of: navigationModal.isInDetailedView) { newIsInDetailedView in
-            if !newIsInDetailedView {
-                self.isInDetailedView = isInDetailedView
             }
         }
         .onAppear {

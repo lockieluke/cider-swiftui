@@ -175,11 +175,7 @@ extension View {
     }
     
     @ViewBuilder func hideWithoutDestroying(_ hidden: Bool) -> some View {
-        if hidden {
-            self.frame(width: .zero, height: .zero)
-        } else {
-            self
-        }
+        self.frame(maxWidth: hidden ? .zero : .infinity, maxHeight: hidden ? .zero : .infinity)
     }
     
     func captureMouseEvents(_ mouseEventCB: @escaping (MouseEvent) -> Void) -> some View {

@@ -18,19 +18,34 @@ struct NavigationContainer: View {
     var body: some View {
         ZStack {
             if self.mkModal.isAuthorised {
-                HomeView()
-                    .environmentObject(appWindowModal)
-                    .environmentObject(mkModal)
-                    .environmentObject(personalisedData)
-                    .environmentObject(navigationModal)
-                    .environmentObject(ciderPlayback)
-                
-                if navigationModal.isInDetailedView {
-                    DetailedView()
-                        .environmentObject(appWindowModal)
-                        .environmentObject(mkModal)
-                        .environmentObject(navigationModal)
-                        .environmentObject(ciderPlayback)
+                ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
+                    let isPresent = viewStack.isPresent
+                    let currentRootStack = navigationModal.currentRootStack
+                    let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
+                    let shouldUpperStackShow = isPresent && currentRootStack == viewStackOrigin
+                    
+                    switch viewStack.stackType {
+                        
+                    case .Home:
+                        HomeView()
+                            .environmentObject(appWindowModal)
+                            .environmentObject(mkModal)
+                            .environmentObject(personalisedData)
+                            .environmentObject(navigationModal)
+                            .environmentObject(ciderPlayback)
+                            .hideWithoutDestroying(currentRootStack != .Home)
+                        
+                    case .Media:
+                        DetailedView(detailedViewParams: viewStack.params as! DetailedViewParams)
+                            .environmentObject(appWindowModal)
+                            .environmentObject(mkModal)
+                            .environmentObject(navigationModal)
+                            .environmentObject(ciderPlayback)
+                            .opacity(shouldUpperStackShow ? 1 : 0)
+                            .allowsHitTesting(shouldUpperStackShow)
+                        
+                    }
+                    
                 }
             }
         }

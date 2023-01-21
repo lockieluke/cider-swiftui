@@ -13,6 +13,12 @@ enum RootNavigationType : String {
     
 }
 
+enum NavigationStackType {
+    
+    case Home, Media
+    
+}
+
 struct DetailedViewParams {
     
     let mediaItem: MusicItem
@@ -40,31 +46,58 @@ struct NavigationActions {
     var backAction: (() -> Void)? = nil
     var forwardAction: (() -> Void)? = nil
     
+    mutating func reset() {
+        self.enableBack = false
+        self.enableForward = false
+    }
+    
+}
+
+struct NavigationStack {
+    
+    let stackType: NavigationStackType
+    let id = UUID()
+    var rootStackOrigin: RootNavigationType? = .AnyView
+    var isPresent: Bool = true
+    var params: Any?
+    
 }
 
 class NavigationModal : ObservableObject {
     
-    @Published var currentRootStack: RootNavigationType = .Home {
+    // segmented control state
+    @Published var currentRootStack: RootNavigationType = .Home
+    
+    @Published var viewsStack: [NavigationStack] = [] {
         didSet {
-            self.isInDetailedView = false
-        }
-    }
-    @Published var detailedViewParams: DetailedViewParams? = nil {
-        didSet {
-            if detailedViewParams != nil {
-                self.isInDetailedView = true
-                self.navigationActions.enableBack = true
+            let presentIndex = viewsStack.firstIndex(where: { viewStack in viewStack.isPresent }) ?? 0
+            self.navigationActions.reset()
+            if viewsStack.count != 1 {
+                if viewsStack.indices.contains(viewsStack.indices.last ?? 0) {
+                    self.navigationActions.enableBack = true
+                    self.navigationActions.backAction = {
+                        self.viewsStack.removeLast()
+                        self.viewsStack[self.viewsStack.endIndex - 1].isPresent = true
+                    }
+                }
             }
+            
+            self.currentlyPresentViewStack = viewsStack.first(where: { viewStack in viewStack.isPresent })
+            self.currentlyPresentViewStackIndex = presentIndex
         }
     }
-    @Published var isInDetailedView: Bool = false {
-        didSet {
-            if !isInDetailedView {
-                self.detailedViewParams = nil
-                self.navigationActions.enableBack = false
-            }
+    
+    func appendViewStack(_ viewStack: NavigationStack, backAction: (() -> Void)? = nil, forwardAction: (() -> Void)? = nil) {
+        var modifyingViewStack = viewStack
+        modifyingViewStack.rootStackOrigin = self.currentRootStack
+        self.viewsStack.indices.forEach { index in
+            self.viewsStack[index].isPresent = false
         }
+        self.viewsStack.append(modifyingViewStack)
     }
+    
+    @Published var currentlyPresentViewStack: NavigationStack?
+    @Published var currentlyPresentViewStackIndex: Int?
     
     @Published var navigationActions = NavigationActions()
     
