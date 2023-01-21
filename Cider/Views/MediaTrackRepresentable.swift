@@ -36,7 +36,6 @@ struct MediaTrackRepresentable: View {
             RoundedRectangle(cornerRadius: 5)
                 .fill(isHovering ? Color("SecondaryColour").opacity(isClicked ? 0.7 : 0.5) : Color.clear)
                 .animation(.interactiveSpring(), value: isHovering || isClicked)
-                .frame(width: .infinity)
         )
         .onTapGesture {
             Task {

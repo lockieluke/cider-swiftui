@@ -147,7 +147,6 @@ struct DetailedView: View {
                         .padding(.vertical)
                     }
                     .transparentScrollbars()
-                    .frame(width: .infinity)
                     .transition(.move(edge: .bottom))
                 }
             }
