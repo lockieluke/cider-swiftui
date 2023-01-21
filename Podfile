@@ -34,7 +34,7 @@ end
 
 target 'CiderPlaybackAgent' do
   # own private fork of Swifter
-  pod 'Swifter', :git => 'https://github.com/ciderapp/swifter.git', :branch => 'stable'
+  pod 'Swifter'
   pod 'ArgumentParserKit'
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'master'
 end

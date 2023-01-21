@@ -8,7 +8,7 @@
 import Foundation
 import Dispatch
 
-public protocol HttpServerIODelegate: AnyObject {
+public protocol HttpServerIODelegate: class {
     func socketConnectionReceived(_ socket: Socket)
 }
 
@@ -112,7 +112,7 @@ open class HttpServerIO {
     }
 
     open func dispatch(_ request: HttpRequest) -> ([String: String], (HttpRequest) -> HttpResponse) {
-        return ([:], { _ in HttpResponse.notFound(nil) })
+        return ([:], { _ in HttpResponse.notFound })
     }
 
     private func handleConnection(_ socket: Socket) {

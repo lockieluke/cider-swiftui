@@ -35,7 +35,6 @@ public func websocket(
             let session = WebSocketSession(socket, request)
             var fragmentedOpCode = WebSocketSession.OpCode.close
             var payload = [UInt8]() // Used for fragmented frames.
-            
 
             func handleTextPayload(_ frame: WebSocketSession.Frame) throws {
                 if let handleText = text {
@@ -280,7 +279,7 @@ public class WebSocketSession: Hashable, Equatable {
         }
 
         let mask = [try socket.read(), try socket.read(), try socket.read(), try socket.read()]
-        // Read payload all at once, then apply mask (calling `socket.read` byte-by-byte is super slow).
+        //Read payload all at once, then apply mask (calling `socket.read` byte-by-byte is super slow).
         frm.payload = try socket.read(length: Int(len))
         for index in 0..<len {
             frm.payload[Int(index)] ^= mask[Int(index % 4)]
