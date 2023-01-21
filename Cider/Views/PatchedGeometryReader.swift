@@ -17,6 +17,7 @@ struct PatchedGeometryReaderSize: PreferenceKey {
 struct PatchedGeometryProxy {
     
     var size: CGSize = .zero
+    var minRelative: CGFloat = .zero
     
 }
 
@@ -35,7 +36,10 @@ struct PatchedGeometryReader<Content: View>: View {
             GeometryReader { geometry in
                 Color.clear
                     .onChange(of: geometry.size) { newSize in
-                        self.geometryProxy = PatchedGeometryProxy(size: newSize)
+                        self.geometryProxy = PatchedGeometryProxy(size: newSize, minRelative: min(newSize.width, newSize.height))
+                    }
+                    .onAppear {
+                        self.geometryProxy = PatchedGeometryProxy(size: geometry.size, minRelative: min(geometry.size.width, geometry.size.height))
                     }
             }
             
