@@ -36,19 +36,11 @@ struct NavigationActions {
             }
         }
     }
-    var enableForward = false {
-        didSet {
-            if !enableForward {
-                self.forwardAction = nil
-            }
-        }
-    }
+
     var backAction: (() -> Void)? = nil
-    var forwardAction: (() -> Void)? = nil
     
     mutating func reset() {
         self.enableBack = false
-        self.enableForward = false
     }
     
 }
@@ -87,7 +79,7 @@ class NavigationModal : ObservableObject {
         }
     }
     
-    func appendViewStack(_ viewStack: NavigationStack, backAction: (() -> Void)? = nil, forwardAction: (() -> Void)? = nil) {
+    func appendViewStack(_ viewStack: NavigationStack, backAction: (() -> Void)? = nil) {
         var modifyingViewStack = viewStack
         modifyingViewStack.rootStackOrigin = self.currentRootStack
         self.viewsStack.indices.forEach { index in

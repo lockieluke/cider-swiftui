@@ -55,12 +55,6 @@ struct AppTitleBar: View {
                     }
                 }
                 
-                if navigationModal.navigationActions.enableForward {
-                    ActionButton(actionType: .Forward) {
-                        self.navigationModal.navigationActions.forwardAction?()
-                    }
-                }
-                
                 ActionButton(actionType: .Library)
                 Spacer()
             }
