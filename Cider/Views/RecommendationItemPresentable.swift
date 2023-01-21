@@ -76,7 +76,7 @@ struct RecommendationItemPresentable: View {
                 }
                 .onTapGesture {
                     withAnimation(.interactiveSpring(response: 0.55, blendDuration: 100)) {
-                        self.navigationModal.appendViewStack(NavigationStack(stackType: .Media, isPresent: true, params: DetailedViewParams(mediaItem: self.recommendation, geometryMatching: self.cardAnimation, originalSize: .zero)))
+                        self.navigationModal.appendViewStack(NavigationStack(stackType: .Media, isPresent: true, params: DetailedViewParams(mediaItem: self.recommendation, geometryMatching: self.cardAnimation, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15))))
                     }
                 }
             
