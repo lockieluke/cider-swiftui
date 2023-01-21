@@ -122,6 +122,7 @@ class AMAPI {
         do {
             responseJson = try await amNetworkingClient.requestJSON("/catalog/\(STOREFRONT_ID!)/\(type.rawValue)/\(id)")
         } catch {
+            self.logger.error("Unable failed to tracks: \(error)")
             throw AMNetworkingError.unableToFetchTracks(error.localizedDescription)
         }
         
