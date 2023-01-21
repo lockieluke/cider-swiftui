@@ -31,17 +31,15 @@ struct PatchedGeometryReader<Content: View>: View {
     }
     
     var body: some View {
-        content(self.geometryProxy)
-            .overlay {
-                GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: PatchedGeometryReaderSize.self, value: geometry.size)
-                }
+        Group {
+            GeometryReader { geometry in
+                Color.clear
+                    .onChange(of: geometry.size) { newSize in
+                        self.geometryProxy = PatchedGeometryProxy(size: newSize)
+                    }
             }
-            .onPreferenceChange(PatchedGeometryReaderSize.self) { newSize in
-                DispatchQueue.main.async {
-                    self.geometryProxy.size = newSize
-                }
-            }
+            
+            content(self.geometryProxy)
+        }
     }
 }
