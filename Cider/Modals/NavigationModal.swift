@@ -68,8 +68,10 @@ class NavigationModal : ObservableObject {
                 if viewsStack.indices.contains(viewsStack.indices.last ?? 0) {
                     self.navigationActions.enableBack = true
                     self.navigationActions.backAction = {
-                        self.viewsStack.removeLast()
-                        self.viewsStack[self.viewsStack.endIndex - 1].isPresent = true
+                        withAnimation(.interactiveSpring()) {
+                            self.viewsStack.removeLast()
+                            self.viewsStack[self.viewsStack.endIndex - 1].isPresent = true
+                        }
                     }
                 }
             }
