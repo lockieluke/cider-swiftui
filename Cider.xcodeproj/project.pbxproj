@@ -262,7 +262,6 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
-				B77AACE4293ACC7600F8E1E2 /* ViewModifiers */,
 				B7F623F32915DB2100316F8E /* API */,
 				B706050B28BD8CB2002AD76C /* Info.plist */,
 				B7AAB6F828BABE57009AABEA /* Modals */,
@@ -311,6 +310,7 @@
 		B700C1A928B955B10069FDF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B77AACE4293ACC7600F8E1E2 /* ViewModifiers */,
 				B768871529491AFE00C623C9 /* PreferencesPanes */,
 				B7ECB7C429033AA700B5DF11 /* MainViews */,
 				B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */,
