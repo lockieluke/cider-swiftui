@@ -151,11 +151,7 @@ struct DetailedView: View {
                 }
             }
             .task {
-                do {
-                    self.reflectedMusicItem.tracks = try await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)
-                } catch {
-                    
-                }
+                self.reflectedMusicItem.tracks = (try? await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)) ?? []
                 
                 withAnimation(.spring().delay(0.3)) {
                     self.tracksShouldLoadIn = true
