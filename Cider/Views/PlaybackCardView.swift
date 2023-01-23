@@ -6,28 +6,6 @@ import SwiftUI
 import InjectHotReload
 import SDWebImageSwiftUI
 
-struct InteractiveText: View {
-    
-    @ObservedObject private var iO = Inject.observer
-    
-    var title: String
-    @State private var isHovered: Bool = false
-    
-    init(_ title: String) {
-        self.title = title
-    }
-    
-    var body: some View {
-        Text(title)
-            .background(RoundedRectangle(cornerRadius: 2).fill(isHovered ? Color("SecondaryColour") : .clear))
-            .onHover { isHovered in
-                self.isHovered = isHovered
-            }
-            .enableInjection()
-    }
-    
-}
-
 struct PlaybackCardView: View {
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback

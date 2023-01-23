@@ -24,8 +24,16 @@ struct MediaTrackRepresentable: View {
                         .font(.system(size: 14))
                         .foregroundColor(isHovering ? .pink : .primary)
                         .animation(.interactiveSpring(), value: isHovering)
-                    Text("\(mediaTrack.title)")
-                        .padding(.horizontal)
+                    VStack {
+                        Group {
+                            Text("\(mediaTrack.title)")
+                            InteractiveText("\(mediaTrack.artistName)")
+                                .font(.system(.caption))
+                                .opacity(0.8)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal)
                 }
                 Spacer()
                 Text("\(mediaTrack.duration.minuteSecond)")
