@@ -186,7 +186,9 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     func play(shuffle: Bool = false) async {
-        self.playbackBehaviour.shuffle = shuffle
+        DispatchQueue.main.async {
+            self.playbackBehaviour.shuffle = shuffle
+        }
         do {
             _ = try await self.wsCommClient.request("/play", body: [
                 "shuffle": shuffle
@@ -264,23 +266,27 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     func updateNowPlayingStateBeforeReady(mediaTrack: MediaTrack) {
-        self.nowPlayingState = NowPlayingState(
-            name: mediaTrack.title,
-            artistName: mediaTrack.artistName,
-            artworkURL: mediaTrack.artwork.getUrl(width: 100, height: 100),
-            isPlaying: false,
-            isReady: false
-        )
+        DispatchQueue.main.async {
+            self.nowPlayingState = NowPlayingState(
+                name: mediaTrack.title,
+                artistName: mediaTrack.artistName,
+                artworkURL: mediaTrack.artwork.getUrl(width: 100, height: 100),
+                isPlaying: false,
+                isReady: false
+            )
+        }
     }
     
     func updateNowPlayingStateBeforeReady(musicItem: MusicItem) {
-        self.nowPlayingState = NowPlayingState(
-            name: musicItem.title,
-            artistName: musicItem.artistName,
-            artworkURL: musicItem.artwork.getUrl(width: 100, height: 100),
-            isPlaying: false,
-            isReady: false
-        )
+        DispatchQueue.main.async {
+            self.nowPlayingState = NowPlayingState(
+                name: musicItem.title,
+                artistName: musicItem.artistName,
+                artworkURL: musicItem.artwork.getUrl(width: 100, height: 100),
+                isPlaying: false,
+                isReady: false
+            )
+        }
     }
     
     func shutdown() async {
@@ -364,8 +370,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 break
                 
             case "playbackTimeDidChange":
-                DispatchQueue.global(qos: .userInteractive).async {
-                    Throttler.throttle(shouldRunImmediately: true) {
+                Throttler.throttle(shouldRunImmediately: true) {
+                    DispatchQueue.main.async {
                         if self.appWindowModal.isFocused || self.appWindowModal.isVisibleInViewport {
                             self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].intValue + 1)
                             self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
