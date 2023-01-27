@@ -89,7 +89,7 @@ class AMAPI {
             "Authorization": "Bearer \(AM_TOKEN)",
             "Music-User-Token": AM_USER_TOKEN,
             "Origin": "https://beta.music.apple.com",
-            "Referrer": "https://beta.music.apple.com"
+            "Referer": "https://beta.music.apple.com"
         ])
     }
     
