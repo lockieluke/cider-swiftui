@@ -190,15 +190,14 @@ struct ArtistView: View {
             .transparentScrollbars()
         }
         .task {
+            let selectingArtistIndex = self.artistViewParams.selectingArtistIndex
             switch self.artistViewParams.originMediaItem {
                 
             case .mediaTrack(let mediaTrack):
-                for artistData in mediaTrack.artistsData {
-                    do {
-                        self.artist = try await self.mkModal.AM_API.fetchArtist(id: artistData.id, params: [.TopSongs, .Singles, .LatestRelease], extendParams: [.artistBio, .origin])
-                    } catch {
-                        print(error)
-                    }
+                do {
+                    self.artist = try await self.mkModal.AM_API.fetchArtist(id: mediaTrack.artistsData[selectingArtistIndex].id, params: [.TopSongs, .Singles, .LatestRelease], extendParams: [.artistBio, .origin])
+                } catch {
+                    print(error)
                 }
                 break
                 

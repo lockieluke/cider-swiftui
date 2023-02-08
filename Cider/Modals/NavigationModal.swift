@@ -30,6 +30,12 @@ struct DetailedViewParams {
 struct ArtistViewParams {
     
     let originMediaItem: MediaDynamic
+    let selectingArtistIndex: Int
+    
+    init(originMediaItem: MediaDynamic, selectingArtistIndex: Int = .zero) {
+        self.originMediaItem = originMediaItem
+        self.selectingArtistIndex = selectingArtistIndex
+    }
     
 }
 

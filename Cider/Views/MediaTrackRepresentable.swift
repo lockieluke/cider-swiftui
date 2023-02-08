@@ -9,14 +9,18 @@ struct MediaTrackRepresentable: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    var mediaTrack: MediaTrack
-    
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var mkModal: MKModal
     
+    @State private var mediaTrack: MediaTrack
     @State private var isHovering = false
     @State private var isClicked = false
+    @State private var showArtistPicker = false
+    
+    init(mediaTrack: MediaTrack) {
+        self.mediaTrack = mediaTrack
+    }
     
     var body: some View {
         HStack {
@@ -36,10 +40,28 @@ struct MediaTrackRepresentable: View {
                                     Task {
                                         if let detailedMediaTrack = try? await self.mkModal.AM_API.fetchSong(id: self.mediaTrack.id) {
                                             withAnimation(.interactiveSpring()) {
-                                                self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: .mediaTrack(detailedMediaTrack))))
+                                                self.mediaTrack = detailedMediaTrack
+                                                if detailedMediaTrack.artistsData.count > 1 {
+                                                    self.showArtistPicker.toggle()
+                                                } else {
+                                                    self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: .mediaTrack(detailedMediaTrack))))
+                                                }
                                             }
                                         }
                                     }
+                                }
+                                .popover(isPresented: $showArtistPicker, attachmentAnchor: .point(.center), arrowEdge: .bottom) {
+                                    VStack {
+                                        let artistNames = self.mediaTrack.artistName.components(separatedBy: " & ")
+                                        ForEach(0..<artistNames.count, id: \.self) { index in
+                                            InteractiveText(artistNames[index])
+                                                .onTapGesture {
+                                                    self.showArtistPicker = false
+                                                    self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: .mediaTrack(self.mediaTrack), selectingArtistIndex: index)))
+                                                }
+                                        }
+                                    }
+                                    .padding()
                                 }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
