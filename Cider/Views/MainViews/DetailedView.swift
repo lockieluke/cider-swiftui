@@ -142,6 +142,8 @@ struct DetailedView: View {
                         LazyVStack {
                             ForEach(reflectedMusicItem.tracks, id: \.id) { track in
                                 MediaTrackRepresentable(mediaTrack: track)
+                                    .environmentObject(navigationModal)
+                                    .environmentObject(mkModal)
                             }
                         }
                         .padding(.vertical)

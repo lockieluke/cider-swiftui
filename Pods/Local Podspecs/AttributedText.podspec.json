@@ -1,0 +1,24 @@
+{
+  "name": "AttributedText",
+  "version": "1.1.0",
+  "summary": "AttributedText is a view for displaying some HTML-tagged text using SwiftUI Text View.",
+  "homepage": "https://github.com/Iaenhaall/AttributedText",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Iaenhaall": "iaenhaall@ya.ru"
+  },
+  "source": {
+    "git": "https://github.com/Iaenhaall/AttributedText",
+    "tag": "1.1.0"
+  },
+  "platforms": {
+    "osx": "10.13",
+    "ios": "14.0"
+  },
+  "swift_versions": "5.3",
+  "source_files": "Sources/AttributedText",
+  "swift_version": "5.3"
+}

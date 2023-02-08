@@ -34,6 +34,7 @@ struct NavigationContainer: View {
                             .environmentObject(navigationModal)
                             .environmentObject(ciderPlayback)
                             .hideWithoutDestroying(currentRootStack != .Home)
+                            .allowsHitTesting(shouldUpperStackShow)
                         
                     case .Media:
                         DetailedView(detailedViewParams: viewStack.params as! DetailedViewParams)
@@ -44,6 +45,12 @@ struct NavigationContainer: View {
                             .opacity(shouldUpperStackShow ? 1 : 0)
                             .allowsHitTesting(shouldUpperStackShow)
                         
+                    case .Artist:
+                        ArtistView(params: viewStack.params as! ArtistViewParams)
+                            .environmentObject(mkModal)
+                            .environmentObject(ciderPlayback)
+                            .hideWithoutDestroying(!shouldUpperStackShow)
+                            .allowsHitTesting(shouldUpperStackShow)
                     }
                     
                 }

@@ -29,10 +29,11 @@ struct MediaShowcaseRow: View {
                     LazyHStack {
                         if let recommendations = recommendationSection?.recommendations {
                             ForEach(recommendations, id: \.title) { recommendation in
-                                RecommendationItemPresentable(recommendation: recommendation, maxRelative: max(geometry.size.width, geometry.size.height))
+                                MediaPresentable(item: .mediaItem(recommendation), maxRelative: max(geometry.size.width, geometry.size.height))
                                     .environmentObject(appWindowModal)
                                     .environmentObject(ciderPlayback)
                                     .environmentObject(navigationModal)
+                                    .padding()
                             }
                         }
                     }

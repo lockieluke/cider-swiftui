@@ -7,14 +7,14 @@ import InjectHotReload
 import SDWebImageSwiftUI
 import Throttler
 
-struct RecommendationItemPresentable: View {
+struct MediaPresentable: View {
     
     @ObservedObject private var iO = Inject.observer
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
-    var recommendation: MusicItem
+    var item: MediaDynamic
     var maxRelative: CGFloat
     
     @State private var isHovering = false
@@ -22,9 +22,30 @@ struct RecommendationItemPresentable: View {
     
     @Namespace private var cardAnimation
     
+    struct MediaPresentableData {
+        let title: String
+        let id: String
+        let artwork: MusicArtwork
+    }
+    
+    var displayData: MediaPresentableData {
+        get {
+            switch self.item {
+                
+            case .mediaItem(let musicItem):
+                return MediaPresentableData(title: musicItem.title, id: musicItem.id, artwork: musicItem.artwork)
+                
+            case .mediaTrack(let mediaTrack):
+                return MediaPresentableData(title: mediaTrack.title, id: mediaTrack.id, artwork: mediaTrack.artwork)
+                
+            }
+        }
+    }
+    
     var innerBody: some View {
+        
         VStack {
-            WebImage(url: recommendation.artwork.getUrl(width: 200, height: 200))
+            WebImage(url: displayData.artwork.getUrl(width: 200, height: 200))
                 .resizable()
                 .placeholder {
                     ProgressView()
@@ -32,7 +53,7 @@ struct RecommendationItemPresentable: View {
                 .scaledToFit()
                 .frame(width: maxRelative * 0.15, height: maxRelative * 0.15)
                 .cornerRadius(5)
-                .matchedGeometryEffect(id: recommendation.id, in: self.cardAnimation)
+                .matchedGeometryEffect(id: displayData.id, in: self.cardAnimation)
                 .brightness(isHovering ? -0.1 : 0)
                 .animation(.easeIn(duration: 0.15), value: isHovering)
                 .overlay {
@@ -59,7 +80,15 @@ struct RecommendationItemPresentable: View {
                                 }
                                 .onTapGesture {
                                     Task {
-                                        await self.ciderPlayback.setQueue(musicItem: self.recommendation)
+                                        switch self.item {
+                                        case .mediaItem(let mediaItem):
+                                            await self.ciderPlayback.setQueue(musicItem: mediaItem)
+                                            break
+                                            
+                                        case .mediaTrack(let mediaTrack):
+                                            await self.ciderPlayback.setQueue(mediaTrack: mediaTrack)
+                                            break
+                                        }
                                         await self.ciderPlayback.play()
                                     }
                                 }
@@ -76,14 +105,22 @@ struct RecommendationItemPresentable: View {
                 }
                 .onTapGesture {
                     withAnimation(.interactiveSpring(response: 0.55, blendDuration: 100)) {
-                        self.navigationModal.appendViewStack(NavigationStack(stackType: .Media, isPresent: true, params: DetailedViewParams(mediaItem: self.recommendation, geometryMatching: self.cardAnimation, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15))))
+                        switch self.item {
+                            
+                        case .mediaItem(let musicItem):
+                            self.navigationModal.appendViewStack(NavigationStack(stackType: .Media, isPresent: true, params: DetailedViewParams(mediaItem: musicItem, geometryMatching: self.cardAnimation, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15))))
+                            break
+                            
+                        default:
+                            break
+                            
+                        }
                     }
                 }
             
-            Text("\(recommendation.title)")
+            Text("\(displayData.title)")
         }
         .frame(width: maxRelative * 0.15, height: maxRelative * 0.15)
-        .padding()
         .fixedSize()
     }
     

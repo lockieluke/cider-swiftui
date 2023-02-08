@@ -18,6 +18,7 @@ struct MediaActionButton: View {
     @ObservedObject private var iO = Inject.observer
     
     var icon: MediaActionButtonIcon
+    var size: CGFloat? = nil
     var onPress: (() -> Void)? = nil
     
     var body: some View {
@@ -25,12 +26,12 @@ struct MediaActionButton: View {
             
         } label: {
             Image(systemName: icon.rawValue)
-                .font(.system(size: 12))
+                .font(.system(size: size != nil ? size! * 0.5 : 12))
                 .foregroundColor(.white)
         }
         .buttonStyle(.borderless)
         .tooltip("\(icon)")
-        .frame(width: 25, height: 25)
+        .frame(width: size ?? 25, height: size ?? 25)
         .background(RoundedRectangle(cornerRadius: 20).fill(Color.pink))
         .modifier(SimpleHoverModifier())
         .onTapGesture {

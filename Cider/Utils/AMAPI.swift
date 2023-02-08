@@ -20,7 +20,11 @@ class AMAPI {
     
     init() {
         self.logger = Logger(label: "Apple Music API")
-        self.amNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.music.apple.com/v1")!)
+        self.amNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://amp-api.music.apple.com/v1")!, defaultHeaders: [
+            "User-Agent": "Music/1.3.3 (Macintosh; OS X 13.2) AppleWebKit/614.4.6.1.5 build/2 (dt:1)",
+            "Referer": "https://beta.music.apple.com",
+            "Origin": "https://beta.music.apple.com"
+        ])
         self.ciderNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.cider.sh/v1")!, defaultHeaders: [
             "User-Agent": "Cider;?client=swiftui&env=dev&platform=darwin",
             "Referer": "localhost"
@@ -130,6 +134,65 @@ class AMAPI {
         let tracks = data?["relationships"]["tracks"]["data"].arrayValue.map{ MediaTrack(data: $0) }
         
         return tracks ?? []
+    }
+    
+    func fetchSong(id: String) async throws -> MediaTrack {
+        var responseJson: JSON
+        do {
+            responseJson = try await amNetworkingClient.requestJSON("/catalog/\(STOREFRONT_ID!)/songs/\(id)")
+        } catch {
+            self.logger.error("Unable failed to tracks: \(error)")
+            throw AMNetworkingError.unableToFetchTracks(error.localizedDescription)
+        }
+        
+        return MediaTrack(data: responseJson["data"].array?.first ?? [])
+    }
+    
+    enum FetchArtistParams: String {
+        case AppearsOnAlbum = "appears-on-albums",
+             CompilationAlbums = "compilation-albums",
+             FeaturedAlbums = "featured-albums",
+             FeaturedMusicVideos = "featured-music-videos",
+             FeaturedPlaylists = "featured-playlists",
+             FullAlbums = "full-albums",
+             LatestRelease = "latest-release",
+             LiveAlbums = "live-albums",
+             SimilarAritsts = "similar-artists",
+             TopMusicVideos = "top-music-videos",
+             TopSongs = "top-songs",
+             Singles = "singles"
+    }
+    
+    enum FetchArtistExtendParams: String {
+        case artistBio, bornOrFormed, editorialArtwork, editorialVideo, isGroup, origin, hero
+    }
+    
+    func fetchArtist(id: String, params: [FetchArtistParams] = [], extendParams: [FetchArtistExtendParams] = []) async throws -> MediaArtist {
+        var responseJson: JSON
+        do {
+            var urlComponents = URLComponents(string: "/")!
+            var urlQueryItems: [URLQueryItem] = []
+            urlComponents.path = "/catalog/\(STOREFRONT_ID!)/artists/\(id)"
+            
+            if !params.isEmpty {
+                urlQueryItems.append(URLQueryItem(name: "views", value: params.map { param in param.rawValue }.joined(separator: ",")))
+            }
+            if !extendParams.isEmpty {
+                urlQueryItems.append(URLQueryItem(name: "extend", value: extendParams.map { param in param.rawValue }.joined(separator: ",")))
+            }
+            urlComponents.queryItems = urlQueryItems
+            
+            guard let urlString = urlComponents.url?.absoluteString else {
+                throw AMNetworkingError.unableToFetchTracks("Unable to compose URL")
+            }
+            responseJson = try await amNetworkingClient.requestJSON(urlString)
+        } catch {
+            self.logger.error("Failed to fetch artist: \(error)")
+            throw AMNetworkingError.unableToFetchTracks(error.localizedDescription)
+        }
+        
+        let data = responseJson["data"].array?.first ?? []
+        return MediaArtist(data: data)
     }
     
 }

@@ -597,6 +597,7 @@ PODS:
     - abseil/base/config
     - abseil/meta/type_traits
   - ArgumentParserKit (1.0.0)
+  - AttributedText (1.1.0)
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
     - BoringSSL-GRPC/Interface (= 0.0.24)
@@ -773,6 +774,7 @@ PODS:
 
 DEPENDENCIES:
   - ArgumentParserKit
+  - AttributedText (from `.coke/pods/Iaenhaall/AttributedText`)
   - FirebaseAnalytics
   - FirebaseAuth
   - FirebaseFirestore
@@ -820,6 +822,8 @@ SPEC REPOS:
     - Watchdog
 
 EXTERNAL SOURCES:
+  AttributedText:
+    :path: ".coke/pods/Iaenhaall/AttributedText"
   Preferences:
     :path: ".coke/pods/sindresorhus/Preferences"
   SwiftUISliders:
@@ -838,6 +842,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
+  AttributedText: 54d4a8bb97ab36380fe115ec16230fe7396e192f
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   FirebaseAnalytics: 036232b6a1e2918e5f67572417be1173576245f3
   FirebaseAuth: 0e415d29d846c1dce2fb641e46f35e9888d9bec6
@@ -868,6 +873,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
 
-PODFILE CHECKSUM: c38f97e52d95b162ad56fcd24defdc954f97f80a
+PODFILE CHECKSUM: c0a71626cf3fe9aba87946cd16be69e311c8682b
 
 COCOAPODS: 1.11.3

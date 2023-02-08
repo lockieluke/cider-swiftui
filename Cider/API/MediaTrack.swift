@@ -11,6 +11,7 @@ struct MediaTrack {
     let type: MediaType
     let artwork: MusicArtwork
     let duration: TimeInterval
+    var artistsData: [MediaAny] = []
     
     init(data: JSON) {
         self.id = data["id"].stringValue
@@ -21,6 +22,11 @@ struct MediaTrack {
         self.artistName = attributes["artistName"].stringValue
         self.artwork = MusicArtwork(data: attributes["artwork"])
         self.duration = TimeInterval(truncating: Int(Int(truncating: attributes["durationInMillis"].numberValue) + 1000) / Int(1000) as NSNumber)
+        
+        let artistsData = data["relationships"]["artists"]["data"].arrayValue
+        artistsData.forEach { artistData in
+            self.artistsData.append(MediaAny(id: artistData["id"].stringValue, type: .Artist, href: artistData["href"].stringValue))
+        }
     }
     
 }

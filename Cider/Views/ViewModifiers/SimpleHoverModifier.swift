@@ -12,9 +12,10 @@ struct SimpleHoverModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .brightness(isHovering ? -0.1 : 0)
-            .animation(.interactiveSpring(), value: isHovering)
             .onHover { isHovering in
-                self.isHovering = isHovering
+                withAnimation(.easeIn(duration: 0.15)) {
+                    self.isHovering = isHovering
+                }
             }
     }
     

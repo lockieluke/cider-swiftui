@@ -15,7 +15,7 @@ enum RootNavigationType : String {
 
 enum NavigationStackType {
     
-    case Home, Media
+    case Home, Media, Artist
     
 }
 
@@ -24,6 +24,12 @@ struct DetailedViewParams {
     let mediaItem: MusicItem
     let geometryMatching: Namespace.ID
     let originalSize: CGSize
+    
+}
+
+struct ArtistViewParams {
+    
+    let originMediaItem: MediaDynamic
     
 }
 

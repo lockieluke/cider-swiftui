@@ -167,7 +167,10 @@ class NetworkingProvider {
     func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> HTTPResponse {
         var newHeaders = self.defaultHeaders
         newHeaders.merge(dict: self.defaultHeaders)
-        return try await NetworkingProvider.request(self.baseURL.appendingPathComponent(endpoint).absoluteString, method: method, headers: newHeaders, body: body)
+        guard let urlString = self.baseURL.appendingPathComponent(endpoint).absoluteString.removingPercentEncoding else {
+            throw NSError(domain: "Failed to compose URL String", code: 1)
+        }
+        return try await NetworkingProvider.request(urlString, method: method, headers: newHeaders, body: body)
     }
     
     func requestJSON(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> JSON {
@@ -201,7 +204,7 @@ class NetworkingProvider {
         
         var responseData: Data
         do {
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data, res) = try await URLSession.shared.data(for: request)
             responseData = data
         } catch {
             throw error

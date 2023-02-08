@@ -12,6 +12,8 @@ struct MediaTrackRepresentable: View {
     var mediaTrack: MediaTrack
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var mkModal: MKModal
     
     @State private var isHovering = false
     @State private var isClicked = false
@@ -30,6 +32,15 @@ struct MediaTrackRepresentable: View {
                             InteractiveText("\(mediaTrack.artistName)")
                                 .font(.system(.caption))
                                 .opacity(0.8)
+                                .onTapGesture {
+                                    Task {
+                                        if let detailedMediaTrack = try? await self.mkModal.AM_API.fetchSong(id: self.mediaTrack.id) {
+                                            withAnimation(.interactiveSpring()) {
+                                                self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: .mediaTrack(detailedMediaTrack))))
+                                            }
+                                        }
+                                    }
+                                }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }

@@ -9,8 +9,14 @@ enum MediaType: String {
     case Playlist = "playlists",
          Album = "albums",
          AnyMedia = "any",
-         Song = "songs"
+         Song = "songs",
+         Artist = "artists"
     
+}
+
+enum MediaDynamic {
+    case mediaTrack(MediaTrack)
+    case mediaItem(MusicItem)
 }
 
 enum PlaylistType: String {
