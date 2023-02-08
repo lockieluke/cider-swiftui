@@ -145,14 +145,25 @@ struct ArtistView: View {
                                 }
                             }
                         }
-                        .padding(.horizontal, 50)
                         Spacer()
                     }
-                    .padding(.horizontal, 30)
                     .padding(.vertical, 10)
-                }
-                
-                LazyVStack(spacing: .zero) {
+                    
+                    VStack(alignment: .leading) {
+                        Text("Singles")
+                            .font(.title2.bold())
+                        ScrollView(.horizontal) {
+                            LazyHStack {
+                                ForEach(self.artist.singles, id: \.id) { single in
+                                    MediaPresentable(item: .mediaTrack(single), maxRelative: 1000)
+                                        .padding(.vertical)
+                                }
+                            }
+                        }
+                        .transparentScrollbars()
+                    }
+                    .padding(.vertical)
+                    
                     if let artistBio = artist.artistBio {
                         Text("About \(artist.artistName)")
                             .font(.title2.bold())
@@ -182,10 +193,9 @@ struct ArtistView: View {
                             .padding(.leading)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 5)
                     }
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal)
             }
             .transparentScrollbars()
         }

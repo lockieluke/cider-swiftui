@@ -18,6 +18,7 @@ struct MediaArtist {
     let artwork: MusicArtwork
     let topSongs: [MediaTrack]
     let latestReleases: [MediaTrack]
+    let singles: [MediaTrack]
     
     let artistBio: String?
     let origin: String?
@@ -37,6 +38,7 @@ struct MediaArtist {
         let views = data["views"]
         self.topSongs = views["top-songs"]["data"].arrayValue.map { MediaTrack(data: $0) }
         self.latestReleases = views["latest-release"]["data"].arrayValue.map { MediaTrack(data: $0) }
+        self.singles = views["singles"]["data"].arrayValue.map { MediaTrack(data: $0) }
     }
     
 }
