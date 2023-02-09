@@ -3,6 +3,15 @@
 .coke/
 Cider/GoogleService-Info.plist
 
+# Yarn 3 files
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 #########################
 # .gitignore file for Xcode4 and Xcode5 Source projects
 #
