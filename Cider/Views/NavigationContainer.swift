@@ -49,6 +49,7 @@ struct NavigationContainer: View {
                         ArtistView(params: viewStack.params as! ArtistViewParams)
                             .environmentObject(mkModal)
                             .environmentObject(ciderPlayback)
+                            .environmentObject(navigationModal)
                             .hideWithoutDestroying(!shouldUpperStackShow)
                             .allowsHitTesting(shouldUpperStackShow)
                     }

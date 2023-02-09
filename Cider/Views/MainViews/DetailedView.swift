@@ -24,7 +24,11 @@ struct DetailedView: View {
     @State private var tracksShouldLoadIn = false
     @State private var bgGlowGradientColours = Gradient(colors: [])
     // copy of the recommendation, this one isn't read only
-    @State private var reflectedMusicItem = MusicItem(data: [])
+    @State private var reflectedMusicItem: MusicItem? = nil
+    
+    init(detailedViewParams: DetailedViewParams) {
+        self.detailedViewParams = detailedViewParams
+    }
     
     var addToLibrary: some View {
         Button {
@@ -44,8 +48,10 @@ struct DetailedView: View {
     
     func playSync(mediaItem: MusicItem, shuffle: Bool = false) {
         Task {
-            await self.ciderPlayback.setQueue(musicItem: self.reflectedMusicItem)
-            await self.ciderPlayback.clearAndPlay(shuffle: shuffle, musicItem: self.reflectedMusicItem)
+            if let reflectedMusicItem = self.reflectedMusicItem {
+                await self.ciderPlayback.setQueue(musicItem: reflectedMusicItem)
+                await self.ciderPlayback.clearAndPlay(shuffle: shuffle, musicItem: reflectedMusicItem)
+            }
         }
     }
     
@@ -73,7 +79,7 @@ struct DetailedView: View {
                         .frame(width: sqaureSize)
                         .background(
                             Rectangle()
-                                .background(Color(nsColor: reflectedMusicItem.artwork.bgColour))
+                                .background(Color(nsColor: reflectedMusicItem?.artwork.bgColour ?? .gray))
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(5)
                                 .multicolourGlow()
@@ -98,7 +104,8 @@ struct DetailedView: View {
                         .padding(.vertical, 5)
                         .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
                     
-                    if descriptionsShouldLoadIn {
+                    if descriptionsShouldLoadIn,
+                       let reflectedMusicItem = self.reflectedMusicItem {
                         VStack {
                             HStack {
                                 Text("\(reflectedMusicItem.title)")
@@ -140,7 +147,7 @@ struct DetailedView: View {
                 if tracksShouldLoadIn {
                     ScrollView(.vertical) {
                         LazyVStack {
-                            ForEach(reflectedMusicItem.tracks, id: \.id) { track in
+                            ForEach(reflectedMusicItem?.tracks ?? [], id: \.id) { track in
                                 MediaTrackRepresentable(mediaTrack: track)
                                     .environmentObject(navigationModal)
                                     .environmentObject(mkModal)
@@ -153,7 +160,8 @@ struct DetailedView: View {
                 }
             }
             .task {
-                self.reflectedMusicItem.tracks = (try? await self.mkModal.AM_API.fetchTracks(id: reflectedMusicItem.id, type: reflectedMusicItem.type)) ?? []
+                guard let id = self.reflectedMusicItem?.id else { return }
+                self.reflectedMusicItem?.tracks = (try? await self.mkModal.AM_API.fetchTracks(id: id, type: self.reflectedMusicItem?.type ?? .AnyMedia)) ?? []
                 
                 withAnimation(.spring().delay(0.3)) {
                     self.tracksShouldLoadIn = true
@@ -165,8 +173,7 @@ struct DetailedView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.leading, 30)
             .onDisappear {
-                self.reflectedMusicItem.tracks = []
-                self.reflectedMusicItem = MusicItem(data: [])
+                self.reflectedMusicItem = nil
             }
         }
         .enableInjection()

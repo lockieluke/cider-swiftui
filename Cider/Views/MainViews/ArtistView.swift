@@ -17,9 +17,10 @@ struct ArtistView: View {
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     let artistViewParams: ArtistViewParams
-    @State private var artist: MediaArtist
+    @State private var artist: MediaArtist?
     @State private var readyToDisplay: Bool = false
     @State private var artistBioHeight: CGFloat = .zero
     
@@ -89,129 +90,156 @@ struct ArtistView: View {
     
     init(params: ArtistViewParams) {
         self.artistViewParams = params
-        self._artist = State.init(initialValue: MediaArtist(data: []))
     }
     
     var body: some View {
         PatchedGeometryReader { geometry in
             ScrollView(.vertical) {
-                VStack {
-                    if readyToDisplay {
-                        WebImage(url: artist.artwork.getUrl(width: 500, height: 500))
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(.infinity)
-                            .frame(width: geometry.minRelative * 0.3, height: geometry.minRelative * 0.3)
-                            .frame(minWidth: 50, minHeight: 50)
-                            .shadow(radius: 10)
-                            .padding(60)
-                            .contextMenu {
-                                Button {
-                                    NSPasteboard.general.declareTypes([.string], owner: nil)
-                                    NSPasteboard.general.setString(self.artist.id, forType: .string)
-                                } label: {
-                                    Text("Copy ID")
+                if let artist = self.artist {
+                    VStack {
+                        if readyToDisplay {
+                            WebImage(url: artist.artwork.getUrl(width: 500, height: 500))
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(.infinity)
+                                .frame(width: geometry.minRelative * 0.3, height: geometry.minRelative * 0.3)
+                                .frame(minWidth: 50, minHeight: 50)
+                                .shadow(radius: 10)
+                                .padding(60)
+                                .contextMenu {
+                                    Button {
+                                        NSPasteboard.general.declareTypes([.string], owner: nil)
+                                        NSPasteboard.general.setString(artist.id, forType: .string)
+                                    } label: {
+                                        Text("Copy ID")
+                                    }
                                 }
+                            
+                            HStack(alignment: .center) {
+                                MediaActionButton(icon: .Play, size: 35)
+                                Text(artist.artistName)
+                                    .font(.title.bold())
+                                    .padding(.horizontal, 10)
+                                Spacer()
+                                MediaActionButton(icon: .Shuffle, size: 35)
                             }
-                        
-                        HStack(alignment: .center) {
-                            MediaActionButton(icon: .Play, size: 35)
-                            Text(artist.artistName)
-                                .font(.title.bold())
-                                .padding(.horizontal, 10)
-                            Spacer()
-                            MediaActionButton(icon: .Shuffle, size: 35)
-                        }
-                        .padding(.horizontal, 30)
-                    }
-                    
-                    HStack(alignment: .top) {
-                        if let latestRelease = self.artist.latestReleases.first {
-                            VStack(alignment: .leading) {
-                                Text("Latest Release")
-                                    .font(.title2.bold())
-                                MediaPresentable(item: .mediaTrack(latestRelease), maxRelative: 1000)
-                                    .padding(.vertical)
-                            }
+                            .padding(.horizontal, 30)
                         }
                         
-                        VStack(alignment: .leading) {
-                            Text("Top Songs")
-                                .font(.title2.bold())
-                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 300))], alignment: .center, spacing: 10) {
-                                ForEach(self.artist.topSongs, id: \.id) { topSong in
-                                    TopSongView(topSong)
-                                        .environmentObject(ciderPlayback)
-                                }
-                            }
-                        }
-                        Spacer()
-                    }
-                    .padding(.vertical, 10)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Singles")
-                            .font(.title2.bold())
-                        ScrollView(.horizontal) {
-                            LazyHStack {
-                                ForEach(self.artist.singles, id: \.id) { single in
-                                    MediaPresentable(item: .mediaTrack(single), maxRelative: 1000)
+                        HStack(alignment: .top) {
+                            if let latestRelease = artist.latestReleases.first {
+                                VStack(alignment: .leading) {
+                                    Text("Latest Release")
+                                        .font(.title2.bold())
+                                    MediaPresentable(item: .mediaTrack(latestRelease), maxRelative: 1000)
                                         .padding(.vertical)
                                 }
                             }
-                        }
-                        .transparentScrollbars()
-                    }
-                    .padding(.vertical)
-                    
-                    if let artistBio = artist.artistBio {
-                        Text("About \(artist.artistName)")
-                            .font(.title2.bold())
-                        
-                        AttributedText(artistBio)
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical)
-                            .modifier(SimpleHoverModifier())
-                    }
-                    
-                    if let origin = artist.origin {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Hometown")
-                                    .font(.title2.bold())
-                                Text("\(origin)")
-                            }
-                            .modifier(SimpleHoverModifier())
                             
                             VStack(alignment: .leading) {
-                                Text("Born")
+                                Text("Top Songs")
                                     .font(.title2.bold())
-                                Text("12th December 2023")
+                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 300))], alignment: .center, spacing: 10) {
+                                    ForEach(artist.topSongs, id: \.id) { topSong in
+                                        TopSongView(topSong)
+                                            .environmentObject(ciderPlayback)
+                                    }
+                                }
                             }
-                            .modifier(SimpleHoverModifier())
-                            .padding(.leading)
+                            Spacer()
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 10)
+                        
+                        VStack(alignment: .leading) {
+                            Text("Singles")
+                                .font(.title2.bold())
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(artist.singles, id: \.id) { single in
+                                        MediaPresentable(item: .mediaTrack(single), maxRelative: 1000)
+                                            .padding(.vertical)
+                                    }
+                                }
+                            }
+                            .transparentScrollbars()
+                        }
+                        .padding(.vertical)
+                        
+                        VStack(alignment: .leading) {
+                            Text("Similar Artists")
+                                .font(.title2.bold())
+                            
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(artist.similarArtists, id: \.id) { similarArtist in
+                                        MediaArtistPresentable(artist: similarArtist, maxRelative: 1000)
+                                            .environmentObject(navigationModal)
+                                            .padding(.vertical)
+                                    }
+                                }
+                            }
+                            .transparentScrollbars()
+                        }
+                        .padding(.vertical)
+                        
+                        if let artistBio = artist.artistBio {
+                            Text("About \(artist.artistName)")
+                                .font(.title2.bold())
+                            
+                            AttributedText(artistBio)
+                                .multilineTextAlignment(.leading)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical)
+                                .modifier(SimpleHoverModifier())
+                        }
+                        
+                        if let origin = artist.origin {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Hometown")
+                                        .font(.title2.bold())
+                                    Text("\(origin)")
+                                }
+                                .modifier(SimpleHoverModifier())
+                                
+                                VStack(alignment: .leading) {
+                                    Text("Born")
+                                        .font(.title2.bold())
+                                    Text("12th December 2023")
+                                }
+                                .modifier(SimpleHoverModifier())
+                                .padding(.leading)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.bottom)
+                        }
                     }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
             }
             .transparentScrollbars()
         }
         .task {
             let selectingArtistIndex = self.artistViewParams.selectingArtistIndex
-            switch self.artistViewParams.originMediaItem {
-                
-            case .mediaTrack(let mediaTrack):
+            
+            let fetchById: (_ id: String) async -> Void = { id in
                 do {
-                    self.artist = try await self.mkModal.AM_API.fetchArtist(id: mediaTrack.artistsData[selectingArtistIndex].id, params: [.TopSongs, .Singles, .LatestRelease], extendParams: [.artistBio, .origin])
+                    self.artist = try await self.mkModal.AM_API.fetchArtist(id: id, params: [.TopSongs, .Singles, .LatestRelease, .SimilarAritsts], extendParams: [.artistBio, .origin])
                 } catch {
                     print(error)
                 }
+            }
+            
+            switch self.artistViewParams.originMediaItem {
+                
+            case .mediaTrack(let mediaTrack):
+                await fetchById(mediaTrack.artistsData[selectingArtistIndex].id)
                 break
                 
             default:
+                if let artist = self.artistViewParams.artist {
+                    await fetchById(artist.id)
+                }
                 break
                 
             }

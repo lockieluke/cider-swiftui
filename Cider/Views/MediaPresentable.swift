@@ -43,7 +43,6 @@ struct MediaPresentable: View {
     }
     
     var innerBody: some View {
-        
         VStack {
             WebImage(url: displayData.artwork.getUrl(width: 200, height: 200))
                 .resizable()
@@ -88,6 +87,7 @@ struct MediaPresentable: View {
                                         case .mediaTrack(let mediaTrack):
                                             await self.ciderPlayback.setQueue(mediaTrack: mediaTrack)
                                             break
+                                            
                                         }
                                         await self.ciderPlayback.play()
                                     }

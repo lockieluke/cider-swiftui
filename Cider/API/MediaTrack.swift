@@ -20,7 +20,7 @@ struct MediaTrack {
         let attributes = data["attributes"]
         self.title = attributes["name"].stringValue
         self.artistName = attributes["artistName"].stringValue
-        self.artwork = MusicArtwork(data: attributes["artwork"])
+        self.artwork = try! MusicArtwork(data: attributes["artwork"])
         self.duration = TimeInterval(truncating: Int(Int(truncating: attributes["durationInMillis"].numberValue) + 1000) / Int(1000) as NSNumber)
         
         let artistsData = data["relationships"]["artists"]["data"].arrayValue

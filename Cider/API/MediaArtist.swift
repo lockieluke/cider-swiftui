@@ -19,13 +19,13 @@ struct MediaArtist {
     let topSongs: [MediaTrack]
     let latestReleases: [MediaTrack]
     let singles: [MediaTrack]
+    let similarArtists: [MediaArtist]
     
     let artistBio: String?
     let origin: String?
     
     init(data: JSON) {
         self.id = data["id"].stringValue
-        
         let attributes = data["attributes"]
         self.artistName = attributes["name"].stringValue
         self.artwork = MusicArtwork(data: attributes["artwork"])
@@ -39,6 +39,7 @@ struct MediaArtist {
         self.topSongs = views["top-songs"]["data"].arrayValue.map { MediaTrack(data: $0) }
         self.latestReleases = views["latest-release"]["data"].arrayValue.map { MediaTrack(data: $0) }
         self.singles = views["singles"]["data"].arrayValue.map { MediaTrack(data: $0) }
+        self.similarArtists = views["similar-artists"]["data"].arrayValue.map { MediaArtist(data: $0) }
     }
     
 }
