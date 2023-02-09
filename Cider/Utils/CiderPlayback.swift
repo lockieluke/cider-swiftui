@@ -9,6 +9,7 @@ import Throttler
 
 struct NowPlayingState {
     
+    var item: MediaDynamic?
     var name: String? = nil
     var artistName: String? = nil
     var artworkURL: URL?
@@ -54,6 +55,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     private let logger: Logger
     private let appWindowModal: AppWindowModal
+    private var mkModal: MKModal?
     private let proc: Process
     private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
@@ -121,10 +123,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         weakSelf = self
     }
     
-    func setDeveloperToken(developerToken: String) {
+    func setDeveloperToken(developerToken: String, mkModal: MKModal) {
         if !self.isRunning {
             self.proc.arguments?.append(contentsOf: ["--am-token", developerToken])
         }
+        self.mkModal = mkModal
     }
     
     func setUserToken(userToken: String) {
@@ -174,11 +177,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     func clearAndPlay(shuffle: Bool = false, musicItem: MusicItem? = nil, mediaTrack: MediaTrack? = nil) async {
         if let musicItem = musicItem {
-            self.updateNowPlayingStateBeforeReady(musicItem: musicItem)
+            self.updateNowPlayingStateBeforeReady(item: .mediaItem(musicItem))
         }
         
         if let mediaTrack = mediaTrack {
-            self.updateNowPlayingStateBeforeReady(mediaTrack: mediaTrack)
+            self.updateNowPlayingStateBeforeReady(item: .mediaTrack(mediaTrack))
         }
         
         await self.stop()
@@ -265,24 +268,33 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    func updateNowPlayingStateBeforeReady(mediaTrack: MediaTrack) {
+    func updateNowPlayingStateBeforeReady(item: MediaDynamic) {
         DispatchQueue.main.async {
+            var title: String
+            var artistName: String
+            var artwork: MusicArtwork
+            
+            switch item {
+                
+            case .mediaTrack(let mediaTrack):
+                title = mediaTrack.title
+                artistName = mediaTrack.artistName
+                artwork = mediaTrack.artwork
+                break
+                
+            case .mediaItem(let musicItem):
+                title = musicItem.title
+                artistName = musicItem.artistName
+                artwork = musicItem.artwork
+                break
+                
+            }
+            
             self.nowPlayingState = NowPlayingState(
-                name: mediaTrack.title,
-                artistName: mediaTrack.artistName,
-                artworkURL: mediaTrack.artwork.getUrl(width: 100, height: 100),
-                isPlaying: false,
-                isReady: false
-            )
-        }
-    }
-    
-    func updateNowPlayingStateBeforeReady(musicItem: MusicItem) {
-        DispatchQueue.main.async {
-            self.nowPlayingState = NowPlayingState(
-                name: musicItem.title,
-                artistName: musicItem.artistName,
-                artworkURL: musicItem.artwork.getUrl(width: 100, height: 100),
+                item: item,
+                name: title,
+                artistName: artistName,
+                artworkURL: artwork.getUrl(width: 100, height: 100),
                 isPlaying: false,
                 isReady: false
             )
@@ -333,16 +345,27 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             case "mediaItemDidChange":
                 let mediaParams = json["mediaParams"]
                 
-                self.nowPlayingState.name = mediaParams["name"].string
-                self.nowPlayingState.artistName = mediaParams["artistName"].string
-                
-                let newArtworkURL = URL(string: mediaParams["artworkURL"].stringValue.replacingOccurrences(of: "{w}", with: "100").replacingOccurrences(of: "{h}", with: "100"))
-                if newArtworkURL != self.nowPlayingState.artworkURL {
-                    self.nowPlayingState.artworkURL = newArtworkURL
+                Task {
+                    let id = mediaParams["id"].stringValue
+                    guard let mediaTrack = try? await self.mkModal?.AM_API.fetchSong(id: id) else {
+                        self.logger.error("Unable to fetch now playing track: \(id)")
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.nowPlayingState.item = .mediaTrack(mediaTrack)
+                        self.nowPlayingState.name = mediaParams["name"].string
+                        self.nowPlayingState.artistName = mediaParams["artistName"].string
+                        
+                        let newArtworkURL = URL(string: mediaParams["artworkURL"].stringValue.replacingOccurrences(of: "{w}", with: "100").replacingOccurrences(of: "{h}", with: "100"))
+                        if newArtworkURL != self.nowPlayingState.artworkURL {
+                            self.nowPlayingState.artworkURL = newArtworkURL
+                        }
+                        
+                        self.nowPlayingState.isPlaying = true
+                        self.nowPlayingState.isReady = true
+                    }
                 }
-                
-                self.nowPlayingState.isPlaying = true
-                self.nowPlayingState.isReady = true
                 
                 break
                 

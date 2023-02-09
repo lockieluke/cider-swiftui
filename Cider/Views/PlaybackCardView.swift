@@ -9,6 +9,7 @@ import SDWebImageSwiftUI
 struct PlaybackCardView: View {
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     @ObservedObject private var iO = Inject.observer
     
@@ -35,6 +36,13 @@ struct PlaybackCardView: View {
                     .font(.system(.headline))
                 
                 InteractiveText(nowPlayingState.artistName ?? "")
+                    .onTapGesture {
+                        withAnimation(.interactiveSpring()) {
+                            if let item = self.ciderPlayback.nowPlayingState.item {
+                                self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: item)))
+                            }
+                        }
+                    }
                 InteractiveText("")
                     .foregroundColor(.gray)
             }

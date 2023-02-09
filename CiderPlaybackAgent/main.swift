@@ -145,6 +145,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     
                 case "mediaItemDidChange":
                     requestObj["mediaParams"] = JSON([
+                        "id": dict["id"],
                         "name": dict["name"],
                         "artistName": dict["artistName"],
                         "artworkURL": dict["artworkURL"]

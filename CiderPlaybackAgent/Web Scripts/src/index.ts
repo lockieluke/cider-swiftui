@@ -73,6 +73,7 @@ document.addEventListener('musickitloaded', async function () {
         const nowPlayingItem = mk.nowPlayingItem;
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "mediaItemDidChange",
+            id: nowPlayingItem.id,
             name: nowPlayingItem.attributes.name,
             artistName: nowPlayingItem.attributes.artistName,
             artworkURL: nowPlayingItem.attributes.artwork.url

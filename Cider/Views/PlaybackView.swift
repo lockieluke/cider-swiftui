@@ -11,6 +11,7 @@ struct PlaybackView: View {
     
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     var repeatModeIcon: PlaybackButtonIcon {
         switch self.ciderPlayback.playbackBehaviour.repeatMode {
@@ -50,6 +51,7 @@ struct PlaybackView: View {
             
             PlaybackCardView()
                 .environmentObject(ciderPlayback)
+                .environmentObject(navigationModal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack {

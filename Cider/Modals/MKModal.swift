@@ -32,7 +32,7 @@ class MKModal : ObservableObject {
                     let developerToken = await self.AM_API.fetchMKDeveloperToken()
                     DispatchQueue.main.async {
                         self.hasDeveloperToken = true
-                        self.ciderPlayback.setDeveloperToken(developerToken: developerToken)
+                        self.ciderPlayback.setDeveloperToken(developerToken: developerToken, mkModal: self)
                         self.logger.success("Successfully fetched MusicKit Developer Token", displayTick: true)
                         continuation.resume(returning: developerToken)
                     }
