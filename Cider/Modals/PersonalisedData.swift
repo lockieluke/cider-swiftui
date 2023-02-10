@@ -6,6 +6,6 @@ import Foundation
 
 class PersonalisedData : ObservableObject {
     
-    @Published var recommendationSections: MusicRecommendationSections?
+    @Published var recommendationSections: MediaRecommendationSections?
     
 }

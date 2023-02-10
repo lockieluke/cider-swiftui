@@ -24,7 +24,7 @@ struct DetailedView: View {
     @State private var tracksShouldLoadIn = false
     @State private var bgGlowGradientColours = Gradient(colors: [])
     // copy of the recommendation, this one isn't read only
-    @State private var reflectedMusicItem: MusicItem? = nil
+    @State private var reflectedMusicItem: MediaItem? = nil
     
     init(detailedViewParams: DetailedViewParams) {
         self.detailedViewParams = detailedViewParams
@@ -46,7 +46,7 @@ struct DetailedView: View {
         .modifier(SimpleHoverModifier())
     }
     
-    func playSync(mediaItem: MusicItem, shuffle: Bool = false) {
+    func playSync(mediaItem: MediaItem, shuffle: Bool = false) {
         Task {
             if let reflectedMusicItem = self.reflectedMusicItem {
                 await self.ciderPlayback.setQueue(musicItem: reflectedMusicItem)
@@ -185,6 +185,6 @@ struct DetailedView_Previews: PreviewProvider {
     @Namespace private static var stubId
     
     static var previews: some View {
-        DetailedView(detailedViewParams: DetailedViewParams(mediaItem: MusicItem(data: []), geometryMatching: stubId, originalSize: .zero))
+        DetailedView(detailedViewParams: DetailedViewParams(mediaItem: MediaItem(data: []), geometryMatching: stubId, originalSize: .zero))
     }
 }

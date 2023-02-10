@@ -5,12 +5,12 @@
 import Foundation
 import SwiftyJSON
 
-struct MusicItem {
+struct MediaItem {
     
     let id: String, title: String, curatorName: String, description: String?, artistName: String
     let type: MediaType
     let playlistType: PlaylistType?
-    let artwork: MusicArtwork
+    let artwork: MediaArtwork
     var tracks: [MediaTrack] = []
     
     init(data: JSON) {
@@ -22,7 +22,7 @@ struct MusicItem {
         self.artistName = attributes["artistName"].stringValue
         self.description = attributes["description"]["standard"].string
         self.playlistType = PlaylistType(rawValue: attributes["playlistType"].stringValue)
-        self.artwork = MusicArtwork(data: attributes["artwork"])
+        self.artwork = MediaArtwork(data: attributes["artwork"])
         self.type = MediaType(rawValue: data["type"].stringValue) ?? .AnyMedia
     }
     

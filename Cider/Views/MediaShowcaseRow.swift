@@ -15,7 +15,7 @@ struct MediaShowcaseRow: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     
     var rowTitle: String?
-    var recommendationSection: MusicRecommendationSection?
+    var recommendationSection: MediaRecommendationSection?
     
     var body: some View {
         PatchedGeometryReader { geometry in

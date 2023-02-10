@@ -110,7 +110,7 @@ class AMAPI {
         self.STOREFRONT_ID = countryCode
     }
     
-    func fetchRecommendations() async throws -> MusicRecommendationSections {
+    func fetchRecommendations() async throws -> MediaRecommendationSections {
         var responseJson: JSON
         do {
             responseJson = try await amNetworkingClient.requestJSON("/me/recommendations")
@@ -118,7 +118,7 @@ class AMAPI {
             throw AMNetworkingError.unableToFetchRecommendations(error.localizedDescription)
         }
         
-        return MusicRecommendationSections(datas: responseJson)
+        return MediaRecommendationSections(datas: responseJson)
     }
     
     func fetchTracks(id: String, type: MediaType) async throws -> [MediaTrack] {

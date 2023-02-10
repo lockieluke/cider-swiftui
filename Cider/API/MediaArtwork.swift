@@ -5,7 +5,7 @@
 import Foundation
 import SwiftyJSON
 
-struct MusicArtwork {
+struct MediaArtwork {
     
     let width: Int
     let height: Int

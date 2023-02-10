@@ -21,7 +21,7 @@ enum NavigationStackType {
 
 struct DetailedViewParams {
     
-    let mediaItem: MusicItem
+    let mediaItem: MediaItem
     let geometryMatching: Namespace.ID
     let originalSize: CGSize
     

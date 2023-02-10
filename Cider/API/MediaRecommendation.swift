@@ -5,42 +5,42 @@
 import Foundation
 import SwiftyJSON
 
-enum MusicRecommendationSectionType : String {
+enum MediaRecommendationSectionType : String {
     
     case PersonalRecommendation = "personal-recommendation"
     
 }
 
-struct MusicRecommendationSections {
+struct MediaRecommendationSections {
     
     let size: Int
-    let musicRecommendations: [MusicRecommendationSection]
+    let musicRecommendations: [MediaRecommendationSection]
     
     init(datas: JSON) {
         self.musicRecommendations = datas["data"].arrayValue.map { data in
-            return MusicRecommendationSection(data: data)
+            return MediaRecommendationSection(data: data)
         }
         self.size = datas.count
     }
     
 }
 
-struct MusicRecommendationSection {
+struct MediaRecommendationSection {
     
     let id: String
     let title: String
-    let type: MusicRecommendationSectionType
-    let recommendations: [MusicItem]
+    let type: MediaRecommendationSectionType
+    let recommendations: [MediaItem]
     let size: Int
     
     init(data: JSON) {
         self.id = data["id"].stringValue
         self.title = data["attributes"]["title"]["stringForDisplay"].stringValue
-        self.type = MusicRecommendationSectionType(rawValue: data["type"].stringValue) ?? .PersonalRecommendation
+        self.type = MediaRecommendationSectionType(rawValue: data["type"].stringValue) ?? .PersonalRecommendation
         
         let recommendationDatas = data["relationships"]["contents"]["data"]
         self.recommendations = recommendationDatas.arrayValue.map { recommendationData in
-            return MusicItem(data: recommendationData)
+            return MediaItem(data: recommendationData)
         }
         self.size = recommendationDatas.count
     }

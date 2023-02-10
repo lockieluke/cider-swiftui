@@ -25,7 +25,7 @@ struct MediaPresentable: View {
     struct MediaPresentableData {
         let title: String
         let id: String
-        let artwork: MusicArtwork
+        let artwork: MediaArtwork
     }
     
     var displayData: MediaPresentableData {

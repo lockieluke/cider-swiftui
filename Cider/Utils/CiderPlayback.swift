@@ -136,7 +136,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    func setQueue(musicItem: MusicItem) async {
+    func setQueue(musicItem: MediaItem) async {
         await self.setQueue(requestBody: ["\(musicItem.type.rawValue)-id": musicItem.id])
     }
     
@@ -175,7 +175,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    func clearAndPlay(shuffle: Bool = false, musicItem: MusicItem? = nil, mediaTrack: MediaTrack? = nil) async {
+    func clearAndPlay(shuffle: Bool = false, musicItem: MediaItem? = nil, mediaTrack: MediaTrack? = nil) async {
         if let musicItem = musicItem {
             self.updateNowPlayingStateBeforeReady(item: .mediaItem(musicItem))
         }
@@ -272,7 +272,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         DispatchQueue.main.async {
             var title: String
             var artistName: String
-            var artwork: MusicArtwork
+            var artwork: MediaArtwork
             
             switch item {
                 
