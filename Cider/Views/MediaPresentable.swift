@@ -108,7 +108,7 @@ struct MediaPresentable: View {
                         switch self.item {
                             
                         case .mediaItem(let musicItem):
-                            self.navigationModal.appendViewStack(NavigationStack(stackType: .Media, isPresent: true, params: DetailedViewParams(mediaItem: musicItem, geometryMatching: self.cardAnimation, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15))))
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(mediaItem: musicItem, geometryMatching: self.cardAnimation, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15)))))
                             break
                             
                         default:

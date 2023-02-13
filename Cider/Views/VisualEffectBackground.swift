@@ -8,8 +8,16 @@ import SwiftUI
 
 struct VisualEffectBackground: NSViewRepresentable {
     
+    private let material: NSVisualEffectView.Material
+    
+    init(material: NSVisualEffectView.Material = .windowBackground) {
+        self.material = material
+    }
+    
     func makeNSView(context: Context) -> NSVisualEffectView {
-        return NSVisualEffectView()
+        let visualEffectView = NSVisualEffectView()
+        visualEffectView.material = self.material
+        return visualEffectView
     }
     
     func updateNSView(_ nsView: NSVisualEffectView, context: Context) {

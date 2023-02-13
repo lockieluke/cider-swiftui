@@ -38,6 +38,7 @@ struct ContentView: View {
                     .environmentObject(appWindowModal)
                     .environmentObject(searchModal)
                     .environmentObject(navigationModal)
+                    .environmentObject(ciderPlayback)
                     
                     Spacer()
                     PlaybackView()
@@ -59,7 +60,7 @@ struct ContentView: View {
                     
                     Task {
                         await self.mkModal.AM_API.initStorefront()
-                        self.navigationModal.appendViewStack(NavigationStack(stackType: .Home, isPresent: true))
+                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .homeViewParams))
                     }
                 }
             }

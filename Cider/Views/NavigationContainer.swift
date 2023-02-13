@@ -24,9 +24,9 @@ struct NavigationContainer: View {
                     let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
                     let shouldUpperStackShow = isPresent && currentRootStack == viewStackOrigin
                     
-                    switch viewStack.stackType {
+                    switch viewStack.params {
                         
-                    case .Home:
+                    case .homeViewParams:
                         HomeView()
                             .environmentObject(appWindowModal)
                             .environmentObject(mkModal)
@@ -36,8 +36,8 @@ struct NavigationContainer: View {
                             .hideWithoutDestroying(currentRootStack != .Home)
                             .allowsHitTesting(shouldUpperStackShow)
                         
-                    case .Media:
-                        DetailedView(detailedViewParams: viewStack.params as! DetailedViewParams)
+                    case .detailedViewParams(let detailedViewParams):
+                        DetailedView(detailedViewParams: detailedViewParams)
                             .environmentObject(appWindowModal)
                             .environmentObject(mkModal)
                             .environmentObject(navigationModal)
@@ -45,13 +45,16 @@ struct NavigationContainer: View {
                             .opacity(shouldUpperStackShow ? 1 : 0)
                             .allowsHitTesting(shouldUpperStackShow)
                         
-                    case .Artist:
-                        ArtistView(params: viewStack.params as! ArtistViewParams)
+                    case .artistViewParams(let artistViewParams):
+                        ArtistView(params: artistViewParams)
                             .environmentObject(mkModal)
                             .environmentObject(ciderPlayback)
                             .environmentObject(navigationModal)
                             .hideWithoutDestroying(!shouldUpperStackShow)
                             .allowsHitTesting(shouldUpperStackShow)
+                    
+                    default:
+                        Color.clear
                     }
                     
                 }

@@ -35,7 +35,7 @@ struct MediaArtistPresentable: View {
                 }
                 .onTapGesture {
                     withAnimation(.interactiveSpring()) {
-                        self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(artist: self.artist)))
+                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(artist: self.artist))))
                     }
                 }
             

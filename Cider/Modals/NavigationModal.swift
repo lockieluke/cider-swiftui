@@ -8,8 +8,8 @@ import SwiftUI
 enum RootNavigationType : String {
     
     case Home = "Home",
-    Library = "Library",
-    AnyView = "Any"
+         Library = "Library",
+         AnyView = "Any"
     
 }
 
@@ -19,8 +19,30 @@ enum NavigationStackType {
     
 }
 
-struct DetailedViewParams {
+enum NavigationDynamicParams: Equatable {
     
+    // logic to verify if the two pages are essentially the same page so the new one doesn't have to be pushed to the stack again
+    static func == (lhs: NavigationDynamicParams, rhs: NavigationDynamicParams) -> Bool {
+        return lhs.value == rhs.value
+    }
+    
+    var value: String {
+        switch self {
+        case .homeViewParams:
+            return "home"
+            
+        case .detailedViewParams(let detailedViewParams):
+            return detailedViewParams.mediaItem.id
+            
+        case .artistViewParams(let artistViewParams):
+            return artistViewParams.artist?.id ?? artistViewParams.originMediaItem.debugDescription
+        }
+    }
+    
+    case detailedViewParams(DetailedViewParams), artistViewParams(ArtistViewParams), homeViewParams
+}
+
+struct DetailedViewParams {
     let mediaItem: MediaItem
     let geometryMatching: Namespace.ID
     let originalSize: CGSize
@@ -56,7 +78,7 @@ struct NavigationActions {
             }
         }
     }
-
+    
     var backAction: (() -> Void)? = nil
     
     mutating func reset() {
@@ -67,11 +89,10 @@ struct NavigationActions {
 
 struct NavigationStack {
     
-    let stackType: NavigationStackType
     let id = UUID()
     var rootStackOrigin: RootNavigationType? = .AnyView
     var isPresent: Bool = true
-    var params: Any?
+    var params: NavigationDynamicParams?
     
 }
 
@@ -96,12 +117,32 @@ class NavigationModal : ObservableObject {
                 }
             }
             
-            self.currentlyPresentViewStack = viewsStack.first(where: { viewStack in viewStack.isPresent })
+            let currentPresentViewStack = viewsStack.first(where: { viewStack in viewStack.isPresent })
+            self.currentlyPresentViewStack = currentPresentViewStack
             self.currentlyPresentViewStackIndex = presentIndex
+            
+            switch currentPresentViewStack?.params {
+                
+            case .homeViewParams:
+                self.currentlyPresentViewType = .Home
+                
+            case .artistViewParams:
+                self.currentlyPresentViewType = .Artist
+                
+            case .detailedViewParams:
+                self.currentlyPresentViewType = .Media
+                
+            default:
+                break
+                
+            }
         }
     }
     
     func appendViewStack(_ viewStack: NavigationStack, backAction: (() -> Void)? = nil) {
+        if (viewStack.params == .homeViewParams && self.currentlyPresentViewType == .Home) || viewStack.params == self.currentlyPresentViewStack?.params {
+            return
+        }
         var modifyingViewStack = viewStack
         modifyingViewStack.rootStackOrigin = self.currentRootStack
         self.viewsStack.indices.forEach { index in
@@ -112,7 +153,7 @@ class NavigationModal : ObservableObject {
     
     @Published var currentlyPresentViewStack: NavigationStack?
     @Published var currentlyPresentViewStackIndex: Int?
-    
+    @Published var currentlyPresentViewType: NavigationStackType?
     @Published var navigationActions = NavigationActions()
     
 }

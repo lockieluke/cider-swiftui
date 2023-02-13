@@ -33,7 +33,15 @@ class Logger {
     }
     
     func error(_ message: String, displayCross: Bool = false) {
-        fputs("[\(self.getTimestampInString())] \("[\(self.label)]".bold) \("ERROR".red) \(message)\(displayCross ? " ✗" : "")\n", stderr)
+        fputs("\(self.errorMessage(message, displayCross: displayCross))\n", stderr)
+    }
+    
+    func crashError(_ message: String, displayCross: Bool = false) -> Never {
+        return fatalError(self.errorMessage(message, displayCross: displayCross))
+    }
+    
+    private func errorMessage(_ message: String, displayCross: Bool = false) -> String {
+        return "[\(self.getTimestampInString())] \("[\(self.label)]".bold) \("ERROR".red) \(message)\(displayCross ? " ✗" : "")"
     }
     
     private func getTimestampInString() -> String {

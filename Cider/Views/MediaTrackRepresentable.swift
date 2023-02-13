@@ -44,7 +44,7 @@ struct MediaTrackRepresentable: View {
                                                 if detailedMediaTrack.artistsData.count > 1 {
                                                     self.showArtistPicker.toggle()
                                                 } else {
-                                                    self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: .mediaTrack(detailedMediaTrack))))
+                                                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(originMediaItem: .mediaTrack(detailedMediaTrack)))))
                                                 }
                                             }
                                         }
@@ -57,7 +57,7 @@ struct MediaTrackRepresentable: View {
                                             InteractiveText(artistNames[index])
                                                 .onTapGesture {
                                                     self.showArtistPicker = false
-                                                    self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: .mediaTrack(self.mediaTrack), selectingArtistIndex: index)))
+                                                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(originMediaItem: .mediaTrack(self.mediaTrack), selectingArtistIndex: index))))
                                                 }
                                         }
                                     }

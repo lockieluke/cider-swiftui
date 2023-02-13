@@ -16,8 +16,6 @@ struct HomeView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
-        let isInViewport = navigationModal.currentlyPresentViewStack?.stackType == .Home
-        
         VStack {
             if mkModal.isAuthorised && self.personalisedData.recommendationSections != nil {
                 ScrollView(.vertical) {
@@ -27,13 +25,13 @@ struct HomeView: View {
                                 .environmentObject(appWindowModal)
                                 .environmentObject(ciderPlayback)
                                 .environmentObject(navigationModal)
-                                .isHidden(!isInViewport)
+                                .isHidden(navigationModal.currentlyPresentViewType != .Home)
                         }
                     }
                     .padding(.vertical, 10)
                 }
                 .transparentScrollbars()
-                .allowsHitTesting(isInViewport)
+                .allowsHitTesting(navigationModal.currentlyPresentViewType == .Home)
             } else {
                 ProgressView()
                     .progressViewStyle(.circular)

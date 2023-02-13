@@ -7,6 +7,7 @@ import Foundation
 class SearchModal : ObservableObject {
     
     @Published var currentSearchText: String = ""
+    @Published var isFocused: Bool = false
     
     init() {
         

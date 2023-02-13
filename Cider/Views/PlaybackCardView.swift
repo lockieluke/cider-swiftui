@@ -39,7 +39,7 @@ struct PlaybackCardView: View {
                     .onTapGesture {
                         withAnimation(.interactiveSpring()) {
                             if let item = self.ciderPlayback.nowPlayingState.item {
-                                self.navigationModal.appendViewStack(NavigationStack(stackType: .Artist, isPresent: true, params: ArtistViewParams(originMediaItem: item)))
+                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(originMediaItem: item))))
                             }
                         }
                     }

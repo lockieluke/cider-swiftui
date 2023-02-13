@@ -12,6 +12,7 @@ struct AppTitleBar: View {
     @EnvironmentObject private var searchModal: SearchModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var toolbarHeight: CGFloat = 0
     
@@ -61,6 +62,8 @@ struct AppTitleBar: View {
             
             SearchBar()
                 .environmentObject(searchModal)
+                .environmentObject(ciderPlayback)
+                .environmentObject(navigationModal)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
         }
         .frame(height: 40)
