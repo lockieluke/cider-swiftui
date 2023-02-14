@@ -17,6 +17,7 @@ enum MediaType: String {
 enum MediaDynamic {
     case mediaTrack(MediaTrack)
     case mediaItem(MediaItem)
+    case mediaPlaylist(MediaPlaylist)
 }
 
 enum PlaylistType: String {

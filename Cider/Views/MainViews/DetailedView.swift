@@ -48,7 +48,7 @@ struct DetailedView: View {
     func playSync(mediaItem: MediaItem, shuffle: Bool = false) {
         Task {
             if let reflectedMusicItem = self.reflectedMusicItem {
-                await self.ciderPlayback.setQueue(musicItem: reflectedMusicItem)
+                await self.ciderPlayback.setQueue(item: .mediaItem(reflectedMusicItem))
                 await self.ciderPlayback.clearAndPlay(shuffle: shuffle, musicItem: reflectedMusicItem)
             }
         }

@@ -20,7 +20,7 @@ struct MediaArtwork {
     }
     
     func getUrl(_ dimension: CGSize) -> URL {
-        return URL(string: self.rawUrl.replacingOccurrences(of: "{w}", with: dimension.width.formatted()).replacingOccurrences(of: "{h}", with: dimension.height.formatted()))!
+        return URL(string: self.rawUrl.replacingOccurrences(of: "{w}", with: dimension.width.formatted()).replacingOccurrences(of: "{h}", with: dimension.height.formatted())) ?? Bundle.main.url(forResource: "MissingArtwork", withExtension: "png")!
     }
     
     func getUrl(width: Int, height: Int) -> URL {

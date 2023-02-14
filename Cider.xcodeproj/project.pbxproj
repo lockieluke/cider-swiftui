@@ -47,6 +47,9 @@
 		B7688728294A314400C623C9 /* WSDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688727294A314400C623C9 /* WSDebugger.swift */; };
 		B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688729294A321200C623C9 /* WSDebuggerView.swift */; };
 		B768872C294A359400C623C9 /* WSModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768872B294A359400C623C9 /* WSModal.swift */; };
+		B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE921299C03D400A19558 /* MediaPlaylist.swift */; };
+		B76AE924299C044800A19558 /* MediaDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE923299C044800A19558 /* MediaDescription.swift */; };
+		B76AE928299C162600A19558 /* MissingArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = B76AE927299C162600A19558 /* MissingArtwork.png */; };
 		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
 		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; };
@@ -164,6 +167,9 @@
 		B7688727294A314400C623C9 /* WSDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSDebugger.swift; sourceTree = "<group>"; };
 		B7688729294A321200C623C9 /* WSDebuggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSDebuggerView.swift; sourceTree = "<group>"; };
 		B768872B294A359400C623C9 /* WSModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSModal.swift; sourceTree = "<group>"; };
+		B76AE921299C03D400A19558 /* MediaPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaylist.swift; sourceTree = "<group>"; };
+		B76AE923299C044800A19558 /* MediaDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDescription.swift; sourceTree = "<group>"; };
+		B76AE927299C162600A19558 /* MissingArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingArtwork.png; sourceTree = "<group>"; };
 		B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreferencesPane.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
 		B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
@@ -359,6 +365,7 @@
 		B740CE152991ACAE0096DF6E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B76AE927299C162600A19558 /* MissingArtwork.png */,
 				B740CE162991AD050096DF6E /* htmltext-style.css */,
 			);
 			path = Resources;
@@ -484,6 +491,8 @@
 				B797AFFB297F3E7B00D77282 /* MediaAny.swift */,
 				B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */,
 				B7CF3768299AC10B00922CDA /* SearchResults.swift */,
+				B76AE921299C03D400A19558 /* MediaPlaylist.swift */,
+				B76AE923299C044800A19558 /* MediaDescription.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -590,6 +599,7 @@
 				B740CE172991AD050096DF6E /* htmltext-style.css in Resources */,
 				B700C18528B920F20069FDF5 /* Assets.xcassets in Resources */,
 				B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */,
+				B76AE928299C162600A19558 /* MissingArtwork.png in Resources */,
 				B74DD87B2996C3F500A04D3F /* build_auth_scripts.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -728,8 +738,10 @@
 			files = (
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
 				B755C73228C817C000A46FB9 /* Bundle.swift in Sources */,
+				B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */,
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
 				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
+				B76AE924299C044800A19558 /* MediaDescription.swift in Sources */,
 				B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */,
 				B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */,
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,

@@ -11,14 +11,16 @@ import SwiftyJSON
 
 struct SearchResults {
     
-    let albums: [MediaItem]
-    let tracks: [MediaTrack]
-    let artists: [MediaArtist]
+    let albums: [MediaItem]?
+    let tracks: [MediaTrack]?
+    let artists: [MediaArtist]?
+    let playlists: [MediaPlaylist]?
     
     init(data: JSON) {
-        self.albums = data["albums"]["data"].arrayValue.map { MediaItem(data: $0) }
-        self.tracks = data["songs"]["data"].arrayValue.map { MediaTrack(data: $0) }
-        self.artists = data["artists"]["data"].arrayValue.map { MediaArtist(data: $0) }
+        self.albums = data["albums"]["data"].array?.compactMap { MediaItem(data: $0) }
+        self.tracks = data["songs"]["data"].array?.compactMap { MediaTrack(data: $0) }
+        self.artists = data["artists"]["data"].array?.compactMap { MediaArtist(data: $0) }
+        self.playlists = data["playlists"]["data"].array?.compactMap { MediaPlaylist(data: $0) }
     }
     
 }

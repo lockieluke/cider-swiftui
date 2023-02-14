@@ -93,7 +93,7 @@ struct SearchBar: View {
                             .onTapGesture {
                                 if let track = self.track {
                                     Task {
-                                        await self.ciderPlayback.setQueue(mediaTrack: track)
+                                        await self.ciderPlayback.setQueue(item: .mediaTrack(track))
                                         await self.ciderPlayback.clearAndPlay(mediaTrack: track)
                                     }
                                 }
@@ -250,6 +250,12 @@ struct SearchBar: View {
                 .onSubmit {
                     self.isFocused = false
                     self.searchModal.shouldDisplaySearchPage = true
+                    Task {
+                        let searchResults = await self.mkModal.AM_API.fetchSearchResults(term: self.searchModal.currentSearchText, types: [.artists, .songs, .albums, .playlists])
+                        DispatchQueue.main.async {
+                            self.searchModal.searchResults = searchResults
+                        }
+                    }
                 }
         }
         .enableInjection()

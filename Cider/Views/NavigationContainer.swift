@@ -50,7 +50,7 @@ struct NavigationContainer: View {
                             .environmentObject(ciderPlayback)
                             .environmentObject(navigationModal)
                             .hideWithoutDestroying(!shouldUpperStackShow)
-                            .allowsHitTesting(shouldUpperStackShow)
+                            .allowsHitTesting(shouldUpperStackShow) 
                     
                     default:
                         Color.clear
@@ -71,6 +71,9 @@ struct NavigationContainer: View {
                         .environmentObject(mkModal)
                         .environmentObject(navigationModal)
                         .environmentObject(ciderPlayback)
+                        .onDisappear {
+                            self.searchModal.searchResults = nil
+                        }
                 }
             }
         }

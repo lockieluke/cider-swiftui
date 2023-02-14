@@ -244,7 +244,7 @@ class AMAPI {
             if !types.isEmpty {
                 urlQueryItems.append(URLQueryItem(name: "types", value: types.map { type in type.rawValue }.joined(separator: ",")))
             }
-            urlQueryItems.append(URLQueryItem(name: "term", value: term))
+            urlQueryItems.append(URLQueryItem(name: "term", value: term.replacingOccurrences(of: "", with: "+")))
             urlComponents.queryItems = urlQueryItems
             
             guard let urlString = urlComponents.url?.absoluteString else {

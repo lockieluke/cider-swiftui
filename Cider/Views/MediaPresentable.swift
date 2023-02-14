@@ -32,11 +32,14 @@ struct MediaPresentable: View {
         get {
             switch self.item {
                 
-            case .mediaItem(let musicItem):
-                return MediaPresentableData(title: musicItem.title, id: musicItem.id, artwork: musicItem.artwork)
+            case .mediaItem(let mediaItem):
+                return MediaPresentableData(title: mediaItem.title, id: mediaItem.id, artwork: mediaItem.artwork)
                 
             case .mediaTrack(let mediaTrack):
                 return MediaPresentableData(title: mediaTrack.title, id: mediaTrack.id, artwork: mediaTrack.artwork)
+                
+            case .mediaPlaylist(let mediaPlaylist):
+                return MediaPresentableData(title: mediaPlaylist.title, id: mediaPlaylist.id, artwork: mediaPlaylist.artwork)
                 
             }
         }
@@ -78,16 +81,7 @@ struct MediaPresentable: View {
                                 }
                                 .onTapGesture {
                                     Task {
-                                        switch self.item {
-                                        case .mediaItem(let mediaItem):
-                                            await self.ciderPlayback.setQueue(musicItem: mediaItem)
-                                            break
-                                            
-                                        case .mediaTrack(let mediaTrack):
-                                            await self.ciderPlayback.setQueue(mediaTrack: mediaTrack)
-                                            break
-                                            
-                                        }
+                                        await self.ciderPlayback.setQueue(item: self.item)
                                         await self.ciderPlayback.play()
                                     }
                                 }

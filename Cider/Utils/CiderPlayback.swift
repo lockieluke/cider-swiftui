@@ -136,12 +136,25 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    func setQueue(musicItem: MediaItem) async {
-        await self.setQueue(requestBody: ["\(musicItem.type.rawValue)-id": musicItem.id])
-    }
-    
-    func setQueue(mediaTrack: MediaTrack) async {
-        await self.setQueue(requestBody: ["\(mediaTrack.type.rawValue)-id": mediaTrack.id])
+    func setQueue(item: MediaDynamic) async {
+        let type, id: String
+        switch item {
+            
+        case .mediaItem(let mediaItem):
+            type = mediaItem.type.rawValue
+            id = mediaItem.id
+            
+        case .mediaTrack(let mediaTrack):
+            type = "songs"
+            id = mediaTrack.id
+            
+        case .mediaPlaylist(let mediaPlaylist):
+            type = "playlists"
+            id = mediaPlaylist.id
+            
+        }
+        
+        await self.setQueue(requestBody: ["\(type)-id": id])
     }
     
     func setQueue(requestBody: [String : Any]? = nil) async {
@@ -270,9 +283,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     func updateNowPlayingStateBeforeReady(item: MediaDynamic) {
         DispatchQueue.main.async {
-            var title: String
-            var artistName: String
-            var artwork: MediaArtwork
+            let title, artistName: String
+            let artwork: MediaArtwork
             
             switch item {
                 
@@ -280,13 +292,16 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 title = mediaTrack.title
                 artistName = mediaTrack.artistName
                 artwork = mediaTrack.artwork
-                break
                 
             case .mediaItem(let musicItem):
                 title = musicItem.title
                 artistName = musicItem.artistName
                 artwork = musicItem.artwork
-                break
+                
+            case .mediaPlaylist(let mediaPlaylist):
+                title = mediaPlaylist.title
+                artistName = mediaPlaylist.curatorName
+                artwork = mediaPlaylist.artwork
                 
             }
             
