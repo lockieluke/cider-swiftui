@@ -32,6 +32,7 @@ struct ContentView: View {
                     .environmentObject(personalisedData)
                     .environmentObject(navigationModal)
                     .environmentObject(ciderPlayback)
+                    .environmentObject(searchModal)
                 
                 VStack {
                     AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top)

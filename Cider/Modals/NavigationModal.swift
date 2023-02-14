@@ -44,9 +44,8 @@ enum NavigationDynamicParams: Equatable {
 
 struct DetailedViewParams {
     let mediaItem: MediaItem
-    let geometryMatching: Namespace.ID
+    let geometryMatching: Namespace.ID?
     let originalSize: CGSize
-    
 }
 
 struct ArtistViewParams {

@@ -12,7 +12,6 @@ struct DetailedView: View {
     @ObservedObject private var iO = Inject.observer
     
     @EnvironmentObject private var navigationModal: NavigationModal
-    @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
@@ -57,7 +56,6 @@ struct DetailedView: View {
     
     var body: some View {
         let mediaItem = self.detailedViewParams.mediaItem
-        let animationNamespace = self.detailedViewParams.geometryMatching
         let originalSize = self.detailedViewParams.originalSize
         
         PatchedGeometryReader { geometry in
@@ -66,7 +64,7 @@ struct DetailedView: View {
                     let sqaureSize = geometry.minRelative * 0.4
                     
                     // there's a slight delay before copying the state to reflectedMediaItem, use original mediaItem data to fetch the image
-                    WebImage(url: mediaItem.artwork.getUrl(width: 600, height: 600))
+                    let artwork = WebImage(url: mediaItem.artwork.getUrl(width: 600, height: 600))
                         .onSuccess { image, data, cacheType in
                             image.getColors(quality: .highest) { colours in
                                 guard let colours = colours else { return }
@@ -102,7 +100,12 @@ struct DetailedView: View {
                             }
                         }
                         .padding(.vertical, 5)
-                        .matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
+                    
+                    if let animationNamespace = self.detailedViewParams.geometryMatching {
+                        artwork.matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
+                    } else {
+                        artwork
+                    }
                     
                     if descriptionsShouldLoadIn,
                        let reflectedMusicItem = self.reflectedMusicItem {

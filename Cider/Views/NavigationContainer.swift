@@ -14,6 +14,7 @@ struct NavigationContainer: View {
     @EnvironmentObject private var personalisedData: PersonalisedData
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var searchModal: SearchModal
     
     var body: some View {
         ZStack {
@@ -28,7 +29,6 @@ struct NavigationContainer: View {
                         
                     case .homeViewParams:
                         HomeView()
-                            .environmentObject(appWindowModal)
                             .environmentObject(mkModal)
                             .environmentObject(personalisedData)
                             .environmentObject(navigationModal)
@@ -38,7 +38,6 @@ struct NavigationContainer: View {
                         
                     case .detailedViewParams(let detailedViewParams):
                         DetailedView(detailedViewParams: detailedViewParams)
-                            .environmentObject(appWindowModal)
                             .environmentObject(mkModal)
                             .environmentObject(navigationModal)
                             .environmentObject(ciderPlayback)
@@ -57,6 +56,21 @@ struct NavigationContainer: View {
                         Color.clear
                     }
                     
+                }
+                .zIndex(0)
+                .hideWithoutDestroying(searchModal.shouldDisplaySearchPage)
+                
+                if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
+                    SearchView()
+                        .transition(.opacity.animation(.spring().speed(2)))
+                        .zIndex(1)
+                        .onChange(of: self.navigationModal.currentlyPresentViewStackIndex) { _ in
+                            self.searchModal.shouldDisplaySearchPage = false
+                        }
+                        .environmentObject(searchModal)
+                        .environmentObject(mkModal)
+                        .environmentObject(navigationModal)
+                        .environmentObject(ciderPlayback)
                 }
             }
         }

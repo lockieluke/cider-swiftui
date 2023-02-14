@@ -6,6 +6,7 @@ import SwiftUI
 import InjectHotReload
 import Throttler
 import SDWebImageSwiftUI
+import Introspect
 
 struct SearchBar: View {
     
@@ -16,6 +17,7 @@ struct SearchBar: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     
     @FocusState private var isFocused: Bool
+    @State private var isHoveringClearButton: Bool = false
     @State private var suggestions: SearchSuggestions?
     @State var fetchSuggestionsTask: Task<Void, Never>?
     
@@ -144,6 +146,10 @@ struct SearchBar: View {
                 ForEach(searchSuggestions, id: \.id) { searchSuggestion in
                     SuggestionView(searchSuggestion, onClick: {
                         self.isFocused = false
+                        if let searchTerm = searchSuggestion.searchTerm {
+                            self.searchModal.currentSearchText = searchTerm.displayTerm
+                            self.searchModal.shouldDisplaySearchPage = true
+                        }
                     })
                     .environmentObject(ciderPlayback)
                     .environmentObject(navigationModal)
@@ -152,6 +158,31 @@ struct SearchBar: View {
         }
         .padding(.vertical, 5)
         .enableInjection()
+    }
+    
+    var clearSearchView: some View {
+        Group {
+            if !self.searchModal.currentSearchText.isEmpty {
+                Image(systemName: "xmark")
+                    .font(.system(size: 10, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .background {
+                        if isHoveringClearButton {
+                            Circle()
+                                .fill(.gray)
+                                .scaleEffect(1.5)
+                        }
+                    }
+                    .contentShape(Circle())
+                    .onHover { isHovering in
+                        self.isHoveringClearButton = isHovering
+                    }
+                    .onTapGesture {
+                        self.searchModal.currentSearchText = ""
+                    }
+                    .padding(.trailing, 20)
+            }
+        }
     }
     
     var body: some View {
@@ -185,31 +216,41 @@ struct SearchBar: View {
                     self.isFocused = true
                 }
                 .padding(.horizontal, 10)
-                .overlay(Group {
-                    if isFocused && !searchModal.currentSearchText.isEmpty {
-                        suggestionsView
-                    }
-                }
-                    .frame(width: searchBarWidth)
-                    .background(VisualEffectBackground(material: .sheet))
-                    .cornerRadius(10)
-                    .shadow(radius: 3)
-                    .offset(y: 45)
-                    .onReceive(self.searchModal.$currentSearchText.debounce(for: .milliseconds(200), scheduler: DispatchQueue.main)) { newCurrentSearchText in
-                        guard !newCurrentSearchText.isEmpty else { return }
-                        Debouncer.debounce(delay: .milliseconds(200), shouldRunImmediately: true) {
-                            self.suggestions?.searchSuggestions = []
-                            self.fetchSuggestionsTask = Task {
-                                if Task.isCancelled {
-                                    return
-                                }
-                                self.suggestions = await self.mkModal.AM_API.fetchSearchSuggestions(term: newCurrentSearchText)
-                            }
+                .overlay(
+                    Group {
+                        if isFocused && !searchModal.currentSearchText.isEmpty {
+                            suggestionsView
                         }
                     }
-                    .onDisappear {
-                        self.fetchSuggestionsTask?.cancel()
-                    }, alignment: .top)
+                        .frame(width: searchBarWidth)
+                        .background(VisualEffectBackground(material: .sheet))
+                        .cornerRadius(10)
+                        .shadow(radius: 3)
+                        .offset(y: 45)
+                        .onReceive(self.searchModal.$currentSearchText.debounce(for: .milliseconds(200), scheduler: DispatchQueue.main)) { newCurrentSearchText in
+                            guard !newCurrentSearchText.isEmpty else {
+                                self.searchModal.shouldDisplaySearchPage = false
+                                return
+                            }
+                            Debouncer.debounce(delay: .milliseconds(200), shouldRunImmediately: true) {
+                                self.suggestions?.searchSuggestions = []
+                                self.fetchSuggestionsTask = Task {
+                                    if Task.isCancelled {
+                                        return
+                                    }
+                                    self.suggestions = await self.mkModal.AM_API.fetchSearchSuggestions(term: newCurrentSearchText)
+                                }
+                            }
+                        }
+                        .onDisappear {
+                            self.fetchSuggestionsTask?.cancel()
+                        }
+                    , alignment: .top)
+                .overlay(clearSearchView, alignment: .trailing)
+                .onSubmit {
+                    self.isFocused = false
+                    self.searchModal.shouldDisplaySearchPage = true
+                }
         }
         .enableInjection()
     }

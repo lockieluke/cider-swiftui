@@ -199,12 +199,12 @@ class AMAPI {
         case terms, topResults
     }
     
-    enum FetchSearchSuggestionsTypes: String {
+    enum FetchSearchTypes: String {
         case activities, albums, appleCurators = "apple-curators", artists, curators, musicVideos = "music-videos", playlists, recordLabels = "record-labels", songs, stations
     }
     
     @MainActor
-    func fetchSearchSuggestions(term: String, kinds: [FetchSearchSuggestionsKinds] = [.terms, .topResults], types: [FetchSearchSuggestionsTypes] = [.artists, .songs, .musicVideos]) async -> SearchSuggestions {
+    func fetchSearchSuggestions(term: String, kinds: [FetchSearchSuggestionsKinds] = [.terms, .topResults], types: [FetchSearchTypes] = [.artists, .songs, .musicVideos]) async -> SearchSuggestions {
         var responseJson: JSON
         do {
             var urlComponents = URLComponents(string: "/")!
@@ -231,6 +231,33 @@ class AMAPI {
         
         let data = responseJson["results"]
         return SearchSuggestions(data: data)
+    }
+    
+    @MainActor
+    func fetchSearchResults(term: String, types: [FetchSearchTypes]) async -> SearchResults {
+        var responseJson: JSON
+        do {
+            var urlComponents = URLComponents(string: "/")!
+            var urlQueryItems: [URLQueryItem] = []
+            urlComponents.path = "/catalog/\(STOREFRONT_ID!)/search"
+            
+            if !types.isEmpty {
+                urlQueryItems.append(URLQueryItem(name: "types", value: types.map { type in type.rawValue }.joined(separator: ",")))
+            }
+            urlQueryItems.append(URLQueryItem(name: "term", value: term))
+            urlComponents.queryItems = urlQueryItems
+            
+            guard let urlString = urlComponents.url?.absoluteString else {
+                throw AMNetworkingError.unableToFetchTracks("Unable to compose URL")
+            }
+            responseJson = try await amNetworkingClient.requestJSON(urlString)
+        } catch {
+            self.logger.error("Failed to fetch search results: \(error)")
+            return SearchResults(data: [])
+        }
+        
+        let data = responseJson["results"]
+        return SearchResults(data: data)
     }
     
 }

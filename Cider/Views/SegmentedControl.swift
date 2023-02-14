@@ -72,9 +72,16 @@ struct SegmentedControl: View {
                     })
                     .overlay {
                         GeometryReader { geometry in
-                            EmptyView()
-                                .onChange(of: geometry.frame(in: .global)) { newPosition in
+                            Color.clear
+                                .onChange(of: geometry.frame(in: .named("SegmentedControl"))) { newPosition in
                                     self.offsetPositions[index] = newPosition
+                                    
+                                    if self.selectedItem == index {
+                                        self.currentOffsetPosition = offsetPositions[index]
+                                    }
+                                }
+                                .onAppear {
+                                    self.offsetPositions[index] = geometry.frame(in: .global)
                                     
                                     if self.selectedItem == index {
                                         self.currentOffsetPosition = offsetPositions[index]
@@ -94,6 +101,9 @@ struct SegmentedControl: View {
                         .onChange(of: geometry.size) { newSize in
                             self.segmentedSize = newSize
                         }
+                        .onAppear {
+                            self.segmentedSize = geometry.size
+                        }
                 }
             }
         }
@@ -101,6 +111,7 @@ struct SegmentedControl: View {
             self.segmentedControlsSize = [CGSize](repeating: .zero, count: self.items.count)
             self.offsetPositions = [CGRect](repeating: .zero, count: self.items.count)
         }
+        .coordinateSpace(name: "SegmentedControl")
         .enableInjection()
     }
 }

@@ -86,6 +86,8 @@
 		B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */; };
 		B7C9CDA52908928600A67CE4 /* index.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B755C72E28C7F00800A46FB9 /* index.js */; };
 		B7C9CDA6290892A900A67CE4 /* index-cpa.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7C9CD9E2908861500A67CE4 /* index-cpa.js */; };
+		B7CF3767299A942000922CDA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3766299A942000922CDA /* SearchView.swift */; };
+		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
 		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
 		B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D46444293574A0000B1E9A /* DetailedView.swift */; };
 		B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D5B9E1292C2F9900046B7F /* Logging.swift */; };
@@ -206,6 +208,8 @@
 		B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKitWorker.swift; sourceTree = "<group>"; };
 		B7C9CD9E2908861500A67CE4 /* index-cpa.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "index-cpa.js"; path = "CiderPlaybackAgent/Web Scripts/dist/index-cpa.js"; sourceTree = "<group>"; };
 		B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderPlayback.swift; sourceTree = "<group>"; };
+		B7CF3766299A942000922CDA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		B7CF3768299AC10B00922CDA /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApp.swift; sourceTree = "<group>"; };
 		B7D46444293574A0000B1E9A /* DetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedView.swift; sourceTree = "<group>"; };
 		B7D5B9E1292C2F9900046B7F /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
@@ -463,6 +467,7 @@
 				B7AAB70C28BD2640009AABEA /* HomeView.swift */,
 				B7D46444293574A0000B1E9A /* DetailedView.swift */,
 				B797AFF7297F3B6A00D77282 /* ArtistView.swift */,
+				B7CF3766299A942000922CDA /* SearchView.swift */,
 			);
 			path = MainViews;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				B797AFF9297F3E2000D77282 /* MediaArtist.swift */,
 				B797AFFB297F3E7B00D77282 /* MediaAny.swift */,
 				B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */,
+				B7CF3768299AC10B00922CDA /* SearchResults.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -754,6 +760,7 @@
 				B7E1CE072996EC6800D25D0F /* SearchSuggestions.swift in Sources */,
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
+				B7CF3767299A942000922CDA /* SearchView.swift in Sources */,
 				B77AACF2293B871700F8E1E2 /* MediaTrackRepresentable.swift in Sources */,
 				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
 				B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */,
@@ -785,6 +792,7 @@
 				B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */,
 				B75219AC291836B5005CF8F0 /* MediaItem.swift in Sources */,
 				B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */,
+				B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */,
 				B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */,
 				B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,

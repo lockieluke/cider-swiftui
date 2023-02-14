@@ -10,12 +10,12 @@ import Throttler
 struct MediaPresentable: View {
     
     @ObservedObject private var iO = Inject.observer
-    @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
     var item: MediaDynamic
     var maxRelative: CGFloat
+    var geometryMatched: Bool = false
     
     @State private var isHovering = false
     @State private var isHoveringPlay = false
@@ -44,7 +44,7 @@ struct MediaPresentable: View {
     
     var innerBody: some View {
         VStack {
-            WebImage(url: displayData.artwork.getUrl(width: 200, height: 200))
+            let artwork = WebImage(url: displayData.artwork.getUrl(width: 200, height: 200))
                 .resizable()
                 .placeholder {
                     ProgressView()
@@ -52,7 +52,6 @@ struct MediaPresentable: View {
                 .scaledToFit()
                 .frame(width: maxRelative * 0.15, height: maxRelative * 0.15)
                 .cornerRadius(5)
-                .matchedGeometryEffect(id: displayData.id, in: self.cardAnimation)
                 .brightness(isHovering ? -0.1 : 0)
                 .animation(.easeIn(duration: 0.15), value: isHovering)
                 .overlay {
@@ -108,7 +107,7 @@ struct MediaPresentable: View {
                         switch self.item {
                             
                         case .mediaItem(let musicItem):
-                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(mediaItem: musicItem, geometryMatching: self.cardAnimation, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15)))))
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(mediaItem: musicItem, geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15)))))
                             break
                             
                         default:
@@ -117,6 +116,13 @@ struct MediaPresentable: View {
                         }
                     }
                 }
+            
+            if geometryMatched {
+                artwork
+                    .matchedGeometryEffect(id: displayData.id, in: cardAnimation)
+            } else {
+                artwork
+            }
             
             Text("\(displayData.title)")
         }

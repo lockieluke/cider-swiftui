@@ -33,15 +33,19 @@ struct AppTitleBar: View {
                     appWindowModal.nsWindow?.zoom(nil)
                 })
             
-            SegmentedControl(
-                items: [
-                    SegmentedControlItemData(title: "Home", icon: .Home),
-                    SegmentedControlItemData(title: "Library", icon: .Library)
-                ],
-                segmentedItemChanged: { currentSegmentedItem in
-                    self.navigationModal.currentRootStack = RootNavigationType(rawValue: currentSegmentedItem) ?? .AnyView
-                }
-            )
+            if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
+                Text("Searching *\"\(searchModal.currentSearchText)\"*")
+            } else {
+                SegmentedControl(
+                    items: [
+                        SegmentedControlItemData(title: "Home", icon: .Home),
+                        SegmentedControlItemData(title: "Library", icon: .Library)
+                    ],
+                    segmentedItemChanged: { currentSegmentedItem in
+                        self.navigationModal.currentRootStack = RootNavigationType(rawValue: currentSegmentedItem) ?? .AnyView
+                    }
+                )
+            }
             
             HStack(spacing: 0) {
                 Spacer()
@@ -50,7 +54,7 @@ struct AppTitleBar: View {
                     .frame(height: 25)
                     .padding(.trailing, 10)
                 
-                if navigationModal.navigationActions.enableBack {
+                if navigationModal.navigationActions.enableBack && !searchModal.shouldDisplaySearchPage {
                     ActionButton(actionType: .Back) {
                         self.navigationModal.navigationActions.backAction?()
                     }

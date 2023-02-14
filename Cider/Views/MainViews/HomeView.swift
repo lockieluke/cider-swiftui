@@ -8,9 +8,8 @@ import InjectHotReload
 struct HomeView: View {
     
     @ObservedObject private var iO = Inject.observer
-    @EnvironmentObject private var mkModal: MKModal
-    @EnvironmentObject private var appWindowModal: AppWindowModal
     
+    @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var personalisedData: PersonalisedData
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
@@ -22,7 +21,6 @@ struct HomeView: View {
                     VStack {
                         ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
                             MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
-                                .environmentObject(appWindowModal)
                                 .environmentObject(ciderPlayback)
                                 .environmentObject(navigationModal)
                                 .isHidden(navigationModal.currentlyPresentViewType != .Home)

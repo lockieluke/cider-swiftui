@@ -10,7 +10,6 @@ struct MediaShowcaseRow: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
@@ -29,8 +28,7 @@ struct MediaShowcaseRow: View {
                     LazyHStack {
                         if let recommendations = recommendationSection?.recommendations {
                             ForEach(recommendations, id: \.title) { recommendation in
-                                MediaPresentable(item: .mediaItem(recommendation), maxRelative: max(geometry.size.width, geometry.size.height))
-                                    .environmentObject(appWindowModal)
+                                MediaPresentable(item: .mediaItem(recommendation), maxRelative: max(geometry.size.width, geometry.size.height), geometryMatched: true)
                                     .environmentObject(ciderPlayback)
                                     .environmentObject(navigationModal)
                                     .padding()
