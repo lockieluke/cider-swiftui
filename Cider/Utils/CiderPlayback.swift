@@ -188,15 +188,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    func clearAndPlay(shuffle: Bool = false, musicItem: MediaItem? = nil, mediaTrack: MediaTrack? = nil) async {
-        if let musicItem = musicItem {
-            self.updateNowPlayingStateBeforeReady(item: .mediaItem(musicItem))
-        }
-        
-        if let mediaTrack = mediaTrack {
-            self.updateNowPlayingStateBeforeReady(item: .mediaTrack(mediaTrack))
-        }
-        
+    func clearAndPlay(shuffle: Bool = false, item: MediaDynamic) async {
+        self.updateNowPlayingStateBeforeReady(item: item)
         await self.stop()
         await self.play(shuffle: shuffle)
     }

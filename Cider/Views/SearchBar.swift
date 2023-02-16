@@ -94,7 +94,7 @@ struct SearchBar: View {
                                 if let track = self.track {
                                     Task {
                                         await self.ciderPlayback.setQueue(item: .mediaTrack(track))
-                                        await self.ciderPlayback.clearAndPlay(mediaTrack: track)
+                                        await self.ciderPlayback.clearAndPlay(item: .mediaTrack(track))
                                     }
                                 }
                             }

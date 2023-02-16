@@ -14,6 +14,7 @@ struct MediaPlaylist {
     let id: String
     let title: String
     let curatorName: String
+    let playlistType: PlaylistType?
     let description: MediaDescription
     let artwork: MediaArtwork
     
@@ -23,6 +24,7 @@ struct MediaPlaylist {
         let attributes = data["attributes"]
         self.title = attributes["name"].stringValue
         self.curatorName = attributes["curatorName"].stringValue
+        self.playlistType = PlaylistType(rawValue: attributes["playlistType"].stringValue)
         self.description = MediaDescription(data: attributes["description"])
         self.artwork = MediaArtwork(data: attributes["artwork"])
     }

@@ -32,7 +32,12 @@ enum NavigationDynamicParams: Equatable {
             return "home"
             
         case .detailedViewParams(let detailedViewParams):
-            return detailedViewParams.mediaItem.id
+            if case .mediaItem(let mediaItem) = detailedViewParams.item {
+                return mediaItem.id
+            } else if case .mediaPlaylist(let mediaPlaylist) = detailedViewParams.item {
+                return mediaPlaylist.id
+            }
+            return ""
             
         case .artistViewParams(let artistViewParams):
             return artistViewParams.artist?.id ?? artistViewParams.originMediaItem.debugDescription
@@ -43,7 +48,7 @@ enum NavigationDynamicParams: Equatable {
 }
 
 struct DetailedViewParams {
-    let mediaItem: MediaItem
+    let item: MediaDynamic
     let geometryMatching: Namespace.ID?
     let originalSize: CGSize
 }

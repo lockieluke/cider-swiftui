@@ -15,18 +15,38 @@ struct DetailedView: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
-    var detailedViewParams: DetailedViewParams
-    
     @State private var size: CGSize = .zero
-    @State private var animationFinished = false
-    @State private var descriptionsShouldLoadIn = false
-    @State private var tracksShouldLoadIn = false
+    @State private var animationFinished: Bool = false
+    @State private var descriptionsShouldLoadIn: Bool = false
+    @State private var tracks: [MediaTrack] = []
+    @State private var tracksShouldLoadIn: Bool = false
     @State private var bgGlowGradientColours = Gradient(colors: [])
-    // copy of the recommendation, this one isn't read only
-    @State private var reflectedMusicItem: MediaItem? = nil
+    
+    private let detailedViewParams: DetailedViewParams
+    // Has to be done, because this view only accepts two types of MediaDynamic
+    private var id, title, artistName: String!
+    private var artwork: MediaArtwork!
+    private var description: MediaDescription!
+    private var playlistType: PlaylistType!
     
     init(detailedViewParams: DetailedViewParams) {
         self.detailedViewParams = detailedViewParams
+        
+        if case .mediaItem(let mediaItem) = detailedViewParams.item {
+            id = mediaItem.id
+            title = mediaItem.title
+            artwork = mediaItem.artwork
+            artistName = mediaItem.artistName
+            description = mediaItem.description
+            playlistType = mediaItem.playlistType ?? .Unknown
+        } else if case .mediaPlaylist(let mediaPlaylist) = detailedViewParams.item {
+            id = mediaPlaylist.id
+            title = mediaPlaylist.title
+            artwork = mediaPlaylist.artwork
+            artistName = mediaPlaylist.curatorName
+            description = mediaPlaylist.description
+            playlistType = mediaPlaylist.playlistType ?? .Unknown
+        }
     }
     
     var addToLibrary: some View {
@@ -45,17 +65,14 @@ struct DetailedView: View {
         .modifier(SimpleHoverModifier())
     }
     
-    func playSync(mediaItem: MediaItem, shuffle: Bool = false) {
+    func playSync(item: MediaDynamic, shuffle: Bool = false) {
         Task {
-            if let reflectedMusicItem = self.reflectedMusicItem {
-                await self.ciderPlayback.setQueue(item: .mediaItem(reflectedMusicItem))
-                await self.ciderPlayback.clearAndPlay(shuffle: shuffle, musicItem: reflectedMusicItem)
-            }
+            await self.ciderPlayback.setQueue(item: item)
+            await self.ciderPlayback.clearAndPlay(shuffle: shuffle, item: item)
         }
     }
     
     var body: some View {
-        let mediaItem = self.detailedViewParams.mediaItem
         let originalSize = self.detailedViewParams.originalSize
         
         PatchedGeometryReader { geometry in
@@ -63,8 +80,7 @@ struct DetailedView: View {
                 VStack {
                     let sqaureSize = geometry.minRelative * 0.4
                     
-                    // there's a slight delay before copying the state to reflectedMediaItem, use original mediaItem data to fetch the image
-                    let artwork = WebImage(url: mediaItem.artwork.getUrl(width: 600, height: 600))
+                    let cover = WebImage(url: artwork.getUrl(width: 600, height: 600))
                         .onSuccess { image, data, cacheType in
                             image.getColors(quality: .highest) { colours in
                                 guard let colours = colours else { return }
@@ -77,7 +93,7 @@ struct DetailedView: View {
                         .frame(width: sqaureSize)
                         .background(
                             Rectangle()
-                                .background(Color(nsColor: reflectedMusicItem?.artwork.bgColour ?? .gray))
+                                .background(Color(nsColor: artwork.bgColour))
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(5)
                                 .multicolourGlow()
@@ -101,48 +117,45 @@ struct DetailedView: View {
                         }
                         .padding(.vertical, 5)
                     
-                    if let animationNamespace = self.detailedViewParams.geometryMatching {
-                        artwork.matchedGeometryEffect(id: mediaItem.id, in: animationNamespace)
+                    if let animationNamespace = self.detailedViewParams.geometryMatching,
+                       let id = self.id {
+                        cover.matchedGeometryEffect(id: id, in: animationNamespace)
                     } else {
-                        artwork
+                        cover
                     }
                     
-                    if descriptionsShouldLoadIn,
-                       let reflectedMusicItem = self.reflectedMusicItem {
-                        VStack {
-                            HStack {
-                                Text("\(reflectedMusicItem.title)")
-                                    .font(.system(size: 18, weight: .bold))
-                                if reflectedMusicItem.playlistType == .PersonalMix {
-                                    Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: reflectedMusicItem.artwork.bgColour))
-                                        .font(.system(size: 18))
-                                        .tooltip("Playlist curated by Apple Music")
-                                        .modifier(SimpleHoverModifier())
-                                }
-                            }
-                            Text("\(reflectedMusicItem.playlistType == .PersonalMix ? "Made For You" : reflectedMusicItem.artistName)")
-                                .foregroundColor(.gray)
-                            
-                            if let description = reflectedMusicItem.description {
-                                Text("\(description)")
-                                    .multilineTextAlignment(.center)
-                                    .frame(maxWidth: 300)
-                            }
-                            
-                            HStack {
-                                MediaActionButton(icon: .Play) {
-                                    self.playSync(mediaItem: reflectedMusicItem)
-                                }
-                                MediaActionButton(icon: .Shuffle) {
-                                    self.playSync(mediaItem: reflectedMusicItem, shuffle: true)
-                                }
-                                addToLibrary
+                    VStack {
+                        HStack {
+                            Text("\(title)")
+                                .font(.system(size: 18, weight: .bold))
+                            if playlistType == .PersonalMix {
+                                Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: artwork.bgColour))
+                                    .font(.system(size: 18))
+                                    .tooltip("Playlist curated by Apple Music")
+                                    .modifier(SimpleHoverModifier())
                             }
                         }
-                        .padding(.vertical)
-                        .isHidden(!animationFinished)
-                        .transition(.move(edge: .bottom).animation(.interactiveSpring()))
+                        Text("\(playlistType == .PersonalMix ? "Made For You" : artistName)")
+                            .foregroundColor(.gray)
+                        
+                        
+                        Text("\(description.standard)")
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: 300)
+                        
+                        HStack {
+                            MediaActionButton(icon: .Play) {
+                                self.playSync(item: self.detailedViewParams.item)
+                            }
+                            MediaActionButton(icon: .Shuffle) {
+                                self.playSync(item: self.detailedViewParams.item, shuffle: true)
+                            }
+                            addToLibrary
+                        }
                     }
+                    .padding(.vertical)
+                    .isHidden(!animationFinished)
+                    .transition(.move(edge: .bottom).animation(.interactiveSpring()))
                 }
                 
                 Spacer()
@@ -150,7 +163,7 @@ struct DetailedView: View {
                 if tracksShouldLoadIn {
                     ScrollView(.vertical) {
                         LazyVStack {
-                            ForEach(reflectedMusicItem?.tracks ?? [], id: \.id) { track in
+                            ForEach(tracks, id: \.id) { track in
                                 MediaTrackRepresentable(mediaTrack: track)
                                     .environmentObject(navigationModal)
                                     .environmentObject(mkModal)
@@ -163,21 +176,18 @@ struct DetailedView: View {
                 }
             }
             .task {
-                guard let id = self.reflectedMusicItem?.id else { return }
-                self.reflectedMusicItem?.tracks = (try? await self.mkModal.AM_API.fetchTracks(id: id, type: self.reflectedMusicItem?.type ?? .AnyMedia)) ?? []
+                if case .mediaItem(let mediaItem) = detailedViewParams.item, let tracks = try? await self.mkModal.AM_API.fetchTracks(id: mediaItem.id, type: .Album) {
+                    self.tracks = tracks
+                } else if case .mediaPlaylist(let mediaPlaylist) = detailedViewParams.item, let tracks = try? await self.mkModal.AM_API.fetchTracks(id: mediaPlaylist.id, type: .Playlist) {
+                    self.tracks = tracks
+                }
                 
                 withAnimation(.spring().delay(0.3)) {
                     self.tracksShouldLoadIn = true
                 }
             }
-            .onAppear {
-                self.reflectedMusicItem = mediaItem
-            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.leading, 30)
-            .onDisappear {
-                self.reflectedMusicItem = nil
-            }
         }
         .enableInjection()
     }
@@ -188,6 +198,6 @@ struct DetailedView_Previews: PreviewProvider {
     @Namespace private static var stubId
     
     static var previews: some View {
-        DetailedView(detailedViewParams: DetailedViewParams(mediaItem: MediaItem(data: []), geometryMatching: stubId, originalSize: .zero))
+        DetailedView(detailedViewParams: DetailedViewParams(item: .mediaItem(MediaItem(data: [])), geometryMatching: stubId, originalSize: .zero))
     }
 }

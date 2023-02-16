@@ -27,8 +27,8 @@ struct MediaShowcaseRow: View {
                 ScrollView([.horizontal]) {
                     LazyHStack {
                         if let recommendations = recommendationSection?.recommendations {
-                            ForEach(recommendations, id: \.title) { recommendation in
-                                MediaPresentable(item: .mediaItem(recommendation), maxRelative: max(geometry.size.width, geometry.size.height), geometryMatched: true)
+                            ForEach(recommendations, id: \.self) { recommendation in
+                                MediaPresentable(item: recommendation, maxRelative: max(geometry.size.width, geometry.size.height), geometryMatched: true)
                                     .environmentObject(ciderPlayback)
                                     .environmentObject(navigationModal)
                                     .padding()

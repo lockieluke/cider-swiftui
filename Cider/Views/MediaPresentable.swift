@@ -13,41 +13,41 @@ struct MediaPresentable: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
-    var item: MediaDynamic
-    var maxRelative: CGFloat
-    var geometryMatched: Bool = false
+    private let item: MediaDynamic
+    private let maxRelative: CGFloat
+    private let geometryMatched: Bool
+    
+    private var id, title: String!
+    private var artwork: MediaArtwork!
     
     @State private var isHovering = false
     @State private var isHoveringPlay = false
     
     @Namespace private var cardAnimation
     
-    struct MediaPresentableData {
-        let title: String
-        let id: String
-        let artwork: MediaArtwork
-    }
-    
-    var displayData: MediaPresentableData {
-        get {
-            switch self.item {
-                
-            case .mediaItem(let mediaItem):
-                return MediaPresentableData(title: mediaItem.title, id: mediaItem.id, artwork: mediaItem.artwork)
-                
-            case .mediaTrack(let mediaTrack):
-                return MediaPresentableData(title: mediaTrack.title, id: mediaTrack.id, artwork: mediaTrack.artwork)
-                
-            case .mediaPlaylist(let mediaPlaylist):
-                return MediaPresentableData(title: mediaPlaylist.title, id: mediaPlaylist.id, artwork: mediaPlaylist.artwork)
-                
-            }
+    init(item: MediaDynamic, maxRelative: CGFloat, geometryMatched: Bool = false) {
+        if case .mediaItem(let mediaItem) = item {
+            self.id = mediaItem.id
+            self.title = mediaItem.title
+            self.artwork = mediaItem.artwork
+        } else if case .mediaPlaylist(let mediaPlaylist) = item {
+            self.id = mediaPlaylist.id
+            self.title = mediaPlaylist.title
+            self.artwork = mediaPlaylist.artwork
+        } else if case .mediaTrack(let mediaTrack) = item {
+            self.id = mediaTrack.id
+            self.title = mediaTrack.title
+            self.artwork = mediaTrack.artwork
         }
+        
+        self.item = item
+        self.maxRelative = maxRelative
+        self.geometryMatched = geometryMatched
     }
     
     var innerBody: some View {
         VStack {
-            let artwork = WebImage(url: displayData.artwork.getUrl(width: 200, height: 200))
+            let artwork = WebImage(url: artwork.getUrl(width: 200, height: 200))
                 .resizable()
                 .placeholder {
                     ProgressView()
@@ -98,27 +98,22 @@ struct MediaPresentable: View {
                 }
                 .onTapGesture {
                     withAnimation(.interactiveSpring(response: 0.55, blendDuration: 100)) {
-                        switch self.item {
-                            
-                        case .mediaItem(let musicItem):
-                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(mediaItem: musicItem, geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15)))))
-                            break
-                            
-                        default:
-                            break
-                            
+                        if case let .mediaItem(mediaItem) = item {
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15)))))
+                        } else if case let .mediaPlaylist(mediaPlaylist) = item {
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15)))))
                         }
                     }
                 }
             
-            if geometryMatched {
+            if geometryMatched, let id = self.id {
                 artwork
-                    .matchedGeometryEffect(id: displayData.id, in: cardAnimation)
+                    .matchedGeometryEffect(id: id, in: cardAnimation)
             } else {
                 artwork
             }
             
-            Text("\(displayData.title)")
+            Text("\(title)")
         }
         .frame(width: maxRelative * 0.15, height: maxRelative * 0.15)
         .fixedSize()

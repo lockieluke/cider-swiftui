@@ -30,7 +30,7 @@ struct MediaRecommendationSection {
     let id: String
     let title: String
     let type: MediaRecommendationSectionType
-    let recommendations: [MediaItem]
+    let recommendations: [MediaDynamic]
     let size: Int
     
     init(data: JSON) {
@@ -39,8 +39,15 @@ struct MediaRecommendationSection {
         self.type = MediaRecommendationSectionType(rawValue: data["type"].stringValue) ?? .PersonalRecommendation
         
         let recommendationDatas = data["relationships"]["contents"]["data"]
-        self.recommendations = recommendationDatas.arrayValue.map { recommendationData in
-            return MediaItem(data: recommendationData)
+        self.recommendations = recommendationDatas.arrayValue.compactMap { recommendationData in
+            let type = MediaType(rawValue: recommendationData["type"].stringValue) ?? .AnyMedia
+            if type == .Album {
+                return .mediaItem(MediaItem(data: recommendationData))
+            } else if type == .Playlist {
+                return .mediaPlaylist(MediaPlaylist(data: recommendationData))
+            }
+            
+            return nil
         }
         self.size = recommendationDatas.count
     }
