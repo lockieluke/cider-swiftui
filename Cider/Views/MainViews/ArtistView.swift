@@ -131,7 +131,7 @@ struct ArtistView: View {
                                 VStack(alignment: .leading) {
                                     Text("Latest Release")
                                         .font(.title2.bold())
-                                    MediaPresentable(item: .mediaTrack(latestRelease), maxRelative: 1000)
+                                    MediaPresentable(item: .mediaTrack(latestRelease), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
                                         .padding(.vertical)
                                 }
                             }
@@ -156,7 +156,7 @@ struct ArtistView: View {
                             ScrollView(.horizontal) {
                                 LazyHStack {
                                     ForEach(artist.singles, id: \.id) { single in
-                                        MediaPresentable(item: .mediaTrack(single), maxRelative: 1000)
+                                        MediaPresentable(item: .mediaTrack(single), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
                                             .padding(.vertical)
                                     }
                                 }
@@ -172,7 +172,7 @@ struct ArtistView: View {
                             ScrollView(.horizontal) {
                                 LazyHStack {
                                     ForEach(artist.similarArtists, id: \.id) { similarArtist in
-                                        MediaArtistPresentable(artist: similarArtist, maxRelative: 1000)
+                                        MediaArtistPresentable(artist: similarArtist, maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
                                             .environmentObject(navigationModal)
                                             .padding(.vertical)
                                     }
