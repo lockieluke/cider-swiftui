@@ -19,90 +19,95 @@ struct SearchView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
-        ScrollView(.vertical) {
-            if let searchResults = self.searchModal.searchResults {
+        PatchedGeometryReader { geometry in
+            ScrollView(.vertical) {
                 VStack {
-                    Text("**Top Results for** *\(searchModal.currentSearchText)*")
+                    Text("**Search Results for** *\(searchModal.currentSearchText)*")
                         .font(.title2)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.bottom)
                     
-                    if let artists = searchResults.artists, !artists.isEmpty {
-                        Text("Artists")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        ScrollView(.horizontal) {
-                            LazyHStack {
-                                ForEach(artists, id: \.id) { artist in
-                                    MediaArtistPresentable(artist: artist, maxRelative: 1000)
-                                        .environmentObject(navigationModal)
+                    if let searchResults = self.searchModal.searchResults, !searchResults.isEmpty {
+                        if let artists = searchResults.artists, !artists.isEmpty {
+                            Text("Artists")
+                                .font(.title2.bold())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(artists, id: \.id) { artist in
+                                        MediaArtistPresentable(artist: artist, maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
+                                            .environmentObject(navigationModal)
+                                    }
                                 }
                             }
+                            .transparentScrollbars()
                         }
-                        .transparentScrollbars()
-                    }
-                    
-                    if let tracks = searchResults.tracks, !tracks.isEmpty {
-                        Text("Songs")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        ScrollView(.horizontal) {
-                            LazyHStack {
-                                ForEach(tracks, id: \.id) { track in
-                                    MediaPresentable(item: .mediaTrack(track), maxRelative: 1000)
-                                        .padding(.vertical)
+                        if let tracks = searchResults.tracks, !tracks.isEmpty {
+                            Text("Songs")
+                                .font(.title2.bold())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(tracks, id: \.id) { track in
+                                        MediaPresentable(item: .mediaTrack(track), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
+                                            .padding(.vertical)
+                                    }
                                 }
                             }
+                            .transparentScrollbars()
                         }
-                        .transparentScrollbars()
-                    }
-                    
-                    if let albums = searchResults.albums, !albums.isEmpty {
-                        Text("Albums")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        ScrollView(.horizontal) {
-                            LazyHStack {
-                                ForEach(albums, id: \.id) { album in
-                                    MediaPresentable(item: .mediaItem(album), maxRelative: 1000, geometryMatched: false)
-                                        .environmentObject(ciderPlayback)
-                                        .environmentObject(navigationModal)
-                                        .padding(.vertical)
+                        if let albums = searchResults.albums, !albums.isEmpty {
+                            Text("Albums")
+                                .font(.title2.bold())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(albums, id: \.id) { album in
+                                        MediaPresentable(item: .mediaItem(album), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: false)
+                                            .environmentObject(ciderPlayback)
+                                            .environmentObject(navigationModal)
+                                            .padding(.vertical)
+                                    }
                                 }
                             }
+                            .transparentScrollbars()
                         }
-                        .transparentScrollbars()
-                    }
-                    
-                    if let playlists = searchResults.playlists, !playlists.isEmpty {
-                        Text("Playlists")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        ScrollView(.horizontal) {
-                            LazyHStack {
-                                ForEach(playlists, id: \.id) { playlist in
-                                    MediaPresentable(item: .mediaPlaylist(playlist), maxRelative: 1000, geometryMatched: false)
-                                        .environmentObject(ciderPlayback)
-                                        .environmentObject(navigationModal)
-                                        .padding(.vertical)
+                        if let playlists = searchResults.playlists, !playlists.isEmpty {
+                            Text("Playlists")
+                                .font(.title2.bold())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(playlists, id: \.id) { playlist in
+                                        MediaPresentable(item: .mediaPlaylist(playlist), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: false)
+                                            .environmentObject(ciderPlayback)
+                                            .environmentObject(navigationModal)
+                                            .padding(.vertical)
+                                    }
                                 }
                             }
+                            .transparentScrollbars()
                         }
-                        .transparentScrollbars()
+                        
+                        Spacer()
+                    } else {
+                        Text("""
+                             **No Results**
+                             Try a new search and check your spellings
+                             """)
+                        .multilineTextAlignment(.center)
                     }
-                    
-                    Spacer()
                 }
                 .padding()
             }
-        }
-        .transparentScrollbars()
-        .task {
-            
+            .transparentScrollbars()
         }
         .enableInjection()
     }

@@ -17,33 +17,33 @@ struct MediaShowcaseRow: View {
     var recommendationSection: MediaRecommendationSection?
     
     var body: some View {
-        PatchedGeometryReader { geometry in
-            VStack {
-                Text(rowTitle ?? "No Title")
-                    .font(.system(size: 15).bold())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 15)
-                    .padding(.top, 10)
-                ScrollView([.horizontal]) {
-                    LazyHStack {
-                        if let recommendations = recommendationSection?.recommendations {
+        if let recommendations = recommendationSection?.recommendations, !recommendations.isEmpty, let rowTitle = rowTitle {
+            PatchedGeometryReader { geometry in
+                VStack {
+                    Text(rowTitle)
+                        .font(.system(size: 15).bold())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 15)
+                        .padding(.top, 10)
+                    ScrollView([.horizontal]) {
+                        LazyHStack {
                             ForEach(recommendations, id: \.self) { recommendation in
-                                MediaPresentable(item: recommendation, maxRelative: max(geometry.size.width, geometry.size.height), geometryMatched: true)
+                                MediaPresentable(item: recommendation, maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: true)
                                     .environmentObject(ciderPlayback)
                                     .environmentObject(navigationModal)
                                     .padding()
                             }
                         }
+                        .introspectScrollView { scrollView in
+                            scrollView.autohidesScrollers = true
+                            scrollView.scrollerStyle = .overlay
+                        }
                     }
-                    .introspectScrollView { scrollView in
-                        scrollView.autohidesScrollers = true
-                        scrollView.scrollerStyle = .overlay
-                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .enableInjection()
         }
-        .enableInjection()
     }
 }
 
