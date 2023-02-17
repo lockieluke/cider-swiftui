@@ -45,19 +45,15 @@ struct SearchBar: View {
             var track: MediaTrack?
             var artist: MediaArtist?
             if let topResult = suggestion.searchTopResult {
-                switch topResult {
-                case .artist(let mediaArtist):
+                if case let .artist(mediaArtist) = topResult {
                     displayName = mediaArtist.artistName
                     artwork = mediaArtist.artwork
                     artist = mediaArtist
-                    break
-                    
-                case .track(let mediaTrack):
+                } else if case let .track(mediaTrack) = topResult {
                     displayName = mediaTrack.title
                     artwork = mediaTrack.artwork
                     description = mediaTrack.artistName
                     track = mediaTrack
-                    break
                 }
             } else {
                 displayName = suggestion.searchTerm?.displayTerm
