@@ -14,7 +14,6 @@ import Watchdog
 class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var appWindow: AppWindow!
-    private var appMenu: AppMenu!
     private var watchdog: Watchdog!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
