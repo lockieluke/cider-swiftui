@@ -17,19 +17,11 @@ struct PlaybackCardView: View {
         HStack {
             let nowPlayingState = ciderPlayback.nowPlayingState
             
-            Group {
-                if let artworkURL = nowPlayingState.artworkURL {
-                    WebImage(url: artworkURL)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 50, height: 50)
-                        .cornerRadius(5)
-                } else {
-                    RoundedRectangle(cornerRadius: 5)
-                        .fill(.secondary)
-                }
-            }
-            .frame(width: 50, height: 50)
+            WebImage(url: nowPlayingState.artworkURL ?? Bundle.main.url(forResource: "MissingArtwork", withExtension: ".png")!)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 50, height: 50)
+                .cornerRadius(5)
             
             VStack(alignment: .leading) {
                 Text(nowPlayingState.name ?? "Not Playing")
