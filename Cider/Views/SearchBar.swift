@@ -21,6 +21,17 @@ struct SearchBar: View {
     @State private var suggestions: SearchSuggestions?
     @State var fetchSuggestionsTask: Task<Void, Never>?
     
+    func updateSearchResults() {
+        Task {
+            self.searchModal.isLoadingResults = true
+            let searchResults = await self.mkModal.AM_API.fetchSearchResults(term: self.searchModal.currentSearchText, types: [.artists, .songs, .albums, .playlists])
+            DispatchQueue.main.async {
+                self.searchModal.searchResults = searchResults
+                self.searchModal.isLoadingResults = false
+            }
+        }
+    }
+    
     struct SuggestionView: View {
         
         @EnvironmentObject private var ciderPlayback: CiderPlayback
@@ -145,6 +156,7 @@ struct SearchBar: View {
                         if let searchTerm = searchSuggestion.searchTerm {
                             self.searchModal.currentSearchText = searchTerm.displayTerm
                             self.searchModal.shouldDisplaySearchPage = true
+                            self.updateSearchResults()
                         }
                     })
                     .environmentObject(ciderPlayback)
@@ -246,12 +258,8 @@ struct SearchBar: View {
                 .onSubmit {
                     self.isFocused = false
                     self.searchModal.shouldDisplaySearchPage = true
-                    Task {
-                        let searchResults = await self.mkModal.AM_API.fetchSearchResults(term: self.searchModal.currentSearchText, types: [.artists, .songs, .albums, .playlists])
-                        DispatchQueue.main.async {
-                            self.searchModal.searchResults = searchResults
-                        }
-                    }
+                    self.updateSearchResults()
+                    
                 }
         }
         .enableInjection()

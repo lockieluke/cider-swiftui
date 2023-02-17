@@ -8,6 +8,7 @@ class SearchModal : ObservableObject {
     
     @Published var currentSearchText: String = ""
     @Published var isFocused: Bool = false
+    @Published var isLoadingResults: Bool = false
     @Published var shouldDisplaySearchPage: Bool = false
     @Published var searchResults: SearchResults? = nil
     

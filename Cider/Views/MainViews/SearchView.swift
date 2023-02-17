@@ -97,12 +97,17 @@ struct SearchView: View {
                         }
                         
                         Spacer()
+                    } else if searchModal.isLoadingResults {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .frame(maxHeight: .infinity, alignment: .center)
                     } else {
                         Text("""
                              **No Results**
                              Try a new search and check your spellings
                              """)
                         .multilineTextAlignment(.center)
+                        .frame(maxHeight: .infinity, alignment: .center)
                     }
                 }
                 .padding()
