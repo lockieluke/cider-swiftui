@@ -15,6 +15,7 @@ struct ContentView: View {
     var authWorker: AuthWorker
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var prefModal: PrefModal
+    @EnvironmentObject private var discordRPCModal: DiscordRPCModal
     
     @StateObject private var searchModal = SearchModal()
     @StateObject private var navigationModal = NavigationModal()
@@ -55,6 +56,7 @@ struct ContentView: View {
             }
             .task {
                 await self.authWorker.presentAuthView() { userToken in
+                    self.discordRPCModal.agent.start()
                     self.mkModal.authenticateWithToken(userToken: userToken)
                     self.ciderPlayback.setUserToken(userToken: userToken)
                     self.ciderPlayback.start()
@@ -74,6 +76,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal(), appWindowModal: AppWindowModal())), appWindowModal: AppWindowModal()))
+        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal(), appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())), appWindowModal: AppWindowModal()))
     }
 }

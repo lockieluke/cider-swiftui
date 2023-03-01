@@ -11,6 +11,7 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let mainWindow: NSWindow
     private let appWindowModal = AppWindowModal()
     private let mkModal: MKModal
+    private let discordRPCModal: DiscordRPCModal
     private let prefModal = PrefModal()
     private let wsModal = WSModal.shared
     private let authWorker: AuthWorker
@@ -18,11 +19,12 @@ class AppWindow: NSObject, NSWindowDelegate {
     
     let ciderPlayback: CiderPlayback
     
-    override init() {
+    init(discordRPCModal: DiscordRPCModal) {
         let activeScreen = NSScreen.activeScreen
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
-        let ciderPlayback = CiderPlayback(prefModal: self.prefModal, appWindowModal: self.appWindowModal)
+        let discordRPCModal = DiscordRPCModal()
+        let ciderPlayback = CiderPlayback(prefModal: self.prefModal, appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback)
         let authWorker = AuthWorker(mkModal: mkModal, appWindowModal: self.appWindowModal)
         
@@ -31,6 +33,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             .environmentObject(mkModal)
             .environmentObject(ciderPlayback)
             .environmentObject(self.prefModal)
+            .environmentObject(discordRPCModal)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         window.contentViewController = NSHostingController(rootView: contentView)
         window.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
@@ -68,6 +71,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         self.mainWindow = window
         self.appWindowModal.nsWindow = window
         self.authWorker = authWorker
+        self.discordRPCModal = discordRPCModal
         self.appMenu = appMenu
         self.mkModal = mkModal
         self.ciderPlayback = ciderPlayback

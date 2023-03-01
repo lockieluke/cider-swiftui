@@ -7,15 +7,14 @@ import Darwin
 import RainbowSwift
 
 enum SharedLoggers {
-    
-    case UIInteraction
-    
+    case UIInteraction, DiscordRPC
 }
 
 class Logger {
     
     static let sharedLoggers: Dictionary<SharedLoggers, Logger> = [
-        .UIInteraction: Logger(label: "UIInteraction")
+        .UIInteraction: Logger(label: "UIInteraction"),
+        .DiscordRPC: Logger(label: "DiscordRPC")
     ]
     static let shared = Logger(label: "Shared")
     private let label: String

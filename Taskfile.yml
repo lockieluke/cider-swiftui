@@ -7,6 +7,18 @@ tasks:
     cmds:
       - echo -e "Build, Run, Perform Tasks with Taskfile!\nRun 'task build-xc' to build Cider, consult README.md for documentation"
 
+  build-discord-rpc-lib:
+    desc: "Build DiscordRPCAgent"
+    dir: DiscordRPCAgent/
+    cmds:
+      - chmod +x ./build.sh && ./build.sh
+
+  clean-discord-rpc-lib:
+    desc: "Clean DiscordRPCAgent's target folder"
+    dir: DiscordRPCAgent/
+    cmds:
+      - rm -rf target/
+
   install-cpa-js-deps:
     dir: 'CiderPlaybackAgent/Web Scripts/'
     desc: "Install CiderPlaybackAgent's dependencies with Yarn"

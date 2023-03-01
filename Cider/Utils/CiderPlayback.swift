@@ -55,13 +55,14 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     private let logger: Logger
     private let appWindowModal: AppWindowModal
+    private let discordRPCModal: DiscordRPCModal
     private var mkModal: MKModal?
     private let proc: Process
     private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
     private var isRunning: Bool
     
-    init(prefModal: PrefModal, appWindowModal: AppWindowModal) {
+    init(prefModal: PrefModal, appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModal) {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = NetworkingProvider.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
@@ -116,6 +117,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         self.logger = logger
         self.appWindowModal = appWindowModal
         self.agentSessionId = agentSessionId
+        self.discordRPCModal = discordRPCModal
         self.proc = proc
         self.agentPort = agentPort
         self.isRunning = false
@@ -189,7 +191,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     func clearAndPlay(shuffle: Bool = false, item: MediaDynamic) async {
-        self.updateNowPlayingStateBeforeReady(item: item)
+        await self.updateNowPlayingStateBeforeReady(item: item)
         await self.stop()
         await self.play(shuffle: shuffle)
     }
@@ -274,39 +276,45 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
     func updateNowPlayingStateBeforeReady(item: MediaDynamic) {
-        DispatchQueue.main.async {
-            let title, artistName: String
-            let artwork: MediaArtwork
+        let title, artistName: String
+        let artwork: MediaArtwork
+        
+        switch item {
             
-            switch item {
-                
-            case .mediaTrack(let mediaTrack):
-                title = mediaTrack.title
-                artistName = mediaTrack.artistName
-                artwork = mediaTrack.artwork
-                
-            case .mediaItem(let musicItem):
-                title = musicItem.title
-                artistName = musicItem.artistName
-                artwork = musicItem.artwork
-                
-            case .mediaPlaylist(let mediaPlaylist):
-                title = mediaPlaylist.title
-                artistName = mediaPlaylist.curatorName
-                artwork = mediaPlaylist.artwork
-                
-            }
+        case .mediaTrack(let mediaTrack):
+            title = mediaTrack.title
+            artistName = mediaTrack.artistName
+            artwork = mediaTrack.artwork
             
-            self.nowPlayingState = NowPlayingState(
-                item: item,
-                name: title,
-                artistName: artistName,
-                artworkURL: artwork.getUrl(width: 100, height: 100),
-                isPlaying: false,
-                isReady: false
-            )
+        case .mediaItem(let musicItem):
+            title = musicItem.title
+            artistName = musicItem.artistName
+            artwork = musicItem.artwork
+            
+        case .mediaPlaylist(let mediaPlaylist):
+            title = mediaPlaylist.title
+            artistName = mediaPlaylist.curatorName
+            artwork = mediaPlaylist.artwork
+            
         }
+        
+        let artworkURL = artwork.getUrl(width: 200, height: 200)
+        self.discordRPCModal.agent.setActivityAssets(artworkURL.absoluteString, title, "", "")
+        self.discordRPCModal.agent.setActivityState(artistName)
+        self.discordRPCModal.agent.setActivityDetails(title)
+        DispatchQueue.global(qos: .default).async {
+            self.discordRPCModal.agent.updateActivity()
+        }
+        self.nowPlayingState = NowPlayingState(
+            item: item,
+            name: title,
+            artistName: artistName,
+            artworkURL: artworkURL,
+            isPlaying: false,
+            isReady: false
+        )
     }
     
     func shutdown() async {
@@ -361,11 +369,14 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     }
                     
                     DispatchQueue.main.async {
-                        self.nowPlayingState.item = .mediaTrack(mediaTrack)
-                        self.nowPlayingState.name = mediaParams["name"].string
-                        self.nowPlayingState.artistName = mediaParams["artistName"].string
+                        if let name = mediaParams["name"].string,
+                           let artistName = mediaParams["artistName"].string {
+                            self.nowPlayingState.item = .mediaTrack(mediaTrack)
+                            self.nowPlayingState.name = name
+                            self.nowPlayingState.artistName = artistName
+                        }
                         
-                        let newArtworkURL = URL(string: mediaParams["artworkURL"].stringValue.replacingOccurrences(of: "{w}", with: "100").replacingOccurrences(of: "{h}", with: "100"))
+                        let newArtworkURL = URL(string: mediaParams["artworkURL"].stringValue.replacingOccurrences(of: "{w}", with: "200").replacingOccurrences(of: "{h}", with: "200"))
                         if newArtworkURL != self.nowPlayingState.artworkURL {
                             self.nowPlayingState.artworkURL = newArtworkURL
                         }
@@ -382,10 +393,17 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     
                 case "paused":
                     self.nowPlayingState.isPlaying = false
+                    DispatchQueue.global(qos: .default).async {
+                        self.discordRPCModal.agent.setActivityTimestamps(0, 0)
+                        self.discordRPCModal.agent.updateActivity()
+                    }
                     break
                     
                 case "stopped":
                     self.nowPlayingState.reset()
+                    DispatchQueue.global(qos: .default).async {
+                        self.discordRPCModal.agent.clearActivity()
+                    }
                     break
                     
                 case "playing":
@@ -403,9 +421,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             case "playbackTimeDidChange":
                 Throttler.throttle(shouldRunImmediately: true) {
                     DispatchQueue.main.async {
+                        let currentTime = TimeInterval(json["currentTime"].intValue + 1)
+                        let remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
                         if self.appWindowModal.isFocused || self.appWindowModal.isVisibleInViewport {
-                            self.nowPlayingState.currentTime = TimeInterval(json["currentTime"].intValue + 1)
-                            self.nowPlayingState.remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
+                            self.nowPlayingState.currentTime = currentTime
+                            self.nowPlayingState.remainingTime = remainingTime
                         }
                     }
                 }

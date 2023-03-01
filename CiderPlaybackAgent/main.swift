@@ -131,45 +131,48 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         }, connected: { session in
             print("Cider Client connected")
             
+            var requestObj = JSON()
+            let done = {
+                if let rawString = requestObj.rawString() {
+                    session.writeText(rawString)
+                }
+            }
+            
             self.musicKitWorker?.addCallback { eventName, dict in
-                var requestObj = JSON()
-                let done = {
-                    if let rawString = requestObj.rawString() {
-                        session.writeText(rawString)
+                Task {
+                    requestObj["requestId"].string = UUID().uuidString
+                    requestObj["eventName"].string = eventName
+                    switch eventName {
+                        
+                    case "mediaItemDidChange":
+                        let artworkURL = dict["artworkURL"]
+                        requestObj["mediaParams"] = JSON([
+                            "id": dict["id"],
+                            "name": dict["name"],
+                            "artistName": dict["artistName"],
+                            "artworkURL": artworkURL
+                        ])
+                        break
+                        
+                    case "playbackStateDidChange":
+                        requestObj["playbackState"].string = String(describing: dict["playbackState"] ?? "unknown" as AnyObject)
+                        break
+                        
+                    case "playbackTimeDidChange":
+                        requestObj["currentTime"].int = dict["currentTime"] as? Int
+                        requestObj["remainingTime"].int = dict["remainingTime"] as? Int
+                        break
+                        
+                    case "playbackDurationDidChange":
+                        requestObj["duration"].int = dict["duration"] as? Int
+                        break
+                        
+                    default:
+                        break
+                        
                     }
+                    done()
                 }
-                
-                requestObj["requestId"].string = UUID().uuidString
-                requestObj["eventName"].string = eventName
-                switch eventName {
-                    
-                case "mediaItemDidChange":
-                    requestObj["mediaParams"] = JSON([
-                        "id": dict["id"],
-                        "name": dict["name"],
-                        "artistName": dict["artistName"],
-                        "artworkURL": dict["artworkURL"]
-                    ])
-                    break
-                    
-                case "playbackStateDidChange":
-                    requestObj["playbackState"].string = String(describing: dict["playbackState"] ?? "unknown" as AnyObject)
-                    break
-                    
-                case "playbackTimeDidChange":
-                    requestObj["currentTime"].int = dict["currentTime"] as? Int
-                    requestObj["remainingTime"].int = dict["remainingTime"] as? Int
-                    break
-                    
-                case "playbackDurationDidChange":
-                    requestObj["duration"].int = dict["duration"] as? Int
-                    break
-                    
-                default:
-                    break
-                    
-                }
-                done()
             }
         })
         

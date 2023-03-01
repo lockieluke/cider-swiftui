@@ -4,32 +4,30 @@
 
 import Foundation
 import FirebaseCore
-import FirebaseFirestore
-import FirebaseAuth
 import FirebaseAnalytics
-import AppKit
-import SwiftUI
 import Watchdog
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var appWindow: AppWindow!
     private var watchdog: Watchdog!
+    private var discordRPCModal: DiscordRPCModal!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        #if DEBUG
+#if DEBUG
         if CommandLine.arguments.contains("--enable-watchdog") {
             self.watchdog = Watchdog(threshold: 1.0, strictMode: true)
         }
-        #endif
+#endif
         
         FirebaseConfiguration.shared.setLoggerLevel(.min)
-        #if DEBUG
+#if DEBUG
         Analytics.setAnalyticsCollectionEnabled(false)
-        #endif
+#endif
         FirebaseApp.configure()
-        
-        self.appWindow = AppWindow()
+      
+        let discordRPCModal = DiscordRPCModal()
+        self.appWindow = AppWindow(discordRPCModal: DiscordRPCModal())
         
         // might be useful for cleaning up child processes when process gets killed
         let terminatedCallback = { exitCode in
@@ -40,6 +38,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         signal(SIGKILL, terminatedCallback)
         signal(SIGSTOP, terminatedCallback)
         
+        self.discordRPCModal = discordRPCModal
         appWindow.show()
     }
     
@@ -52,6 +51,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ notification: Notification) {
+        self.discordRPCModal.agent.stop()
         self.appWindow.ciderPlayback.shutdownSync()
     }
     
