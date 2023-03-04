@@ -42,7 +42,9 @@ enum MouseEvent {
     case MouseEntered,
          MouseLeft,
          MousePrimaryPressed,
-         MousePrimaryReleased
+         MousePrimaryReleased,
+         MouseSecondaryPressed,
+         MouseSecondaryReleased
     
 }
 
@@ -86,8 +88,18 @@ struct MouseModifier: ViewModifier {
             
             override func mouseDown(with event: NSEvent) {
                 mouseEventCB?(.MousePrimaryPressed)
-                super.mouseDown(with: event)
+            }
+            
+            override func mouseUp(with event: NSEvent) {
                 mouseEventCB?(.MousePrimaryReleased)
+            }
+            
+            override func rightMouseDown(with event: NSEvent) {
+                mouseEventCB?(.MouseSecondaryPressed)
+            }
+            
+            override func rightMouseUp(with event: NSEvent) {
+                mouseEventCB?(.MouseSecondaryReleased)
             }
             
             override func mouseDragged(with event: NSEvent) {
@@ -188,6 +200,10 @@ extension View {
                 mouseEventCB()
             }
         }))
+    }
+    
+    func contextMenu(_ contextMenuArgs: [ContextMenuArg] = [], onAppear: (() -> Void)? = nil, _ onAction: ((_ id: String) -> Void)? = nil) -> some View {
+        modifier(ContextMenu(contextMenuArgs, onAppear: onAppear, onAction))
     }
     
     func erasedToAnyView() -> AnyView {

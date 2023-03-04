@@ -105,6 +105,7 @@ struct MediaPresentable: View {
                         }
                     }
                 }
+                .modifier(CatalogActions(item: item))
             
             if geometryMatched, let id = self.id {
                 artwork

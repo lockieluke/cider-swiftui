@@ -20,6 +20,12 @@ enum MediaDynamic {
     case mediaTrack(MediaTrack), mediaItem(MediaItem), mediaPlaylist(MediaPlaylist)
 }
 
+enum MediaRatings: Int {
+    case Disliked = -1
+    case Neutral = 0
+    case Liked = 1
+}
+
 extension MediaDynamic: Identifiable, Hashable {
     
     var id: String {
@@ -35,6 +41,23 @@ extension MediaDynamic: Identifiable, Hashable {
             return mediaPlaylist.id
             
         }
+    }
+    
+    var type: String {
+        
+        switch self {
+            
+        case .mediaItem(let mediaItem):
+            return mediaItem.type.rawValue
+            
+        case .mediaTrack( _):
+            return "songs"
+            
+        case .mediaPlaylist( _):
+            return "playlists"
+            
+        }
+        
     }
     
     

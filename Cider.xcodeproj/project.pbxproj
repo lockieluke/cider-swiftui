@@ -36,6 +36,7 @@
 		B75219C0291F0742005CF8F0 /* PersonalisedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219BF291F0742005CF8F0 /* PersonalisedData.swift */; };
 		B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */; };
 		B755C73228C817C000A46FB9 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755C73128C817C000A46FB9 /* Bundle.swift */; };
+		B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75C7C1229B12AE500F7693E /* CatalogActions.swift */; };
 		B76887122948F9C600C623C9 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887112948F9C600C623C9 /* Support.swift */; };
 		B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887132949172300C623C9 /* PreferencesPanes.swift */; };
 		B768871729491B1800C623C9 /* GeneralPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */; };
@@ -82,6 +83,7 @@
 		B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70A28BD24B4009AABEA /* MKModal.swift */; };
 		B7AAB70D28BD2640009AABEA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70C28BD2640009AABEA /* HomeView.swift */; };
 		B7B02F57295629030065FCDD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02F56295629030065FCDD /* Double.swift */; };
+		B7B3D8C029B005100014F63D /* ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B3D8BF29B005100014F63D /* ContextMenu.swift */; };
 		B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C06F832932E1C5000C1192 /* NavigationContainer.swift */; };
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
 		B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorker.swift */; };
@@ -162,6 +164,7 @@
 		B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchedGeometryReader.swift; sourceTree = "<group>"; };
 		B755C72E28C7F00800A46FB9 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = CiderWebAuth/dist/index.js; sourceTree = "<group>"; };
 		B755C73128C817C000A46FB9 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		B75C7C1229B12AE500F7693E /* CatalogActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogActions.swift; sourceTree = "<group>"; };
 		B76887112948F9C600C623C9 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		B76887132949172300C623C9 /* PreferencesPanes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesPanes.swift; sourceTree = "<group>"; };
 		B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesPane.swift; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 		B7AAB70A28BD24B4009AABEA /* MKModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKModal.swift; sourceTree = "<group>"; };
 		B7AAB70C28BD2640009AABEA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B7B02F56295629030065FCDD /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		B7B3D8BF29B005100014F63D /* ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenu.swift; sourceTree = "<group>"; };
 		B7C06F832932E1C5000C1192 /* NavigationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationContainer.swift; sourceTree = "<group>"; };
 		B7C651D328C415F000D32DDC /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
 		B7C651D528C4B8E200D32DDC /* AuthWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorker.swift; sourceTree = "<group>"; };
@@ -381,6 +385,7 @@
 				B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */,
 				B797AFF5297F3AB900D77282 /* InteractiveText.swift */,
 				B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */,
+				B7B3D8BF29B005100014F63D /* ContextMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -431,6 +436,7 @@
 				B77AACEB293AD90100F8E1E2 /* DisableScrollingModifier.swift */,
 				B77AACF3293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift */,
 				B768871A2949225200C623C9 /* BasicHoverModifier.swift */,
+				B75C7C1229B12AE500F7693E /* CatalogActions.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -867,8 +873,10 @@
 				B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */,
 				B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */,
 				B7688723294A06F600C623C9 /* Diagnostic.swift in Sources */,
+				B7B3D8C029B005100014F63D /* ContextMenu.swift in Sources */,
 				B7AAB70328BADCB2009AABEA /* PlaybackView.swift in Sources */,
 				B75219B0291984AD005CF8F0 /* NavigationModal.swift in Sources */,
+				B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
 				B798562B292ADE13003CA787 /* String.swift in Sources */,
 				B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */,

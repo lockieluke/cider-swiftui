@@ -8,8 +8,7 @@ import Starscream
 import Throttler
 
 enum HTTPMethod : String {
-    case GET = "GET",
-    POST = "POST"
+    case GET = "GET", POST = "POST", PUT = "PUT", DELETE = "DELETE"
 }
 
 struct HTTPResponse {
@@ -164,20 +163,20 @@ class NetworkingProvider {
         self.defaultHeaders = headers
     }
     
-    func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> HTTPResponse {
+    func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil, bodyContentType: String = "application/x-www-form-urlencoded", acceptContentType: String = "application/json") async throws -> HTTPResponse {
         var newHeaders = self.defaultHeaders
         newHeaders.merge(dict: self.defaultHeaders)
         guard let urlString = self.baseURL.appendingPathComponent(endpoint).absoluteString.removingPercentEncoding else {
             throw NSError(domain: "Failed to compose URL String", code: 1)
         }
-        return try await NetworkingProvider.request(urlString, method: method, headers: newHeaders, body: body)
+        return try await NetworkingProvider.request(urlString, method: method, headers: newHeaders, body: body, bodyContentType: bodyContentType, acceptContentType: acceptContentType)
     }
     
-    func requestJSON(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> JSON {
+    func requestJSON(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil, bodyContentType: String = "application/x-www-form-urlencoded", acceptContentType: String = "application/json") async throws -> JSON {
         let json: JSON
         let response: HTTPResponse
         do {
-            response = try await request(endpoint, method: method, headers: headers, body: body)
+            response = try await request(endpoint, method: method, headers: headers, body: body, bodyContentType: bodyContentType, acceptContentType: acceptContentType)
             json = try JSON(data: response.data)
         } catch {
             throw error
@@ -185,26 +184,40 @@ class NetworkingProvider {
         return json
     }
     
-    static func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil) async throws -> HTTPResponse {
+    static func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil, bodyContentType: String = "application/x-www-form-urlencoded", acceptContentType: String = "application/json") async throws -> HTTPResponse {
         var request = URLRequest(url: URL(string: endpoint)!)
         request.allHTTPHeaderFields = headers
         request.httpMethod = method.rawValue
         if let body = body {
             if method != .GET {
-                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                request.setValue(NSLocalizedString("lang", comment: ""), forHTTPHeaderField:"Accept-Language");
-                var values: String = ""
-                for bodyValue in body {
-                    values.append("\(values.isEmpty ? "" : "&")\(bodyValue.key)=\(bodyValue.value)")
+                request.addValue(bodyContentType, forHTTPHeaderField: "Content-Type")
+                request.addValue(<#T##value: String##String#>, forHTTPHeaderField: <#T##String#>)
+                
+                if bodyContentType == "application/x-www-form-urlencoded" {
+                    var values: String = ""
+                    for bodyValue in body {
+                        values.append("\(values.isEmpty ? "" : "&")\(bodyValue.key)=\(bodyValue.value)")
+                    }
+                    
+                    request.httpBody = values.data(using: .utf8)
                 }
                 
-                request.httpBody = values.data(using: .utf8)
+                if bodyContentType == "application/json" {
+                    do {
+                        request.httpBody = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
+                    } catch {
+                        self.sharedLogger.error("Failed to serialise JSON \(endpoint): \(error)")
+                    }
+                }
             }
         }
         
         var responseData: Data
         do {
             let (data, res) = try await URLSession.shared.data(for: request)
+            if let res = res as? HTTPURLResponse, res.statusCode != 200, let urlString = res.url?.absoluteString, let response = String(data: data, encoding: .utf8) {
+                throw NSError(domain: "Expected HTTP Status: 200 but received \(res.statusCode): \(urlString) \(response)", code: 1)
+            }
             responseData = data
         } catch {
             throw error

@@ -260,4 +260,35 @@ class AMAPI {
         return SearchResults(data: data)
     }
     
+    @MainActor
+    func fetchRatings(item: MediaDynamic) async -> MediaRatings {
+        var responseJson: JSON
+        do {
+            responseJson = try await amNetworkingClient.requestJSON("/me/ratings/\(item.type)/\(item.id)")
+        } catch {
+//            self.logger.error("Failed to fetch ratings for \(item.id): \(error)")
+            // If the media isn't given a rating, it will return 404
+            return .Neutral
+        }
+        
+        return MediaRatings(rawValue: responseJson["data"].array?.first?["attributes"]["value"].int ?? 0)!
+    }
+    
+    @MainActor @discardableResult
+    func setRatings(item: MediaDynamic, ratings: MediaRatings) async -> MediaRatings {
+        var responseJson: JSON
+        do {
+            if ratings == .Neutral {
+                responseJson = try await amNetworkingClient.requestJSON("/me/ratings/\(item.type)/\(item.id)", method: .PUT)
+            } else {
+                responseJson = try await amNetworkingClient.requestJSON("/me/ratings/\(item.type)/\(item.id)", method: .PUT, body: ["type": "rating", "attributes": [ "value": ratings.rawValue ]], bodyContentType: "application/json")
+            }
+        } catch {
+            self.logger.error("Failed to set ratings for \(item.id): \(error)")
+            return .Disliked
+        }
+        
+        return MediaRatings(rawValue: responseJson["data"].array?.first?["attributes"]["value"].int ?? 0)!
+    }
+    
 }
