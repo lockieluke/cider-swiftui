@@ -191,7 +191,6 @@ class NetworkingProvider {
         if let body = body {
             if method != .GET {
                 request.addValue(bodyContentType, forHTTPHeaderField: "Content-Type")
-                request.addValue(<#T##value: String##String#>, forHTTPHeaderField: <#T##String#>)
                 
                 if bodyContentType == "application/x-www-form-urlencoded" {
                     var values: String = ""

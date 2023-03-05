@@ -246,7 +246,7 @@ struct SearchBar: View {
                                     if Task.isCancelled {
                                         return
                                     }
-                                    self.suggestions = await self.mkModal.AM_API.fetchSearchSuggestions(term: newCurrentSearchText)
+                                    self.suggestions = try? await self.mkModal.AM_API.fetchSearchSuggestions(term: newCurrentSearchText)
                                 }
                             }
                         }

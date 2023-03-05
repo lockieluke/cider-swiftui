@@ -596,6 +596,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - Alamofire (5.6.4)
   - ArgumentParserKit (1.0.0)
   - AttributedText (1.1.0)
   - BoringSSL-GRPC (0.0.24):
@@ -773,6 +774,7 @@ PODS:
   - Watchdog (5.2)
 
 DEPENDENCIES:
+  - Alamofire
   - ArgumentParserKit
   - AttributedText (from `.coke/pods/Iaenhaall/AttributedText`)
   - FirebaseAnalytics
@@ -786,7 +788,7 @@ DEPENDENCIES:
   - Starscream
   - Swifter
   - SwiftUISliders (from `.coke/pods/spacenation/swiftui-sliders`)
-  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `master`)
+  - SwiftyJSON
   - Throttler (from `.coke/pods/boraseoksoon/Throttler`)
   - UIImageColors
   - Watchdog
@@ -794,6 +796,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - abseil
+    - Alamofire
     - ArgumentParserKit
     - BoringSSL-GRPC
     - FirebaseAnalytics
@@ -818,6 +821,7 @@ SPEC REPOS:
     - SDWebImageSwiftUI
     - Starscream
     - Swifter
+    - SwiftyJSON
     - UIImageColors
     - Watchdog
 
@@ -828,19 +832,12 @@ EXTERNAL SOURCES:
     :path: ".coke/pods/sindresorhus/Preferences"
   SwiftUISliders:
     :path: ".coke/pods/spacenation/swiftui-sliders"
-  SwiftyJSON:
-    :branch: master
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
   Throttler:
     :path: ".coke/pods/boraseoksoon/Throttler"
 
-CHECKOUT OPTIONS:
-  SwiftyJSON:
-    :commit: af1f7a2007d607fbe735c445f19080df4260fe8e
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
-
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
   AttributedText: 54d4a8bb97ab36380fe115ec16230fe7396e192f
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
@@ -873,6 +870,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
 
-PODFILE CHECKSUM: c0a71626cf3fe9aba87946cd16be69e311c8682b
+PODFILE CHECKSUM: d878b1fc129ffdd4be21fc839f5a7cdaeee85eda
 
 COCOAPODS: 1.11.3

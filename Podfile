@@ -14,16 +14,17 @@ target 'Cider' do
   use_frameworks!
 
   # Pods for Cider
-  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'master'
+  pod 'SwiftyJSON'
   pod 'Introspect'
   pod 'Starscream'
   pod 'SDWebImageSwiftUI'
   pod 'InjectHotReload'
   pod 'RainbowSwift'
+  pod 'Watchdog'
+  pod 'Alamofire'
   pod 'UIImageColors', :modular_headers => true
   pod "Preferences", :path => '.coke/pods/sindresorhus/Preferences'
   pod "SwiftUISliders", :path => '.coke/pods/spacenation/swiftui-sliders'
-  pod 'Watchdog'
   pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
   pod "AttributedText", :path => '.coke/pods/Iaenhaall/AttributedText'
 
@@ -37,7 +38,7 @@ target 'CiderPlaybackAgent' do
   # own private fork of Swifter
   pod 'Swifter'
   pod 'ArgumentParserKit'
-  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'master'
+  pod 'SwiftyJSON'
 end
 
 post_install do |installer|

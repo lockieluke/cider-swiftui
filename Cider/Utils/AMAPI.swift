@@ -6,30 +6,22 @@ import Foundation
 import StoreKit
 import MusicKit
 import SwiftyJSON
+import Alamofire
+
+struct APIEndpoints {
+    static let AMAPI = "https://amp-api.music.apple.com/v1"
+    static let CIDER = "https://api.cider.sh/v1"
+}
 
 class AMAPI {
     
     var AM_TOKEN: String?
     var AM_USER_TOKEN: String?
     
-    private let amNetworkingClient: NetworkingProvider
-    private let ciderNetworkingClient: NetworkingProvider
-    private let logger: Logger
+    private static var amSession: Session!
+    private let logger = Logger(label: "Apple Music API")
     
     private var STOREFRONT_ID: String?
-    
-    init() {
-        self.logger = Logger(label: "Apple Music API")
-        self.amNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://amp-api.music.apple.com/v1")!, defaultHeaders: [
-            "User-Agent": "Music/1.3.3 (Macintosh; OS X 13.2) AppleWebKit/614.4.6.1.5 build/2 (dt:1)",
-            "Referer": "https://beta.music.apple.com",
-            "Origin": "https://beta.music.apple.com"
-        ])
-        self.ciderNetworkingClient = NetworkingProvider(baseURL: URL(string: "https://api.cider.sh/v1")!, defaultHeaders: [
-            "User-Agent": "Cider;?client=swiftui&env=dev&platform=darwin",
-            "Referer": "localhost"
-        ])
-    }
     
     func requestSKAuthorisation(completion: @escaping (_ status: SKCloudServiceAuthorizationStatus) -> Void) {
         SKCloudServiceController.requestAuthorization { status in
@@ -45,22 +37,21 @@ class AMAPI {
         }
     }
     
-    func fetchMKDeveloperToken() async -> String {
-        var amToken: String!
-        do {
-            let json = try await ciderNetworkingClient.requestJSON("/")
-            
-            if let token = json["token"].string {
-                amToken = token
-            } else {
-                self.logger.error("MusicKit Developer Token could not be fetched", displayCross: true)
-            }
-        } catch {
-            self.logger.error(error.localizedDescription)
+    func fetchMKDeveloperToken() async throws -> String {
+        let res = await AF.request(APIEndpoints.CIDER, headers: [
+            "User-Agent": "Cider;?client=swiftui&env=dev&platform=darwin",
+            "Referer": "localhost"
+        ]).serializingData().response
+        
+        if let error = res.error {
+            self.logger.error("MusicKit Developer Token could not be fetched: \(error)", displayCross: true)
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data), let token = json["token"].string {
+            self.AM_TOKEN = token
+            return token
         }
         
-        self.AM_TOKEN = amToken
-        return amToken
+        throw NSError(domain: "Failed to fetch MK Developer Account", code: 1)
     }
     
     func fetchMKUserToken(completion: @escaping (_ succeeded: Bool, _ userToken: String?, _ error: Error?) -> Void) {
@@ -89,12 +80,17 @@ class AMAPI {
         guard let AM_USER_TOKEN = self.AM_USER_TOKEN else { throw AMAuthError.invalidUserToken }
         guard let AM_TOKEN = self.AM_TOKEN else { throw AMAuthError.invalidDeveloperToken }
         
-        self.amNetworkingClient.setDefaultHTTPHeaders(headers: [
+        let configuration = URLSessionConfiguration.default
+        let headers = HTTPHeaders([
+            "User-Agent": "Music/1.3.3 (Macintosh; OS X 13.2) AppleWebKit/614.4.6.1.5 build/2 (dt:1)",
             "Authorization": "Bearer \(AM_TOKEN)",
             "Music-User-Token": AM_USER_TOKEN,
             "Origin": "https://beta.music.apple.com",
             "Referer": "https://beta.music.apple.com"
-        ])
+        ].merging(HTTPHeaders.default.dictionary, uniquingKeysWith: { (current, _) in current }))
+        configuration.headers = headers
+        
+        AMAPI.amSession = Session(configuration: configuration)
     }
     
     func unauthorise() {
@@ -102,50 +98,48 @@ class AMAPI {
     }
     
     func initStorefront() async {
-        guard let responseJson = try? await amNetworkingClient.requestJSON("/me/storefront") else { return }
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/storefront").serializingData().response
         
-        let data = responseJson["data"].array?[0]
-        let countryCode = data?["id"].stringValue
-        
-        self.STOREFRONT_ID = countryCode
+        if let error = res.error {
+            self.logger.error("Failed to fetch storefront: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            self.STOREFRONT_ID = json["data"].array?.first?["id"].stringValue
+        }
     }
     
     func fetchRecommendations() async throws -> MediaRecommendationSections {
-        var responseJson: JSON
-        do {
-            responseJson = try await amNetworkingClient.requestJSON("/me/recommendations")
-        } catch {
-            throw AMNetworkingError.unableToFetchRecommendations(error.localizedDescription)
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recommendations").serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch recommendations: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            return MediaRecommendationSections(datas: json)
         }
         
-        return MediaRecommendationSections(datas: responseJson)
+        return MediaRecommendationSections(datas: [])
     }
     
     func fetchTracks(id: String, type: MediaType) async throws -> [MediaTrack] {
-        var responseJson: JSON
-        do {
-            responseJson = try await amNetworkingClient.requestJSON("/catalog/\(STOREFRONT_ID!)/\(type.rawValue)/\(id)")
-        } catch {
-            self.logger.error("Unable failed to tracks: \(error)")
-            throw AMNetworkingError.unableToFetchTracks(error.localizedDescription)
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/\(type.rawValue)/\(id)").serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch tracks: \(error)")
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data), let tracks = json["data"].array?.first?["relationships"]["tracks"]["data"].arrayValue.map({ MediaTrack(data: $0) }) {
+            return tracks
         }
         
-        let data = responseJson["data"].array?[0]
-        let tracks = data?["relationships"]["tracks"]["data"].arrayValue.map{ MediaTrack(data: $0) }
-        
-        return tracks ?? []
+        return []
     }
     
     func fetchSong(id: String) async throws -> MediaTrack {
-        var responseJson: JSON
-        do {
-            responseJson = try await amNetworkingClient.requestJSON("/catalog/\(STOREFRONT_ID!)/songs/\(id)")
-        } catch {
-            self.logger.error("Unable failed to tracks: \(error)")
-            throw AMNetworkingError.unableToFetchTracks(error.localizedDescription)
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/songs/\(id)").serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch song: \(error)")
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data), let trackData = json["data"].array?.first {
+            return MediaTrack(data: trackData)
         }
         
-        return MediaTrack(data: responseJson["data"].array?.first ?? [])
+        return MediaTrack(data: [])
     }
     
     enum FetchArtistParams: String {
@@ -168,31 +162,18 @@ class AMAPI {
     }
     
     func fetchArtist(id: String, params: [FetchArtistParams] = [], extendParams: [FetchArtistExtendParams] = []) async throws -> MediaArtist {
-        var responseJson: JSON
-        do {
-            var urlComponents = URLComponents(string: "/")!
-            var urlQueryItems: [URLQueryItem] = []
-            urlComponents.path = "/catalog/\(STOREFRONT_ID!)/artists/\(id)"
-            
-            if !params.isEmpty {
-                urlQueryItems.append(URLQueryItem(name: "views", value: params.map { param in param.rawValue }.joined(separator: ",")))
-            }
-            if !extendParams.isEmpty {
-                urlQueryItems.append(URLQueryItem(name: "extend", value: extendParams.map { param in param.rawValue }.joined(separator: ",")))
-            }
-            urlComponents.queryItems = urlQueryItems
-            
-            guard let urlString = urlComponents.url?.absoluteString else {
-                throw AMNetworkingError.unableToFetchTracks("Unable to compose URL")
-            }
-            responseJson = try await amNetworkingClient.requestJSON(urlString)
-        } catch {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/artists/\(id)", parameters: [
+            "views": params.map { param in param.rawValue }.joined(separator: ","),
+            "extend": extendParams.map { param in param.rawValue }.joined(separator: ",")
+        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        if let error = res.error {
             self.logger.error("Failed to fetch artist: \(error)")
-            throw AMNetworkingError.unableToFetchTracks(error.localizedDescription)
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data), let artistData = json["data"].array?.first {
+            return MediaArtist(data: artistData)
         }
         
-        let data = responseJson["data"].array?.first ?? []
-        return MediaArtist(data: data)
+        return MediaArtist(data: [])
     }
     
     enum FetchSearchSuggestionsKinds: String {
@@ -204,91 +185,59 @@ class AMAPI {
     }
     
     @MainActor
-    func fetchSearchSuggestions(term: String, kinds: [FetchSearchSuggestionsKinds] = [.terms, .topResults], types: [FetchSearchTypes] = [.artists, .songs, .musicVideos]) async -> SearchSuggestions {
-        var responseJson: JSON
-        do {
-            var urlComponents = URLComponents(string: "/")!
-            var urlQueryItems: [URLQueryItem] = []
-            urlComponents.path = "/catalog/\(STOREFRONT_ID!)/search/suggestions"
-            
-            if !kinds.isEmpty {
-                urlQueryItems.append(URLQueryItem(name: "kinds", value: kinds.map { kind in kind.rawValue }.joined(separator: ",")))
-            }
-            if !types.isEmpty {
-                urlQueryItems.append(URLQueryItem(name: "types", value: types.map { type in type.rawValue }.joined(separator: ",")))
-            }
-            urlQueryItems.append(URLQueryItem(name: "term", value: term))
-            urlComponents.queryItems = urlQueryItems
-            
-            guard let urlString = urlComponents.url?.absoluteString else {
-                throw AMNetworkingError.unableToFetchTracks("Unable to compose URL")
-            }
-            responseJson = try await amNetworkingClient.requestJSON(urlString)
-        } catch {
+    func fetchSearchSuggestions(term: String, kinds: [FetchSearchSuggestionsKinds] = [.terms, .topResults], types: [FetchSearchTypes] = [.artists, .songs, .musicVideos]) async throws -> SearchSuggestions {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/search/suggestions", parameters: [
+            "kinds": kinds.map { kind in kind.rawValue }.joined(separator: ","),
+            "types": types.map { type in type.rawValue }.joined(separator: ","),
+            "term": term
+        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        if let error = res.error {
             self.logger.error("Failed to fetch search suggestions: \(error)")
-            return SearchSuggestions(data: [])
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            return SearchSuggestions(data: json["results"])
         }
         
-        let data = responseJson["results"]
-        return SearchSuggestions(data: data)
+        return SearchSuggestions(data: [])
     }
     
     @MainActor
     func fetchSearchResults(term: String, types: [FetchSearchTypes]) async -> SearchResults {
-        var responseJson: JSON
-        do {
-            var urlComponents = URLComponents(string: "/")!
-            var urlQueryItems: [URLQueryItem] = []
-            urlComponents.path = "/catalog/\(STOREFRONT_ID!)/search"
-            
-            if !types.isEmpty {
-                urlQueryItems.append(URLQueryItem(name: "types", value: types.map { type in type.rawValue }.joined(separator: ",")))
-            }
-            urlQueryItems.append(URLQueryItem(name: "term", value: term.replacingOccurrences(of: "", with: "+")))
-            urlComponents.queryItems = urlQueryItems
-            
-            guard let urlString = urlComponents.url?.absoluteString else {
-                throw AMNetworkingError.unableToFetchTracks("Unable to compose URL")
-            }
-            responseJson = try await amNetworkingClient.requestJSON(urlString)
-        } catch {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/search", parameters: [
+            "types": types.map { type in type.rawValue }.joined(separator: ","),
+            "term": term.replacingOccurrences(of: "", with: "+")
+        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        if let error = res.error {
             self.logger.error("Failed to fetch search results: \(error)")
-            return SearchResults(data: [])
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            return SearchResults(data: json["results"])
         }
         
-        let data = responseJson["results"]
-        return SearchResults(data: data)
+        return SearchResults(data: [])
     }
     
     @MainActor
     func fetchRatings(item: MediaDynamic) async -> MediaRatings {
-        var responseJson: JSON
-        do {
-            responseJson = try await amNetworkingClient.requestJSON("/me/ratings/\(item.type)/\(item.id)")
-        } catch {
-//            self.logger.error("Failed to fetch ratings for \(item.id): \(error)")
-            // If the media isn't given a rating, it will return 404
-            return .Neutral
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)").serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch ratings: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let rawRatings = json["data"].array?.first?["attributes"]["value"].int {
+            return MediaRatings(rawValue: rawRatings)!
         }
         
-        return MediaRatings(rawValue: responseJson["data"].array?.first?["attributes"]["value"].int ?? 0)!
+        return .Neutral
     }
     
     @MainActor @discardableResult
     func setRatings(item: MediaDynamic, ratings: MediaRatings) async -> MediaRatings {
-        var responseJson: JSON
-        do {
-            if ratings == .Neutral {
-                responseJson = try await amNetworkingClient.requestJSON("/me/ratings/\(item.type)/\(item.id)", method: .PUT)
-            } else {
-                responseJson = try await amNetworkingClient.requestJSON("/me/ratings/\(item.type)/\(item.id)", method: .PUT, body: ["type": "rating", "attributes": [ "value": ratings.rawValue ]], bodyContentType: "application/json")
-            }
-        } catch {
-            self.logger.error("Failed to set ratings for \(item.id): \(error)")
-            return .Disliked
+        let res = await (ratings == .Neutral ? AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .delete) : AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .put, parameters: ["type": "rating", "attributes": [ "value": ratings.rawValue ]], encoding: JSONEncoding.default)).serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch ratings: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let rawRatings = json["data"].array?.first?["attributes"]["value"].int {
+            return MediaRatings(rawValue: rawRatings)!
         }
         
-        return MediaRatings(rawValue: responseJson["data"].array?.first?["attributes"]["value"].int ?? 0)!
+        return .Neutral
     }
     
 }

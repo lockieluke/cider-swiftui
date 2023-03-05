@@ -29,7 +29,10 @@ class MKModal : ObservableObject {
                     self.resetAuthorisation()
                 }
                 Task {
-                    let developerToken = await self.AM_API.fetchMKDeveloperToken()
+                    guard let developerToken = try? await self.AM_API.fetchMKDeveloperToken() else {
+                        self.resetAuthorisation()
+                        return
+                    }
                     DispatchQueue.main.async {
                         self.hasDeveloperToken = true
                         self.ciderPlayback.setDeveloperToken(developerToken: developerToken, mkModal: self)
