@@ -760,9 +760,9 @@ PODS:
   - Preferences (2.6.0)
   - PromisesObjC (2.2.0)
   - RainbowSwift (4.0.1)
-  - SDWebImage (5.15.4):
-    - SDWebImage/Core (= 5.15.4)
-  - SDWebImage/Core (5.15.4)
+  - SDWebImage (5.15.5):
+    - SDWebImage/Core (= 5.15.5)
+  - SDWebImage/Core (5.15.5)
   - SDWebImageSwiftUI (2.2.2):
     - SDWebImage (~> 5.10)
   - Starscream (4.0.4)
@@ -860,7 +860,7 @@ SPEC CHECKSUMS:
   Preferences: 1160076196ad1473de509c68db1ad9b78677f5c2
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   RainbowSwift: f39edd7a46322888c94336448add80def6d1ed68
-  SDWebImage: 1c39de67663e5eebb2f41324d5d580eeea12dd4c
+  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SDWebImageSwiftUI: 54ded4115b4ac6cd60b78f61415f86d070892d98
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   Swifter: e71dd674404923d7f03ebb03f3f222d1c570bc8e
