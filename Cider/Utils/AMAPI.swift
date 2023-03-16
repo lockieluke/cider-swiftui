@@ -240,4 +240,35 @@ class AMAPI {
         return .Neutral
     }
     
+    func fetchLibraryCatalog(item: MediaDynamic) async -> (Bool, String)? {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/", parameters: [
+            "ids[\(item.type)]": (item.id as NSString).integerValue,
+            "relate": "library",
+            "fields": "inLibrary"
+        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to check if \(item.id) is in library: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let data = json["data"].array?.first, let inLibrary = data["attributes"]["inLibrary"].bool, let libraryId = data["relationships"]["library"]["data"].array?.first?["id"].string {
+            return (inLibrary, libraryId)
+        }
+        
+        return nil
+    }
+    
+    @MainActor
+    func isInLibrary(item: MediaDynamic) async -> Bool {
+        let libraryCatalog = await self.fetchLibraryCatalog(item: item)
+        return libraryCatalog?.0 ?? false
+    }
+    
+    @MainActor
+    func addToLibray(item: MediaDynamic, libraryId: String, _ add: Bool = true) async {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library\(add ? "" : "/\(item.type)/\(libraryId)")", method: add ? .post : .delete, parameters: add ? [
+            "ids[\(item.type)]": (item.id as NSString).integerValue
+        ] : [:], encoding: add ? URLEncoding(destination: .queryString) : .default).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to add \(item.id) to library: \(error)")
+        }
+    }
+    
 }

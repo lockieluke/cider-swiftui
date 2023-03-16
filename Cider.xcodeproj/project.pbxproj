@@ -385,7 +385,6 @@
 				B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */,
 				B797AFF5297F3AB900D77282 /* InteractiveText.swift */,
 				B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */,
-				B7B3D8BF29B005100014F63D /* ContextMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -437,6 +436,7 @@
 				B77AACF3293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift */,
 				B768871A2949225200C623C9 /* BasicHoverModifier.swift */,
 				B75C7C1229B12AE500F7693E /* CatalogActions.swift */,
+				B7B3D8BF29B005100014F63D /* ContextMenu.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
