@@ -10,17 +10,15 @@ import Throttler
 struct NowPlayingState {
     
     var item: MediaDynamic?
-    var name: String? = nil
-    var artistName: String? = nil
+    var name: String? = nil, artistName: String? = nil
     var artworkURL: URL?
-    var isPlaying = false
-    var isReady = true
-    var hasItemToPlay = false
+    var isPlaying = false, isReady = true, hasItemToPlay = false
     var currentTime: TimeInterval?
     var remainingTime: TimeInterval?
     var duration: TimeInterval?
     
     mutating func reset() {
+        self.item = nil
         self.name = nil
         self.artworkURL = nil
         self.artistName = nil
@@ -29,6 +27,7 @@ struct NowPlayingState {
         self.hasItemToPlay = false
         self.currentTime = nil
         self.remainingTime = nil
+        self.duration = nil
     }
     
 }
