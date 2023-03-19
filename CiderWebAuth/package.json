@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.15.7",
+    "esbuild": "^0.17.12",
     "musickit-typescript": "^1.2.4"
   },
   "dependencies": {
