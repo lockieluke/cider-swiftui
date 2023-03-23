@@ -98,7 +98,7 @@ struct WSDebuggerView: View {
             }
             
             if ciderPlayback.isReady {
-                Toggle("Hide requests that are frequently sent", isOn: $prefModal.prefs.hideFrequentWSRequests)
+                Toggle("Hide frequently sent requests", isOn: $prefModal.prefs.hideFrequentWSRequests)
                 HStack {
                     Circle()
                         .fill(.green)
