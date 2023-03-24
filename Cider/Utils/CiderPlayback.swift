@@ -38,8 +38,9 @@ enum RepeatMode: String, CaseIterable {
 
 struct PlaybackBehaviour {
     
-    var shuffle: Bool = false
+    var shuffle = false
     var repeatMode: RepeatMode = .None
+    var autoplayEnabled = false
     
 }
 
@@ -55,11 +56,14 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     private let logger: Logger
     private let appWindowModal: AppWindowModal
     private let discordRPCModal: DiscordRPCModal
-    private var mkModal: MKModal?
     private let proc: Process
     private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
+    
+    private var mkModal: MKModal?
     private var isRunning: Bool
+    
+    var queue: [MediaTrack] = []
     
     init(prefModal: PrefModal, appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModal) {
         let logger = Logger(label: "CiderPlayback")
@@ -137,6 +141,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
     func setQueue(item: MediaDynamic) async {
         let type, id: String
         switch item {
@@ -158,6 +163,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         await self.setQueue(requestBody: ["\(type)-id": id])
     }
     
+    @MainActor
     func setQueue(requestBody: [String : Any]? = nil) async {
         do {
             _ = try await self.wsCommClient.request("/set-queue", body: requestBody)
@@ -166,6 +172,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
     func setShuffleMode(_ shuffle: Bool) async {
         self.playbackBehaviour.shuffle = shuffle
         do {
@@ -177,7 +184,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
-    
+    @MainActor
     func setRepeatMode(_ repeatMode: RepeatMode) async {
         self.playbackBehaviour.repeatMode = repeatMode
         do {
@@ -189,12 +196,26 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
+    func setAutoPlay(_ autoPlay: Bool) async {
+        self.playbackBehaviour.autoplayEnabled = autoPlay
+        do {
+            _ = try await self.wsCommClient.request("/set-autoplay", body: [
+                "autoplay": autoPlay
+            ])
+        } catch {
+            self.logger.error("Set autoplay failed \(error)", displayCross: true)
+        }
+    }
+    
+    @MainActor
     func clearAndPlay(shuffle: Bool = false, item: MediaDynamic) async {
-        await self.updateNowPlayingStateBeforeReady(item: item)
+        self.updateNowPlayingStateBeforeReady(item: item)
         await self.stop()
         await self.play(shuffle: shuffle)
     }
     
+    @MainActor
     func play(shuffle: Bool = false) async {
         DispatchQueue.main.async {
             self.playbackBehaviour.shuffle = shuffle
@@ -208,6 +229,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
     func pause() async {
         do {
             _ = try await self.wsCommClient.request("/pause")
@@ -216,6 +238,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
     func stop() async {
         do {
             _ = try await self.wsCommClient.request("/stop")
@@ -224,6 +247,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
     func seekToTime(seconds: Int) async {
         do {
             _ = try await self.wsCommClient.request("/seek-to-time", body: [
@@ -237,6 +261,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     enum SkipType {
         case Previous, Next
     }
+    
+    @MainActor
     func skip(type: SkipType) async {
         do {
             _ = try await self.wsCommClient.request(type == .Previous ? "/previous" : "/next")
@@ -245,12 +271,14 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
     }
     
+    @MainActor
     func togglePlaybackSync() {
         Task {
             await (self.nowPlayingState.isPlaying ? self.pause() : self.play())
         }
     }
     
+    @MainActor
     func setAudioQuality(_ quality: AudioQuality) async {
         do {
             _ = try await self.wsCommClient.request("/set-audio-quality", body: [
@@ -432,6 +460,15 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 
             case "playbackDurationDidChange":
                 self.nowPlayingState.duration = TimeInterval(json["duration"].int ?? 0)
+                break
+                
+            case "queueItemsDidChange":
+                let newQueue = json["queue"]
+                self.queue = []
+                
+                for (_, subJson):(String, JSON) in newQueue {
+                    self.queue.append(MediaTrack(data: subJson))
+                }
                 break
                 
             default:

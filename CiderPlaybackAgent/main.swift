@@ -93,6 +93,12 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     }
                     break
                     
+                case "/set-autoplay":
+                    if let autoPlay = json?["autoplay"].bool {
+                        await self.musicKitWorker?.setAutoPlay(autoPlay)
+                    }
+                    break
+                    
                 case "/play":
                     if let shuffle = json?["shuffle"].bool {
                         await self.musicKitWorker?.setShuffleMode(shuffle)
@@ -161,6 +167,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     case "playbackTimeDidChange":
                         requestObj["currentTime"].int = dict["currentTime"] as? Int
                         requestObj["remainingTime"].int = dict["remainingTime"] as? Int
+                        break
+                        
+                    case "queueItemsDidChange":
+                        requestObj["queue"] = JSON(dict["items"] as Any)
                         break
                         
                     case "playbackDurationDidChange":

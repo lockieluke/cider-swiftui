@@ -4,19 +4,22 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.15.3",
+    "@types/lodash": "^4",
+    "@types/musickit-js": "^1.0.5",
+    "@types/node": "^18.15.6",
     "esbuild": "^0.17.12",
     "patch-package": "^6.5.1",
-    "postinstall-postinstall": "^2.1.0",
     "typescript": "^5.0.2"
   },
   "scripts": {
     "build": "esbuild src/index.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/index-cpa.js",
-    "clean": "rm -rf dist/",
-    "postinstall": "patch-package"
+    "clean": "rm -rf dist/"
   },
   "dependencies": {
-    "@types/musickit-js": "^1.0.5",
-    "await-to-js": "^3.0.0"
+    "await-to-js": "^3.0.0",
+    "lodash": "^4.17.21"
+  },
+  "resolutions": {
+    "@types/musickit-js@^1.0.5": "patch:@types/musickit-js@npm%3A1.0.5#./.yarn/patches/@types-musickit-js-npm-1.0.5-f6b6794a13.patch"
   }
 }

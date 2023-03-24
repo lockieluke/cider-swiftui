@@ -122,6 +122,10 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.repeatMode = MusicKit.PlayerRepeatMode[\"\(repeatMode)\"]", contentWorld: .page)
     }
     
+    func setAutoPlay(_ autoPlay: Bool) async {
+        await self.asyncRunJS("window.ciderInterop.mk.autoplayEnabled = \(autoPlay)")
+    }
+    
     func play() async {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.play()", arguments: [:], contentWorld: .page)
     }

@@ -75,6 +75,13 @@ struct NavigationContainer: View {
                             self.searchModal.searchResults = nil
                         }
                 }
+                
+                if navigationModal.showQueue {
+                    QueueView()
+                        .environmentObject(ciderPlayback)
+                        .transition(.move(edge: .trailing))
+                        .zIndex(1)
+                }
             }
         }
         .padding(.top, 40)

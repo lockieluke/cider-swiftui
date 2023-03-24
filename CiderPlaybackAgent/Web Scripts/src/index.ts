@@ -1,5 +1,6 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
+import * as _ from 'lodash';
 
 declare let AM_TOKEN: string;
 declare let AM_USER_TOKEN: string;
@@ -17,7 +18,8 @@ declare global {
         ciderInterop: {
             mk: CiderMusicKitInstance,
             play: () => void,
-            setQueue: (mediaItem: MusicKit.SetQueueOptions) => void
+            setQueue: (mediaItem: MusicKit.SetQueueOptions) => void,
+            getQueue: () => MusicKit.MediaItem[]
         }
     }
 }
@@ -33,11 +35,14 @@ type CiderMusicKitInstance = MusicKitInstance & {
             }
         }
     },
-    queue: [],
+    queue: {
+        items: MusicKit.MediaItem[]
+    },
     queueIsEmpty: boolean,
     nowPlayingItem: MusicKit.MediaItem,
     currentPlaybackTime: number,
-    currentPlaybackTimeRemaining: number
+    currentPlaybackTimeRemaining: number,
+    autoplayEnabled: boolean
 };
 
 const mkScript = document.createElement('script');
@@ -80,6 +85,20 @@ document.addEventListener('musickitloaded', async function () {
         });
     }
 
+    let lastSyncedQueue: MusicKit.MediaItem[] = [];
+    const syncQueue = () => {
+        const ids = _.map(mk.queue.items, 'id');
+        const lastSyncedIds = _.map(lastSyncedQueue, 'id');
+        if (_.isEqual(ids, lastSyncedIds))
+            return;
+
+        lastSyncedQueue = window.ciderInterop.getQueue();
+        window.webkit.messageHandlers.ciderkit.postMessage({
+            event: "queueItemsDidChange",
+            items: lastSyncedQueue
+        });
+    }
+
     mk.addEventListener('mediaItemDidChange', () => {
         updateNowPlayingInfo();
     })
@@ -115,6 +134,16 @@ document.addEventListener('musickitloaded', async function () {
         console.error(`Error playing media: ${event}`);
     })
 
+    mk.addEventListener('queueItemsDidChange', () => {
+        syncQueue();
+    })
+    mk.addEventListener('queuePositionDidChange', () => {
+        syncQueue();
+    })
+    mk.addEventListener('autoplayEnabledDidChange', () => {
+        syncQueue();
+    })
+
     window.ciderInterop = {
         mk,
         play: async () => {
@@ -130,6 +159,9 @@ document.addEventListener('musickitloaded', async function () {
                 console.error(`Failed to set queue ${err}`);
                 return;
             }
+        },
+        getQueue: () => {
+            return _.values(JSON.parse(JSON.stringify(mk.queue.items)));
         }
     };
 })

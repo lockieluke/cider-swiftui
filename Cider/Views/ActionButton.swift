@@ -20,16 +20,23 @@ struct ActionButton: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    var actionType: ButtonAction = .More
-    var onClick: (() -> Void)? = nil
+    private let actionType: ButtonAction
+    private let onClick: (() -> Void)?
     
     @State private var isHovered = false
     @State private var isClicked = false
+    @Binding private var enabled: Bool
+    
+    init(actionType: ButtonAction = .More, enabled: Binding<Bool> = .constant(false), _ onClick: (() -> Void)? = nil) {
+        self.actionType = actionType
+        self._enabled = enabled
+        self.onClick = onClick
+    }
     
     var body: some View {
         Rectangle()
             .fill(Color("PrimaryColour"))
-            .opacity(isClicked ? 1 : (isHovered ? 0.7 : 0))
+            .opacity(isClicked || enabled ? 1 : (isHovered ? 0.7 : 0))
             .cornerRadius(5)
             .tooltip("\(actionType)")
             .overlay {
