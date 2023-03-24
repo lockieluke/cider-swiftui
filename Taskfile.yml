@@ -37,6 +37,23 @@ tasks:
       - task: install-cpa-js-deps
       - task: install-cwa-js-deps
 
+  build-cwa-js:
+    dir: 'CiderWebAuth/'
+    desc: "Build CiderWebAuth"
+    cmds:
+      - yarn build
+
+  build-cpa-js:
+    dir: 'CiderPlaybackAgent/Web Scripts/'
+    desc: "Build CiderPlaybackAgent's Scripts"
+    cmds:
+      - yarn build
+
+  build-all-js:
+    cmds:
+      - task: build-cwa-js
+      - task: build-cpa-js
+
   install-pod-plugins:
     desc: "Install all CocoaPods plugin dependencies"
     preconditions:
