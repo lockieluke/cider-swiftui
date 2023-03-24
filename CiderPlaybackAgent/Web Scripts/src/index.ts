@@ -1,6 +1,6 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
-import * as _ from 'lodash';
+import {isEqual, map, values} from "lodash";
 
 declare let AM_TOKEN: string;
 declare let AM_USER_TOKEN: string;
@@ -87,9 +87,9 @@ document.addEventListener('musickitloaded', async function () {
 
     let lastSyncedQueue: MusicKit.MediaItem[] = [];
     const syncQueue = () => {
-        const ids = _.map(mk.queue.items, 'id');
-        const lastSyncedIds = _.map(lastSyncedQueue, 'id');
-        if (_.isEqual(ids, lastSyncedIds))
+        const ids = map(mk.queue.items, 'id');
+        const lastSyncedIds = map(lastSyncedQueue, 'id');
+        if (isEqual(ids, lastSyncedIds))
             return;
 
         lastSyncedQueue = window.ciderInterop.getQueue();
@@ -161,7 +161,7 @@ document.addEventListener('musickitloaded', async function () {
             }
         },
         getQueue: () => {
-            return _.values(JSON.parse(JSON.stringify(mk.queue.items)));
+            return values(JSON.parse(JSON.stringify(mk.queue.items)));
         }
     };
 })
