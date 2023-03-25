@@ -16,7 +16,6 @@ struct MediaTrackRepresentable: View {
     @State private var mediaTrack: MediaTrack
     @State private var isHovering = false
     @State private var isClicked = false
-    @State private var showArtistPicker = false
     
     init(mediaTrack: MediaTrack) {
         self.mediaTrack = mediaTrack
@@ -33,36 +32,7 @@ struct MediaTrackRepresentable: View {
                     VStack {
                         Group {
                             Text("\(mediaTrack.title)")
-                            InteractiveText("\(mediaTrack.artistName)")
-                                .font(.system(.caption))
-                                .opacity(0.8)
-                                .onTapGesture {
-                                    Task {
-                                        if let detailedMediaTrack = try? await self.mkModal.AM_API.fetchSong(id: self.mediaTrack.id) {
-                                            withAnimation(.interactiveSpring()) {
-                                                self.mediaTrack = detailedMediaTrack
-                                                if detailedMediaTrack.artistsData.count > 1 {
-                                                    self.showArtistPicker.toggle()
-                                                } else {
-                                                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(originMediaItem: .mediaTrack(detailedMediaTrack)))))
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                .popover(isPresented: $showArtistPicker, attachmentAnchor: .point(.center), arrowEdge: .bottom) {
-                                    VStack {
-                                        let artistNames = self.mediaTrack.artistName.components(separatedBy: " & ")
-                                        ForEach(0..<artistNames.count, id: \.self) { index in
-                                            InteractiveText(artistNames[index])
-                                                .onTapGesture {
-                                                    self.showArtistPicker = false
-                                                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(originMediaItem: .mediaTrack(self.mediaTrack), selectingArtistIndex: index))))
-                                                }
-                                        }
-                                    }
-                                    .padding()
-                                }
+                            ArtistNamesInteractiveText(item: .mediaTrack(mediaTrack))
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }

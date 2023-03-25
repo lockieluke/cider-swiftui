@@ -44,10 +44,11 @@ struct QueueView: View {
                                 .frame(height: scrollGeometry.size.height)
                         } else {
                             ForEach(ciderPlayback.queue, id: \.id) { queueTrack in
-                                Text(queueTrack.title)
+                                QueueTrackView(track: queueTrack)
                             }
                         }
                     }
+                    .transparentScrollbars()
                     .frame(width: scrollGeometry.size.width)
                 }
             }

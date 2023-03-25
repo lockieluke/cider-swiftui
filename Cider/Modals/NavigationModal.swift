@@ -40,7 +40,15 @@ enum NavigationDynamicParams: Equatable {
             return ""
             
         case .artistViewParams(let artistViewParams):
-            return artistViewParams.artist?.id ?? artistViewParams.originMediaItem.debugDescription
+            if let artist = artistViewParams.artist {
+                return artist.id
+            }
+            
+            if case let .mediaTrack(mediaTrack) = artistViewParams.originMediaItem {
+                return mediaTrack.artistsData[artistViewParams.selectingArtistIndex].id
+            }
+            
+            return artistViewParams.originMediaItem.debugDescription
         }
     }
     

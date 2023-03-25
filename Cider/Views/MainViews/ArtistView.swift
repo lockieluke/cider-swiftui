@@ -233,7 +233,9 @@ struct ArtistView: View {
             switch self.artistViewParams.originMediaItem {
                 
             case .mediaTrack(let mediaTrack):
-                await fetchById(mediaTrack.artistsData[selectingArtistIndex].id)
+                if let artistData = mediaTrack.artistsData[safe: selectingArtistIndex] {
+                    await fetchById(artistData.id)
+                }
                 break
                 
             default:

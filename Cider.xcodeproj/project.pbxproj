@@ -84,6 +84,9 @@
 		B7B02F57295629030065FCDD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02F56295629030065FCDD /* Double.swift */; };
 		B7B3D8C029B005100014F63D /* ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B3D8BF29B005100014F63D /* ContextMenu.swift */; };
 		B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C06F832932E1C5000C1192 /* NavigationContainer.swift */; };
+		B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5D929CE6F4C00EF4D11 /* QueueTrackView.swift */; };
+		B7C5C5DC29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */; };
+		B7C5C5DE29CF7C0000EF4D11 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5DD29CF7C0000EF4D11 /* Collection.swift */; };
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
 		B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorker.swift */; };
 		B7C9CD8A2908467A00A67CE4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD892908467A00A67CE4 /* main.swift */; };
@@ -221,6 +224,9 @@
 		B7B02F56295629030065FCDD /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		B7B3D8BF29B005100014F63D /* ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenu.swift; sourceTree = "<group>"; };
 		B7C06F832932E1C5000C1192 /* NavigationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationContainer.swift; sourceTree = "<group>"; };
+		B7C5C5D929CE6F4C00EF4D11 /* QueueTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTrackView.swift; sourceTree = "<group>"; };
+		B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistNamesInteractiveText.swift; sourceTree = "<group>"; };
+		B7C5C5DD29CF7C0000EF4D11 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		B7C651D328C415F000D32DDC /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
 		B7C651D528C4B8E200D32DDC /* AuthWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorker.swift; sourceTree = "<group>"; };
 		B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CiderPlaybackAgent; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -358,6 +364,7 @@
 				B7B02F56295629030065FCDD /* Double.swift */,
 				B76AE929299E993500A19558 /* Comparable.swift */,
 				B7EC2900299FC94300700C24 /* Optional.swift */,
+				B7C5C5DD29CF7C0000EF4D11 /* Collection.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -386,6 +393,8 @@
 				B797AFF5297F3AB900D77282 /* InteractiveText.swift */,
 				B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */,
 				B7A6EB6729C539800041FDD7 /* QueueView.swift */,
+				B7C5C5D929CE6F4C00EF4D11 /* QueueTrackView.swift */,
+				B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -790,7 +799,9 @@
 				B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */,
 				B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */,
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
+				B7C5C5DE29CF7C0000EF4D11 /* Collection.swift in Sources */,
 				B7688725294A076300C623C9 /* Process.swift in Sources */,
+				B7C5C5DC29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift in Sources */,
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
 				B7AAB70528BAE3DC009AABEA /* PlaybackCardView.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
@@ -863,6 +874,7 @@
 				B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */,
 				B725013A28C2624300992F57 /* NSColor.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
+				B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */,
 				B768872C294A359400C623C9 /* WSModal.swift in Sources */,
 				B7A53EA529A0F41E005E90F2 /* discord-rpc-agent.swift in Sources */,
 			);
