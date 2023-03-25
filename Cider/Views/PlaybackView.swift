@@ -92,7 +92,7 @@ struct PlaybackView: View {
             HStack {
                 ActionButton(actionType: .AirPlay)
                 ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
-                    withAnimation(.spring()) {
+                    withAnimation(.interactiveSpring()) {
                         self.navigationModal.showQueue.toggle()
                     }
                 }
