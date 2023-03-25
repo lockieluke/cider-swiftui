@@ -48,6 +48,6 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
             .environmentObject(AppWindowModal())
-            .environmentObject(MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal(), appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())))
+            .environmentObject(MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())))
     }
 }

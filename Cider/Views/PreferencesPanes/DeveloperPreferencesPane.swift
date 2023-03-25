@@ -5,14 +5,16 @@
 import SwiftUI
 import Preferences
 import InjectHotReload
+import Defaults
 
 struct DeveloperPreferencesPane: View {
     
     @ObservedObject private var iO = Inject.observer
     
     @EnvironmentObject private var mkModal: MKModal
-    @EnvironmentObject private var prefModal: PrefModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    
+    @Default(.debugOpenWebInspectorAutomatically) var openWebInspectorAutomatically
     
     var body: some View {
         Preferences.Container(contentWidth: 450.0) {
@@ -37,7 +39,7 @@ struct DeveloperPreferencesPane: View {
                         Group {
                             PrefSectionText("Debugging Settings - CiderPlaybackAgent")
                             
-                            Toggle("When CiderPlaybackAgent is launched, open Web Inspector automatically", isOn: $prefModal.prefs.openWebInspectorAutomatically)
+                            Toggle("When CiderPlaybackAgent is launched, open Web Inspector automatically", isOn: $openWebInspectorAutomatically)
                                 .toggleStyle(.checkbox)
                             Text("This setting will apply next time \(Bundle.main.displayName) is launched")
                                 .preferenceDescription()

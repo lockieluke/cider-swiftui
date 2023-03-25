@@ -4,6 +4,7 @@
 
 import SwiftUI
 import InjectHotReload
+import Defaults
 
 struct WSTrafficView: View {
     
@@ -62,8 +63,9 @@ struct WSDebuggerView: View {
     @ObservedObject private var iO = Inject.observer
     @EnvironmentObject private var wsModal: WSModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
-    @EnvironmentObject private var prefModal: PrefModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
+    
+    @Default(.debugHideFrequentWSRequests) var hideFrequentWSRequests
     
     @State private var selectedWSTarget: WSTarget = .CiderPlaybackAgent
     
@@ -85,7 +87,7 @@ struct WSDebuggerView: View {
                                 let eventName = traffic.json["eventName"].stringValue
                                 let wsTrafficView = WSTrafficView(wsTraffic: traffic)
                                 if PERFORMANCE_DEMANDING_EVENT_NAMES.contains(eventName) {
-                                    if !self.prefModal.prefs.hideFrequentWSRequests {
+                                    if !self.hideFrequentWSRequests {
                                         wsTrafficView
                                     }
                                 } else {
@@ -98,7 +100,7 @@ struct WSDebuggerView: View {
             }
             
             if ciderPlayback.isReady {
-                Toggle("Hide frequently sent requests", isOn: $prefModal.prefs.hideFrequentWSRequests)
+                Toggle("Hide frequently sent requests", isOn: $hideFrequentWSRequests)
                 HStack {
                     Circle()
                         .fill(.green)

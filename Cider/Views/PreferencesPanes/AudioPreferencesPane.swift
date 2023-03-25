@@ -6,17 +6,19 @@ import SwiftUI
 import Preferences
 import InjectHotReload
 import Throttler
+import Defaults
 
 struct AudioPreferencesPane: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    @EnvironmentObject private var prefModal: PrefModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    
+    @State private var audioQuality: AudioQuality = .High
     
     var audioQualityDescription: String {
         get {
-            switch self.prefModal.prefs.audioQuality {
+            switch self.audioQuality {
                 
             case .Standard:
                 return "Standard Quality contains less detail of the audio but can help save network bandwidth"
@@ -36,13 +38,14 @@ struct AudioPreferencesPane: View {
                     PrefSectionText("Playback Settings")
                     
                     VStack(alignment: .leading) {
-                        Picker("Audio Quality", selection: $prefModal.prefs.audioQuality) {
+                        Picker("Audio Quality", selection: $audioQuality) {
                             Text("High 256kbps").tag(AudioQuality.High)
                             Text("Standard 64kbps").tag(AudioQuality.Standard)
                         }
-                        .onChange(of: prefModal.prefs.audioQuality) { audioQuality in
+                        .onChange(of: audioQuality) { audioQuality in
                             Debouncer.debounce {
                                 Task {
+                                    Defaults[.audioQuality] = audioQuality.rawValue
                                     await self.ciderPlayback.setAudioQuality(audioQuality)
                                 }
                             }

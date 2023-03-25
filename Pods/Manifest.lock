@@ -605,6 +605,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
+  - Defaults (7.1.0)
   - FirebaseAnalytics (10.6.0):
     - FirebaseAnalytics/AdIdSupport (= 10.6.0)
     - FirebaseCore (~> 10.0)
@@ -777,6 +778,7 @@ DEPENDENCIES:
   - Alamofire
   - ArgumentParserKit
   - AttributedText (from `.coke/pods/Iaenhaall/AttributedText`)
+  - Defaults (from `.coke/pods/sindresorhus/Defaults`)
   - FirebaseAnalytics
   - FirebaseAuth
   - FirebaseFirestore
@@ -828,6 +830,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   AttributedText:
     :path: ".coke/pods/Iaenhaall/AttributedText"
+  Defaults:
+    :path: ".coke/pods/sindresorhus/Defaults"
   Preferences:
     :path: ".coke/pods/sindresorhus/Preferences"
   SwiftUISliders:
@@ -841,6 +845,7 @@ SPEC CHECKSUMS:
   ArgumentParserKit: 99ceb746098d9f478a6cb9b01b38ce9ecab3122d
   AttributedText: 54d4a8bb97ab36380fe115ec16230fe7396e192f
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
+  Defaults: 10410082ac27223b7588b6663da55c59067d1596
   FirebaseAnalytics: 9f382605c5ee412b039212f054bf7a403d9850c1
   FirebaseAuth: 743e5cd568af59d6d99a91ea9300843672515cf7
   FirebaseCore: fa80ad16a62d52f67274b5b88304c3a318bbf9a4
@@ -870,6 +875,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
 
-PODFILE CHECKSUM: d878b1fc129ffdd4be21fc839f5a7cdaeee85eda
+PODFILE CHECKSUM: 5e494df3c68cc04b0262aa92350c3acb341160b8
 
 COCOAPODS: 1.11.3

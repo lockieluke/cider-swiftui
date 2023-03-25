@@ -13,12 +13,11 @@ class AppMenu {
     private let window: NSWindow
     private let mkModal: MKModal
     private let authWorker: AuthWorker
-    private let prefModal: PrefModal
     private let wsModal: WSModal
     private let ciderPlayback: CiderPlayback
     private let appWindowModal: AppWindowModal
     
-    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, prefModal: PrefModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal) {
+    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal) {
         let menu = NSMenu()
         
         self.window = window
@@ -26,7 +25,6 @@ class AppMenu {
         self.menu = menu
         self.mkModal = mkModal
         self.authWorker = authWorker
-        self.prefModal = prefModal
         self.wsModal = wsModal
         self.ciderPlayback = ciderPlayback
         self.appWindowModal = appWindowModal
@@ -148,12 +146,10 @@ class AppMenu {
             preferencePanes: [
                 PreferencesPanes.GeneralPreferenceViewController(),
                 PreferencesPanes.AudioPreferencesViewController(
-                    self.ciderPlayback,
-                    self.prefModal
+                    self.ciderPlayback
                 ),
                 PreferencesPanes.DeveloperPreferencesViewController(
                     self.mkModal,
-                    self.prefModal,
                     self.ciderPlayback
                 )
             ],
@@ -175,7 +171,6 @@ class AppMenu {
         let wsDebugger = WSDebugger(
             wsModal: self.wsModal,
             ciderPlayback: self.ciderPlayback,
-            prefModal: self.prefModal,
             appWindowModal: self.appWindowModal
         )
         wsDebugger.open()

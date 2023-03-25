@@ -73,7 +73,7 @@ struct PreferencesPanes {
     }
     
     
-    static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ prefModal: PrefModal, _ ciderPlayback: CiderPlayback) -> PreferencePane = { mkModal, prefModal, ciderPlayback in
+    static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ ciderPlayback: CiderPlayback) -> PreferencePane = { mkModal, ciderPlayback in
         let paneView = Preferences.Pane(
             identifier: .developer,
             title: "Developer",
@@ -81,14 +81,13 @@ struct PreferencesPanes {
         ) {
             DeveloperPreferencesPane()
                 .environmentObject(mkModal)
-                .environmentObject(prefModal)
                 .environmentObject(ciderPlayback)
         }
         
         return Preferences.PaneHostingController(pane: paneView)
     }
     
-    static let AudioPreferencesViewController: (_ ciderPlayback: CiderPlayback, _ prefModal: PrefModal) -> PreferencePane = { ciderPlayback, prefModal in
+    static let AudioPreferencesViewController: (_ ciderPlayback: CiderPlayback) -> PreferencePane = { ciderPlayback in
         let paneView = Preferences.Pane(
             identifier: .audio,
             title: "Audio",
@@ -96,7 +95,6 @@ struct PreferencesPanes {
         ) {
             AudioPreferencesPane()
                 .environmentObject(ciderPlayback)
-                .environmentObject(prefModal)
         }
         
         return Preferences.PaneHostingController(pane: paneView)

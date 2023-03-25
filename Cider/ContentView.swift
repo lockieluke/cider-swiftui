@@ -14,7 +14,6 @@ struct ContentView: View {
     @EnvironmentObject private var appWindowModal: AppWindowModal
     var authWorker: AuthWorker
     @EnvironmentObject private var ciderPlayback: CiderPlayback
-    @EnvironmentObject private var prefModal: PrefModal
     @EnvironmentObject private var discordRPCModal: DiscordRPCModal
     
     @StateObject private var searchModal = SearchModal()
@@ -76,6 +75,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(prefModal: PrefModal(), appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())), appWindowModal: AppWindowModal()))
+        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())), appWindowModal: AppWindowModal()))
     }
 }

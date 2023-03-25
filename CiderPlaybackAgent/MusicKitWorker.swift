@@ -203,7 +203,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     
     func openInspectorInNewWindow() {
 #if DEBUG
-        if self.config["debug"]["openWebInspectorAutomatically"].boolValue {
+        if self.config["openWebInspectorAutomatically"].boolValue {
             if let inspector = self.wkWebView.value(forKey: "_inspector") as? AnyObject {
                 _ = inspector.perform(Selector(("showConsole")))
             }

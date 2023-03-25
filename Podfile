@@ -27,6 +27,7 @@ target 'Cider' do
   pod "SwiftUISliders", :path => '.coke/pods/spacenation/swiftui-sliders'
   pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
   pod "AttributedText", :path => '.coke/pods/Iaenhaall/AttributedText'
+  pod "Defaults", :path => '.coke/pods/sindresorhus/Defaults'
 
   # Firebase
   pod 'FirebaseAuth'

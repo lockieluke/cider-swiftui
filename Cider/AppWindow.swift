@@ -12,7 +12,6 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let appWindowModal = AppWindowModal()
     private let mkModal: MKModal
     private let discordRPCModal: DiscordRPCModal
-    private let prefModal = PrefModal()
     private let wsModal = WSModal.shared
     private let authWorker: AuthWorker
     private let appMenu: AppMenu
@@ -24,7 +23,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
         let discordRPCModal = DiscordRPCModal()
-        let ciderPlayback = CiderPlayback(prefModal: self.prefModal, appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
+        let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback)
         let authWorker = AuthWorker(mkModal: mkModal, appWindowModal: self.appWindowModal)
         
@@ -32,7 +31,6 @@ class AppWindow: NSObject, NSWindowDelegate {
             .environmentObject(self.appWindowModal)
             .environmentObject(mkModal)
             .environmentObject(ciderPlayback)
-            .environmentObject(self.prefModal)
             .environmentObject(discordRPCModal)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         window.contentViewController = NSHostingController(rootView: contentView)
@@ -61,7 +59,6 @@ class AppWindow: NSObject, NSWindowDelegate {
         let appMenu = AppMenu(window,
                               mkModal: mkModal,
                               authWorker: authWorker,
-                              prefModal: self.prefModal,
                               wsModal: self.wsModal,
                               ciderPlayback: ciderPlayback,
                               appWindowModal: self.appWindowModal

@@ -6,6 +6,7 @@ import Foundation
 import Starscream
 import SwiftyJSON
 import Throttler
+import Defaults
 
 struct NowPlayingState {
     
@@ -65,7 +66,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     var queue: [MediaTrack] = []
     
-    init(prefModal: PrefModal, appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModal) {
+    init(appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModal) {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = NetworkingProvider.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
@@ -109,10 +110,13 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
         
         guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
+        guard let configStr = JSON([
+            "openWebInspectorAutomatically": Defaults[.debugOpenWebInspectorAutomatically]
+        ]).rawString(.utf8) else { fatalError("Failed to stringify config") }
         proc.arguments = [
             "--agent-port", String(agentPort),
             "--agent-session-id", "\"\(agentSessionId)\"",
-            "--config", "\(prefModal.prefs.rawJSONString)"
+            "--config", configStr
         ]
         proc.executableURL = execUrl
         proc.standardOutput = pipe
