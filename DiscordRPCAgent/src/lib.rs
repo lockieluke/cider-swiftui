@@ -1,7 +1,5 @@
 #![feature(extern_types)]
 
-use std::sync::{mpsc, Mutex};
-use std::thread;
 use discord_rpc_client::{Client, models::Activity, models::ActivityAssets, models::ActivityTimestamps};
 
 pub struct DiscordRPCAgent {
