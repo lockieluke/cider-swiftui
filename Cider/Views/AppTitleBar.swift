@@ -49,10 +49,14 @@ struct AppTitleBar: View {
             
             HStack(spacing: 0) {
                 Spacer()
-                    .frame(width: 85)
+                    .frame(width: appWindowModal.isFullscreen ? 2 : 85)
+                    .animation(.linear, value: appWindowModal.isFullscreen)
+                
                 Divider()
                     .frame(height: 25)
                     .padding(.trailing, 10)
+                    .isHidden(appWindowModal.isFullscreen)
+                    .animation(.linear, value: appWindowModal.isFullscreen)
                 
                 if navigationModal.navigationActions.enableBack && !searchModal.shouldDisplaySearchPage {
                     ActionButton(actionType: .Back) {

@@ -20,6 +20,7 @@ class AppWindow: NSObject, NSWindowDelegate {
     
     init(discordRPCModal: DiscordRPCModal) {
         let activeScreen = NSScreen.activeScreen
+        
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
         
         let discordRPCModal = DiscordRPCModal()
@@ -109,6 +110,14 @@ class AppWindow: NSObject, NSWindowDelegate {
     
     func windowDidChangeOcclusionState(_ notification: Notification) {
         self.appWindowModal.isVisibleInViewport = self.mainWindow.isVisible && self.mainWindow.occlusionState.contains(.visible) && self.mainWindow.isOnActiveSpace
+    }
+    
+    func windowDidEnterFullScreen(_ notification: Notification) {
+        self.appWindowModal.isFullscreen = true
+    }
+    
+    func windowDidExitFullScreen(_ notification: Notification) {
+        self.appWindowModal.isFullscreen = false
     }
     
     func windowShouldClose(_ sender: NSWindow) -> Bool {

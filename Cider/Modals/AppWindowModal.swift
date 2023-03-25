@@ -9,6 +9,7 @@ class AppWindowModal : ObservableObject {
 
     @Published var nsWindow: NSWindow?
     @Published var isFocused: Bool = false
+    @Published var isFullscreen: Bool = false
     @Published var isVisibleInViewport: Bool = false
     
     init () {
