@@ -54,7 +54,7 @@ struct QueueView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
-            .frame(height: geometry.size.height * 0.95)
+            .frame(maxHeight: geometry.size.height * 0.95)
             .frame(width: (geometry.maxRelative * 0.2).clamped(to: 275...320))
             .background(.ultraThinMaterial)
             .shadow(radius: 7)
