@@ -6,7 +6,6 @@ declare let AM_TOKEN: string;
 declare let AM_USER_TOKEN: string;
 
 declare global {
-
     interface Window {
         webkit: {
             messageHandlers: {

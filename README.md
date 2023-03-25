@@ -24,7 +24,7 @@ cd Cider-macOS
 
 ### Install JS Dependencies and compile TypeScript files
 
-Cider for macOS uses some TypeScript for handling Authorisation and Playback, ~~they are automatically compiled to JavaScript when Xcode builds the project~~(nuked this funtionality because everyone has `yarn` installed differently and Xcode creates a sanitised shell environment for all its build scripts, it would not be able to find your `yarn` installation).  However, before compiling anything, JS Dependencies would have to be installed
+Cider for macOS uses some TypeScript for handling Authorisation and Playback.  However, before compiling anything, JS Dependencies would have to be installed
 
 ```shell
 task install-js-deps
@@ -36,6 +36,12 @@ Make sure you compile the JavaScript code before proceeding(and every time you m
 
 ```shell
 task build-all-js
+```
+
+If you are a forgetful person and often run into a situation where you forget to compile the JavaScript code after making changes thinking there's something wrong in the Cider build toolchain, please for the love of god use the dev server
+
+```shell
+task start-dev-server
 ```
 
 ### Install CocoaPods plugins and dependencies

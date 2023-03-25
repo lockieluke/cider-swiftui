@@ -585,6 +585,7 @@
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
+				B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */,
 				B7C9CDA129088F4F00A67CE4 /* Copy JS Scripts */,
 				B755C73028C7F0CA00A46FB9 /* Finalise JS Scripts */,
 				B56BB5D8B225CB49360A5C46 /* [CP] Embed Pods Frameworks */,
@@ -770,6 +771,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
 			shellScript = "(cd $SRCROOT/DiscordRPCAgent; $SRCROOT/DiscordRPCAgent/build.sh)\n";
+		};
+		B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build JS Scripts";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "curl \"localhost:2345/perform-task?task=build-all-js\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
