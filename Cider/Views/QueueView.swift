@@ -8,6 +8,7 @@
 
 import SwiftUI
 import InjectHotReload
+import Inspect
 
 struct QueueView: View {
     
@@ -38,17 +39,24 @@ struct QueueView: View {
                 }
                 
                 GeometryReader { scrollGeometry in
-                    ScrollView(.vertical) {
+                    VStack {
                         if ciderPlayback.queue.isEmpty {
                             Text("Add media to queue")
                                 .frame(height: scrollGeometry.size.height)
                         } else {
-                            ForEach(ciderPlayback.queue, id: \.id) { queueTrack in
-                                QueueTrackView(track: queueTrack)
+                            List {
+                                ForEach(ciderPlayback.queue, id: \.id) { queueTrack in
+                                    QueueTrackView(track: queueTrack)
+                                        .listRowInsets(EdgeInsets())
+                                }
                             }
+                            .inspect { list in
+                                list.backgroundColor = .clear
+                                list.enclosingScrollView?.drawsBackground = false
+                            }
+                            .listStyle(.plain)
                         }
                     }
-                    .transparentScrollbars()
                     .frame(width: scrollGeometry.size.width)
                 }
             }

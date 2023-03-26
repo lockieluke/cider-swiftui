@@ -1,0 +1,6 @@
+framework module Inspect {
+  umbrella header "Inspect-umbrella.h"
+
+  export *
+  module * { export * }
+}

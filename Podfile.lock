@@ -745,6 +745,7 @@ PODS:
   - gRPC-Core/Interface (1.44.0)
   - GTMSessionFetcher/Core (3.1.0)
   - InjectHotReload (1.2.2)
+  - Inspect (0.1.0)
   - Introspect (0.2.3)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
@@ -783,6 +784,7 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseFirestore
   - InjectHotReload
+  - Inspect (from `.coke/pods/Quintschaf/SwiftUI-Inspect`)
   - Introspect
   - Preferences (from `.coke/pods/sindresorhus/Preferences`)
   - RainbowSwift
@@ -832,6 +834,8 @@ EXTERNAL SOURCES:
     :path: ".coke/pods/Iaenhaall/AttributedText"
   Defaults:
     :path: ".coke/pods/sindresorhus/Defaults"
+  Inspect:
+    :path: ".coke/pods/Quintschaf/SwiftUI-Inspect"
   Preferences:
     :path: ".coke/pods/sindresorhus/Preferences"
   SwiftUISliders:
@@ -858,6 +862,7 @@ SPEC CHECKSUMS:
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   InjectHotReload: e524b7c46ec063d84e407e65df5fe251cde19b32
+  Inspect: ea5df0960f1531e912827ab9b4079fd5117e108f
   Introspect: 6917895ed34004271bc8d75a75db6c07839fa971
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
@@ -875,6 +880,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
 
-PODFILE CHECKSUM: 5e494df3c68cc04b0262aa92350c3acb341160b8
+PODFILE CHECKSUM: f70e67c9ee198735c922659d474761fdd1f2828c
 
 COCOAPODS: 1.11.3

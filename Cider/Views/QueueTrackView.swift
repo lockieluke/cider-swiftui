@@ -40,7 +40,8 @@ struct QueueTrackView: View {
             
             Spacer()
         }
-        .background(.thickMaterial.opacity(isHovering ? (isClicking ? 0.7 : 1) : 0))
+        .background(.thinMaterial.opacity(isHovering ? (isClicking ? 0.7 : 1) : 0))
+        .cornerRadius(5)
         .onHover { isHovering in
             self.isHovering = isHovering
         }
