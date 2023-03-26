@@ -47,12 +47,20 @@ tasks:
   build-cwa-js:
     dir: 'CiderWebAuth/'
     desc: "Build CiderWebAuth"
+    sources:
+      - src/**/*.ts
+    generates:
+      - dist/index.js
     cmds:
       - yarn build
 
   build-cpa-js:
     dir: 'CiderPlaybackAgent/Web Scripts/'
     desc: "Build CiderPlaybackAgent's Scripts"
+    sources:
+      - src/**/*.ts
+    generates:
+      - dist/index-cpa.js
     cmds:
       - yarn build
 
