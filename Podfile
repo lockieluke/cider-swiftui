@@ -23,6 +23,7 @@ target 'Cider' do
   pod 'Watchdog'
   pod 'Alamofire'
   pod 'UIImageColors', :modular_headers => true
+  # Pods installed with coke, run `coke install` first
   pod "Preferences", :path => '.coke/pods/sindresorhus/Preferences'
   pod "SwiftUISliders", :path => '.coke/pods/spacenation/swiftui-sliders'
   pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
