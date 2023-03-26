@@ -11,7 +11,7 @@ import Defaults
 
 enum AudioQuality: Int {
     case Standard = 65, High = 256
-} 
+}
 
 extension Defaults.Keys {
     
