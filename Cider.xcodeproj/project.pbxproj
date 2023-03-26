@@ -68,6 +68,7 @@
 		B798562929285218003CA787 /* WKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562829285218003CA787 /* WKWebView.swift */; };
 		B798562B292ADE13003CA787 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562A292ADE13003CA787 /* String.swift */; };
 		B798983429D0B6DB00A734DC /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983329D0B6DB00A734DC /* List.swift */; };
+		B798983829D0E96900A734DC /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983729D0E96900A734DC /* DraggableView.swift */; };
 		B7A53E9829A0EE6A005E90F2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */; };
 		B7A53E9F29A0F23D005E90F2 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A53E9D29A0F23D005E90F2 /* SwiftBridgeCore.swift */; };
 		B7A53EA529A0F41E005E90F2 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A53EA429A0F41E005E90F2 /* discord-rpc-agent.swift */; };
@@ -204,6 +205,7 @@
 		B798562829285218003CA787 /* WKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebView.swift; sourceTree = "<group>"; };
 		B798562A292ADE13003CA787 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B798983329D0B6DB00A734DC /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		B798983729D0E96900A734DC /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		B7A53E8929A0EBBD005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B7A53E9729A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				B768871A2949225200C623C9 /* BasicHoverModifier.swift */,
 				B75C7C1229B12AE500F7693E /* CatalogActions.swift */,
 				B7B3D8BF29B005100014F63D /* ContextMenu.swift */,
+				B798983729D0E96900A734DC /* DraggableView.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -879,6 +882,7 @@
 				B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */,
 				B7EA101A299FFA6A000998A5 /* DiscordRPCModal.swift in Sources */,
 				B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */,
+				B798983829D0E96900A734DC /* DraggableView.swift in Sources */,
 				B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */,
 				B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,

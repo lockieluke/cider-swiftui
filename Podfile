@@ -29,7 +29,6 @@ target 'Cider' do
   pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
   pod "AttributedText", :path => '.coke/pods/Iaenhaall/AttributedText'
   pod "Defaults", :path => '.coke/pods/sindresorhus/Defaults'
-  pod "Inspect", :path => '.coke/pods/Quintschaf/SwiftUI-Inspect'
 
   # Firebase
   pod 'FirebaseAuth'

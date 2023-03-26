@@ -40,13 +40,17 @@ struct QueueTrackView: View {
             
             Spacer()
         }
-        .background(.thinMaterial.opacity(isHovering ? (isClicking ? 0.7 : 1) : 0))
+        .shadow(radius: isHovering ? 7 :.zero)
+        .background(.thickMaterial.opacity(isClicking ? 1 : 0))
         .cornerRadius(5)
         .onHover { isHovering in
             self.isHovering = isHovering
         }
+        .draggable()
         .modifier(PressActions(onEvent: { isClicking in
-            self.isClicking = isClicking
+            withAnimation(.interactiveSpring()) {
+                self.isClicking = isClicking
+            }
         }))
         .padding(.vertical, 2)
         .enableInjection()

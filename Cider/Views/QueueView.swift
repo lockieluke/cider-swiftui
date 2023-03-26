@@ -37,31 +37,26 @@ struct QueueView: View {
                     }
                     .buttonStyle(.plain)
                 }
+                .padding()
                 
                 GeometryReader { scrollGeometry in
-                    VStack {
-                        if ciderPlayback.queue.isEmpty {
-                            Text("Add media to queue")
-                                .frame(height: scrollGeometry.size.height)
-                        } else {
-                            List {
+                    ScrollView(.vertical) {
+                        VStack {
+                            if ciderPlayback.queue.isEmpty {
+                                Text("Add media to queue")
+                                    .frame(height: scrollGeometry.size.height)
+                            } else {
                                 ForEach(ciderPlayback.queue, id: \.id) { queueTrack in
                                     QueueTrackView(track: queueTrack)
-                                        .listRowInsets(EdgeInsets())
+                                        .frame(maxWidth: scrollGeometry.size.width * 0.9)
                                 }
                             }
-                            .inspect { list in
-                                list.backgroundColor = .clear
-                                list.enclosingScrollView?.drawsBackground = false
-                            }
-                            .listStyle(.plain)
                         }
+                        .frame(width: scrollGeometry.size.width)
                     }
-                    .frame(width: scrollGeometry.size.width)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
             .frame(maxHeight: geometry.size.height * 0.95)
             .frame(width: (geometry.maxRelative * 0.2).clamped(to: 275...320))
             .background(.ultraThinMaterial)

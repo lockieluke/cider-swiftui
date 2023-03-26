@@ -244,6 +244,10 @@ extension View {
         return modifier(AnimationCompletionObserverModifier(observedValue: value, completion: completion))
     }
     
+    func draggable() -> some View {
+        return modifier(DraggableView())
+    }
+    
 }
 
 struct PressActions: ViewModifier {
