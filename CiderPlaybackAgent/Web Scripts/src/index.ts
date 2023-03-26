@@ -2,8 +2,7 @@ import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
 import {isEqual, map, values} from "lodash";
 
-declare let AM_TOKEN: string;
-declare let AM_USER_TOKEN: string;
+declare let AM_TOKEN: string, AM_USER_TOKEN: string;
 
 declare global {
     interface Window {

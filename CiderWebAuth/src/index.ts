@@ -1,7 +1,6 @@
 import to from "await-to-js";
 
-declare const amToken: string;
-declare const initialURL: string;
+declare const amToken: string, initialURL: string;
 
 declare global {
     interface Window {
@@ -37,7 +36,7 @@ function waitForDom(selector: string): Promise<Element> {
     })
 }
 
-window.sendNativeMessage = (message) => {
+window.sendNativeMessage = message => {
     alert(JSON.stringify(message));
 }
 
