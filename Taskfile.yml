@@ -10,8 +10,12 @@ tasks:
   build-discord-rpc-lib:
     desc: "Build DiscordRPCAgent"
     dir: DiscordRPCAgent/
+    sources:
+      - src/**/*.rs
+    generates:
+      - target/universal/libdiscord_rpc_agent.a
     cmds:
-      - chmod +x ./build.sh && ./build.sh
+      - sh build.sh
 
   clean-discord-rpc-lib:
     desc: "Clean DiscordRPCAgent's target folder"

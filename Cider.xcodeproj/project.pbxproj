@@ -770,7 +770,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "(cd $SRCROOT/DiscordRPCAgent; $SRCROOT/DiscordRPCAgent/build.sh)\n";
+			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile DiscordRPCAgent\"\n    curl \"localhost:2345/perform-task?task=build-discord-rpc-lib\"\nfi\n";
 		};
 		B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */ = {
 			isa = PBXShellScriptBuildPhase;
