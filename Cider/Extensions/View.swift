@@ -244,8 +244,8 @@ extension View {
         return modifier(AnimationCompletionObserverModifier(observedValue: value, completion: completion))
     }
     
-    func draggable() -> some View {
-        return modifier(DraggableView())
+    func draggable(onDrag: ((_ offset: CGPoint) -> Void)? = nil) -> some View {
+        return modifier(DraggableView(onDrag: onDrag))
     }
     
 }

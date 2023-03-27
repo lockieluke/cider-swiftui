@@ -18,41 +18,55 @@ struct QueueTrackView: View {
     @State private var isClicking = false
     
     private let mediaTrack: MediaTrack
+    private let onReordering: ((_ reorderingIndex: Int?) -> Void)?
     
-    init(track: MediaTrack) {
+    init(track: MediaTrack, onReordering: ((_ reorderingIndex: Int?) -> Void)? = nil) {
         self.mediaTrack = track
+        self.onReordering = onReordering
     }
     
     var body: some View {
-        HStack {
-            WebImage(url: mediaTrack.artwork.getUrl(width: 50, height: 50))
-                .resizable()
-                .scaledToFit()
-                .frame(width: 30, height: 30)
-                .cornerRadius(5)
-                .padding(.leading, 2)
-                .padding(.vertical, 2)
-            
-            VStack(alignment: .leading) {
-                Text(mediaTrack.title)
-                ArtistNamesInteractiveText(item: .mediaTrack(mediaTrack))
+        PatchedGeometryReader { geometry in
+            HStack {
+                WebImage(url: mediaTrack.artwork.getUrl(width: 50, height: 50))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .cornerRadius(5)
+                    .padding(.leading, 2)
+                    .padding(.vertical, 2)
+                
+                VStack(alignment: .leading) {
+                    Text(mediaTrack.title)
+                    ArtistNamesInteractiveText(item: .mediaTrack(mediaTrack))
+                }
+                
+                Spacer()
             }
-            
-            Spacer()
-        }
-        .shadow(radius: isHovering ? 7 :.zero)
-        .background(.thickMaterial.opacity(isClicking ? 1 : 0))
-        .cornerRadius(5)
-        .onHover { isHovering in
-            self.isHovering = isHovering
-        }
-        .draggable()
-        .modifier(PressActions(onEvent: { isClicking in
-            withAnimation(.interactiveSpring()) {
-                self.isClicking = isClicking
+            .shadow(radius: isHovering ? 7 :.zero)
+            .background(.thickMaterial.opacity(isClicking ? 1 : 0))
+            .cornerRadius(5)
+            .onHover { isHovering in
+                self.isHovering = isHovering
             }
-        }))
-        .padding(.vertical, 2)
+            .draggable(onDrag: { offset in
+                // Determine draggable's current location on the list, adding 2 to make up for the additional padding, idek why this works i figured this out at midnight dont blame me
+                let moveIndex = Int(round((offset.y / (geometry.size.height + 2)) / 4))
+                self.onReordering?(moveIndex)
+            })
+            .modifier(PressActions(onEvent: { isClicking in
+                if !isClicking {
+                    self.onReordering?(nil)
+                }
+                
+                withAnimation(.interactiveSpring()) {
+                    self.isClicking = isClicking
+                }
+            }))
+            .frame(height: geometry.size.height)
+            .padding(.vertical, 2)
+            .zIndex(isClicking ? 1 : 0)
+        }
         .enableInjection()
     }
 }

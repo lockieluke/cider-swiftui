@@ -14,12 +14,20 @@ struct DraggableView: ViewModifier {
     
     @State private var offset = CGPoint(x: 0, y: 0)
     
+    private let onDrag: ((_ offset: CGPoint) -> Void)?
+    
+    init(onDrag: ((_ offset: CGPoint) -> Void)? = nil) {
+        self.onDrag = onDrag
+    }
+    
     func body(content: Content) -> some View {
         content
             .gesture(DragGesture(coordinateSpace: .global)
                 .onChanged { value in
                     self.offset.x = value.location.x - value.startLocation.x
                     self.offset.y = value.location.y - value.startLocation.y
+                    
+                    self.onDrag?(self.offset)
                 }
                 .onEnded { value in
                     withAnimation(.interactiveSpring()) {

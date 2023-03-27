@@ -8,13 +8,14 @@
 
 import SwiftUI
 import InjectHotReload
-import Inspect
 
 struct QueueView: View {
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     @ObservedObject private var iO = Inject.observer
+    
+    @State private var reorderingIndex: Int?
     
     var body: some View {
         PatchedGeometryReader { geometry in
@@ -37,7 +38,7 @@ struct QueueView: View {
                     }
                     .buttonStyle(.plain)
                 }
-                .padding()
+                .padding(.horizontal)
                 
                 GeometryReader { scrollGeometry in
                     ScrollView(.vertical) {
@@ -46,13 +47,24 @@ struct QueueView: View {
                                 Text("Add media to queue")
                                     .frame(height: scrollGeometry.size.height)
                             } else {
-                                ForEach(ciderPlayback.queue, id: \.id) { queueTrack in
-                                    QueueTrackView(track: queueTrack)
-                                        .frame(maxWidth: scrollGeometry.size.width * 0.9)
+                                ForEach(Array(ciderPlayback.queue.enumerated()), id: \.offset) { index, queueTrack in
+                                    QueueTrackView(track: queueTrack, onReordering: { reorderingIndex in
+                                        withAnimation(.interactiveSpring()) {
+                                            self.reorderingIndex = reorderingIndex != nil && reorderingIndex != 0 ? index + reorderingIndex! : nil
+                                        }
+                                    })
+                                    .frame(maxWidth: scrollGeometry.size.width * 0.9)
+                                    
+                                    if index == reorderingIndex {
+                                        Divider()
+                                    }
                                 }
                             }
                         }
                         .frame(width: scrollGeometry.size.width)
+                        
+                        Spacer()
+                            .frame(height: 50)
                     }
                 }
             }
