@@ -128,6 +128,12 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     await self.musicKitWorker?.next()
                     break
                     
+                case "/reorder-queued-item":
+                    if let from = json?["from"].int, let to = json?["to"].int {
+                        await self.musicKitWorker?.reorderQueuedItem(from: from, to: to)
+                    }
+                    break
+                    
                 default:
                     break
                 }

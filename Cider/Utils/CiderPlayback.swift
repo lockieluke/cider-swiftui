@@ -276,6 +276,19 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     @MainActor
+    func reorderQueuedItem(from: Int, to: Int) async {
+        self.queue.move(from: from, to: to)
+        do {
+            _ = try await self.wsCommClient.request("/reorder-queued-item", body: [
+                "from": from,
+                "to": to
+            ])
+        } catch {
+            self.logger.error("Failed to reorder queued item from \(from) to \(to)", displayCross: true)
+        }
+    }
+    
+    @MainActor
     func togglePlaybackSync() {
         Task {
             await (self.nowPlayingState.isPlaying ? self.pause() : self.play())

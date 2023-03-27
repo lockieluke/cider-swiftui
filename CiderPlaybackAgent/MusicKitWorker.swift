@@ -160,6 +160,10 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.bitrate = \(audioQuality)", contentWorld: .page)
     }
     
+    func reorderQueuedItem(from: Int, to: Int) async {
+        _ = await self.asyncRunJS("window.ciderInterop.reorderQueue(\(from), \(to))")
+    }
+    
     private func asyncRunMKJS(_ script: String) async {
         do {
             _ = try await self.wkWebView.callAsyncJavaScript("return await window.ciderInterop.mk.\(script)", contentWorld: .page)

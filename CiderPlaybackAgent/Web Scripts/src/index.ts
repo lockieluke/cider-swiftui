@@ -1,6 +1,6 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
-import {isEqual, map, values} from "lodash";
+import {isEqual, map, values, filter} from "lodash";
 
 declare let AM_TOKEN: string, AM_USER_TOKEN: string;
 
@@ -17,7 +17,8 @@ declare global {
             mk: CiderMusicKitInstance,
             play: () => void,
             setQueue: (mediaItem: MusicKit.SetQueueOptions) => void,
-            getQueue: () => MusicKit.MediaItem[]
+            getQueue: () => MusicKit.MediaItem[],
+            reorderQueue: (from: number, to: number) => void
         }
     }
 }
@@ -34,7 +35,9 @@ type CiderMusicKitInstance = MusicKitInstance & {
         }
     },
     queue: {
-        items: MusicKit.MediaItem[]
+        items: MusicKit.MediaItem[],
+        _queueItems: [],
+        _reindex: () => void
     },
     queueIsEmpty: boolean,
     nowPlayingItem: MusicKit.MediaItem,
@@ -160,6 +163,15 @@ document.addEventListener('musickitloaded', async function () {
         },
         getQueue: () => {
             return values(JSON.parse(JSON.stringify(mk.queue.items)));
+        },
+        reorderQueue: (from: number, to: number) => {
+            const items = mk.queue._queueItems;
+            const item = items[from];
+            const newItems = filter(items, (_, index) => index !== from) as [];
+            newItems.splice(to, 0, item);
+
+            mk.queue._queueItems = newItems;
+            mk.queue._reindex();
         }
     };
 })

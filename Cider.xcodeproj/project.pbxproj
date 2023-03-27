@@ -69,6 +69,7 @@
 		B798562B292ADE13003CA787 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798562A292ADE13003CA787 /* String.swift */; };
 		B798983429D0B6DB00A734DC /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983329D0B6DB00A734DC /* List.swift */; };
 		B798983829D0E96900A734DC /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983729D0E96900A734DC /* DraggableView.swift */; };
+		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
 		B7A53E9829A0EE6A005E90F2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */; };
 		B7A53E9F29A0F23D005E90F2 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A53E9D29A0F23D005E90F2 /* SwiftBridgeCore.swift */; };
 		B7A53EA529A0F41E005E90F2 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A53EA429A0F41E005E90F2 /* discord-rpc-agent.swift */; };
@@ -206,6 +207,7 @@
 		B798562A292ADE13003CA787 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B798983329D0B6DB00A734DC /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		B798983729D0E96900A734DC /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
+		B798983929D22A9400A734DC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		B7A53E8929A0EBBD005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B7A53E9729A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				B7C5C5DD29CF7C0000EF4D11 /* Collection.swift */,
 				B7C5C5DF29CF827F00EF4D11 /* Defaults.swift */,
 				B798983329D0B6DB00A734DC /* List.swift */,
+				B798983929D22A9400A734DC /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -828,6 +831,7 @@
 				B797AFF6297F3AB900D77282 /* InteractiveText.swift in Sources */,
 				B75219C0291F0742005CF8F0 /* PersonalisedData.swift in Sources */,
 				B7ECB7C328FDFA6700B5DF11 /* Dictionary.swift in Sources */,
+				B798983A29D22A9400A734DC /* Array.swift in Sources */,
 				B76887122948F9C600C623C9 /* Support.swift in Sources */,
 				B76AE92A299E993500A19558 /* Comparable.swift in Sources */,
 				B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */,

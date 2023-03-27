@@ -16,6 +16,7 @@ struct QueueView: View {
     @ObservedObject private var iO = Inject.observer
     
     @State private var reorderingIndex: Int?
+    @State private var isMovingDown: Bool?
     
     var body: some View {
         PatchedGeometryReader { geometry in
@@ -48,15 +49,28 @@ struct QueueView: View {
                                     .frame(height: scrollGeometry.size.height)
                             } else {
                                 ForEach(Array(ciderPlayback.queue.enumerated()), id: \.offset) { index, queueTrack in
+                                    if index == reorderingIndex && isMovingDown == false {
+                                        Spacer()
+                                            .frame(height: 20)
+                                    }
+                                    
                                     QueueTrackView(track: queueTrack, onReordering: { reorderingIndex in
+                                        if reorderingIndex == nil, let lastReorderingIndex = self.reorderingIndex {
+                                            Task {
+                                                await self.ciderPlayback.reorderQueuedItem(from: index, to: lastReorderingIndex)
+                                            }
+                                        }
+                                        
+                                        self.isMovingDown = reorderingIndex != nil ? reorderingIndex! > 0 : nil
                                         withAnimation(.interactiveSpring()) {
                                             self.reorderingIndex = reorderingIndex != nil && reorderingIndex != 0 ? index + reorderingIndex! : nil
                                         }
                                     })
                                     .frame(maxWidth: scrollGeometry.size.width * 0.9)
                                     
-                                    if index == reorderingIndex {
-                                        Divider()
+                                    if index == reorderingIndex && isMovingDown == true {
+                                        Spacer()
+                                            .frame(height: 20)
                                     }
                                 }
                             }
