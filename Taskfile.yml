@@ -100,3 +100,9 @@ tasks:
     desc: "Start Dev Server for compiling JS in Xcode build scripts"
     cmds:
       - yarn start
+
+  kill-cider-playback-agent:
+    aliases: [kill-cpa]
+    desc: "Kill a hanging CiderPlaybackAgent process"
+    cmds:
+      - killall "CiderPlaybackAgent"
