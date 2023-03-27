@@ -13,16 +13,18 @@ import Throttler
 struct DraggableView: ViewModifier {
     
     @State private var offset = CGPoint(x: 0, y: 0)
+    @Binding private var allowDragging: Bool
     
     private let onDrag: ((_ offset: CGPoint) -> Void)?
     
-    init(onDrag: ((_ offset: CGPoint) -> Void)? = nil) {
+    init(onDrag: ((_ offset: CGPoint) -> Void)? = nil, allowDragging: Binding<Bool> = .constant(true)) {
         self.onDrag = onDrag
+        self._allowDragging = allowDragging
     }
     
     func body(content: Content) -> some View {
-        content
-            .gesture(DragGesture(coordinateSpace: .global)
+        if allowDragging {
+            content.gesture(DragGesture(coordinateSpace: .global)
                 .onChanged { value in
                     self.offset.x = value.location.x - value.startLocation.x
                     self.offset.y = value.location.y - value.startLocation.y
@@ -36,6 +38,9 @@ struct DraggableView: ViewModifier {
                 }
             )
             .offset(x: offset.x, y: offset.y)
+        } else {
+            content
+        }
     }
     
 }

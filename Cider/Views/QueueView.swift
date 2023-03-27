@@ -49,13 +49,14 @@ struct QueueView: View {
                                     .frame(height: scrollGeometry.size.height)
                             } else {
                                 ForEach(Array(ciderPlayback.queue.enumerated()), id: \.offset) { index, queueTrack in
+                                    let allowReordering = Binding<Bool>(get: { index != 0 }, set: { _ in })
                                     if index == reorderingIndex && isMovingDown == false {
                                         Spacer()
                                             .frame(height: 20)
                                     }
                                     
-                                    QueueTrackView(track: queueTrack, onReordering: { reorderingIndex in
-                                        if reorderingIndex == nil, let lastReorderingIndex = self.reorderingIndex {
+                                    QueueTrackView(track: queueTrack, allowReordering: allowReordering, onReordering: { reorderingIndex in
+                                        if reorderingIndex == nil, let lastReorderingIndex = self.reorderingIndex, lastReorderingIndex != 0 {
                                             Task {
                                                 await self.ciderPlayback.reorderQueuedItem(from: index, to: lastReorderingIndex)
                                             }

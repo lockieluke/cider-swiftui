@@ -17,11 +17,14 @@ struct QueueTrackView: View {
     @State private var isHovering = false
     @State private var isClicking = false
     
+    @Binding private var allowReordering: Bool
+    
     private let mediaTrack: MediaTrack
     private let onReordering: ((_ reorderingIndex: Int?) -> Void)?
     
-    init(track: MediaTrack, onReordering: ((_ reorderingIndex: Int?) -> Void)? = nil) {
+    init(track: MediaTrack, allowReordering: Binding<Bool> = .constant(true), onReordering: ((_ reorderingIndex: Int?) -> Void)? = nil) {
         self.mediaTrack = track
+        self._allowReordering = allowReordering
         self.onReordering = onReordering
     }
     
@@ -53,7 +56,7 @@ struct QueueTrackView: View {
                 // Determine draggable's current location on the list, adding 2 to make up for the additional padding, idek why this works i figured this out at midnight dont blame me
                 let moveIndex = Int(round((offset.y / (geometry.size.height + 2)) / 4))
                 self.onReordering?(moveIndex)
-            })
+            }, allowDragging: $allowReordering)
             .modifier(PressActions(onEvent: { isClicking in
                 if !isClicking {
                     self.onReordering?(nil)
