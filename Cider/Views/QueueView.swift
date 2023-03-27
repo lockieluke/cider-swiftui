@@ -40,6 +40,7 @@ struct QueueView: View {
                     .buttonStyle(.plain)
                 }
                 .padding(.horizontal)
+                .padding(.top)
                 
                 GeometryReader { scrollGeometry in
                     ScrollView(.vertical) {
