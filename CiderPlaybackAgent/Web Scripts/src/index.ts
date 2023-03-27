@@ -102,6 +102,7 @@ document.addEventListener('musickitloaded', async function () {
 
     mk.addEventListener('mediaItemDidChange', () => {
         updateNowPlayingInfo();
+        syncQueue();
     })
 
     mk.addEventListener('metadataDidChange', () => {
