@@ -8,6 +8,7 @@
 
 import SwiftUI
 import InjectHotReload
+import Defaults
 
 struct QueueView: View {
     
@@ -28,6 +29,7 @@ struct QueueView: View {
                     Button {
                         Task {
                             await self.ciderPlayback.setAutoPlay(!self.ciderPlayback.playbackBehaviour.autoplayEnabled)
+                            Defaults[.playbackAutoplay] = self.ciderPlayback.playbackBehaviour.autoplayEnabled
                         }
                     } label: {
                         Image(systemName: "infinity")

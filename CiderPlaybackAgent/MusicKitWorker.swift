@@ -219,9 +219,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         // hack to show WKInspector of the headless WKWebView without Safari
         self.openInspectorInNewWindow()
         
-        if let audioQuality = self.config["audio"]["quality"].int {
-            self.syncRunMKJS("bitrate = \(audioQuality)")
-        }
+        self.callCallbacks("ciderPlaybackAgentReady", [:])
     }
     
 }

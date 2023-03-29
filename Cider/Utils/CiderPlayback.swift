@@ -41,7 +41,11 @@ struct PlaybackBehaviour {
     
     var shuffle = false
     var repeatMode: RepeatMode = .None
-    var autoplayEnabled = false
+    var autoplayEnabled: Bool
+    
+    init() {
+        self.autoplayEnabled = Defaults[.playbackAutoplay]
+    }
     
 }
 
@@ -402,6 +406,13 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             
             switch eventName {
                 
+            case "ciderPlaybackAgentReady":
+                Task {
+                    await self.setAutoPlay(self.playbackBehaviour.autoplayEnabled)
+                    await self.setAudioQuality(AudioQuality(rawValue: Defaults[.audioQuality])!)
+                }
+                break
+                
             case "mediaItemDidChange":
                 let mediaParams = json["mediaParams"]
                 
@@ -415,7 +426,6 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     DispatchQueue.main.async {
                         if let name = mediaParams["name"].string,
                            let artistName = mediaParams["artistName"].string {
-                            print(name)
                             self.nowPlayingState.item = .mediaTrack(mediaTrack)
                             self.nowPlayingState.name = name
                             self.nowPlayingState.artistName = artistName
@@ -484,7 +494,6 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 let newQueue = json["queue"]
                 self.queue = []
                 
-                print("changed")
                 for (_, subJson):(String, JSON) in newQueue {
                     self.queue.append(MediaTrack(data: subJson))
                 }
