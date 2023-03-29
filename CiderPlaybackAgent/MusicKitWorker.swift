@@ -149,11 +149,11 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     }
     
     func previous() async {
-        await self.asyncRunMKJS("skipToPreviousItem()")
+        _ = await self.asyncRunJS("window.ciderInterop.previous()")
     }
     
     func next() async {
-        await self.asyncRunMKJS("skipToNextItem()")
+        _ = await self.asyncRunJS("window.ciderInterop.next()")
     }
     
     func setAudioQuality(audioQuality: Int) async {

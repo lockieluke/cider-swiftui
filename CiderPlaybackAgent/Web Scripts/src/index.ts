@@ -1,6 +1,6 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
-import {isEqual, map, values, filter} from "lodash";
+import {isEqual, map, values, filter, isNull, slice} from "lodash";
 
 declare let AM_TOKEN: string, AM_USER_TOKEN: string;
 
@@ -18,7 +18,9 @@ declare global {
             play: () => void,
             setQueue: (mediaItem: MusicKit.SetQueueOptions) => void,
             getQueue: () => MusicKit.MediaItem[],
-            reorderQueue: (from: number, to: number) => void
+            reorderQueue: (from: number, to: number) => void,
+            previous: () => void,
+            next: () => void
         }
     }
 }
@@ -37,7 +39,10 @@ type CiderMusicKitInstance = MusicKitInstance & {
     queue: {
         items: MusicKit.MediaItem[],
         _queueItems: [],
-        _reindex: () => void
+        _reindex: () => void,
+        nextPlayableItemIndex: number,
+        previousPlayableItemIndex: number,
+        position: number
     },
     queueIsEmpty: boolean,
     nowPlayingItem: MusicKit.MediaItem,
@@ -87,22 +92,23 @@ document.addEventListener('musickitloaded', async function () {
     }
 
     let lastSyncedQueue: MusicKit.MediaItem[] = [];
-    const syncQueue = () => {
+    const syncQueue = (force: boolean = false) => {
         const ids = map(mk.queue.items, 'id');
         const lastSyncedIds = map(lastSyncedQueue, 'id');
-        if (isEqual(ids, lastSyncedIds))
+        if (isEqual(ids, lastSyncedIds) && !force)
             return;
 
         lastSyncedQueue = window.ciderInterop.getQueue();
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "queueItemsDidChange",
-            items: lastSyncedQueue
+            items: slice(lastSyncedQueue, mk.queue.position)
         });
     }
 
-    mk.addEventListener('mediaItemDidChange', () => {
+    // @ts-ignore
+    mk.addEventListener('nowPlayingItemDidChange', () => {
         updateNowPlayingInfo();
-        syncQueue();
+        syncQueue(true);
     })
 
     mk.addEventListener('metadataDidChange', () => {
@@ -115,6 +121,7 @@ document.addEventListener('musickitloaded', async function () {
             event: "playbackStateDidChange",
             playbackState: state
         });
+        syncQueue();
     })
 
     mk.addEventListener('playbackDurationDidChange', (event: { duration: number }) => {
@@ -137,11 +144,12 @@ document.addEventListener('musickitloaded', async function () {
     })
 
     mk.addEventListener('queueItemsDidChange', () => {
-        syncQueue();
+        syncQueue(true);
     })
     mk.addEventListener('queuePositionDidChange', () => {
         syncQueue();
     })
+    // @ts-ignore
     mk.addEventListener('autoplayEnabledDidChange', () => {
         syncQueue();
     })
@@ -173,6 +181,14 @@ document.addEventListener('musickitloaded', async function () {
 
             mk.queue._queueItems = newItems;
             mk.queue._reindex();
+        },
+        previous: () => {
+            if (!isEqual(mk.queue.previousPlayableItemIndex, -1) && !isNull(mk.queue.previousPlayableItemIndex))
+                mk.skipToPreviousItem();
+        },
+        next: () => {
+            if (!isEqual(mk.queue.nextPlayableItemIndex, -1) && !isNull(mk.queue.nextPlayableItemIndex))
+                mk.skipToNextItem();
         }
     };
 })

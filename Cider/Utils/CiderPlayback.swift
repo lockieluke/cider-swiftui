@@ -415,6 +415,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     DispatchQueue.main.async {
                         if let name = mediaParams["name"].string,
                            let artistName = mediaParams["artistName"].string {
+                            print(name)
                             self.nowPlayingState.item = .mediaTrack(mediaTrack)
                             self.nowPlayingState.name = name
                             self.nowPlayingState.artistName = artistName
@@ -483,6 +484,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 let newQueue = json["queue"]
                 self.queue = []
                 
+                print("changed")
                 for (_, subJson):(String, JSON) in newQueue {
                     self.queue.append(MediaTrack(data: subJson))
                 }
