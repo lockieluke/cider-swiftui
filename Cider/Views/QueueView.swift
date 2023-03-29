@@ -69,6 +69,10 @@ struct QueueView: View {
                                         withAnimation(.interactiveSpring()) {
                                             self.reorderingIndex = reorderingIndex != nil && reorderingIndex != 0 ? index + reorderingIndex! : nil
                                         }
+                                    }, onPlay: {
+                                        Task {
+                                            await self.ciderPlayback.skipToQueueIndex(index)
+                                        }
                                     })
                                     .frame(maxWidth: scrollGeometry.size.width * 0.9)
                                     

@@ -114,6 +114,10 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         _ = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.setQueue({song: songId})", arguments: ["songId": songID], contentWorld: .page)
     }
     
+    func skipToQueueIndex(_ index: Int) async {
+        await self.asyncRunJS("window.ciderInterop.skipToQueueIndex(\(index))")
+    }
+    
     func setShuffleMode(_ shuffle: Bool) async {
         _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.shuffleMode = MusicKit.PlayerShuffleMode[\"\(shuffle ? "songs" : "off")\"]", contentWorld: .page)
     }

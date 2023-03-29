@@ -172,6 +172,17 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     @MainActor
+    func skipToQueueIndex(_ index: Int) async {
+        do {
+            _ = try await self.wsCommClient.request("/skip-to-queue-index", body: [
+                "index": index
+            ])
+        } catch {
+            self.logger.error("Skip to queue index \(index) failed \(error)", displayCross: true)
+        }
+    }
+    
+    @MainActor
     func setQueue(requestBody: [String : Any]? = nil) async {
         do {
             _ = try await self.wsCommClient.request("/set-queue", body: requestBody)

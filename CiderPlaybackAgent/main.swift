@@ -81,6 +81,12 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     }
                     break
                     
+                case "/skip-to-queue-index":
+                    if let index = json?["index"].int {
+                        await self.musicKitWorker?.skipToQueueIndex(index)
+                    }
+                    break
+                    
                 case "/set-shuffle-mode":
                     if let shuffleMode = json?["shuffle"].bool {
                         await self.musicKitWorker?.setShuffleMode(shuffleMode)

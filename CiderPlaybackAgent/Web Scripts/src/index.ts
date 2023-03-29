@@ -20,7 +20,8 @@ declare global {
             getQueue: () => MusicKit.MediaItem[],
             reorderQueue: (from: number, to: number) => void,
             previous: () => void,
-            next: () => void
+            next: () => void,
+            skipToQueueIndex: (index: number) => void,
         }
     }
 }
@@ -189,6 +190,10 @@ document.addEventListener('musickitloaded', async function () {
         next: () => {
             if (!isEqual(mk.queue.nextPlayableItemIndex, -1) && !isNull(mk.queue.nextPlayableItemIndex))
                 mk.skipToNextItem();
+        },
+        skipToQueueIndex: (index: number) => {
+            // TODO: this doesn't work yet, need to figure out how to skip to a specific index in the queue
+            mk.changeToMediaAtIndex(mk.queue.position + index);
         }
     };
 })

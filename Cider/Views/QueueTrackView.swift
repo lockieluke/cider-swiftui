@@ -21,11 +21,13 @@ struct QueueTrackView: View {
     
     private let mediaTrack: MediaTrack
     private let onReordering: ((_ reorderingIndex: Int?) -> Void)?
+    private let onPlay: (() -> Void)?
     
-    init(track: MediaTrack, allowReordering: Binding<Bool> = .constant(true), onReordering: ((_ reorderingIndex: Int?) -> Void)? = nil) {
+    init(track: MediaTrack, allowReordering: Binding<Bool> = .constant(true), onReordering: ((_ reorderingIndex: Int?) -> Void)? = nil, onPlay: (() -> Void)? = nil) {
         self.mediaTrack = track
         self._allowReordering = allowReordering
         self.onReordering = onReordering
+        self.onPlay = onPlay
     }
     
     var body: some View {
@@ -36,8 +38,17 @@ struct QueueTrackView: View {
                     .scaledToFit()
                     .frame(width: 30, height: 30)
                     .cornerRadius(5)
+                    .brightness(isHovering ? -0.5 : 0)
                     .padding(.leading, 2)
                     .padding(.vertical, 2)
+                    .overlay {
+                        if isHovering {
+                            Image(systemName: "play.fill")
+                        }
+                    }
+                    .onTapGesture {
+                        self.onPlay?()
+                    }
                 
                 VStack(alignment: .leading) {
                     Text(mediaTrack.title)
