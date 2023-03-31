@@ -13,6 +13,8 @@ struct PlaybackView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
+    @State private var showCastMenu: Bool = false
+    
     var repeatModeIcon: PlaybackButtonIcon {
         switch self.ciderPlayback.playbackBehaviour.repeatMode {
             
@@ -90,7 +92,21 @@ struct PlaybackView: View {
             }
             
             HStack {
-                ActionButton(actionType: .AirPlay)
+                if ciderPlayback.nowPlayingState.playbackPipelineInitialised {
+                    ActionButton(actionType: .AirPlay) {
+                        Task {
+                            guard let frame = self.appWindowModal.nsWindow?.frame else { return }
+                            let supportsAirplay = await self.ciderPlayback.openAirPlayPicker(x: Int(frame.maxX - 125), y: Int(frame.minY + 70))
+                            
+                            if !supportsAirplay {
+                                self.showCastMenu = true
+                            }
+                        }
+                    }
+                    .transition(.fade)
+                }
+                // TODO: Add alternate cast menu
+                
                 ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
                     withAnimation(.interactiveSpring()) {
                         self.navigationModal.showQueue.toggle()

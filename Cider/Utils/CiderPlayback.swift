@@ -7,13 +7,14 @@ import Starscream
 import SwiftyJSON
 import Throttler
 import Defaults
+import SwiftUI
 
 struct NowPlayingState {
     
     var item: MediaDynamic?
     var name: String? = nil, artistName: String? = nil
     var artworkURL: URL?
-    var isPlaying = false, isReady = true, hasItemToPlay = false
+    var isPlaying = false, isReady = true, hasItemToPlay = false, playbackPipelineInitialised = false
     var currentTime: TimeInterval?
     var remainingTime: TimeInterval?
     var duration: TimeInterval?
@@ -304,6 +305,21 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     @MainActor
+    func openAirPlayPicker(x: Int? = nil, y: Int? = nil) async -> Bool {
+        do {
+            let result = try await self.wsCommClient.request("/open-airplay-picker", body: x != nil && y != nil ? [
+                "x": x!,
+                "y": y!
+            ] : .none)
+            return result["supportsAirPlay"].boolValue
+        } catch {
+            self.logger.error("Skip failed \(error)", displayCross: true)
+        }
+        
+        return false
+    }
+    
+    @MainActor
     func togglePlaybackSync() {
         Task {
             await (self.nowPlayingState.isPlaying ? self.pause() : self.play())
@@ -425,6 +441,9 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 break
                 
             case "mediaItemDidChange":
+                withAnimation(.spring()) {
+                    self.nowPlayingState.playbackPipelineInitialised = true
+                }
                 let mediaParams = json["mediaParams"]
                 
                 Task {

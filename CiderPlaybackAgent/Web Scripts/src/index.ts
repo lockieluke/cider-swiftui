@@ -1,6 +1,6 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
-import {isEqual, map, values, filter, isNull, slice} from "lodash";
+import {isEqual, map, values, filter, isNull, slice, isNil} from "lodash";
 
 declare let AM_TOKEN: string, AM_USER_TOKEN: string;
 
@@ -22,6 +22,8 @@ declare global {
             previous: () => void,
             next: () => void,
             skipToQueueIndex: (index: number) => void,
+            isAirPlayAvailable: () => boolean,
+            openAirPlayPicker: () => void
         }
     }
 }
@@ -194,6 +196,16 @@ document.addEventListener('musickitloaded', async function () {
         skipToQueueIndex: (index: number) => {
             // TODO: this doesn't work yet, need to figure out how to skip to a specific index in the queue
             mk.changeToMediaAtIndex(mk.queue.position + index);
+        },
+        isAirPlayAvailable: () => {
+            // @ts-ignore
+            const audioElement = mk._mediaItemPlayback._currentPlayer.audio;
+            return !isNil(audioElement) && !isNil(audioElement.webkitShowPlaybackTargetPicker);
+        },
+        openAirPlayPicker: () => {
+            if (window.ciderInterop.isAirPlayAvailable())
+                // @ts-ignore
+                mk._mediaItemPlayback._currentPlayer.audio.webkitShowPlaybackTargetPicker();
         }
     };
 })

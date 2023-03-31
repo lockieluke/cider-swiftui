@@ -6,7 +6,7 @@ import Foundation
 import WebKit
 import SwiftyJSON
 
-class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
+class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, NSWindowDelegate {
     
     private let wkWebView: WKWebView
     private let windowContainer: NSWindow
@@ -37,12 +37,13 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         wkConfiguration.userContentController = userContentController
         wkConfiguration.mediaTypesRequiringUserActionForPlayback = []
         wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        wkConfiguration.allowsAirPlayForMediaPlayback = true
 #if DEBUG
         wkConfiguration.preferences.setValue(true, forKey: "developerExtrasEnabled")
 #endif
         
         // Hack to enable playback for headless WKWebView
-        let windowContainer = NSWindow(contentRect: .zero, styleMask: [.borderless, .nonactivatingPanel, .hudWindow], backing: .buffered, defer: false)
+        let windowContainer = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 1, height: 1), styleMask: [.borderless], backing: .buffered, defer: false)
         windowContainer.animationBehavior = .none
         windowContainer.collectionBehavior = .transient
         
@@ -50,6 +51,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         windowContainer.contentView?.addSubview(wkWebView)
         
         defer {
+            windowContainer.delegate = self
             wkWebView.navigationDelegate = self
             wkWebView.configuration.userContentController.add(self, name: "ciderkit")
             wkWebView.loadSimulatedRequest(URLRequest(url: URL(string: "https://beta.music.apple.com")!), responseHTML: self.bootstrapHTML)
@@ -127,7 +129,21 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     }
     
     func setAutoPlay(_ autoPlay: Bool) async {
-        await self.asyncRunJS("window.ciderInterop.mk.autoplayEnabled = \(autoPlay)")
+        _ = await self.asyncRunJS("window.ciderInterop.mk.autoplayEnabled = \(autoPlay)")
+    }
+    
+    func openAirPlayPicker(x: Int? = nil, y: Int? = nil) async -> Bool {
+        guard let supportsAirPlay = try? await self.wkWebView.callAsyncJavaScript("return window.ciderInterop.isAirPlayAvailable()", contentWorld: .page) as? Bool, supportsAirPlay else { return false }
+        
+        await NSApp.activate(ignoringOtherApps: true)
+        await self.windowContainer.center()
+        await self.windowContainer.makeKeyAndOrderFront(nil)
+        if let x = x, let y = y {
+            await self.windowContainer.setFrameOrigin(NSPoint(x: x, y: y))
+        }
+        await self.windowContainer.orderFrontRegardless()
+        _ = await self.asyncRunJS("window.ciderInterop.openAirPlayPicker()")
+        return true
     }
     
     func play() async {
@@ -180,12 +196,14 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         self.wkWebView.evaluateJavaScript("window.ciderInterop.mk.\(script)")
     }
     
-    private func asyncRunJS(_ script: String) async {
+    private func asyncRunJS(_ script: String) async -> Any? {
         do {
-            _ = try await self.wkWebView.evaluateJavaScriptAsync(script)
+            return try await self.wkWebView.evaluateJavaScriptAsync(script)
         } catch {
             print("Error running JavaScript: \(error)")
         }
+        
+        return nil
     }
     
     func dispose() {

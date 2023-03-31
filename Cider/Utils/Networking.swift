@@ -99,7 +99,7 @@ class CiderWSProvider {
         self.socket.connect()
     }
     
-    func request(_ route: String, body: [String: Any]? = nil) async throws {
+    func request(_ route: String, body: [String: Any]? = nil) async throws -> JSON {
         let lock = NSLock()
         return try await withUnsafeThrowingContinuation { continuation in
             if !self.isReady {
@@ -126,7 +126,7 @@ class CiderWSProvider {
                 lock.lock()
                 
                 DispatchQueue.main.async {
-                    continuation.resume()
+                    continuation.resume(returning: responseBody)
                 }
             }, id: requestId))
             guard let requestBodyString = requestBody.rawString(.utf8) else {

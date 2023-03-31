@@ -51,7 +51,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                 return
             }
             
-            let requestObj = JSON([
+            var requestObj = JSON([
                 "requestId": requestId
             ])
             let done = {
@@ -138,6 +138,11 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     if let from = json?["from"].int, let to = json?["to"].int {
                         await self.musicKitWorker?.reorderQueuedItem(from: from, to: to)
                     }
+                    break
+                    
+                case "/open-airplay-picker":
+                    let supportsAirPlay = await self.musicKitWorker?.openAirPlayPicker(x: json?["x"].int, y: json?["y"].int)
+                    requestObj["supportsAirPlay"].bool = supportsAirPlay
                     break
                     
                 default:
