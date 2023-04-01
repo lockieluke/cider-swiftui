@@ -168,6 +168,7 @@ class NavigationModal : ObservableObject {
     @Published var currentlyPresentViewType: NavigationStackType?
     @Published var navigationActions = NavigationActions()
     
-    @Published var showQueue = false
+    @Published var showQueue: Bool = false
+    @Published var showLyrics: Bool = false
     
 }

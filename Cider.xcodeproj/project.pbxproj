@@ -27,6 +27,8 @@
 		B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* MediaPresentable.swift */; };
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
 		B740CE172991AD050096DF6E /* htmltext-style.css in Resources */ = {isa = PBXBuildFile; fileRef = B740CE162991AD050096DF6E /* htmltext-style.css */; };
+		B74EEBD229D7AEAB00711DB6 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD129D7AEAB00711DB6 /* LyricsView.swift */; };
+		B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD329D86EEF00711DB6 /* SidePane.swift */; };
 		B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219A92918358C005CF8F0 /* MediaType.swift */; };
 		B75219AC291836B5005CF8F0 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219AB291836B5005CF8F0 /* MediaItem.swift */; };
 		B75219AE29187526005CF8F0 /* MediaArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219AD29187525005CF8F0 /* MediaArtwork.swift */; };
@@ -159,6 +161,8 @@
 		B725013D28C2637F00992F57 /* MediaPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresentable.swift; sourceTree = "<group>"; };
 		B7284174290DABA100B7A525 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B740CE162991AD050096DF6E /* htmltext-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "htmltext-style.css"; sourceTree = "<group>"; };
+		B74EEBD129D7AEAB00711DB6 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
+		B74EEBD329D86EEF00711DB6 /* SidePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePane.swift; sourceTree = "<group>"; };
 		B75219A92918358C005CF8F0 /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
 		B75219AB291836B5005CF8F0 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
 		B75219AD29187525005CF8F0 /* MediaArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaArtwork.swift; sourceTree = "<group>"; };
@@ -378,6 +382,7 @@
 		B700C1A928B955B10069FDF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B74EEBCE29D7AE7D00711DB6 /* SidePanes */,
 				B77AACE4293ACC7600F8E1E2 /* ViewModifiers */,
 				B768871529491AFE00C623C9 /* PreferencesPanes */,
 				B7ECB7C429033AA700B5DF11 /* MainViews */,
@@ -398,8 +403,6 @@
 				B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */,
 				B797AFF5297F3AB900D77282 /* InteractiveText.swift */,
 				B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */,
-				B7A6EB6729C539800041FDD7 /* QueueView.swift */,
-				B7C5C5D929CE6F4C00EF4D11 /* QueueTrackView.swift */,
 				B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */,
 			);
 			path = Views;
@@ -412,6 +415,17 @@
 				B740CE162991AD050096DF6E /* htmltext-style.css */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B74EEBCE29D7AE7D00711DB6 /* SidePanes */ = {
+			isa = PBXGroup;
+			children = (
+				B7A6EB6729C539800041FDD7 /* QueueView.swift */,
+				B7C5C5D929CE6F4C00EF4D11 /* QueueTrackView.swift */,
+				B74EEBD129D7AEAB00711DB6 /* LyricsView.swift */,
+				B74EEBD329D86EEF00711DB6 /* SidePane.swift */,
+			);
+			path = SidePanes;
 			sourceTree = "<group>";
 		};
 		B768871529491AFE00C623C9 /* PreferencesPanes */ = {
@@ -811,10 +825,12 @@
 				B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */,
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
 				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
+				B74EEBD229D7AEAB00711DB6 /* LyricsView.swift in Sources */,
 				B76AE924299C044800A19558 /* MediaDescription.swift in Sources */,
 				B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */,
 				B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */,
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
+				B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */,
 				B7C5C5DE29CF7C0000EF4D11 /* Collection.swift in Sources */,
 				B7688725294A076300C623C9 /* Process.swift in Sources */,
 				B7C5C5DC29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift in Sources */,

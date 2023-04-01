@@ -109,10 +109,20 @@ struct PlaybackView: View {
                 
                 ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
                     withAnimation(.interactiveSpring()) {
+                        if !self.navigationModal.showQueue {
+                            self.navigationModal.showLyrics = false
+                        }
                         self.navigationModal.showQueue.toggle()
                     }
                 }
-                ActionButton(actionType: .More)
+                ActionButton(actionType: .Lyrics, enabled: $navigationModal.showLyrics) {
+                    withAnimation(.interactiveSpring()) {
+                        if !self.navigationModal.showLyrics {
+                            self.navigationModal.showQueue = false
+                        }
+                        self.navigationModal.showLyrics.toggle()
+                    }
+                }
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.horizontal, 20)

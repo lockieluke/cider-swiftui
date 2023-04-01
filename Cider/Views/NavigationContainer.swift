@@ -82,6 +82,14 @@ struct NavigationContainer: View {
                         .transition(.move(edge: .trailing))
                         .zIndex(1)
                 }
+                
+                if navigationModal.showLyrics {
+                    LyricsView()
+                        .environmentObject(mkModal)
+                        .environmentObject(ciderPlayback)
+                        .transition(.move(edge: .trailing))
+                        .zIndex(1)
+                }
             }
         }
         .padding(.top, 40)

@@ -7,12 +7,13 @@ import InjectHotReload
 
 enum ButtonAction : String {
     
-    case Back = "chevron.backward";
-    case Forward = "chevron.forward";
-    case More = "ellipsis.circle";
-    case Library = "sidebar.squares.leading";
-    case AirPlay = "airplayaudio";
-    case Queue = "list.bullet";
+    case Back = "chevron.backward",
+    Forward = "chevron.forward",
+    More = "ellipsis.circle",
+    Library = "sidebar.squares.leading",
+    AirPlay = "airplayaudio",
+    Queue = "list.bullet",
+    Lyrics = "quote.bubble";
     
 }
 
