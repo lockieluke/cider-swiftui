@@ -12,13 +12,14 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let appWindowModal = AppWindowModal()
     private let mkModal: MKModal
     private let discordRPCModal: DiscordRPCModal
+    private let nativeUtilsWrapper: NativeUtilsWrapper
     private let wsModal = WSModal.shared
     private let authWorker: AuthWorker
     private let appMenu: AppMenu
     
     let ciderPlayback: CiderPlayback
     
-    init(discordRPCModal: DiscordRPCModal) {
+    init(discordRPCModal: DiscordRPCModal, nativeUtilsWrapper: NativeUtilsWrapper) {
         let activeScreen = NSScreen.activeScreen
         
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
@@ -33,6 +34,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             .environmentObject(mkModal)
             .environmentObject(ciderPlayback)
             .environmentObject(discordRPCModal)
+            .environmentObject(nativeUtilsWrapper)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         window.contentViewController = NSHostingController(rootView: contentView)
         window.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
@@ -70,6 +72,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         self.appWindowModal.nsWindow = window
         self.authWorker = authWorker
         self.discordRPCModal = discordRPCModal
+        self.nativeUtilsWrapper = nativeUtilsWrapper
         self.appMenu = appMenu
         self.mkModal = mkModal
         self.ciderPlayback = ciderPlayback

@@ -1,0 +1,9 @@
+# Output
+target/
+Generated/
+
+# Playground
+src/main.rs
+
+# IDE Specific
+.idea/

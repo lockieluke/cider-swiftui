@@ -12,6 +12,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     private var appWindow: AppWindow!
     private var watchdog: Watchdog!
     private var discordRPCModal: DiscordRPCModal!
+    private var nativeUtilsWrapper: NativeUtilsWrapper!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
 #if DEBUG
@@ -27,7 +28,8 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         FirebaseApp.configure()
       
         let discordRPCModal = DiscordRPCModal()
-        self.appWindow = AppWindow(discordRPCModal: DiscordRPCModal())
+        let nativeUtilsWrapper = NativeUtilsWrapper()
+        self.appWindow = AppWindow(discordRPCModal: discordRPCModal, nativeUtilsWrapper: nativeUtilsWrapper)
         
         // might be useful for cleaning up child processes when process gets killed
         let terminatedCallback = { exitCode in
@@ -39,6 +41,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
         signal(SIGSTOP, terminatedCallback)
         
         self.discordRPCModal = discordRPCModal
+        self.nativeUtilsWrapper = nativeUtilsWrapper
         appWindow.show()
     }
     

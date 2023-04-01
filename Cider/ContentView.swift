@@ -12,9 +12,11 @@ struct ContentView: View {
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
-    var authWorker: AuthWorker
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var discordRPCModal: DiscordRPCModal
+    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
+    
+    var authWorker: AuthWorker
     
     @StateObject private var searchModal = SearchModal()
     @StateObject private var navigationModal = NavigationModal()
@@ -33,6 +35,7 @@ struct ContentView: View {
                     .environmentObject(navigationModal)
                     .environmentObject(ciderPlayback)
                     .environmentObject(searchModal)
+                    .environmentObject(nativeUtilsWrapper)
                 
                 VStack {
                     AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top)

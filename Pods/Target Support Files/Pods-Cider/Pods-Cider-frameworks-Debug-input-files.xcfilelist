@@ -23,6 +23,7 @@ ${BUILT_PRODUCTS_DIR}/SwiftyJSON-framework/SwiftyJSON.framework
 ${BUILT_PRODUCTS_DIR}/Throttler/Throttler.framework
 ${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework
 ${BUILT_PRODUCTS_DIR}/Watchdog/Watchdog.framework
+${BUILT_PRODUCTS_DIR}/WrappingHStack/WrappingHStack.framework
 ${BUILT_PRODUCTS_DIR}/abseil/absl.framework
 ${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework
 ${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework

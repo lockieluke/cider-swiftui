@@ -773,6 +773,7 @@ PODS:
   - Throttler (1.0.6)
   - UIImageColors (2.1.0)
   - Watchdog (5.2)
+  - WrappingHStack (2.2.9)
 
 DEPENDENCIES:
   - Alamofire
@@ -794,6 +795,7 @@ DEPENDENCIES:
   - Throttler (from `.coke/pods/boraseoksoon/Throttler`)
   - UIImageColors
   - Watchdog
+  - WrappingHStack
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -826,6 +828,7 @@ SPEC REPOS:
     - SwiftyJSON
     - UIImageColors
     - Watchdog
+    - WrappingHStack
 
 EXTERNAL SOURCES:
   AttributedText:
@@ -874,7 +877,8 @@ SPEC CHECKSUMS:
   Throttler: 7d4968679264f280a3b0fd9bfc30cbb488901550
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
+  WrappingHStack: 5a5bf4dc6e06a2c7259aa79331c907d7ee32fc6d
 
-PODFILE CHECKSUM: a8f800e875e7e1d37c6a5240179636d7bb7d7908
+PODFILE CHECKSUM: a83cc8d872946a0b3d7a8fccfdcb77c1be9f5486
 
 COCOAPODS: 1.11.3

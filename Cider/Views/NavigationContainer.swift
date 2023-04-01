@@ -15,6 +15,7 @@ struct NavigationContainer: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var searchModal: SearchModal
+    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
     
     var body: some View {
         ZStack {
@@ -87,6 +88,7 @@ struct NavigationContainer: View {
                     LyricsView()
                         .environmentObject(mkModal)
                         .environmentObject(ciderPlayback)
+                        .environmentObject(nativeUtilsWrapper)
                         .transition(.move(edge: .trailing))
                         .zIndex(1)
                 }

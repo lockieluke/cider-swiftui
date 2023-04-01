@@ -15,9 +15,9 @@ struct SidePane<HeaderChildren: View, Content: View>: View {
     
     @ViewBuilder private let content: Content
     @ViewBuilder private let headerChildren: HeaderChildren
-    private let title: String
+    private let title: String?
     
-    init(title: String, @ViewBuilder content: @escaping () -> Content, @ViewBuilder headerChildren: @escaping () -> HeaderChildren) {
+    init(title: String? = nil, @ViewBuilder content: @escaping () -> Content, @ViewBuilder headerChildren: @escaping () -> HeaderChildren) {
         self.title = title
         self.content = content()
         self.headerChildren = headerChildren()
@@ -26,15 +26,17 @@ struct SidePane<HeaderChildren: View, Content: View>: View {
     var body: some View {
         PatchedGeometryReader { geometry in
             VStack {
-                HStack {
-                    Text(title)
-                        .font(.title.bold())
-                    Spacer()
-                    
-                    headerChildren
+                if let title = title {
+                    HStack {
+                        Text(title)
+                            .font(.title.bold())
+                        Spacer()
+                        
+                        headerChildren
+                    }
+                    .padding(.horizontal)
+                    .padding(.top)
                 }
-                .padding(.horizontal)
-                .padding(.top)
                 
                 content
             }
@@ -53,7 +55,7 @@ struct SidePane<HeaderChildren: View, Content: View>: View {
 
 extension SidePane where HeaderChildren == EmptyView {
     
-    init(title: String, @ViewBuilder content: @escaping () -> Content) {
+    init(title: String? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.init(title: title, content: content, headerChildren: { EmptyView() })
     }
     

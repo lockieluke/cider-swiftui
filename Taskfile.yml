@@ -23,6 +23,22 @@ tasks:
     cmds:
       - rm -rf target/
 
+  build-native-utils-lib:
+    desc: "Build NativeUtils"
+    dir: NativeUtils/
+    sources:
+      - src/**/*.rs
+    generates:
+      - target/universal/libnative_utils.a
+    cmds:
+      - sh build.sh
+
+  clean-native-utils-lib:
+    desc: "Clean NativeUtils's target folder"
+    dir: NativeUtils/
+    cmds:
+      - rm -rf target/
+
   install-cpa-js-deps:
     dir: 'CiderPlaybackAgent/Web Scripts/'
     desc: "Install CiderPlaybackAgent's dependencies with Yarn"

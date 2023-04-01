@@ -273,7 +273,7 @@ class AMAPI {
     
     @MainActor
     func fetchLyricsXml(item: MediaDynamic) async -> String? {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/gb/\(item.type)/\(item.id)/lyrics").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/gb/\(item.type)/\(item.id)/syllable-lyrics").serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch lyrics \(item.id): \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let ttml = json["data"].array?.first?["attributes"]["ttml"].string {

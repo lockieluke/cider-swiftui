@@ -22,6 +22,7 @@ target 'Cider' do
   pod 'RainbowSwift'
   pod 'Watchdog'
   pod 'Alamofire'
+  pod 'WrappingHStack'
   pod 'UIImageColors', :modular_headers => true
   # Pods installed with coke, run `coke install` first
   pod "Preferences", :path => '.coke/pods/sindresorhus/Preferences'
