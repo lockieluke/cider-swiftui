@@ -8,7 +8,6 @@ build = "build.rs"
 
 [dependencies]
 swift-bridge = "0.1.49"
-ide = {git = "https://github.com/rust-analyzer/rust-analyzer"}
 discord-rpc-client = "0.3.0"
 
 [build-dependencies]
