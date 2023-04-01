@@ -92,12 +92,20 @@ You should be good to go!
 
 There are two ways for building Cider
 
-### Build `discord-rpc-agent` (It's written in Rust if that matters)
+### Build `discord-rpc-agent`
 
-Run the Taskfile command(this is only needed if it's the first time compiling)
+Run the Taskfile command(required if it's the first time compiling)
 
 ```shell
 task build-discord-rpc-lib
+```
+
+### Build `native-utils`
+
+Run the Taskfile command(required if it's the first time compiling)
+
+```shell
+task build-native-utils-lib
 ```
 
 ### Build using Command Line
