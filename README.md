@@ -154,7 +154,7 @@ task run-xc
 
 Assuming you already have Xcode opened, just simply click on the **Play** button
 
-![Screenshot of Xcode's play button](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/4.png?raw=true)
+![Screenshot of Xcode's play button](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/5.png?raw=true)
 
 Voila! Cider should now be live on your Mac, happy hacking 🥰
 
