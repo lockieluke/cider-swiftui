@@ -11,6 +11,7 @@ const lodashTransform = require('esbuild-plugin-lodash');
         treeShaking: true,
         platform: 'browser',
         logLevel: 'info',
-        plugins: [lodashTransform()]
+        plugins: [lodashTransform()],
+        legalComments: 'none' /* we will show licences in the main client as this script is run in a headless WKWebView */
     });
 })();
