@@ -16,7 +16,7 @@ declare global {
         ciderInterop: {
             mk: CiderMusicKitInstance,
             play: () => void,
-            setQueue: (mediaItem: MusicKit.SetQueueOptions) => void,
+            setQueue: (opts: MusicKit.SetQueueOptions) => void,
             getQueue: () => MusicKit.MediaItem[],
             reorderQueue: (from: number, to: number) => void,
             previous: () => void,
@@ -166,8 +166,9 @@ document.addEventListener('musickitloaded', async function () {
                 return;
             }
         },
-        setQueue: async mediaItem => {
-            const [err] = await to(mk.setQueue(mediaItem));
+        setQueue: async opts => {
+            console.log(opts);
+            const [err] = await to(mk.setQueue(opts));
             if (err) {
                 console.error(`Failed to set queue ${err}`);
                 return;
