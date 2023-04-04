@@ -85,7 +85,7 @@ struct NavigationContainer: View {
                 }
                 
                 if navigationModal.showLyrics {
-                    LyricsView()
+                    LyricsPaneView()
                         .environmentObject(mkModal)
                         .environmentObject(ciderPlayback)
                         .environmentObject(nativeUtilsWrapper)

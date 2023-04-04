@@ -27,7 +27,7 @@
 		B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* MediaPresentable.swift */; };
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
 		B740CE172991AD050096DF6E /* htmltext-style.css in Resources */ = {isa = PBXBuildFile; fileRef = B740CE162991AD050096DF6E /* htmltext-style.css */; };
-		B74EEBD229D7AEAB00711DB6 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD129D7AEAB00711DB6 /* LyricsView.swift */; };
+		B74EEBD229D7AEAB00711DB6 /* LyricsPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */; };
 		B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD329D86EEF00711DB6 /* SidePane.swift */; };
 		B74EEBD829D8886500711DB6 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD729D8886500711DB6 /* SwiftBridgeCore.swift */; };
 		B74EEBDA29D8893100711DB6 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B74EEBD929D8892500711DB6 /* libnative_utils.a */; };
@@ -164,7 +164,7 @@
 		B725013D28C2637F00992F57 /* MediaPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresentable.swift; sourceTree = "<group>"; };
 		B7284174290DABA100B7A525 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B740CE162991AD050096DF6E /* htmltext-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "htmltext-style.css"; sourceTree = "<group>"; };
-		B74EEBD129D7AEAB00711DB6 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
+		B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsPaneView.swift; sourceTree = "<group>"; };
 		B74EEBD329D86EEF00711DB6 /* SidePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePane.swift; sourceTree = "<group>"; };
 		B74EEBD629D8886500711DB6 /* SwiftBridgeCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftBridgeCore.h; path = NativeUtils/Generated/SwiftBridgeCore.h; sourceTree = SOURCE_ROOT; };
 		B74EEBD729D8886500711DB6 /* SwiftBridgeCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftBridgeCore.swift; path = NativeUtils/Generated/SwiftBridgeCore.swift; sourceTree = SOURCE_ROOT; };
@@ -430,7 +430,7 @@
 			children = (
 				B7A6EB6729C539800041FDD7 /* QueueView.swift */,
 				B7C5C5D929CE6F4C00EF4D11 /* QueueTrackView.swift */,
-				B74EEBD129D7AEAB00711DB6 /* LyricsView.swift */,
+				B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */,
 				B74EEBD329D86EEF00711DB6 /* SidePane.swift */,
 			);
 			path = SidePanes;
@@ -855,7 +855,7 @@
 				B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */,
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
 				B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */,
-				B74EEBD229D7AEAB00711DB6 /* LyricsView.swift in Sources */,
+				B74EEBD229D7AEAB00711DB6 /* LyricsPaneView.swift in Sources */,
 				B76AE924299C044800A19558 /* MediaDescription.swift in Sources */,
 				B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */,
 				B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */,

@@ -29,9 +29,11 @@ impl NativeUtils {
         let body = children.clone().find(|n| n.has_tag_name("body")).unwrap();
         let head = children.clone().find(|n| n.has_tag_name("head")).unwrap();
         let itunes_metadata = head.children().find(|n| n.has_tag_name("metadata")).unwrap().first_child().unwrap();
-        let songwriters = itunes_metadata.first_child().unwrap();
-        assert_eq!(songwriters.tag_name().name(), "songwriters");
-        let mut segments = body.children().filter(|n| n.has_tag_name("div"));
+        let songwriters = itunes_metadata.first_child();
+        if !songwriters.is_none() {
+            assert_eq!(songwriters.unwrap().tag_name().name(), "songwriters");
+        }
+        let segments = body.children().filter(|n| n.has_tag_name("div"));
         let mut lyrics: Vec<LyricsLine> = Vec::new();
 
         for segment in segments {
@@ -58,7 +60,7 @@ impl NativeUtils {
         return json!({
             "lyrics": lyrics,
             "leadingSilence": itunes_metadata.attribute("leadingSilence").unwrap_or("0.0").parse::<f64>().unwrap(),
-            "songwriters": songwriters.children().map(|n| n.text().unwrap().to_string()).collect::<Vec<String>>()
+            "songwriters": if songwriters.is_none() { vec!() } else { songwriters.unwrap().children().map(|n| n.text().unwrap().to_string()).collect::<Vec<String>>() }
         }).to_string();
     }
 }
