@@ -1,6 +1,7 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
-import {isEqual, map, values, filter, isNull, slice, isNil} from "lodash";
+import store from "store2";
+import {isEqual, map, values, filter, isNull, slice, isNil, split} from "lodash";
 
 declare let AM_TOKEN: string, AM_USER_TOKEN: string;
 
@@ -62,6 +63,12 @@ document.head.appendChild(mkScript);
 
 document.addEventListener('musickitloaded', async function () {
     console.log(`MusicKit ${MusicKit.version} loaded`);
+
+    const oldVersions = split(store.get('musickit.version-history'), '&');
+    if (!store.has('musickit.version-history') || isNil(oldVersions.find(v => v.includes(MusicKit.version))) || oldVersions.findIndex(v => v.includes(MusicKit.version)) !== oldVersions.length - 1) {
+        const versionHistory = store.get('musickit.version-history');
+        store.set('musickit.version-history', `${isNil(versionHistory) ? "" : `${versionHistory}&`}${MusicKit.version}-${new Date().toUTCString()}`)
+    }
 
     let mk: CiderMusicKitInstance;
     try {
