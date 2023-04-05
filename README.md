@@ -27,7 +27,7 @@ cd Cider-macOS
 Cider for macOS uses some TypeScript for handling Authorisation and Playback.  However, before compiling anything, JS Dependencies would have to be installed
 
 ```shell
-task install-js-deps
+task install-deps:all-js
 ```
 
 ### Build JS-Swift Interop Scripts
@@ -35,13 +35,13 @@ task install-js-deps
 Make sure you compile the JavaScript code before proceeding(and every time you make changes to it as well);  We're using `esbuild`, compilation should be pretty quick
 
 ```shell
-task build-all-js
+task build:all-js
 ```
 
 If you are a forgetful person and often run into a situation where you forget to compile the JavaScript code after making changes thinking there's something wrong in the Cider build toolchain, please for the love of god use the dev server
 
 ```shell
-task start-dev-server
+task start:dev-server
 ```
 
 ### Install CocoaPods plugins and dependencies
@@ -51,7 +51,7 @@ Cider for macOS uses CocoaPods for dependency management and some plugins are us
 <sub>We don't like SPM, it's too unreliable</sub>
 
 ```shell
-task install-pod-plugins
+task install:pod-plugins
 ```
 
 Prefetch CocoaPods dependencies that were pulled in using `coke`
@@ -97,7 +97,7 @@ There are two ways for building Cider
 Run the Taskfile command(required if it's the first time compiling)
 
 ```shell
-task build-discord-rpc-lib
+task build:discord-rpc-lib
 ```
 
 ### Build `native-utils`
@@ -105,7 +105,7 @@ task build-discord-rpc-lib
 Run the Taskfile command(required if it's the first time compiling)
 
 ```shell
-task build-native-utils-lib
+task build:native-utils-lib
 ```
 
 ### Build using Command Line
@@ -113,13 +113,13 @@ task build-native-utils-lib
 Run the Taskfile command
 
 ```shell
-task build-xc
+task build:xc
 ```
 
 Clean the build folder if you need to
 
 ```shell
-task clean-xc
+task clean:xc
 ```
 
 ### Build using Xcode(GUI)
@@ -147,7 +147,7 @@ Once Xcode/Command Line has finished building Cider, you can now run Cider on yo
 Run the Taskfile command
 
 ```shell
-task run-xc
+task run:xc
 ```
 
 ### Run using Xcode(GUI)

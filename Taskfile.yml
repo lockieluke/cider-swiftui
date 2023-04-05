@@ -7,7 +7,7 @@ tasks:
     cmds:
       - echo -e "Build, Run, Perform Tasks with Taskfile!\nRun 'task build-xc' to build Cider, consult README.md for documentation"
 
-  build-discord-rpc-lib:
+  build:discord-rpc-lib:
     desc: "Build DiscordRPCAgent"
     dir: DiscordRPCAgent/
     sources:
@@ -17,13 +17,13 @@ tasks:
     cmds:
       - sh build.sh
 
-  clean-discord-rpc-lib:
+  clean:discord-rpc-lib:
     desc: "Clean DiscordRPCAgent's target folder"
     dir: DiscordRPCAgent/
     cmds:
       - rm -rf target/
 
-  build-native-utils-lib:
+  build:native-utils-lib:
     desc: "Build NativeUtils"
     dir: NativeUtils/
     sources:
@@ -33,38 +33,38 @@ tasks:
     cmds:
       - sh build.sh
 
-  clean-native-utils-lib:
+  clean:native-utils-lib:
     desc: "Clean NativeUtils's target folder"
     dir: NativeUtils/
     cmds:
       - rm -rf target/
 
-  install-cpa-js-deps:
+  install-deps:cpa-js:
     dir: 'CiderPlaybackAgent/Web Scripts/'
     desc: "Install CiderPlaybackAgent's dependencies with Yarn"
     cmds:
       - yarn
 
-  install-cwa-js-deps:
+  install-deps:cwa-js:
     dir: 'CiderWebAuth/'
     desc: "Install CiderWebAuth's dependencies with Yarn"
     cmds:
       - yarn
 
-  install-dev-server-js-deps:
+  install-deps:dev-server-js:
     dir: 'CiderDevServer/'
     desc: "Install CiderDevServer's dependencies with Yarn"
     cmds:
       - yarn
 
-  install-js-deps:
+  install-deps:all-js:
     desc: "Install all JS dependencies"
     cmds:
-      - task: install-cpa-js-deps
-      - task: install-cwa-js-deps
-      - task: install-dev-server-js-deps
+      - task: install-deps:cwa-js
+      - task: install-deps:cpa-js
+      - task: install-deps:dev-server-js
 
-  build-cwa-js:
+  build:cwa-js:
     dir: 'CiderWebAuth/'
     desc: "Build CiderWebAuth"
     sources:
@@ -74,7 +74,7 @@ tasks:
     cmds:
       - yarn build
 
-  build-cpa-js:
+  build:cpa-js:
     dir: 'CiderPlaybackAgent/Web Scripts/'
     desc: "Build CiderPlaybackAgent's Scripts"
     sources:
@@ -84,40 +84,40 @@ tasks:
     cmds:
       - yarn build
 
-  build-all-js:
+  build:all-js:
     cmds:
-      - task: build-cwa-js
-      - task: build-cpa-js
+      - task: build:cwa-js
+      - task: build:cpa-js
 
-  install-pod-plugins:
+  install:pod-plugins:
     desc: "Install all CocoaPods plugin dependencies"
     preconditions:
       - test -x $(which bundle)
     cmds:
       - bundle install
 
-  build-xc:
+  build:xc:
     desc: "Build all targets including Cider and CiderPlaybackAgent"
     cmds:
       - xcodebuild -workspace Cider.xcworkspace -configuration Debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build
 
-  run-xc:
+  run:xc:
     desc: "Run Cider"
     cmds:
       - open $(xcodebuild -workspace Cider.xcworkspace -scheme Cider -sdk macosx -configuration Debug -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*")/Cider.app
 
-  clean-xc:
+  clean:xc:
     desc: "Clean Xcode build folder"
     cmds:
       - xcodebuild -workspace Cider.xcworkspace clean
 
-  start-dev-server:
+  start:dev-server:
     dir: 'CiderDevServer/'
     desc: "Start Dev Server for compiling JS in Xcode build scripts"
     cmds:
       - yarn start
 
-  generate-pods-licences:
+  generate:pods-licences:
     desc: "Generate licences from Pods"
     vars:
       LICENCES_CIDER: "Pods/Target Support Files/Pods-Cider/Pods-Cider-acknowledgements.markdown"
@@ -134,13 +134,13 @@ tasks:
       - cp "{{.LICENCES_CIDER}}" "{{.DIST_CIDER_LICENCES}}"
       - cp "{{.LICENCES_CPA}}" "{{.DIST_CPA_LICENCES}}"
 
-  generate-js-licences:
+  generate:js-licences:
     desc: "Generate licences from JavaScript dependencies"
     cmds:
-      - task: generate-cpa-licences
-      - task: generate-cwa-licences
+      - task: generate:cpa-licences
+      - task: generate:cwa-licences
 
-  generate-cwa-licences:
+  generate:cwa-licences:
     desc: "Generate licences from CiderWebAuth's JavaScript dependencies"
     dir: "CiderWebAuth/"
     vars:
@@ -156,7 +156,7 @@ tasks:
       - cat "{{.DIST_LICENCES}}" >> "{{.DIST_CPA_LICENCES}}"
 
 
-  generate-cpa-licences:
+  generate:cpa-licences:
     desc: "Generate licences from CiderPlaybackAgent's JavaScript dependencies"
     dir: "CiderPlaybackAgent/Web Scripts/"
     vars:
@@ -171,13 +171,13 @@ tasks:
       - defer: rm "{{.DIST_LICENCES}}"
       - cat "{{.DIST_LICENCES}}" >> "{{.DIST_CPA_LICENCES}}"
 
-  generate-licences:
+  generate:licences:
     desc: "Generate licences from Pods and JavaScript"
     cmds:
-      - task: generate-pods-licences
-      - task: generate-js-licences
+      - task: generate:pods-licences
+      - task: generate:js-licences
 
-  kill-cider-playback-agent:
+  kill:cider-playback-agent:
     aliases: [ kill-cpa ]
     desc: "Kill a hanging CiderPlaybackAgent process"
     cmds:
