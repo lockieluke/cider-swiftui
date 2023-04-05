@@ -117,8 +117,68 @@ tasks:
     cmds:
       - yarn start
 
+  generate-pods-licences:
+    desc: "Generate licences from Pods"
+    vars:
+      LICENCES_CIDER: "Pods/Target Support Files/Pods-Cider/Pods-Cider-acknowledgements.markdown"
+      LICENCES_CPA: "Pods/Target Support Files/Pods-CiderPlaybackAgent/Pods-CiderPlaybackAgent-acknowledgements.markdown"
+      DIST_CIDER_LICENCES: "Cider/Resources/Pods-Licences.md"
+      DIST_CPA_LICENCES: "Cider/Resources/Pods-CPA-Licences.md"
+    sources:
+      - "{{.LICENCES_CIDER}}"
+      - "{{.LICENCES_CPA}}"
+    generates:
+      - "{{.DIST_CIDER_LICENCES}}"
+      - "{{.DIST_CPA_LICENCES}}"
+    cmds:
+      - cp "{{.LICENCES_CIDER}}" "{{.DIST_CIDER_LICENCES}}"
+      - cp "{{.LICENCES_CPA}}" "{{.DIST_CPA_LICENCES}}"
+
+  generate-js-licences:
+    desc: "Generate licences from JavaScript dependencies"
+    cmds:
+      - task: generate-cpa-licences
+      - task: generate-cwa-licences
+
+  generate-cwa-licences:
+    desc: "Generate licences from CiderWebAuth's JavaScript dependencies"
+    dir: "CiderWebAuth/"
+    vars:
+      DIST_LICENCES: "../Cider/Resources/CWA-JS-Licences.txt"
+      DIST_CPA_LICENCES: "../Cider/Resources/Pods-Licences.md"
+    sources:
+      - package.json
+    generates:
+      - "{{.DIST_CPA_LICENCES}}"
+    cmds:
+      - yarn generate-license-file --input package.json --output "{{.DIST_LICENCES}}" --overwrite
+      - defer: rm "{{.DIST_LICENCES}}"
+      - cat "{{.DIST_LICENCES}}" >> "{{.DIST_CPA_LICENCES}}"
+
+
+  generate-cpa-licences:
+    desc: "Generate licences from CiderPlaybackAgent's JavaScript dependencies"
+    dir: "CiderPlaybackAgent/Web Scripts/"
+    vars:
+      DIST_LICENCES: "../../Cider/Resources/CPA-JS-Licences.txt"
+      DIST_CPA_LICENCES: "../../Cider/Resources/Pods-CPA-Licences.md"
+    sources:
+      - package.json
+    generates:
+      - "{{.DIST_CPA_LICENCES}}"
+    cmds:
+      - yarn generate-license-file --input package.json --output "{{.DIST_LICENCES}}" --overwrite
+      - defer: rm "{{.DIST_LICENCES}}"
+      - cat "{{.DIST_LICENCES}}" >> "{{.DIST_CPA_LICENCES}}"
+
+  generate-licences:
+    desc: "Generate licences from Pods and JavaScript"
+    cmds:
+      - task: generate-pods-licences
+      - task: generate-js-licences
+
   kill-cider-playback-agent:
-    aliases: [kill-cpa]
+    aliases: [ kill-cpa ]
     desc: "Kill a hanging CiderPlaybackAgent process"
     cmds:
       - killall "CiderPlaybackAgent"

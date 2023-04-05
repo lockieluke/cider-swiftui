@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "esbuild": "^0.17.12",
+    "generate-license-file": "^2.0.0",
     "musickit-typescript": "^1.2.4"
   },
   "dependencies": {

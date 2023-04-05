@@ -45,6 +45,8 @@ target 'CiderPlaybackAgent' do
 end
 
 post_install do |installer|
+  system("task generate-pods-licences")
+
   installer.pods_project.build_configurations.each do |config|
     config.build_settings['DEAD_CODE_STRIPPING'] = 'YES'
   end
