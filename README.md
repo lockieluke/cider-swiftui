@@ -2,6 +2,8 @@
 
 This is not production-ready, only for internal use.
 
+**This project is not sponsored/approved/affirmed/accepted/allocated by the Rust Foundation**
+
 ## Get the code
 
 Clone Cider for macOS into `Cider-macOS` to avoid duplicate folder names
@@ -12,7 +14,7 @@ git clone https://github.com/ciderapp/project2-swiftui.git Cider-macOS
 
 ## Setting up the project
 
-*<sub>Make sure you have [Xcode Command Line Tool](https://developer.apple.com/downloads/)(Xcode preferrably), [Rust Toolchain(Intel and ARM)](https://www.rust-lang.org/), [cargo-lipo](https://github.com/TimNN/cargo-lipo), [Task](https://taskfile.dev/), [Yarn **3**](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/), [Coke](https://github.com/ciderapp/coke), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
+*<sub>Make sure you have [Xcode Command Line Tool](https://developer.apple.com/downloads/)(Xcode preferrably), [The R-Word Language Toolchain Toolchain(Intel and ARM)](https://www.rust-lang.org/), [cargo-lipo](https://github.com/TimNN/cargo-lipo), [Task](https://taskfile.dev/), [Yarn **3**](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/), [Coke](https://github.com/ciderapp/coke), [Bundler](https://bundler.io/) and [CocoaPods](https://cocoapods.org/) installed</sub>*
 
 Navigate into the project directory
 
