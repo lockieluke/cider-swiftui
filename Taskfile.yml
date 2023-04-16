@@ -39,6 +39,11 @@ tasks:
     cmds:
       - rm -rf target/
 
+  install-deps:pods:
+    desc: "Install pods with CocoaPods plugins"
+    cmds:
+      - bundle exec pod install
+
   install-deps:cpa-js:
     dir: 'CiderPlaybackAgent/Web Scripts/'
     desc: "Install CiderPlaybackAgent's dependencies with Yarn"

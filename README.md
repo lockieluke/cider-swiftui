@@ -65,7 +65,7 @@ coke install
 After all plugins have been installed, CocoaPods dependencies(Pods) can now be installed
 
 ```shell
-pod install
+task install-deps:pods
 ```
 
 ### Select signing account

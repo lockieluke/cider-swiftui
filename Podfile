@@ -6,8 +6,10 @@ platform :osx, '12.3'
 # Disable all warnings from Pods
 inhibit_all_warnings!
 
-# Patch Plugin
+# Plugins
 plugin 'cocoapods-patch'
+plugin 'cocoapods-update-if-you-dare'
+plugin 'cocoapods-open'
 
 target 'Cider' do
   # Comment the next line if you don't want to use dynamic frameworks
