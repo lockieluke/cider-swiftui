@@ -48,12 +48,12 @@ task start:dev-server
 
 ### Install CocoaPods plugins and dependencies
 
-Cider for macOS uses CocoaPods for dependency management and some plugins are used for making the workflow easier
+Cider for macOS uses CocoaPods for dependency management and some plugins are used for making the workflow easier, use sudo if it doesn't work on the first run
 
 <sub>We don't like SPM, it's too unreliable</sub>
 
 ```shell
-task install:pod-plugins
+[sudo]task install:pod-plugins
 ```
 
 Prefetch CocoaPods dependencies that were pulled in using `coke`
