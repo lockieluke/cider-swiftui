@@ -60,6 +60,10 @@ After all plugins have been installed, CocoaPods dependencies(Pods) can now be i
 task install-deps:pods
 ```
 
+## Services and APIs
+
+You need **GoogleService-Info.plist** in `Cider/` for it to work, this is mainly for Firebase and Google Analytics
+
 ## Building Cider
 
 ### Select signing account
@@ -73,7 +77,6 @@ pod open
 ```
 
 <sub>This command can also be used for opening the `.xcworkspace` project during development</sub>
-
 
 ![Screenshot of Xcode](https://github.com/ciderapp/project2-swiftui/blob/master/assets/screenshots/1.png?raw=true)
 
