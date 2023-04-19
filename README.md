@@ -51,7 +51,7 @@ Cider for macOS uses CocoaPods for dependency management and some plugins are us
 Prefetch CocoaPods dependencies that were pulled in using `coke`
 
 ```shell
-coke install
+coke install-pods
 ```
 
 After all plugins have been installed, CocoaPods dependencies(Pods) can now be installed
