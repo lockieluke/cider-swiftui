@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C58CD12658496A4D5DAB6C5 /* libPods-CiderPlaybackAgent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F793F688607BD3FB8DE1C3CA /* libPods-CiderPlaybackAgent.a */; };
-		A64D6AC5A84B955149FFE230 /* Pods_Cider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11026C7E964A29CA4B27DB23 /* Pods_Cider.framework */; };
+		159598A95DA5DBF58FCF25CA /* Pods_Cider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A1C251C13BA1D5CDA34D91 /* Pods_Cider.framework */; };
 		B700C18328B920F10069FDF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C18228B920F10069FDF5 /* ContentView.swift */; };
 		B700C18528B920F20069FDF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18428B920F20069FDF5 /* Assets.xcassets */; };
 		B700C18828B920F20069FDF5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18728B920F20069FDF5 /* Preview Assets.xcassets */; };
@@ -29,9 +28,7 @@
 		B740CE172991AD050096DF6E /* htmltext-style.css in Resources */ = {isa = PBXBuildFile; fileRef = B740CE162991AD050096DF6E /* htmltext-style.css */; };
 		B74EEBD229D7AEAB00711DB6 /* LyricsPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */; };
 		B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD329D86EEF00711DB6 /* SidePane.swift */; };
-		B74EEBD829D8886500711DB6 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD729D8886500711DB6 /* SwiftBridgeCore.swift */; };
 		B74EEBDA29D8893100711DB6 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B74EEBD929D8892500711DB6 /* libnative_utils.a */; };
-		B74EEBDC29D88AB900711DB6 /* native-utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBDB29D88AB900711DB6 /* native-utils.swift */; };
 		B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */; };
 		B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219A92918358C005CF8F0 /* MediaType.swift */; };
 		B75219AC291836B5005CF8F0 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219AB291836B5005CF8F0 /* MediaItem.swift */; };
@@ -67,6 +64,7 @@
 		B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */; };
 		B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */; };
 		B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77C91AD294FCCE100124B47 /* CaseIterable.swift */; };
+		B790345E29F091D5001B11AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B790345D29F091D5001B11AE /* Settings.swift */; };
 		B797AFF6297F3AB900D77282 /* InteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF5297F3AB900D77282 /* InteractiveText.swift */; };
 		B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF7297F3B6A00D77282 /* ArtistView.swift */; };
 		B797AFFA297F3E2000D77282 /* MediaArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF9297F3E2000D77282 /* MediaArtist.swift */; };
@@ -77,7 +75,6 @@
 		B798983829D0E96900A734DC /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983729D0E96900A734DC /* DraggableView.swift */; };
 		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
 		B7A53E9829A0EE6A005E90F2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */; };
-		B7A53EA529A0F41E005E90F2 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A53EA429A0F41E005E90F2 /* discord-rpc-agent.swift */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
@@ -119,6 +116,7 @@
 		B7ECB7C328FDFA6700B5DF11 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7C228FDFA6700B5DF11 /* Dictionary.swift */; };
 		B7ECB7C6290497B000B5DF11 /* ObservableHoveringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7C5290497B000B5DF11 /* ObservableHoveringObject.swift */; };
 		B7F623F72915DBA500316F8E /* MediaRecommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F623F62915DBA500316F8E /* MediaRecommendation.swift */; };
+		D7D89040BD15AA200D979B5F /* libPods-CiderPlaybackAgent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E31CFC35B3290EFC0858648 /* libPods-CiderPlaybackAgent.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -138,10 +136,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		11026C7E964A29CA4B27DB23 /* Pods_Cider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3CF52258159134FE837BB1C4 /* Pods-CiderPlaybackAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CiderPlaybackAgent.release.xcconfig"; path = "Target Support Files/Pods-CiderPlaybackAgent/Pods-CiderPlaybackAgent.release.xcconfig"; sourceTree = "<group>"; };
-		8C2C2A2AEA0FC0C88E42E59F /* Pods-CiderPlaybackAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CiderPlaybackAgent.debug.xcconfig"; path = "Target Support Files/Pods-CiderPlaybackAgent/Pods-CiderPlaybackAgent.debug.xcconfig"; sourceTree = "<group>"; };
-		B3C31CEA2AB409FB87D85687 /* Pods-Cider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.release.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.release.xcconfig"; sourceTree = "<group>"; };
+		1D0D0AA5A8525D1CEC676F1E /* Pods-CiderPlaybackAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CiderPlaybackAgent.release.xcconfig"; path = "Target Support Files/Pods-CiderPlaybackAgent/Pods-CiderPlaybackAgent.release.xcconfig"; sourceTree = "<group>"; };
+		59020774FDBF60D74A9162C0 /* Pods-Cider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.debug.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.debug.xcconfig"; sourceTree = "<group>"; };
+		5E31CFC35B3290EFC0858648 /* libPods-CiderPlaybackAgent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CiderPlaybackAgent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60DA3C02D43851B5596ABCDB /* Pods-Cider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.release.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.release.xcconfig"; sourceTree = "<group>"; };
+		92A1C251C13BA1D5CDA34D91 /* Pods_Cider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7955FCB2FC3A98722AC9E6D /* Pods-CiderPlaybackAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CiderPlaybackAgent.debug.xcconfig"; path = "Target Support Files/Pods-CiderPlaybackAgent/Pods-CiderPlaybackAgent.debug.xcconfig"; sourceTree = "<group>"; };
 		B700C17D28B920F10069FDF5 /* Cider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B700C18228B920F10069FDF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B700C18428B920F20069FDF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -166,10 +166,7 @@
 		B740CE162991AD050096DF6E /* htmltext-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "htmltext-style.css"; sourceTree = "<group>"; };
 		B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsPaneView.swift; sourceTree = "<group>"; };
 		B74EEBD329D86EEF00711DB6 /* SidePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePane.swift; sourceTree = "<group>"; };
-		B74EEBD629D8886500711DB6 /* SwiftBridgeCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftBridgeCore.h; path = NativeUtils/Generated/SwiftBridgeCore.h; sourceTree = SOURCE_ROOT; };
-		B74EEBD729D8886500711DB6 /* SwiftBridgeCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftBridgeCore.swift; path = NativeUtils/Generated/SwiftBridgeCore.swift; sourceTree = SOURCE_ROOT; };
 		B74EEBD929D8892500711DB6 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
-		B74EEBDB29D88AB900711DB6 /* native-utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "native-utils.swift"; path = "NativeUtils/Generated/native-utils/native-utils.swift"; sourceTree = SOURCE_ROOT; };
 		B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeUtils.swift; sourceTree = "<group>"; };
 		B75219A92918358C005CF8F0 /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
 		B75219AB291836B5005CF8F0 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
@@ -207,6 +204,7 @@
 		B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaActionButton.swift; sourceTree = "<group>"; };
 		B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B77C91AD294FCCE100124B47 /* CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
+		B790345D29F091D5001B11AE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B797AFF5297F3AB900D77282 /* InteractiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveText.swift; sourceTree = "<group>"; };
 		B797AFF7297F3B6A00D77282 /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
 		B797AFF9297F3E2000D77282 /* MediaArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaArtist.swift; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 		B7A53E8929A0EBBD005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B7A53E9729A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
-		B7A53EA429A0F41E005E90F2 /* discord-rpc-agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "discord-rpc-agent.swift"; path = "DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.swift"; sourceTree = SOURCE_ROOT; };
 		B7A6EB6729C539800041FDD7 /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
 		B7AAB6F928BABE83009AABEA /* SearchModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModal.swift; sourceTree = "<group>"; };
 		B7AAB6FB28BABF64009AABEA /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -266,8 +263,6 @@
 		B7ECB7C228FDFA6700B5DF11 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		B7ECB7C5290497B000B5DF11 /* ObservableHoveringObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableHoveringObject.swift; sourceTree = "<group>"; };
 		B7F623F62915DBA500316F8E /* MediaRecommendation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRecommendation.swift; sourceTree = "<group>"; };
-		EA5BC30A3E396CFF27A565B4 /* Pods-Cider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cider.debug.xcconfig"; path = "Target Support Files/Pods-Cider/Pods-Cider.debug.xcconfig"; sourceTree = "<group>"; };
-		F793F688607BD3FB8DE1C3CA /* libPods-CiderPlaybackAgent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CiderPlaybackAgent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,7 +272,7 @@
 			files = (
 				B74EEBDA29D8893100711DB6 /* libnative_utils.a in Frameworks */,
 				B7A53E9829A0EE6A005E90F2 /* libdiscord_rpc_agent.a in Frameworks */,
-				A64D6AC5A84B955149FFE230 /* Pods_Cider.framework in Frameworks */,
+				159598A95DA5DBF58FCF25CA /* Pods_Cider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C58CD12658496A4D5DAB6C5 /* libPods-CiderPlaybackAgent.a in Frameworks */,
+				D7D89040BD15AA200D979B5F /* libPods-CiderPlaybackAgent.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,8 +297,8 @@
 				B79856222925A453003CA787 /* GCDWebServer.framework */,
 				B79856202925A3C3003CA787 /* GCDWebServer.framework */,
 				B798561E29259D85003CA787 /* libz.tbd */,
-				11026C7E964A29CA4B27DB23 /* Pods_Cider.framework */,
-				F793F688607BD3FB8DE1C3CA /* libPods-CiderPlaybackAgent.a */,
+				92A1C251C13BA1D5CDA34D91 /* Pods_Cider.framework */,
+				5E31CFC35B3290EFC0858648 /* libPods-CiderPlaybackAgent.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -333,7 +328,6 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
-				B7A53E9229A0EC74005E90F2 /* RustInterop */,
 				B740CE152991ACAE0096DF6E /* Resources */,
 				B7F623F32915DB2100316F8E /* API */,
 				B706050B28BD8CB2002AD76C /* Info.plist */,
@@ -480,17 +474,6 @@
 			path = DiscordRPCAgent/target/universal/debug;
 			sourceTree = "<group>";
 		};
-		B7A53E9229A0EC74005E90F2 /* RustInterop */ = {
-			isa = PBXGroup;
-			children = (
-				B74EEBDB29D88AB900711DB6 /* native-utils.swift */,
-				B74EEBD629D8886500711DB6 /* SwiftBridgeCore.h */,
-				B74EEBD729D8886500711DB6 /* SwiftBridgeCore.swift */,
-				B7A53EA429A0F41E005E90F2 /* discord-rpc-agent.swift */,
-			);
-			path = RustInterop;
-			sourceTree = "<group>";
-		};
 		B7A53E9429A0EE46005E90F2 /* universal */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,6 +507,7 @@
 				B7D5B9E1292C2F9900046B7F /* Logging.swift */,
 				B76887112948F9C600C623C9 /* Support.swift */,
 				B7688722294A06F500C623C9 /* Diagnostic.swift */,
+				B790345D29F091D5001B11AE /* Settings.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -598,10 +582,10 @@
 		D71F616D8E45C602E3354C99 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EA5BC30A3E396CFF27A565B4 /* Pods-Cider.debug.xcconfig */,
-				B3C31CEA2AB409FB87D85687 /* Pods-Cider.release.xcconfig */,
-				8C2C2A2AEA0FC0C88E42E59F /* Pods-CiderPlaybackAgent.debug.xcconfig */,
-				3CF52258159134FE837BB1C4 /* Pods-CiderPlaybackAgent.release.xcconfig */,
+				59020774FDBF60D74A9162C0 /* Pods-Cider.debug.xcconfig */,
+				60DA3C02D43851B5596ABCDB /* Pods-Cider.release.xcconfig */,
+				A7955FCB2FC3A98722AC9E6D /* Pods-CiderPlaybackAgent.debug.xcconfig */,
+				1D0D0AA5A8525D1CEC676F1E /* Pods-CiderPlaybackAgent.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -613,7 +597,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B700C18C28B920F20069FDF5 /* Build configuration list for PBXNativeTarget "Cider" */;
 			buildPhases = (
-				23F8F0B54EBA87A3C9C6F5DA /* [CP] Check Pods Manifest.lock */,
+				693FEF010F50209E55ABD2C7 /* [CP] Check Pods Manifest.lock */,
 				B76E1D5129A01A120087D3E5 /* Build DIscordRPCAgent */,
 				B74EEBD529D8862500711DB6 /* Build NativeUtils */,
 				B700C17928B920F10069FDF5 /* Sources */,
@@ -622,7 +606,7 @@
 				B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */,
 				B7C9CDA129088F4F00A67CE4 /* Copy JS Scripts */,
 				B755C73028C7F0CA00A46FB9 /* Finalise JS Scripts */,
-				B56BB5D8B225CB49360A5C46 /* [CP] Embed Pods Frameworks */,
+				DAE76AC54B0D06B316E9E6E2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -637,7 +621,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B7C9CD8D2908467A00A67CE4 /* Build configuration list for PBXNativeTarget "CiderPlaybackAgent" */;
 			buildPhases = (
-				0C50BADECA295F30C70F8A0F /* [CP] Check Pods Manifest.lock */,
+				6D6F04F8EBBA19BF90F40060 /* [CP] Check Pods Manifest.lock */,
 				B7C9CD832908467A00A67CE4 /* Sources */,
 				B7C9CD842908467A00A67CE4 /* Frameworks */,
 			);
@@ -705,29 +689,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C50BADECA295F30C70F8A0F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CiderPlaybackAgent-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		23F8F0B54EBA87A3C9C6F5DA /* [CP] Check Pods Manifest.lock */ = {
+		693FEF010F50209E55ABD2C7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -749,21 +711,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B56BB5D8B225CB49360A5C46 /* [CP] Embed Pods Frameworks */ = {
+		6D6F04F8EBBA19BF90F40060 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CiderPlaybackAgent-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B74EEBD529D8862500711DB6 /* Build NativeUtils */ = {
@@ -842,6 +809,23 @@
 			shellPath = /bin/zsh;
 			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile JavaScript code\"\n    curl \"localhost:2345/perform-task?task=build:all-js\"\nfi\n";
 		};
+		DAE76AC54B0D06B316E9E6E2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cider/Pods-Cider-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -850,7 +834,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
-				B74EEBDC29D88AB900711DB6 /* native-utils.swift in Sources */,
 				B755C73228C817C000A46FB9 /* Bundle.swift in Sources */,
 				B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */,
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
@@ -861,7 +844,6 @@
 				B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */,
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
 				B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */,
-				B74EEBD829D8886500711DB6 /* SwiftBridgeCore.swift in Sources */,
 				B7C5C5DE29CF7C0000EF4D11 /* Collection.swift in Sources */,
 				B7688725294A076300C623C9 /* Process.swift in Sources */,
 				B7C5C5DC29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift in Sources */,
@@ -942,7 +924,7 @@
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 				B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */,
 				B768872C294A359400C623C9 /* WSModal.swift in Sources */,
-				B7A53EA529A0F41E005E90F2 /* discord-rpc-agent.swift in Sources */,
+				B790345E29F091D5001B11AE /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,7 +1063,7 @@
 		};
 		B700C18D28B920F20069FDF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA5BC30A3E396CFF27A565B4 /* Pods-Cider.debug.xcconfig */;
+			baseConfigurationReference = 59020774FDBF60D74A9162C0 /* Pods-Cider.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1129,7 +1111,7 @@
 		};
 		B700C18E28B920F20069FDF5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B3C31CEA2AB409FB87D85687 /* Pods-Cider.release.xcconfig */;
+			baseConfigurationReference = 60DA3C02D43851B5596ABCDB /* Pods-Cider.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1176,7 +1158,7 @@
 		};
 		B7C9CD8B2908467A00A67CE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C2C2A2AEA0FC0C88E42E59F /* Pods-CiderPlaybackAgent.debug.xcconfig */;
+			baseConfigurationReference = A7955FCB2FC3A98722AC9E6D /* Pods-CiderPlaybackAgent.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -1197,7 +1179,7 @@
 		};
 		B7C9CD8C2908467A00A67CE4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CF52258159134FE837BB1C4 /* Pods-CiderPlaybackAgent.release.xcconfig */;
+			baseConfigurationReference = 1D0D0AA5A8525D1CEC676F1E /* Pods-CiderPlaybackAgent.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
 				CODE_SIGN_IDENTITY = "-";

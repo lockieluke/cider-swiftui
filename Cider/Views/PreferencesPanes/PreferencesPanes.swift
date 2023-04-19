@@ -3,14 +3,8 @@
 //  
 
 import SwiftUI
-import Preferences
+import Settings
 import InjectHotReload
-
-extension Preferences.PaneIdentifier {
-    static let general = Self("general")
-    static let audio = Self("audio")
-    static let developer = Self("developer")
-}
 
 struct PrefValueField: View {
     
@@ -60,8 +54,8 @@ struct PrefSectionText: View {
 
 struct PreferencesPanes {
     
-    static let GeneralPreferenceViewController: () -> PreferencePane = {
-        let paneView = Preferences.Pane(
+    static let GeneralPreferenceViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
             identifier: .general,
             title: "General",
             toolbarIcon: NSImage(systemSymbolName: "gearshape", accessibilityDescription: "General Preferences")!
@@ -69,12 +63,12 @@ struct PreferencesPanes {
             GeneralPreferencesPane()
         }
         
-        return Preferences.PaneHostingController(pane: paneView)
+        return Settings.PaneHostingController(pane: paneView)
     }
     
     
-    static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ ciderPlayback: CiderPlayback) -> PreferencePane = { mkModal, ciderPlayback in
-        let paneView = Preferences.Pane(
+    static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ ciderPlayback: CiderPlayback) -> SettingsPane = { mkModal, ciderPlayback in
+        let paneView = Settings.Pane(
             identifier: .developer,
             title: "Developer",
             toolbarIcon: NSImage(systemSymbolName: "wrench.and.screwdriver.fill", accessibilityDescription: "Developer Preferences")!
@@ -84,11 +78,11 @@ struct PreferencesPanes {
                 .environmentObject(ciderPlayback)
         }
         
-        return Preferences.PaneHostingController(pane: paneView)
+        return Settings.PaneHostingController(pane: paneView)
     }
     
-    static let AudioPreferencesViewController: (_ ciderPlayback: CiderPlayback) -> PreferencePane = { ciderPlayback in
-        let paneView = Preferences.Pane(
+    static let AudioPreferencesViewController: (_ ciderPlayback: CiderPlayback) -> SettingsPane = { ciderPlayback in
+        let paneView = Settings.Pane(
             identifier: .audio,
             title: "Audio",
             toolbarIcon: NSImage(systemSymbolName: "waveform", accessibilityDescription: "Audio Preferences")!
@@ -97,7 +91,7 @@ struct PreferencesPanes {
                 .environmentObject(ciderPlayback)
         }
         
-        return Preferences.PaneHostingController(pane: paneView)
+        return Settings.PaneHostingController(pane: paneView)
     }
     
 }

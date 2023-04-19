@@ -3,7 +3,7 @@
 //  
 
 import SwiftUI
-import Preferences
+import Settings
 import InjectHotReload
 import Defaults
 
@@ -17,8 +17,8 @@ struct DeveloperPreferencesPane: View {
     @Default(.debugOpenWebInspectorAutomatically) var openWebInspectorAutomatically
     
     var body: some View {
-        Preferences.Container(contentWidth: 450.0) {
-            Preferences.Section(title: "") {
+        Settings.Container(contentWidth: 450.0) {
+            Settings.Section(title: "") {
                 ScrollView(.vertical) {
                     LazyVStack(alignment: .leading) {
                         Group {
@@ -32,7 +32,7 @@ struct DeveloperPreferencesPane: View {
                             
                             Text("Do not share this information with anyone.  The Cider Team would never, never ask for this.")
                                 .foregroundColor(.red)
-                                .preferenceDescription()
+                                .settingDescription()
                                 .padding(.vertical)
                         }
                         
@@ -42,7 +42,7 @@ struct DeveloperPreferencesPane: View {
                             Toggle("When CiderPlaybackAgent is launched, open Web Inspector automatically", isOn: $openWebInspectorAutomatically)
                                 .toggleStyle(.checkbox)
                             Text("This setting will apply next time \(Bundle.main.displayName) is launched")
-                                .preferenceDescription()
+                                .settingDescription()
                             
                             HStack(alignment: .center) {
                                 Circle()

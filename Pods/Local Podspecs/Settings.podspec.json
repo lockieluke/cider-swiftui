@@ -1,0 +1,21 @@
+{
+  "name": "Settings",
+  "version": "3.0.0",
+  "summary": "⚙ Add a settings window to your macOS app in minutes",
+  "homepage": "https://github.com/sindresorhus/Settings",
+  "license": {
+    "type": "MIT",
+    "file": "license"
+  },
+  "authors": {
+    "sindresorhus": "sindresorhus@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/sindresorhus/Settings.git",
+    "tag": "3.0.0"
+  },
+  "platforms": {
+    "osx": "10.13"
+  },
+  "source_files": "Sources/Settings/**/*"
+}

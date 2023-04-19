@@ -27,7 +27,7 @@ target 'Cider' do
   pod 'WrappingHStack'
   pod 'UIImageColors', :modular_headers => true
   # Pods installed with coke, run `coke install` first
-  pod "Preferences", :path => '.coke/pods/sindresorhus/Preferences'
+  pod "Settings", :path => '.coke/pods/sindresorhus/Settings'
   pod "SwiftUISliders", :path => '.coke/pods/spacenation/swiftui-sliders'
   pod "Throttler", :path => '.coke/pods/boraseoksoon/Throttler'
   pod "AttributedText", :path => '.coke/pods/Iaenhaall/AttributedText'
