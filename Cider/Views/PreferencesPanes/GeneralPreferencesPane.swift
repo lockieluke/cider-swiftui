@@ -3,7 +3,7 @@
 //  
 
 import SwiftUI
-import Preferences
+import Settings
 import InjectHotReload
 
 struct GeneralPreferencesPane: View {

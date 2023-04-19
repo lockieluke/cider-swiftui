@@ -19,6 +19,6 @@
     "ios": "13.0"
   },
   "swift_versions": "5.3",
-  "source_files": "Sources/Throttler/",
+  "source_files": "Sources/Throttler/**/*",
   "swift_version": "5.3"
 }

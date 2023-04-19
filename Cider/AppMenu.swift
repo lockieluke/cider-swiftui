@@ -4,7 +4,7 @@
 
 import Foundation
 import AppKit
-import Preferences
+import Settings
 
 class AppMenu {
     

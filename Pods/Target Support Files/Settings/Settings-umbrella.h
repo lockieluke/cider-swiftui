@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double PreferencesVersionNumber;
-FOUNDATION_EXPORT const unsigned char PreferencesVersionString[];
+FOUNDATION_EXPORT double SettingsVersionNumber;
+FOUNDATION_EXPORT const unsigned char SettingsVersionString[];
 
