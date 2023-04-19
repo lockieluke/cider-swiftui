@@ -64,6 +64,9 @@
 		B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */; };
 		B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */; };
 		B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77C91AD294FCCE100124B47 /* CaseIterable.swift */; };
+		B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720B29F09A15006EDC69 /* native-utils.swift */; };
+		B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */; };
+		B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */; };
 		B790345E29F091D5001B11AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B790345D29F091D5001B11AE /* Settings.swift */; };
 		B797AFF6297F3AB900D77282 /* InteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF5297F3AB900D77282 /* InteractiveText.swift */; };
 		B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF7297F3B6A00D77282 /* ArtistView.swift */; };
@@ -204,6 +207,11 @@
 		B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaActionButton.swift; sourceTree = "<group>"; };
 		B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B77C91AD294FCCE100124B47 /* CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
+		B78B720A29F09A15006EDC69 /* native-utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "native-utils.h"; path = "NativeUtils/Generated/native-utils/native-utils.h"; sourceTree = SOURCE_ROOT; };
+		B78B720B29F09A15006EDC69 /* native-utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "native-utils.swift"; path = "NativeUtils/Generated/native-utils/native-utils.swift"; sourceTree = SOURCE_ROOT; };
+		B78B720D29F09A32006EDC69 /* discord-rpc-agent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "discord-rpc-agent.h"; path = "DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.h"; sourceTree = SOURCE_ROOT; };
+		B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "discord-rpc-agent.swift"; path = "DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.swift"; sourceTree = SOURCE_ROOT; };
+		B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftBridgeCore.swift; path = NativeUtils/Generated/SwiftBridgeCore.swift; sourceTree = SOURCE_ROOT; };
 		B790345D29F091D5001B11AE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B797AFF5297F3AB900D77282 /* InteractiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveText.swift; sourceTree = "<group>"; };
 		B797AFF7297F3B6A00D77282 /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
@@ -328,6 +336,7 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
+				B78B720929F09A08006EDC69 /* RustInterop */,
 				B740CE152991ACAE0096DF6E /* Resources */,
 				B7F623F32915DB2100316F8E /* API */,
 				B706050B28BD8CB2002AD76C /* Info.plist */,
@@ -463,6 +472,18 @@
 				B798983729D0E96900A734DC /* DraggableView.swift */,
 			);
 			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		B78B720929F09A08006EDC69 /* RustInterop */ = {
+			isa = PBXGroup;
+			children = (
+				B78B720A29F09A15006EDC69 /* native-utils.h */,
+				B78B720B29F09A15006EDC69 /* native-utils.swift */,
+				B78B720D29F09A32006EDC69 /* discord-rpc-agent.h */,
+				B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */,
+				B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */,
+			);
+			path = RustInterop;
 			sourceTree = "<group>";
 		};
 		B7A53E8829A0EBBD005E90F2 /* debug */ = {
@@ -834,6 +855,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
+				B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */,
 				B755C73228C817C000A46FB9 /* Bundle.swift in Sources */,
 				B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */,
 				B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */,
@@ -919,9 +941,11 @@
 				B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */,
 				B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,
+				B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */,
 				B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */,
 				B725013A28C2624300992F57 /* NSColor.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
+				B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */,
 				B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */,
 				B768872C294A359400C623C9 /* WSModal.swift in Sources */,
 				B790345E29F091D5001B11AE /* Settings.swift in Sources */,
