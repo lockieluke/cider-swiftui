@@ -1,10 +1,11 @@
 {
-  "name": "cider-dev-server",
+  "name": "cider-dev-utils",
   "type": "module",
   "packageManager": "yarn@3.4.1",
   "scripts": {
     "start": "tsx src/index.ts",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "fns/fetch-google-service": "tsx src/functions/fetch-google-service.ts"
   },
   "devDependencies": {
     "@types/node": "^18.15.9",

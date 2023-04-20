@@ -56,9 +56,9 @@ tasks:
     cmds:
       - yarn
 
-  install-deps:dev-server-js:
-    dir: 'CiderDevServer/'
-    desc: "Install CiderDevServer's dependencies with Yarn"
+  install-deps:dev-utils-js:
+    dir: 'CiderDevUtils/'
+    desc: "Install CiderDevUtils' dependencies with Yarn"
     cmds:
       - yarn
 
@@ -67,7 +67,7 @@ tasks:
     cmds:
       - task: install-deps:cwa-js
       - task: install-deps:cpa-js
-      - task: install-deps:dev-server-js
+      - task: install-deps:dev-utils-js
 
   build:cwa-js:
     dir: 'CiderWebAuth/'
@@ -117,7 +117,7 @@ tasks:
       - xcodebuild -workspace Cider.xcworkspace clean
 
   start:dev-server:
-    dir: 'CiderDevServer/'
+    dir: 'CiderDevUtils/'
     desc: "Start Dev Server for compiling JS in Xcode build scripts"
     cmds:
       - yarn start
@@ -181,6 +181,14 @@ tasks:
     cmds:
       - task: generate:pods-licences
       - task: generate:js-licences
+
+  fetch:google-services:
+    desc: "Fetch GoogleServices-Info.plist"
+    dir: "CiderDevUtils/"
+    env:
+      CWD: "../"
+    cmds:
+      - yarn run fns/fetch-google-service
 
   kill:cider-playback-agent:
     aliases: [ kill-cpa ]
