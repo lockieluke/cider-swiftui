@@ -745,7 +745,7 @@ PODS:
     - gRPC-Core/Interface (= 1.44.0)
     - Libuv-gRPC (= 0.0.10)
   - gRPC-Core/Interface (1.44.0)
-  - GTMSessionFetcher/Core (3.1.0)
+  - GTMSessionFetcher/Core (3.1.1)
   - InjectHotReload (1.2.2)
   - Introspect (0.2.3)
   - leveldb-library (1.22.2)
@@ -863,7 +863,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
-  GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
+  GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   InjectHotReload: e524b7c46ec063d84e407e65df5fe251cde19b32
   Introspect: 6917895ed34004271bc8d75a75db6c07839fa971
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
