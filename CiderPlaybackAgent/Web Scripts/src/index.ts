@@ -1,7 +1,7 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
 import store from "store2";
-import {isEqual, map, values, filter, isNull, slice, isNil, split} from "lodash";
+import {isEqual, map, values, filter, isNull, slice, isNil, split, toNumber} from "lodash";
 
 declare let AM_TOKEN: string, AM_USER_TOKEN: string;
 
@@ -190,7 +190,8 @@ document.addEventListener('musickitloaded', async function () {
         reorderQueue: (from: number, to: number) => {
             const items = mk.queue._queueItems;
             const item = items[from];
-            const newItems = filter(items, (_, index) => index !== from) as [];
+
+            const newItems: any[] = filter(items, (_, index) => toNumber(index) !== from) as [];
             newItems.splice(to, 0, item);
 
             mk.queue._queueItems = newItems;

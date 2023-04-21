@@ -17,7 +17,7 @@
     "clean": "rimraf dist/"
   },
   "dependencies": {
-    "@types/musickit-js": "^1.0.5",
+    "@types/musickit": "https://github.com/ciderapp/musickit-types",
     "await-to-js": "^3.0.0",
     "esbuild-plugin-lodash": "^1.2.0",
     "lodash": "^4.17.21",
