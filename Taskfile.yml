@@ -190,6 +190,12 @@ tasks:
     cmds:
       - yarn run fns/fetch-google-service
 
+  verify:toolchain:
+    desc: "Verify build toolchain"
+    dir: "CiderDevUtils/"
+    cmds:
+      - yarn run fns/verify-and-install-toolchain
+
   kill:cider-playback-agent:
     aliases: [ kill-cpa ]
     desc: "Kill a hanging CiderPlaybackAgent process"

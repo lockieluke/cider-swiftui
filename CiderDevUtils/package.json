@@ -5,10 +5,12 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
-    "fns/fetch-google-service": "tsx src/functions/fetch-google-service.ts"
+    "fns/fetch-google-service": "tsx src/functions/fetch-google-service.ts",
+    "fns/verify-and-install-toolchain": "tsx src/functions/verify-and-install-toolchain.ts"
   },
   "devDependencies": {
     "@types/node": "^18.15.9",
+    "@types/prompt-sync": "^4",
     "@types/shelljs": "^0",
     "tsx": "^3.12.6",
     "typescript": "^5.0.2"
@@ -16,6 +18,7 @@
   "dependencies": {
     "fastify": "^4.15.0",
     "ora": "^6.3.0",
+    "prompt-sync": "^4.2.0",
     "shelljs": "^0.8.5"
   }
 }
