@@ -800,7 +800,7 @@ DEPENDENCIES:
   - WrappingHStack
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - abseil
     - Alamofire
     - ArgumentParserKit
@@ -883,6 +883,6 @@ SPEC CHECKSUMS:
   Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
   WrappingHStack: 5a5bf4dc6e06a2c7259aa79331c907d7ee32fc6d
 
-PODFILE CHECKSUM: 3d209b93630470fac078b8c2778458a0fcadcaf9
+PODFILE CHECKSUM: 1f0fdf44ed84387d8d41279d9544c38786dcb0d3
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.12.0
