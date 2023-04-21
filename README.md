@@ -116,6 +116,14 @@ Assuming you already have Xcode opened, just simply click on the **Play** button
 
 Voila! Cider should now be live on your Mac, happy hacking 🥰
 
+### Verifying build toolchain
+
+If you are not sure about if you've installed all the required tools(dependency hell it really is), run this command.  Better yet, if you don't have `coke` installed correctly, it does it for you automatically.
+
+```shell
+task verify:toolchain
+```
+
 ## Final words
 
 Please do not hesitate to open an issue if you face any problems when building or developing Cider, we truly want everyone to be able to contribute to Cider and make Cider truly perfect!
