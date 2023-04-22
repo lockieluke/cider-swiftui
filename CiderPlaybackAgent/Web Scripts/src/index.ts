@@ -1,7 +1,7 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
 import store from "store2";
-import {isEqual, map, values, filter, isNull, slice, isNil, split, toNumber} from "lodash";
+import * as _ from "lodash-es";
 
 declare let AM_TOKEN: string, AM_USER_TOKEN: string;
 
@@ -64,10 +64,10 @@ document.head.appendChild(mkScript);
 document.addEventListener('musickitloaded', async function () {
     console.log(`MusicKit ${MusicKit.version} loaded`);
 
-    const oldVersions = split(store.get('musickit.version-history'), '&');
-    if (!store.has('musickit.version-history') || isNil(oldVersions.find(v => v.includes(MusicKit.version))) || oldVersions.findIndex(v => v.includes(MusicKit.version)) !== oldVersions.length - 1) {
+    const oldVersions = _.split(store.get('musickit.version-history'), '&');
+    if (!store.has('musickit.version-history') || _.isNil(oldVersions.find(v => v.includes(MusicKit.version))) || oldVersions.findIndex(v => v.includes(MusicKit.version)) !== oldVersions.length - 1) {
         const versionHistory = store.get('musickit.version-history');
-        store.set('musickit.version-history', `${isNil(versionHistory) ? "" : `${versionHistory}&`}${MusicKit.version}-${new Date().toUTCString()}`)
+        store.set('musickit.version-history', `${_.isNil(versionHistory) ? "" : `${versionHistory}&`}${MusicKit.version}-${new Date().toUTCString()}`)
     }
 
     let mk: CiderMusicKitInstance;
@@ -93,7 +93,7 @@ document.addEventListener('musickitloaded', async function () {
     const updateNowPlayingInfo = () => {
         const nowPlayingItem = mk.nowPlayingItem;
 
-        if (!isNil(nowPlayingItem)) {
+        if (!_.isNil(nowPlayingItem)) {
             window.webkit.messageHandlers.ciderkit.postMessage({
                 event: "mediaItemDidChange",
                 id: nowPlayingItem.id,
@@ -106,15 +106,15 @@ document.addEventListener('musickitloaded', async function () {
 
     let lastSyncedQueue: MusicKit.MediaItem[] = [];
     const syncQueue = (force: boolean = false) => {
-        const ids = map(mk.queue.items, 'id');
-        const lastSyncedIds = map(lastSyncedQueue, 'id');
-        if (isEqual(ids, lastSyncedIds) && !force)
+        const ids = _.map(mk.queue.items, 'id');
+        const lastSyncedIds = _.map(lastSyncedQueue, 'id');
+        if (_.isEqual(ids, lastSyncedIds) && !force)
             return;
 
         lastSyncedQueue = window.ciderInterop.getQueue();
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "queueItemsDidChange",
-            items: slice(lastSyncedQueue, mk.queue.position)
+            items: _.slice(lastSyncedQueue, mk.queue.position)
         });
     }
 
@@ -177,7 +177,6 @@ document.addEventListener('musickitloaded', async function () {
             }
         },
         setQueue: async opts => {
-            console.log(opts);
             const [err] = await to(mk.setQueue(opts));
             if (err) {
                 console.error(`Failed to set queue ${err}`);
@@ -185,24 +184,24 @@ document.addEventListener('musickitloaded', async function () {
             }
         },
         getQueue: () => {
-            return values(JSON.parse(JSON.stringify(mk.queue.items)));
+            return _.values(JSON.parse(JSON.stringify(mk.queue.items)));
         },
         reorderQueue: (from: number, to: number) => {
             const items = mk.queue._queueItems;
             const item = items[from];
 
-            const newItems: any[] = filter(items, (_, index) => toNumber(index) !== from) as [];
+            const newItems: any[] = _.filter(items, (_, index) => _.toNumber(index) !== from) as [];
             newItems.splice(to, 0, item);
 
             mk.queue._queueItems = newItems;
             mk.queue._reindex();
         },
         previous: () => {
-            if (!isEqual(mk.queue.previousPlayableItemIndex, -1) && !isNull(mk.queue.previousPlayableItemIndex))
+            if (!_.isEqual(mk.queue.previousPlayableItemIndex, -1) && !_.isNull(mk.queue.previousPlayableItemIndex))
                 mk.skipToPreviousItem();
         },
         next: () => {
-            if (!isEqual(mk.queue.nextPlayableItemIndex, -1) && !isNull(mk.queue.nextPlayableItemIndex))
+            if (!_.isEqual(mk.queue.nextPlayableItemIndex, -1) && !_.isNull(mk.queue.nextPlayableItemIndex))
                 mk.skipToNextItem();
         },
         skipToQueueIndex: (index: number) => {
@@ -212,7 +211,7 @@ document.addEventListener('musickitloaded', async function () {
         isAirPlayAvailable: () => {
             // @ts-ignore
             const audioElement = mk._mediaItemPlayback._currentPlayer.audio;
-            return !isNil(audioElement) && !isNil(audioElement.webkitShowPlaybackTargetPicker);
+            return !_.isNil(audioElement) && !_.isNil(audioElement.webkitShowPlaybackTargetPicker);
         },
         openAirPlayPicker: () => {
             if (window.ciderInterop.isAirPlayAvailable())

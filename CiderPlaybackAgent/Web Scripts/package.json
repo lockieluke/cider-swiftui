@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/lodash": "^4",
+    "@types/lodash-es": "^4",
     "@types/node": "^18.15.6",
     "esbuild": "^0.17.12",
     "generate-license-file": "^2.0.0",
@@ -20,7 +20,7 @@
     "@types/musickit": "https://github.com/ciderapp/musickit-types",
     "await-to-js": "^3.0.0",
     "esbuild-plugin-lodash": "^1.2.0",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "store2": "^2.14.2"
   }
 }
