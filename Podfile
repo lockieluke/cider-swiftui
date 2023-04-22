@@ -25,6 +25,7 @@ target 'Cider' do
   pod 'Watchdog'
   pod 'Alamofire'
   pod 'WrappingHStack'
+  pod 'Then'
   pod 'UIImageColors', :modular_headers => true
   # Pods installed with coke, run `coke install` first
   pod "Settings", :path => '.coke/pods/sindresorhus/Settings'
@@ -44,6 +45,7 @@ target 'CiderPlaybackAgent' do
   pod 'Swifter'
   pod 'ArgumentParserKit'
   pod 'SwiftyJSON'
+  pod 'Then'
 end
 
 post_install do |installer|

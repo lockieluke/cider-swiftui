@@ -11,9 +11,10 @@ class WSDebugger {
     private let window: NSWindow
     
     init(wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal) {
-        let window = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 480, height: 360), styleMask: [.closable, .miniaturizable, .resizable, .titled, .unifiedTitleAndToolbar], backing: .buffered, defer: false)
-        window.title = "WebSockets Debugger - \(Bundle.main.displayName)"
-        window.isReleasedWhenClosed = false
+        let window = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 480, height: 360), styleMask: [.closable, .miniaturizable, .resizable, .titled, .unifiedTitleAndToolbar], backing: .buffered, defer: false).then {
+            $0.title = "WebSockets Debugger - \(Bundle.main.displayName)"
+            $0.isReleasedWhenClosed = false
+        }
         
         let vc = WSDebuggerView()
             .environmentObject(wsModal)

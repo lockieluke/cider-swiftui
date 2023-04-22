@@ -154,6 +154,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Then-framework.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Then-library.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Throttler.xcscheme</key>
 		<dict>
 			<key>isShown</key>

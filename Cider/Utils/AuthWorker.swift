@@ -98,14 +98,16 @@ final class AuthWorker {
             _ = semaphore.wait(timeout: .now() + .milliseconds(300))
         }
         
-        self.wkWebView = WKWebView(frame: .zero)
-        wkWebView?.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-        wkWebView?.customUserAgent = AuthWorker.USER_AGENT
+        self.wkWebView = WKWebView(frame: .zero).then {
+            $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+            $0.customUserAgent = AuthWorker.USER_AGENT
+        }
         
-        self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false)
-        authWindow.title = "Sign In - \(Bundle.main.displayName)"
-        authWindow.isMovable = false
-        authWindow.isMovableByWindowBackground = false
+        self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false).then {
+            $0.title = "Sign In - \(Bundle.main.displayName)"
+            $0.isMovable = false
+            $0.isMovableByWindowBackground = false
+        }
         
         self.mkModal = mkModal
         self.appWindowModal = appWindowModal

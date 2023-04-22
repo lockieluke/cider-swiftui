@@ -21,6 +21,7 @@ ${BUILT_PRODUCTS_DIR}/Settings/Settings.framework
 ${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework
 ${BUILT_PRODUCTS_DIR}/SwiftUISliders/SwiftUISliders.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON-framework/SwiftyJSON.framework
+${BUILT_PRODUCTS_DIR}/Then-framework/Then.framework
 ${BUILT_PRODUCTS_DIR}/Throttler/Throttler.framework
 ${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework
 ${BUILT_PRODUCTS_DIR}/Watchdog/Watchdog.framework

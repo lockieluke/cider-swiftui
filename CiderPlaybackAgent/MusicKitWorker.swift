@@ -25,27 +25,30 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
     private var callbacks: [String: ((_ eventName: String, _ dict: [String: AnyObject]) -> Void)] = [:]
     
     init(userToken: String, developerToken: String, config: JSON) {
-        guard let jsPath = Bundle.main.executableURL?.deletingLastPathComponent().appendingPathComponent("ciderplaybackagent.js"), let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
-            fatalError("Unable to load CiderPlaybackAgent scripts")
+        let userContentController = WKUserContentController().then {
+            guard let jsPath = Bundle.main.executableURL?.deletingLastPathComponent().appendingPathComponent("ciderplaybackagent.js"), let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
+                fatalError("Unable to load CiderPlaybackAgent scripts")
+            }
+            let userScript = WKUserScript(source: "const AM_TOKEN=\"\(developerToken)\";const AM_USER_TOKEN=\"\(userToken)\";\(jsScript)", injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+            
+            $0.addUserScript(userScript)
         }
         
-        let userScript = WKUserScript(source: "const AM_TOKEN=\"\(developerToken)\";const AM_USER_TOKEN=\"\(userToken)\";\(jsScript)", injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-        let userContentController = WKUserContentController()
-        userContentController.addUserScript(userScript)
-        
-        let wkConfiguration = WKWebViewConfiguration()
-        wkConfiguration.userContentController = userContentController
-        wkConfiguration.mediaTypesRequiringUserActionForPlayback = []
-        wkConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
-        wkConfiguration.allowsAirPlayForMediaPlayback = true
-#if DEBUG
-        wkConfiguration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-#endif
+        let wkConfiguration = WKWebViewConfiguration().then {
+            $0.userContentController = userContentController
+            $0.mediaTypesRequiringUserActionForPlayback = []
+            $0.preferences.javaScriptCanOpenWindowsAutomatically = true
+            $0.allowsAirPlayForMediaPlayback = true
+    #if DEBUG
+            $0.preferences.setValue(true, forKey: "developerExtrasEnabled")
+    #endif
+        }
         
         // Hack to enable playback for headless WKWebView
-        let windowContainer = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 1, height: 1), styleMask: [.borderless], backing: .buffered, defer: false)
-        windowContainer.animationBehavior = .none
-        windowContainer.collectionBehavior = .transient
+        let windowContainer = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 1, height: 1), styleMask: [.borderless], backing: .buffered, defer: false).then {
+            $0.animationBehavior = .none
+            $0.collectionBehavior = .transient
+        }
         
         let wkWebView = WKWebView(frame: .zero, configuration: wkConfiguration)
         windowContainer.contentView?.addSubview(wkWebView)
@@ -71,19 +74,20 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
         let menu = NSMenu()
         
         let undoManager = self.windowContainer.undoManager
-        let editMenu = NSMenuItem()
-        editMenu.submenu = NSMenu(title: "Edit")
-        editMenu.submenu?.items = [
-            NSMenuItem(title: undoManager?.undoMenuItemTitle ?? "Undo", action: Selector(("undo:")), keyEquivalent: "z"),
-            NSMenuItem(title: undoManager?.redoMenuItemTitle ?? "Redo", action: Selector(("redo:")), keyEquivalent: "Z"),
-            .separator(),
-            NSMenuItem(title: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x"),
-            NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c"),
-            NSMenuItem(title: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v"),
-            NSMenuItem.separator(),
-            NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)),
-                       keyEquivalent: "a")
-        ]
+        let editMenu = NSMenuItem().then {
+            $0.submenu = NSMenu(title: "Edit")
+            $0.submenu?.items = [
+                NSMenuItem(title: undoManager?.undoMenuItemTitle ?? "Undo", action: Selector(("undo:")), keyEquivalent: "z"),
+                NSMenuItem(title: undoManager?.redoMenuItemTitle ?? "Redo", action: Selector(("redo:")), keyEquivalent: "Z"),
+                .separator(),
+                NSMenuItem(title: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x"),
+                NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c"),
+                NSMenuItem(title: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v"),
+                NSMenuItem.separator(),
+                NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)),
+                           keyEquivalent: "a")
+            ]
+        }
         
         menu.items = [editMenu]
         NSApp.mainMenu = menu

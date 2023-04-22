@@ -6,6 +6,7 @@ import Foundation
 import ArgumentParserKit
 import Swifter
 import SwiftyJSON
+import Then
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     

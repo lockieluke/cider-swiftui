@@ -64,40 +64,44 @@ class AppMenu {
             NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("Quit %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         ]
         
-        let fileMenu = NSMenuItem()
-        fileMenu.submenu = NSMenu(title: "File")
-        fileMenu.submenu?.items = [
-            NSMenuItem(title: NSLocalizedString("Close Window", comment: ""), action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
-        ]
+        let fileMenu = NSMenuItem().then {
+            $0.submenu = NSMenu(title: "File")
+            $0.submenu?.items = [
+                NSMenuItem(title: NSLocalizedString("Close Window", comment: ""), action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
+            ]
+        }
         
-        let editMenu = NSMenuItem()
-        editMenu.submenu = NSMenu(title: "Edit")
-        editMenu.submenu?.items = [
-            NSMenuItem(title: undoManager?.undoMenuItemTitle ?? "Undo", action: Selector(("undo:")), keyEquivalent: "z"),
-            NSMenuItem(title: undoManager?.redoMenuItemTitle ?? "Redo", action: Selector(("redo:")), keyEquivalent: "Z"),
-            .separator(),
-            NSMenuItem(title: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x"),
-            NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c"),
-            NSMenuItem(title: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v"),
-            NSMenuItem.separator(),
-            NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)),
-                       keyEquivalent: "a")
-        ]
+        let editMenu = NSMenuItem().then {
+            $0.submenu = NSMenu(title: "Edit")
+            $0.submenu?.items = [
+                NSMenuItem(title: undoManager?.undoMenuItemTitle ?? "Undo", action: Selector(("undo:")), keyEquivalent: "z"),
+                NSMenuItem(title: undoManager?.redoMenuItemTitle ?? "Redo", action: Selector(("redo:")), keyEquivalent: "Z"),
+                .separator(),
+                NSMenuItem(title: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x"),
+                NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c"),
+                NSMenuItem(title: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v"),
+                NSMenuItem.separator(),
+                NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)),
+                           keyEquivalent: "a")
+            ]
+        }
         
         #if DEBUG
-        let developerMenu = NSMenuItem()
-        developerMenu.submenu = NSMenu(title: "Developer")
-        developerMenu.submenu?.items = [
-            wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: ""))
-        ]
+        let developerMenu = NSMenuItem().then {
+            $0.submenu = NSMenu(title: "Developer")
+            $0.submenu?.items = [
+                wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: ""))
+            ]
+        }
         #endif
         
-        let windowMenu = NSMenuItem()
-        windowMenu.submenu = NSMenu(title: "Window")
-        windowMenu.submenu?.items = [
-            NSMenuItem(title: NSLocalizedString("Minimise", comment: ""), action: #selector(NSWindow.miniaturize(_:)), keyEquivalent: ""),
-            NSMenuItem(title: NSLocalizedString("Zoom", comment: ""), action: #selector(NSWindow.zoom(_:)), keyEquivalent: "")
-        ]
+        let windowMenu = NSMenuItem().then {
+            $0.submenu = NSMenu(title: "Window")
+            $0.submenu?.items = [
+                NSMenuItem(title: NSLocalizedString("Minimise", comment: ""), action: #selector(NSWindow.miniaturize(_:)), keyEquivalent: ""),
+                NSMenuItem(title: NSLocalizedString("Zoom", comment: ""), action: #selector(NSWindow.zoom(_:)), keyEquivalent: "")
+            ]
+        }
         
         let helpMenu = NSMenuItem()
         let helpMenuSearch = NSMenuItem()

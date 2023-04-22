@@ -41,7 +41,7 @@ install_framework()
 
   if [ -L "${source}" ]; then
     echo "Symlinked..."
-    source="$(readlink "${source}")"
+    source="$(readlink -f "${source}")"
   fi
 
   if [ -d "${source}/${BCSYMBOLMAP_DIR}" ]; then
@@ -198,6 +198,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftUISliders/SwiftUISliders.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON-framework/SwiftyJSON.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Then-framework/Then.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Throttler/Throttler.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Watchdog/Watchdog.framework"
@@ -231,6 +232,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftUISliders/SwiftUISliders.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON-framework/SwiftyJSON.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Then-framework/Then.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Throttler/Throttler.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Watchdog/Watchdog.framework"

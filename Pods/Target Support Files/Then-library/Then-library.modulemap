@@ -1,0 +1,6 @@
+module Then {
+  umbrella header "Then-library-umbrella.h"
+
+  export *
+  module * { export * }
+}

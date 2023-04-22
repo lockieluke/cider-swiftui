@@ -22,8 +22,6 @@ class AppWindow: NSObject, NSWindowDelegate {
     init(discordRPCModal: DiscordRPCModal, nativeUtilsWrapper: NativeUtilsWrapper) {
         let activeScreen = NSScreen.activeScreen
         
-        let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false)
-        
         let discordRPCModal = DiscordRPCModal()
         let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback)
@@ -36,28 +34,31 @@ class AppWindow: NSObject, NSWindowDelegate {
             .environmentObject(discordRPCModal)
             .environmentObject(nativeUtilsWrapper)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
-        window.contentViewController = NSHostingController(rootView: contentView)
-        window.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
-        window.isOpaque = true
-        window.backgroundColor = .clear
-        window.titlebarAppearsTransparent = true
-        window.titleVisibility = .hidden
-        window.title = Bundle.main.displayName
+        
+        let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false).then {
+            $0.contentViewController = NSHostingController(rootView: contentView)
+            $0.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
+            $0.isOpaque = true
+            $0.backgroundColor = .clear
+            $0.titlebarAppearsTransparent = true
+            $0.titleVisibility = .hidden
+            $0.title = Bundle.main.displayName
+            
+            let toolbar = NSToolbar()
+            $0.showsToolbarButton = false
+            $0.toolbar = toolbar
+            
+            var pos = NSPoint()
+            pos.x = activeScreen.visibleFrame.midX
+            pos.y = activeScreen.visibleFrame.midY
+            $0.setFrameOrigin(pos)
+            $0.isReleasedWhenClosed = false
+            $0.center()
+        }
         
         defer {
             window.delegate = self
         }
-        
-        let toolbar = NSToolbar()
-        window.showsToolbarButton = false
-        window.toolbar = toolbar
-        
-        var pos = NSPoint()
-        pos.x = activeScreen.visibleFrame.midX
-        pos.y = activeScreen.visibleFrame.midY
-        window.setFrameOrigin(pos)
-        window.isReleasedWhenClosed = false
-        window.center()
         
         let appMenu = AppMenu(window,
                               mkModal: mkModal,
