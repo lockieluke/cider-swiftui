@@ -13,12 +13,17 @@ plugin 'cocoapods-open'
 
 pod 'Periphery'
 
+def shared_pods
+  pod 'SwiftyUtils'
+  pod 'SwiftyJSON'
+end
+
 target 'Cider' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for Cider
-  pod 'SwiftyJSON'
+  shared_pods
   pod 'Introspect'
   pod 'Starscream'
   pod 'SDWebImageSwiftUI'
@@ -27,7 +32,6 @@ target 'Cider' do
   pod 'Watchdog'
   pod 'Alamofire'
   pod 'WrappingHStack'
-  pod 'Then'
   pod 'UIImageColors', :modular_headers => true
   # Pods installed with coke, run `coke install` first
   pod "Settings", :path => '.coke/pods/sindresorhus/Settings'
@@ -43,11 +47,9 @@ target 'Cider' do
 end
 
 target 'CiderPlaybackAgent' do
-  # own private fork of Swifter
+  shared_pods
   pod 'Swifter'
   pod 'ArgumentParserKit'
-  pod 'SwiftyJSON'
-  pod 'Then'
 end
 
 post_install do |installer|

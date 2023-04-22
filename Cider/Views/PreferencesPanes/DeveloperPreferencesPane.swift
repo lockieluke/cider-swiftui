@@ -76,7 +76,7 @@ struct DeveloperPreferencesPane: View {
                             Memory: \(ProcessInfo.processInfo.physicalMemory / 1024 / 1024 / 1024) GB
                             Serial Number: \(Diagnostic.macSerialNumber ?? "Unable to retrieve serial number")
                             OS: \(Diagnostic.macOSName) \(Diagnostic.macOSFullVersionString)
-                            Cider: \(Bundle.main.version)
+                            Cider: \(Bundle.main.appVersion)
                             """)
                         }
                     }

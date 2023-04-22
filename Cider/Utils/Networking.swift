@@ -165,7 +165,7 @@ class NetworkingProvider {
     
     func request(_ endpoint: String, method: HTTPMethod = .GET, headers: [String : String]? = nil, body: [String : Any]? = nil, bodyContentType: String = "application/x-www-form-urlencoded", acceptContentType: String = "application/json") async throws -> HTTPResponse {
         var newHeaders = self.defaultHeaders
-        newHeaders.merge(dict: self.defaultHeaders)
+        newHeaders.merge(with: newHeaders, self.defaultHeaders)
         guard let urlString = self.baseURL.appendingPathComponent(endpoint).absoluteString.removingPercentEncoding else {
             throw NSError(domain: "Failed to compose URL String", code: 1)
         }

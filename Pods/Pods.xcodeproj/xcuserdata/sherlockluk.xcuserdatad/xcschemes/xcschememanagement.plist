@@ -164,12 +164,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Then-framework.xcscheme</key>
+		<key>SwiftyUtils-framework.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Then-library.xcscheme</key>
+		<key>SwiftyUtils-library.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

@@ -1,0 +1,1237 @@
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/Swift/Data/DataExtension.swift b/Pods/SwiftyUtils/Sources/Extensions/Swift/Data/DataExtension.swift
+index db769a1..282f71c 100644
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/Swift/Data/DataExtension.swift
++++ b/Pods/SwiftyUtils/Sources/Extensions/Swift/Data/DataExtension.swift
+@@ -66,22 +66,22 @@ extension Data {
+     ///   - spaces: Boolean determining if there should be spaces inserted every 8 characters
+     /// - Returns: String with hex encoded data
+     public func toHexString(hexLeader: Bool = false, spaces: Bool = false) -> String {
+-        let count = self.count / MemoryLayout<UInt8>.stride
++//        let count = self.count / MemoryLayout<UInt8>.stride
+ 
+         var hexString = ""
+         if hexLeader {
+             hexString = "0x"
+         }
+ 
+-        self.withUnsafeBytes { bytes in
+-            for index in 0..<count {
+-                if spaces && (index % 4) == 0 && index != 0 && index != (count - 1) {
+-                    hexString += " "
+-                }
+-                hexString += String(format: "%02X", bytes[index])
+-            }
+-        }
+-        return hexString
++//        self.withUnsafeBytes { bytes in
++//            for index in 0..<count {
++//                if spaces && (index % 4) == 0 && index != 0 && index != (count - 1) {
++//                    hexString += " "
++//                }
++//                hexString += String(format: "%02X", bytes[index])
++//            }
++//        }
++        return self.map { String(format: hexString, $0) }.joined()
+     }
+ 
+     /// Provides the data as an array of UInt8 bytes for easy manipulation.
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIAlertController/UIAlertControllerExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIAlertController/UIAlertControllerExtension.swift
+deleted file mode 100644
+index ceeea19..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIAlertController/UIAlertControllerExtension.swift
++++ /dev/null
+@@ -1,81 +0,0 @@
+-//
+-//  Created by Tom Baranes on 10/05/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Initializers
+-
+-extension UIAlertController {
+-
+-    /// Create a new `UIAlertController` with a default button.
+-    /// - Parameters:
+-    ///   - title: The alert's title.
+-    ///   - title: The alert's message. Default value is nil.
+-    ///   - defaultActionButtonTitle: The default alert action button's title. Default value is `OK`
+-    ///   - defaultActionButtonStyle: The default alert action button's style. Default value is `.default`
+-    ///   - tintColor: The alert's tint color. Default value is `nil`
+-    /// - Returns: The `UIAlertController` created.
+-    @objc
+-    public convenience init(title: String,
+-                            message: String? = nil,
+-                            defaultActionButtonTitle: String = "OK",
+-                            defaultActionButtonStyle: UIAlertAction.Style = .default,
+-                            tintColor: UIColor? = nil) {
+-        self.init(title: title, message: message, preferredStyle: .alert)
+-        let defaultAction = UIAlertAction(title: defaultActionButtonTitle,
+-                                          style: defaultActionButtonStyle,
+-                                          handler: nil)
+-        addAction(defaultAction)
+-        if let color = tintColor {
+-            view.tintColor = color
+-        }
+-    }
+-
+-}
+-
+-// MARK: - Show
+-
+-extension UIAlertController {
+-
+-    /// Show the alert controller from the top view controller.
+-    /// - Parameters:
+-    ///   - animated: true or false, default value is true.
+-    ///   - completion: Block called once the alert has been presented.
+-    @objc
+-    public func show(animated: Bool = true, completion: (() -> Void)? = nil) {
+-        UIApplication.shared.topViewController()?.present(self, animated: animated, completion: completion)
+-    }
+-
+-}
+-
+-// MARK: - Actions
+-
+-extension UIAlertController {
+-
+-    /// Add an action to the alert controller.
+-    /// - Parameters:
+-    ///   - title: The action's title.
+-    ///   - style: The action style. Default value is `.default`
+-    ///   - isEnabled: Indicates if the action button is enabeld or not.
+-    ///   - handler: An optional block called when the buton is pressed.
+-    ///              The block takes one parameter corresponding to the action pressed.
+-    ///              Default value is nil.
+-    /// - Returns: The `UIAlertAction` created.
+-    @discardableResult
+-    public func addAction(title: String,
+-                          style: UIAlertAction.Style = .default,
+-                          isEnabled: Bool = true,
+-                          handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+-        let action = UIAlertAction(title: title, style: style, handler: handler)
+-        action.isEnabled = isEnabled
+-        addAction(action)
+-        return action
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIApplication/UIApplicationExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIApplication/UIApplicationExtension.swift
+deleted file mode 100644
+index 72e8e48..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIApplication/UIApplicationExtension.swift
++++ /dev/null
+@@ -1,71 +0,0 @@
+-//
+-//  Created by Tom Baranes on 10/05/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - ViewController
+-
+-extension UIApplication {
+-
+-    /// Get the top most visible view controller currently shown.
+-    /// - Parameter baseVC: Optional view controller used to start the research of the top most visible.
+-    ///                     Default value is `UIApplication.shared.keyWindow?.rootViewController`
+-    /// - Returns: The top most view controller found, otherwise nil.
+-    public func topViewController(from baseVC: UIViewController? = UIApplication.shared.keyWindow?.rootViewController)
+-                                  -> UIViewController? {
+-        guard let baseVC = baseVC else {
+-            return nil
+-        }
+-
+-        if let nav = baseVC as? UINavigationController {
+-            return topViewController(from: nav.visibleViewController)
+-        } else if let tab = baseVC as? UITabBarController, let selected = tab.selectedViewController {
+-            return topViewController(from: selected)
+-        } else if let presented = baseVC.presentedViewController {
+-            return topViewController(from: presented)
+-        }
+-        return baseVC
+-    }
+-
+-}
+-
+-// MARK: - Open
+-
+-@available(iOS 10.0, tvOS 10.0, *)
+-extension UIApplication {
+-
+-    /// Open app settings
+-    public func openAppSettings() {
+-        guard let url = URL(string: UIApplication.openSettingsURLString) else {
+-            return
+-        }
+-        open(url, options: [:], completionHandler: nil)
+-    }
+-
+-    /// Open app review page
+-    /// - Parameter url: `URL` App page url finishing with `write-review`
+-    public func openAppStoreReviewPage(_ url: URL) {
+-        DispatchQueue.main.async {
+-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+-        }
+-    }
+-
+-}
+-
+-// MARK: - AppDelegate
+-
+-extension UIApplication {
+-
+-    /// Get the UIApplication delegate
+-    /// - Parameter type: The application delegate type.
+-    /// - Returns: The app delegate found casted in the right type. If none of this type found then returns nil.
+-    public static func delegate<T: UIApplicationDelegate>(_ type: T.Type) -> T? {
+-        UIApplication.shared.delegate as? T
+-    }
+-
+-}
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIButton/UIButtonExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIButton/UIButtonExtension.swift
+deleted file mode 100644
+index 5dde75d..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIButton/UIButtonExtension.swift
++++ /dev/null
+@@ -1,28 +0,0 @@
+-//
+-//  UIButtonExtension.swift
+-//  SwiftyUtils iOS
+-//
+-//  Created by Tom Baranes on 25/04/2020.
+-//  Copyright © 2020 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-@available(iOS 9.0, *)
+-extension UIButton {
+-
+-    /// Add a right image with custom offset to the current button.
+-    /// - Parameters:
+-    ///     - image: The image that will be added to the button.
+-    ///     - offset: The trailing margin that will be added between the image and the button's right border.
+-    public func addRightImage(_ image: UIImage?, offset: CGFloat) {
+-        setImage(image, for: .normal)
+-        imageView?.translatesAutoresizingMaskIntoConstraints = false
+-        imageView?.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0.0).isActive = true
+-        imageView?.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset).isActive = true
+-    }
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UICollectionViewCell/UICollectionViewCellExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UICollectionViewCell/UICollectionViewCellExtension.swift
+deleted file mode 100644
+index 2c6315b..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UICollectionViewCell/UICollectionViewCellExtension.swift
++++ /dev/null
+@@ -1,61 +0,0 @@
+-//
+-//  UICollectionViewCell.swift
+-//  SwiftyUtils iOS
+-//
+-//  Created by Tom Baranes on 25/04/2020.
+-//  Copyright © 2020 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS)
+-
+-import UIKit
+-
+-extension UICollectionViewCell {
+-
+-    /// Apply corner radius to the cell.
+-    /// - Parameters:
+-    ///     - radius: The radius that will be applied to the cell.
+-    public func applyCornerRadius(_ radius: CGFloat) {
+-        contentView.layer.cornerRadius = radius
+-        contentView.layer.masksToBounds = true
+-    }
+-
+-}
+-
+-// MARK: - Animations
+-
+-extension UICollectionViewCell {
+-
+-    /// Configure and animate the cell animation, mainly used when the cell is highlighted.
+-    /// - Parameters:
+-    ///     - shouldScale: Either the animation should do a scale animation or not.
+-    ///     - duration: The animation duration. Default value is `0.35`
+-    ///     - transformScale: The transform scale delta. Default value is `0.97`
+-    ///     - damping: The damping ratio for the spring animation as it approaches its quiescent state.
+-    ///                Default value is `0.7`
+-    ///     - options: A mask of options indicating how you want to perform the animations. Default value is empty.
+-    ///     - delay: The delay duration before starting the animation. Default value is `0.0`
+-    ///     - velocity: `CGFloat`, default is `0.0`
+-    ///     - completion: An optional block called once the animation did finish. Default value is nil.
+-    public func animate(scale: Bool,
+-                        duration: TimeInterval = 0.35,
+-                        transformScale: CGFloat = 0.97,
+-                        damping: CGFloat = 0.7,
+-                        options: UIView.AnimationOptions = [],
+-                        delay: TimeInterval = 0.0,
+-                        velocity: CGFloat = 0.0,
+-                        completion: ((Bool) -> Void)? = nil) {
+-        UIView.animate(withDuration: duration,
+-                       delay: delay,
+-                       usingSpringWithDamping: damping,
+-                       initialSpringVelocity: velocity,
+-                       options: options,
+-                       animations: { [unowned self] in
+-                        let scaleTransform = CGAffineTransform(scaleX: transformScale, y: transformScale)
+-                        self.contentView.transform = scale ? scaleTransform : .identity
+-            }, completion: completion)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIDevice/UIDeviceExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIDevice/UIDeviceExtension.swift
+deleted file mode 100644
+index 5616a11..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIDevice/UIDeviceExtension.swift
++++ /dev/null
+@@ -1,103 +0,0 @@
+-//
+-//  Created by Tom Baranes on 24/04/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Device information
+-
+-extension UIDevice {
+-
+-    /// Generate a random uuid string.
+-    public class var idForVendor: String? {
+-        UIDevice.current.identifierForVendor?.uuidString
+-    }
+-
+-    /// Returns the systeme name.
+-    public class func systemName() -> String {
+-        UIDevice.current.systemName
+-    }
+-
+-    /// Returns the systeme version.
+-    @objc
+-    public class func systemVersion() -> String {
+-        UIDevice.current.systemVersion
+-    }
+-
+-    /// Returns the device name.
+-    public class var deviceName: String {
+-        UIDevice.current.name
+-    }
+-
+-    /// Returns the device language.
+-    public class var deviceLanguage: String {
+-        Bundle.main.preferredLocalizations[0]
+-    }
+-
+-    /// Check if the device is either a Phone or not.
+-    @objc public class var isPhone: Bool {
+-        UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone
+-    }
+-
+-    /// Check if the device is either a Pad or not.
+-    @objc public class var isPad: Bool {
+-        UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
+-    }
+-
+-}
+-
+-// MARK: - Version
+-
+-extension UIDevice {
+-
+-    /// Check if the version is equal to a specified one.
+-    /// - Parameter version: The version to compare with.
+-    /// - Returns: true if the version is equal to the specified one, otherwise false.
+-    public class func isVersion(_ version: Float) -> Bool {
+-        systemFloatVersion >= version && systemFloatVersion < (version + 1.0)
+-    }
+-
+-    /// Check if the version is equal or later to a specified one.
+-    /// - Parameter version: The version to compare with.
+-    /// - Returns: true if the version is equal or superior to the specified one, otherwise false.
+-    public class func isVersionOrLater(_ version: Float) -> Bool {
+-        systemFloatVersion >= version
+-    }
+-
+-    /// Check if the version is equal or earlier to a specified one.
+-    /// - Parameter version: The version to compare with.
+-    /// - Returns: true if the version is equal or inferior to the specified one, otherwise false.
+-    public class func isVersionOrEarlier(_ version: Float) -> Bool {
+-        systemFloatVersion < (version + 1.0)
+-    }
+-
+-    private class var systemFloatVersion: Float {
+-        (systemVersion() as NSString).floatValue
+-    }
+-
+-}
+-
+-// MARK: - Rotation
+-
+-#if os(iOS)
+-extension UIDevice {
+-
+-    /// Force the device rotation.
+-    /// - Parameter orientation: The orientation that the device will be forced to.
+-    public class func forceRotation(_ orientation: UIInterfaceOrientation) {
+-        UIDevice.current.forceRotation(orientation)
+-    }
+-
+-    /// Force the device rotation.
+-    /// - Parameter orientation: The orientation that the device will be forced to.
+-    public func forceRotation(_ orientation: UIInterfaceOrientation) {
+-        setValue(orientation.rawValue, forKey: "orientation")
+-    }
+-
+-}
+-#endif
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIFont/UIFontExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIFont/UIFontExtension.swift
+deleted file mode 100644
+index 8734247..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIFont/UIFontExtension.swift
++++ /dev/null
+@@ -1,40 +0,0 @@
+-//
+-//  UIFontExtension.swift
+-//  SwiftyUtils iOS
+-//
+-//  Created by Tom Baranes on 26/04/2020.
+-//  Copyright © 2020 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-extension UIFont {
+-
+-    /// A utility object for obtaining custom fonts that scale to support Dynamic Type.
+-    /// - Parameters:
+-    ///   - style: The TextStyle that will apply to the font.
+-    ///   - traits: Optional symbolic traits applied to the font.
+-    ///   - sizeCategory: Constants indicating the preferred size of your content.
+-    /// - returns: The dynamic font created.
+-    @available(iOS 11.0, tvOS 11.0, *)
+-    public class func dynamicStyle(_ style: UIFont.TextStyle,
+-                                   traits: UIFontDescriptor.SymbolicTraits?,
+-                                   sizeCategory: UIContentSizeCategory = .large) -> UIFont {
+-        let traitcollection = UITraitCollection(preferredContentSizeCategory: sizeCategory)
+-        let defaultTraitCollection = UITraitCollection(traitsFrom: [UIScreen.main.traitCollection, traitcollection])
+-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: style,
+-                                                                  compatibleWith: defaultTraitCollection)
+-        let fontDescriptor: UIFont
+-        if let traits = traits, let traitsDescriptor = descriptor.withSymbolicTraits(traits) {
+-            fontDescriptor = UIFont(descriptor: traitsDescriptor, size: 0)
+-        } else {
+-            fontDescriptor = UIFont(descriptor: descriptor, size: 0)
+-        }
+-        return UIFontMetrics(forTextStyle: style).scaledFont(for: fontDescriptor)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIImage/UIImageExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIImage/UIImageExtension.swift
+deleted file mode 100644
+index 1bf005c..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIImage/UIImageExtension.swift
++++ /dev/null
+@@ -1,105 +0,0 @@
+-//
+-//  Created by Tom Baranes on 24/04/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if !os(macOS)
+-
+-import UIKit
+-
+-// MARK: Initializer
+-
+-extension UIImage {
+-
+-    /// Create an image from a `Color`.
+-    /// - Parameter color: The color that will be used to create the image.
+-    /// - Returns: The colored image created.
+-    @objc
+-    public convenience init(color: UIColor?) {
+-        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+-        color?.setFill()
+-        UIRectFill(rect)
+-        let image = UIGraphicsGetImageFromCurrentImageContext()
+-        UIGraphicsEndImageContext()
+-        self.init(cgImage: (image?.cgImage!)!)
+-    }
+-
+-}
+-
+-// MARK: - Colors
+-
+-extension UIImage {
+-
+-    /// Fill an image with a color.
+-    /// - Parameter color: The color used to fill the image.
+-    /// - Returns: The image colorized.
+-    @objc
+-    public func filled(with color: UIColor?) -> UIImage {
+-        guard let color = color else {
+-            return self
+-        }
+-
+-        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+-        guard let context = UIGraphicsGetCurrentContext(), let cgImage = self.cgImage else {
+-            return self
+-        }
+-
+-        color.setFill()
+-        context.translateBy(x: 0, y: size.height)
+-        context.scaleBy(x: 1.0, y: -1.0)
+-        context.setBlendMode(.normal)
+-
+-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+-        context.clip(to: rect, mask: cgImage)
+-        context.fill(rect)
+-
+-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+-        UIGraphicsEndImageContext()
+-        return newImage ?? self
+-    }
+-
+-}
+-
+-// MARK: - Transform
+-
+-#if !os(watchOS)
+-extension UIImage {
+-
+-    /// Combine this image with another one.
+-    /// - Parameter image: The image that will be combined with the current one.
+-    /// - Returns: The image resulting from the both image combined together.
+-    public func combined(with image: UIImage) -> UIImage? {
+-        let finalSize = CGSize(width: max(size.width, image.size.width),
+-                               height: max(size.height, image.size.height))
+-        var finalImage: UIImage?
+-
+-        UIGraphicsBeginImageContextWithOptions(finalSize, false, UIScreen.main.scale)
+-        draw(at: CGPoint(x: (finalSize.width - size.width) / 2, y: (finalSize.height - size.height) / 2))
+-        image.draw(at: CGPoint(x: (finalSize.width - image.size.width) / 2,
+-                               y: (finalSize.height - image.size.height) / 2))
+-        finalImage = UIGraphicsGetImageFromCurrentImageContext()
+-        UIGraphicsEndImageContext()
+-        return finalImage
+-    }
+-
+-}
+-#endif
+-
+-// MARK: - RenderingMode
+-
+-extension UIImage {
+-
+-    /// Returns the image with a rendering mode set to `original`.
+-    public var original: UIImage {
+-        withRenderingMode(.alwaysOriginal)
+-    }
+-
+-    /// Returns the image with a rendering mode set to `template`.
+-    public var template: UIImage {
+-        withRenderingMode(.alwaysTemplate)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UILabel/UILabelExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UILabel/UILabelExtension.swift
+deleted file mode 100644
+index 642ba32..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UILabel/UILabelExtension.swift
++++ /dev/null
+@@ -1,98 +0,0 @@
+-//
+-//  Created by Tom Baranes on 16/11/2016.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Text style
+-
+-extension UILabel {
+-
+-    /// Set the label line height multiple.
+-    ///
+-    /// The natural line height of the receiver is multiplied by this factor (if positive)
+-    /// before being constrained by minimum and maximum line height.
+-    ///
+-    /// - Parameter lineHeight: The line height multiple that will be applied to the label.
+-    public func setLineHeight(_ lineHeight: CGFloat) {
+-        let paragraphStyle = NSMutableParagraphStyle()
+-        paragraphStyle.lineSpacing = 1.0
+-        paragraphStyle.lineHeightMultiple = lineHeight
+-        paragraphStyle.alignment = textAlignment
+-        paragraphStyle.lineBreakMode = lineBreakMode
+-
+-        let attrString = NSMutableAttributedString(string: text!)
+-        let range = NSRange(location: 0, length: attrString.length)
+-        attrString.addAttribute(.font, value: font!, range: range)
+-        attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+-        attributedText = attrString
+-    }
+-
+-}
+-
+-// MARK: - Text
+-
+-extension UILabel {
+-
+-    /// Set the label's text with a custom truncated text (instead of `...`)  if needed.
+-    /// - Parameters:
+-    ///   - text: The text that will set to the label.
+-    ///   - truncatedText: The text that will be used in to replace the `...` if needed.
+-    public func setText(_ text: String, truncatedText: String) {
+-        var text = text
+-        self.text = text
+-        while isTruncated() && text.isNotEmpty {
+-            text = String(text.dropLast())
+-            self.text = text + truncatedText
+-        }
+-    }
+-
+-}
+-
+-// MARK: - Misc
+-
+-extension UILabel {
+-
+-    /// Check if the text is truncated or not.
+-    /// - Returns: true if the text is truncated, otherwise false.
+-    public func isTruncated() -> Bool {
+-        guard let string = text else {
+-            return false
+-        }
+-
+-        let rectSize = CGSize(width: self.width, height: .greatestFiniteMagnitude)
+-        let size: CGSize = (string as NSString).boundingRect(with: rectSize,
+-                                                             options: .usesLineFragmentOrigin,
+-                                                             attributes: [NSAttributedString.Key.font: font!],
+-                                                             context: nil).size
+-        return (size.height > self.bounds.size.height)
+-    }
+-
+-}
+-
+-// MARK: - Fonts
+-
+-extension UILabel {
+-
+-    /// Set a dynamic font to the label.
+-    /// - Parameters:
+-    ///   - style: The UIFont.TextStyle that will set to the label.
+-    ///   - traits: Optional symbolic traits applied to the font. Default value is nil.
+-    ///   - minimumScaleFactor: The minimum scale factor supported for the label’s text. Default value is 0.8.
+-    @available(iOS 11.0, tvOS 11.0, *)
+-    public func configureDynamicStyle(_ style: UIFont.TextStyle,
+-                                      traits: UIFontDescriptor.SymbolicTraits? = nil,
+-                                      minimumScaleFactor: CGFloat = 0.8) {
+-        adjustsFontForContentSizeCategory = true
+-        adjustsFontSizeToFitWidth = true
+-        allowsDefaultTighteningForTruncation = true
+-        self.minimumScaleFactor = minimumScaleFactor
+-        font = UIFont.dynamicStyle(style, traits: traits)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIScreen/UIScreenExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIScreen/UIScreenExtension.swift
+deleted file mode 100644
+index f4f911f..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIScreen/UIScreenExtension.swift
++++ /dev/null
+@@ -1,63 +0,0 @@
+-//
+-//  Created by Tom Baranes on 24/04/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Size
+-
+-extension UIScreen {
+-
+-    /// Get the screen's size.
+-    @objc public class var size: CGSize {
+-        CGSize(width: width, height: height)
+-    }
+-
+-    /// Get the screen's width.
+-    @objc public class var width: CGFloat {
+-        UIScreen.main.bounds.size.width
+-    }
+-
+-    /// Get the screen's height..
+-    @objc public class var height: CGFloat {
+-        UIScreen.main.bounds.size.height
+-    }
+-
+-}
+-
+-#if os(iOS)
+-
+-// MARK: - StatusBar
+-
+-extension UIScreen {
+-
+-    /// Get the status bar height.
+-    /// - Returns: The status bar height.
+-    public class var statusBarHeight: CGFloat {
+-        UIApplication.shared.statusBarFrame.height
+-    }
+-
+-    /// Get the screen height without the status bar.
+-    public class var heightWithoutStatusBar: CGFloat {
+-        currentOrientation.isPortrait ? height - statusBarHeight :
+-            UIScreen.main.bounds.size.width - statusBarHeight
+-    }
+-
+-}
+-
+-// MARK: - Orientation
+-
+-extension UIScreen {
+-
+-    /// Get the current screen orientation.
+-    @objc public class var currentOrientation: UIInterfaceOrientation {
+-        UIApplication.shared.statusBarOrientation
+-    }
+-
+-}
+-#endif
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIStoryboard/UIStoryboardExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIStoryboard/UIStoryboardExtension.swift
+deleted file mode 100644
+index d6bf1d4..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIStoryboard/UIStoryboardExtension.swift
++++ /dev/null
+@@ -1,23 +0,0 @@
+-//
+-//  Created by Tom Baranes on 23/06/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-extension UIStoryboard {
+-
+-    /// Get the main application storyboard.
+-    public class var main: UIStoryboard? {
+-        let bundle = Bundle.main
+-        guard let storyboardName = bundle.object(forInfoDictionaryKey: "UIMainStoryboardFile") as? String else {
+-            return nil
+-        }
+-        return UIStoryboard(name: storyboardName, bundle: bundle)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UISwitch/UISwitchExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UISwitch/UISwitchExtension.swift
+deleted file mode 100644
+index a491765..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UISwitch/UISwitchExtension.swift
++++ /dev/null
+@@ -1,22 +0,0 @@
+-//
+-//  Created by Tom Baranes on 23/06/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS)
+-
+-import UIKit
+-
+-// MARK: - Misc
+-
+-extension UISwitch {
+-
+-    /// Toggle a switch state.
+-    /// - Parameter animated: true if you want to animate the toggle, otherwise false.
+-    public func toggle(animated: Bool = true) {
+-        self.setOn(!isOn, animated: animated)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UITextField/UITextFieldExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UITextField/UITextFieldExtension.swift
+deleted file mode 100644
+index 74981e9..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UITextField/UITextFieldExtension.swift
++++ /dev/null
+@@ -1,74 +0,0 @@
+-//
+-//  Created by Tom Baranes on 18/01/2017.
+-//  Copyright © 2017 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Clear button
+-
+-extension UITextField {
+-
+-    /// Add a custom clear button to the textfield.
+-    /// - Parameter image: The image representing the clear button.
+-    public func setClearButton(with image: UIImage) {
+-        let clearButton = UIButton(type: .custom)
+-        clearButton.setImage(image, for: .normal)
+-        clearButton.frame = CGRect(origin: .zero, size: CGSize(width: self.height, height: self.height))
+-        clearButton.contentMode = .right
+-        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+-        clearButtonMode = .never
+-
+-        rightView = clearButton
+-        rightViewMode = .whileEditing
+-    }
+-
+-    @objc
+-    func clear() {
+-        text = ""
+-        sendActions(for: .editingChanged)
+-    }
+-
+-}
+-
+-// MARK: - Placeholder
+-
+-extension UITextField {
+-
+-    /// Change the textfield's placeholder color.
+-    /// - Parameter color: The new placeholder's color.
+-    public func setPlaceHolderTextColor(_ color: UIColor) {
+-        guard let placeholder = placeholder, placeholder.isNotEmpty else {
+-            return
+-        }
+-        let attributes = [NSAttributedString.Key.foregroundColor: color]
+-        attributedPlaceholder = NSAttributedString(string: placeholder,
+-                                                   attributes: attributes)
+-    }
+-
+-}
+-
+-// MARK: - Fonts
+-
+-extension UITextField {
+-
+-    /// Set a dynamic font to the label.
+-    /// - Parameters:
+-    ///   - style: The UIFont.TextStyle that will set to the label.
+-    ///   - traits: Optional symbolic traits applied to the font. Default value is nil.
+-    ///   - adjustToFit: A Boolean value indicating whether the font size should be reduced
+-    ///                  in order to fit the text string into the text field’s bounding rectangle.
+-    @available(iOS 11.0, tvOS 11.0, *)
+-    public func configureDynamicStyle(_ style: UIFont.TextStyle,
+-                                      traits: UIFontDescriptor.SymbolicTraits? = nil,
+-                                      adjustToFit: Bool = true) {
+-        adjustsFontForContentSizeCategory = true
+-        adjustsFontSizeToFitWidth = adjustToFit
+-        font = UIFont.dynamicStyle(style, traits: traits)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UITextView/UITextViewExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UITextView/UITextViewExtension.swift
+deleted file mode 100644
+index d42a317..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UITextView/UITextViewExtension.swift
++++ /dev/null
+@@ -1,30 +0,0 @@
+-//
+-//  UITextViewExtension.swift
+-//  SwiftyUtils iOS Tests
+-//
+-//  Created by Tom Baranes on 26/04/2020.
+-//  Copyright © 2020 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Font
+-
+-extension UITextView {
+-
+-    /// Set a dynamic font to the label.
+-    /// - Parameters:
+-    ///   - style: The UIFont.TextStyle that will set to the label.
+-    ///   - traits: Optional symbolic traits applied to the font. Default value is nil.
+-    @available(iOS 11.0, tvOS 11.0, *)
+-    public func configureDynamicStyle(_ style: UIFont.TextStyle,
+-                                      traits: UIFontDescriptor.SymbolicTraits? = nil) {
+-        adjustsFontForContentSizeCategory = true
+-        font = UIFont.dynamicStyle(style, traits: traits)
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIView/UIViewExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIView/UIViewExtension.swift
+deleted file mode 100644
+index 0999462..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIView/UIViewExtension.swift
++++ /dev/null
+@@ -1,162 +0,0 @@
+-//
+-//  Created by Tom Baranes on 24/04/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Frame
+-
+-extension UIView {
+-
+-    /// Get or set the NSView's frame `x` value.
+-    public var x: CGFloat {
+-        get { frame.x }
+-        set { frame = frame.with(x: newValue) }
+-    }
+-
+-    /// Get or set the NSView's frame `y` value.
+-    public var y: CGFloat {
+-        get { frame.y }
+-        set { frame = frame.with(y: newValue) }
+-    }
+-
+-    /// Get or set the NSView's frame `width` value.
+-    public var width: CGFloat {
+-        get { frame.width }
+-        set { frame = frame.with(width: newValue) }
+-    }
+-
+-    /// Get or set the NSView's frame `height` value.
+-    public var height: CGFloat {
+-        get { frame.height }
+-        set { frame = frame.with(height: newValue) }
+-    }
+-}
+-
+-// MARK: - Corner Radius
+-
+-extension UIView {
+-
+-    /// Apply a corner radius to the view.
+-    /// - Parameter radius: The radius that will be applied to the view.
+-    /// - Parameter maskedCorners: The corners on which the radius will be applied. Default value is all corners.
+-    @available(iOS 11.0, tvOS 11.0, *)
+-    public func applyCornerRadius(_ radius: CGFloat, maskedCorners: CACornerMask = [.layerMaxXMaxYCorner,
+-                                                                                    .layerMaxXMinYCorner,
+-                                                                                    .layerMinXMaxYCorner,
+-                                                                                    .layerMinXMinYCorner]) {
+-        self.layer.cornerRadius = radius
+-        self.layer.maskedCorners = maskedCorners
+-        self.layer.masksToBounds = true
+-    }
+-
+-}
+-
+-// MARK: - Localizables
+-
+-extension UIView {
+-
+-    /// Automatically translate all the subviews using their text as localizable's key.
+-    @objc
+-    public func translateSubviews() {
+-        if subviews.isEmpty {
+-            return
+-        }
+-
+-        for subview in subviews {
+-            translate(subview)
+-            if #available(iOS 9.0, *), let stackView = subview as? UIStackView {
+-                stackView.arrangedSubviews.forEach {
+-                    self.translate($0)
+-                    $0.translateSubviews()
+-                }
+-            } else {
+-                subview.translateSubviews()
+-            }
+-        }
+-    }
+-
+-    private func translate(_ subview: UIView) {
+-        if let label = subview as? UILabel {
+-            label.text = NSLocalizedString(label.text ?? "", comment: "")
+-        } else if let textField = subview as? UITextField {
+-            textField.text = NSLocalizedString(textField.text ?? "", comment: "")
+-            textField.placeholder = NSLocalizedString(textField.placeholder ?? "", comment: "")
+-        } else if let textView = subview as? UITextView {
+-            textView.text = NSLocalizedString(textView.text, comment: "")
+-        } else if let button = subview as? UIButton {
+-            let states: [UIControl.State] = [.normal, .selected, .highlighted, .disabled, .application, .reserved]
+-            for state in states where button.title(for: state) != nil {
+-                button.setTitle(NSLocalizedString(button.title(for: state) ?? "", comment: ""), for: state)
+-            }
+-        }
+-    }
+-
+-}
+-
+-// MARK: - Find View
+-
+-extension UIView {
+-
+-    /// Find a subview using it's accessibility identifier. This is useful to test private view outlets.
+-    /// - Parameter identifier: The accessibility identifier to look for.
+-    /// - Returns: The view corresponding to the identifier, if none then it will return nil.
+-    public func findView(forIdentifier identifier: String) -> UIView? {
+-        if accessibilityIdentifier == identifier {
+-            return self
+-        }
+-
+-        if #available(iOS 9.0, *), let stackView = self as? UIStackView {
+-            return findView(in: stackView.arrangedSubviews, forIdentifier: identifier)
+-        }
+-        return findView(in: subviews, forIdentifier: identifier)
+-    }
+-
+-    private func findView(in views: [UIView], forIdentifier identifier: String) -> UIView? {
+-        for view in views {
+-            if let view = view.findView(forIdentifier: identifier) {
+-                return view
+-            }
+-        }
+-        return nil
+-    }
+-
+-}
+-
+-// MARK: - Constraints
+-
+-@available(iOS 9.0, *)
+-extension UIView {
+-
+-    /// Add constraints to its superview.
+-    /// - Parameters:
+-    ///   - edges: The edges where a new constraint will be added. Default value is `.all`.
+-    ///   - insets: The constant that will be applied to the new constraint.
+-    ///             For example, the edge `.top` constant will be equal to the inset `.top`.
+-    ///             Default value is `.zero`.
+-    public func addConstraints(to edges: UIRectEdge = .all, insets: UIEdgeInsets = .zero) {
+-        guard let superview = superview else {
+-            fatalError("No superview found, add your view in another before adding constraints.")
+-        }
+-
+-        translatesAutoresizingMaskIntoConstraints = false
+-        if edges.contains(.top) {
+-            topAnchor.constraint(equalTo: superview.topAnchor, constant: insets.top).isActive = true
+-        }
+-        if edges.contains(.bottom) {
+-            bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: -insets.bottom).isActive = true
+-        }
+-        if edges.contains(.left) {
+-            leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: insets.left).isActive = true
+-        }
+-        if edges.contains(.right) {
+-            trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: -insets.right).isActive = true
+-        }
+-    }
+-
+-}
+-
+-#endif
+diff --git a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIViewController/UIViewControllerExtension.swift b/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIViewController/UIViewControllerExtension.swift
+deleted file mode 100644
+index 2ea56a6..0000000
+--- a/cocoapods-patch-20230423-71248-8xc1st/SwiftyUtils/Sources/Extensions/UIKit/UIViewController/UIViewControllerExtension.swift
++++ /dev/null
+@@ -1,149 +0,0 @@
+-//
+-//  Created by Tom Baranes on 27/04/16.
+-//  Copyright © 2016 Tom Baranes. All rights reserved.
+-//
+-
+-#if os(iOS) || os(tvOS)
+-
+-import UIKit
+-
+-// MARK: - Navigation
+-
+-extension UIViewController {
+-
+-    /// Remove all the previous controllers from the navigation.
+-    /// - Parameter animated: If false, replace the view controllers without any animations,
+-    ///                       otherwise it will be animated.
+-    public func removePreviousControllers(animated: Bool = false) {
+-        navigationController?.setViewControllers([self], animated: animated)
+-    }
+-
+-}
+-
+-// MARK: - Misc
+-
+-extension UIViewController {
+-
+-    /// Either the viewcontroller is visible or not.
+-    public var isVisible: Bool {
+-        self.isViewLoaded && view.window != nil
+-    }
+-
+-    /// Check if the view controller has been presented or not.
+-    /// - Returns: true if the controller is presented, otherwise false.
+-    public var isModal: Bool {
+-        presentingViewController?.presentedViewController == self ||
+-            navigationController?.presentingViewController?.presentedViewController == navigationController ||
+-            tabBarController?.presentingViewController is UITabBarController
+-    }
+-
+-}
+-
+-// MARK: - ChildVC
+-
+-@available(iOS 9.0, *)
+-extension UIViewController {
+-
+-    /// Add a child controller the current one.
+-    /// - Parameters:
+-    ///   - controller: The controller that will be added as a child.
+-    ///   - subview: The container view which will contain the child view controller.
+-    ///   - animated: If true, the addition will be animated.
+-    ///   - duration: The animation duration, if `animated` is false, that value is not used. Default value is `0.35`.
+-    ///   - options: The animation's options. If `animated` is false, that value is not used.
+-    ///             The default value is `[.curveEaseInOut, .transitionCrossDissolve]`.
+-    public func addChildController(_ controller: UIViewController,
+-                                   to subview: UIView,
+-                                   animated: Bool = true,
+-                                   duration: TimeInterval = 0.35,
+-                                   options: UIView.AnimationOptions = [.curveEaseInOut,
+-                                                                       .transitionCrossDissolve]) {
+-        addChild(controller)
+-        controller.view.frame = subview.frame
+-        controller.view.center = subview.center
+-        UIView.transition(with: subview,
+-                          duration: animated ? duration : 0,
+-                          options: options,
+-                          animations: {
+-                            subview.addSubview(controller.view)
+-        }, completion: nil)
+-
+-        controller.view.translatesAutoresizingMaskIntoConstraints = false
+-        NSLayoutConstraint.activate([
+-            controller.view.leftAnchor.constraint(equalTo: subview.leftAnchor),
+-            controller.view.rightAnchor.constraint(equalTo: subview.rightAnchor),
+-            controller.view.topAnchor.constraint(equalTo: subview.topAnchor),
+-            controller.view.bottomAnchor.constraint(equalTo: subview.bottomAnchor)])
+-
+-        controller.didMove(toParent: self)
+-        view.setNeedsLayout()
+-        view.layoutIfNeeded()
+-    }
+-
+-    /// Add a child controller the current one.
+-    /// - Parameters:
+-    ///   - child: The controller that will be added as a child.
+-    ///   - containerView: The container view which will contain the child view controller.
+-    public func addChildController(_ child: UIViewController, in containerView: UIView) {
+-        guard containerView.isDescendant(of: view) else {
+-            return
+-        }
+-
+-        addChild(child)
+-        containerView.addSubview(child.view)
+-        child.view.frame = containerView.frame
+-        child.view.center = containerView.center
+-        child.view.addConstraints()
+-        child.view.setNeedsLayout()
+-        child.view.layoutIfNeeded()
+-        child.didMove(toParent: self)
+-    }
+-
+-    /// Remove a child controller.
+-    /// - Parameter child: The controller to remove.
+-    public func removeChildController(_ child: UIViewController) {
+-        child.willMove(toParent: nil)
+-        child.view.removeFromSuperview()
+-        child.removeFromParent()
+-    }
+-
+-}
+-
+-#endif
+-
+-#if os(iOS)
+-
+-import SafariServices
+-
+-// MARK: - Safari View Controller
+-
+-@available(iOS 10.0, *)
+-extension UIViewController {
+-
+-    /// open Safari view controller with URL and options
+-    /// - Parameters:
+-    ///     - url: `URL`
+-    ///     - delegate: `SFSafariViewControllerDelegate`, you may use `SafariViewControllerDelegate`
+-    ///     - tintColor: `UIColor`, default is `.black`
+-    ///     - barTintColor: `UIColor`, default is `.white`
+-    ///     - barCollapsing: `Bool`, default is `true` only available since iOS 11.0
+-    public func openSafariVC(withURL url: URL,
+-                             delegate: SFSafariViewControllerDelegate,
+-                             tintColor: UIColor = .black,
+-                             barTintColor: UIColor = .white,
+-                             barCollapsing: Bool = true) {
+-        let safariViewController = SFSafariViewController(url: url)
+-        safariViewController.delegate = delegate
+-        safariViewController.preferredControlTintColor = tintColor
+-        safariViewController.preferredBarTintColor = barTintColor
+-        if #available(iOS 11.0, *) {
+-            safariViewController.configuration.barCollapsingEnabled = barCollapsing
+-        }
+-        DispatchQueue.main.async { [weak self] in
+-            self?.present(safariViewController, animated: true, completion: nil)
+-        }
+-    }
+-
+-}
+-
+-#endif

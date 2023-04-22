@@ -6,7 +6,7 @@ import Foundation
 import FirebaseCore
 import FirebaseAnalytics
 import Watchdog
-import Then
+import SwiftyUtils
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     
