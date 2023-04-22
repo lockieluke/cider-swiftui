@@ -11,6 +11,8 @@ plugin 'cocoapods-patch'
 plugin 'cocoapods-update-if-you-dare'
 plugin 'cocoapods-open'
 
+pod 'Periphery'
+
 target 'Cider' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!

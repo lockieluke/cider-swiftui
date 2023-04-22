@@ -760,6 +760,7 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - Periphery (2.12.3)
   - PromisesObjC (2.2.0)
   - RainbowSwift (4.0.1)
   - SDWebImage (5.15.5):
@@ -788,6 +789,7 @@ DEPENDENCIES:
   - FirebaseFirestore
   - InjectHotReload
   - Introspect
+  - Periphery
   - RainbowSwift
   - SDWebImageSwiftUI
   - Settings (from `.coke/pods/sindresorhus/Settings`)
@@ -824,6 +826,7 @@ SPEC REPOS:
     - leveldb-library
     - Libuv-gRPC
     - nanopb
+    - Periphery
     - PromisesObjC
     - RainbowSwift
     - SDWebImage
@@ -872,6 +875,7 @@ SPEC CHECKSUMS:
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  Periphery: aba292cd17e5bbb0a35d15f8c8e98df9580aacef
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   RainbowSwift: f39edd7a46322888c94336448add80def6d1ed68
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
@@ -887,6 +891,6 @@ SPEC CHECKSUMS:
   Watchdog: 622647e6bc5a55665e6dbae0b7831ad8d95abeab
   WrappingHStack: 5a5bf4dc6e06a2c7259aa79331c907d7ee32fc6d
 
-PODFILE CHECKSUM: de1ca79f26bc444a2cb9929a240ff05546a53f49
+PODFILE CHECKSUM: acd5ad9851a412238614280bf9cf1154668bc7a9
 
 COCOAPODS: 1.12.1

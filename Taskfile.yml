@@ -196,6 +196,11 @@ tasks:
     cmds:
       - yarn run fns/verify-and-install-toolchain
 
+  scan:unused-code:
+    desc: "Scan for unused code"
+    cmds:
+      - Pods/Periphery/periphery scan
+
   kill:cider-playback-agent:
     aliases: [ kill-cpa ]
     desc: "Kill a hanging CiderPlaybackAgent process"
