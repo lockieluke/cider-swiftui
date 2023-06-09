@@ -14,7 +14,11 @@ struct DeveloperPreferencesPane: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
+    #if DEBUG
     @Default(.debugOpenWebInspectorAutomatically) var openWebInspectorAutomatically
+    #else
+    @State private var openWebInspectorAutomatically = false
+    #endif
     
     var body: some View {
         Settings.Container(contentWidth: 450.0) {

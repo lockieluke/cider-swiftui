@@ -115,13 +115,16 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
         
         guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
-        guard let configStr = JSON([
-            "openWebInspectorAutomatically": Defaults[.debugOpenWebInspectorAutomatically]
-        ]).rawString(.utf8) else { fatalError("Failed to stringify config") }
+        var config = JSON([
+            "openWebInspectorAutomatically": false
+        ])
+        #if DEBUG
+        config["openWebInspectorAutomatically"].boolValue = Defaults[.debugOpenWebInspectorAutomatically]
+        #endif
         proc.arguments = [
             "--agent-port", String(agentPort),
             "--agent-session-id", "\"\(agentSessionId)\"",
-            "--config", configStr
+            "--config", config.rawString(.utf8)!
         ]
         proc.executableURL = execUrl
         proc.standardOutput = pipe

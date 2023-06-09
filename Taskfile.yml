@@ -109,12 +109,21 @@ tasks:
   run:xc:
     desc: "Run Cider"
     cmds:
-      - open $(xcodebuild -workspace Cider.xcworkspace -scheme Cider -sdk macosx -configuration Debug -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*")/Cider.app
+      - open $(xcodebuild -workspace Cider.xcworkspace -scheme Cider -sdk macosx -configuration Debug -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*")/*.app
 
   clean:xc:
     desc: "Clean Xcode build folder"
     cmds:
       - xcodebuild -workspace Cider.xcworkspace clean
+
+  build:dmg:
+    desc: "Build DMG for Cider (Dev).app"
+    vars:
+      CIDER_DMG: "dist/Cider.dmg"
+      DEBUG_CIDER_APP:
+        sh: xcodebuild -workspace Cider.xcworkspace -scheme Cider -sdk macosx -configuration Debug -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
+    cmds:
+      - open "{{.DEBUG_CIDER_APP}}"/*.app
 
   start:dev-server:
     dir: 'CiderDevUtils/'

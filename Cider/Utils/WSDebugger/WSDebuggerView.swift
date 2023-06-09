@@ -65,7 +65,11 @@ struct WSDebuggerView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var appWindowModal: AppWindowModal
     
+    #if DEBUG
     @Default(.debugHideFrequentWSRequests) var hideFrequentWSRequests
+    #else
+    @State private var hideFrequentWSRequests = false
+    #endif
     
     @State private var selectedWSTarget: WSTarget = .CiderPlaybackAgent
     
