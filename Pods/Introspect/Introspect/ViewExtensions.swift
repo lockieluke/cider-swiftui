@@ -120,7 +120,7 @@ extension View {
     /// Finds a `UIScrollView` from a `SwiftUI.ScrollView`, or `SwiftUI.ScrollView` child.
     public func introspectScrollView(customize: @escaping (UIScrollView) -> ()) -> some View {
         if #available(iOS 14, tvOS 14, *) {
-            return introspect(selector: TargetViewSelector.siblingOfTypeOrAncestor, customize: customize)
+            return introspect(selector: TargetViewSelector.siblingOrAncestorOrSiblingContainingOrAncestorChild, customize: customize)
         } else {
             return introspect(selector: TargetViewSelector.siblingContainingOrAncestor, customize: customize)
         }
@@ -187,11 +187,13 @@ extension View {
     }
     
     /// Finds a `UIColorWell` from a `SwiftUI.ColorPicker`
+    #if os(iOS)
     @available(iOS 14, *)
     @available(tvOS, unavailable)
     public func introspectColorWell(customize: @escaping (UIColorWell) -> ()) -> some View {
         introspect(selector: TargetViewSelector.siblingContaining, customize: customize)
     }
+    #endif
 }
 #endif
 
@@ -227,7 +229,7 @@ extension View {
     /// Finds a `NSScrollView` from a `SwiftUI.ScrollView`, or `SwiftUI.ScrollView` child.
     public func introspectScrollView(customize: @escaping (NSScrollView) -> ()) -> some View {
         if #available(macOS 11, *) {
-            return introspect(selector: TargetViewSelector.siblingOfTypeOrAncestor, customize: customize)
+            return introspect(selector: TargetViewSelector.siblingOrAncestorOrSiblingContainingOrAncestorChild, customize: customize)
         } else {
             return introspect(selector: TargetViewSelector.siblingContainingOrAncestor, customize: customize)
         }
