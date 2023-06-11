@@ -651,7 +651,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = "Cider Collective";
 				TargetAttributes = {
 					B700C17C28B920F10069FDF5 = {
@@ -990,6 +990,7 @@
 				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1052,6 +1053,7 @@
 				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1160,7 +1162,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRIP_STYLE = debugging;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cider/Cider-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
