@@ -146,6 +146,7 @@ build/
 #
 # NB: this is exclusive with OPTION 2 below
 xcuserdata/
+Pods/Pods.xcodeproj/xcuserdata/**/*
 
 # OPTION 2: ---------------------------------
 #     get rid of ALL personal settings, but KEEP SOME OF THEM
