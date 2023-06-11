@@ -32,8 +32,8 @@ struct AudioPreferencesPane: View {
     }
     
     var body: some View {
-        Preferences.Container(contentWidth: 450.0) {
-            Preferences.Section(title: "") {
+        Settings.Container(contentWidth: 450.0) {
+            Settings.Section(title: "") {
                 Group {
                     PrefSectionText("Playback Settings")
                     
@@ -52,7 +52,7 @@ struct AudioPreferencesPane: View {
                         }
                         
                         Text(audioQualityDescription)
-                            .preferenceDescription()
+                            .settingDescription()
                     }
                 }
                 .fixedSize(horizontal: false, vertical: true)

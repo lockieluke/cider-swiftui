@@ -11,7 +11,7 @@ struct GeneralPreferencesPane: View {
     @ObservedObject private var iO = Inject.observer
     
     var body: some View {
-        Preferences.Container(contentWidth: 450.0) {
+        Settings.Container(contentWidth: 450.0) {
             
         }
         .enableInjection()

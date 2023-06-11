@@ -146,8 +146,8 @@ class AppMenu {
     }
     
     @objc func showPreferences(_ sender: Any) {
-        PreferencesWindowController(
-            preferencePanes: [
+        SettingsWindowController(
+            panes: [
                 PreferencesPanes.GeneralPreferenceViewController(),
                 PreferencesPanes.AudioPreferencesViewController(
                     self.ciderPlayback
