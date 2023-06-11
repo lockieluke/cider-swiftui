@@ -5,4 +5,4 @@ schemes:
 targets:
 - Cider
 - CiderPlaybackAgent
-workspace: Cider.xcworkspace
+workspace: Cider.xcodeproj
