@@ -3,6 +3,7 @@
 //  
 
 import Foundation
+import AppKit
 import ArgumentParserKit
 import Swifter
 import SwiftyJSON

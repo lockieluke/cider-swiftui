@@ -3,8 +3,8 @@
 //  
 
 import SwiftUI
-import SwiftUISliders
-import InjectHotReload
+import Sliders
+import Inject
 import Throttler
 
 struct PlaybackBar: View {

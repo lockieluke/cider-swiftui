@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import InjectHotReload
+import Inject
 
 struct SidePane<HeaderChildren: View, Content: View>: View {
     

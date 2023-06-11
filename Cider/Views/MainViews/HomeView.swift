@@ -3,7 +3,7 @@
 //  
 
 import SwiftUI
-import InjectHotReload
+import Inject
 
 struct HomeView: View {
     

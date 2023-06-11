@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import InjectHotReload
+import Inject
 import Defaults
 
 struct QueueView: View {

@@ -3,7 +3,7 @@
 //  
 
 import SwiftUI
-import InjectHotReload
+import Inject
 import Defaults
 
 struct WSTrafficView: View {

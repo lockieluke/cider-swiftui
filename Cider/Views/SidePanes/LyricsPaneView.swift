@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import InjectHotReload
+import Inject
 import SwiftyJSON
 import WrappingHStack
 

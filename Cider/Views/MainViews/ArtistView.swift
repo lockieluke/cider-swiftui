@@ -9,7 +9,7 @@
 import SwiftUI
 import AttributedText
 import SDWebImageSwiftUI
-import InjectHotReload
+import Inject
 
 struct ArtistView: View {
     

@@ -8,7 +8,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import InjectHotReload
+import Inject
 
 struct QueueTrackView: View {
     

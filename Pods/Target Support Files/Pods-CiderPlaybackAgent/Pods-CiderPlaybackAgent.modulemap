@@ -1,6 +1,0 @@
-module Pods_CiderPlaybackAgent {
-  umbrella header "Pods-CiderPlaybackAgent-umbrella.h"
-
-  export *
-  module * { export * }
-}

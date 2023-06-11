@@ -1,1 +1,0 @@
-../../../Target Support Files/SwiftyUtils-library/SwiftyUtils-library-umbrella.h

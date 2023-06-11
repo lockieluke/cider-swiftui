@@ -4,7 +4,7 @@
 
 import SwiftUI
 import Throttler
-import InjectHotReload
+import Inject
 
 struct ContentView: View {
     

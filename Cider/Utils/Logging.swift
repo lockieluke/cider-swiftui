@@ -4,7 +4,7 @@
 
 import Foundation
 import Darwin
-import RainbowSwift
+import Rainbow
 
 enum SharedLoggers {
     case UIInteraction, DiscordRPC

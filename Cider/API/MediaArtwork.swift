@@ -3,6 +3,7 @@
 //  
 
 import Foundation
+import AppKit
 import SwiftyJSON
 
 struct MediaArtwork {

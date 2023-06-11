@@ -4,7 +4,7 @@
 
 import SwiftUI
 import Settings
-import InjectHotReload
+import Inject
 
 struct GeneralPreferencesPane: View {
     

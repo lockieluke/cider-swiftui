@@ -5,23 +5,15 @@
 import Foundation
 import FirebaseCore
 import FirebaseAnalytics
-import Watchdog
 import SwiftyUtils
 
 class AppDelegate : NSObject, NSApplicationDelegate {
     
     private var appWindow: AppWindow!
-    private var watchdog: Watchdog!
     private var discordRPCModal: DiscordRPCModal!
     private var nativeUtilsWrapper: NativeUtilsWrapper!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-#if DEBUG
-        if CommandLine.arguments.contains("--enable-watchdog") {
-            self.watchdog = Watchdog(threshold: 1.0, strictMode: true)
-        }
-#endif
-        
         FirebaseConfiguration.shared.setLoggerLevel(.min)
 #if DEBUG
         Analytics.setAnalyticsCollectionEnabled(false)

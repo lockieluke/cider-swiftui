@@ -4,7 +4,7 @@
 
 import SwiftUI
 import Settings
-import InjectHotReload
+import Inject
 import Throttler
 import Defaults
 
