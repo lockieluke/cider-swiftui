@@ -101,13 +101,13 @@
 		B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */; };
 		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */; };
-		B7C9CDA52908928600A67CE4 /* index.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B755C72E28C7F00800A46FB9 /* index.js */; };
-		B7C9CDA6290892A900A67CE4 /* index-cpa.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7C9CD9E2908861500A67CE4 /* index-cpa.js */; };
 		B7CF3767299A942000922CDA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3766299A942000922CDA /* SearchView.swift */; };
 		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
 		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
 		B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D46444293574A0000B1E9A /* DetailedView.swift */; };
 		B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D5B9E1292C2F9900046B7F /* Logging.swift */; };
+		B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */; };
+		B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */; };
 		B7E1CE072996EC6800D25D0F /* SearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */; };
 		B7E72361299455430086EDA4 /* MediaArtistPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */; };
 		B7EA101A299FFA6A000998A5 /* DiscordRPCModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */; };
@@ -121,12 +121,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		B7C9CDA129088F4F00A67CE4 /* Copy JS Scripts */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 12;
 			files = (
-				B7C9CDA6290892A900A67CE4 /* index-cpa.js in Copy JS Scripts */,
-				B7C9CDA52908928600A67CE4 /* index.js in Copy JS Scripts */,
+				B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy JS Scripts */,
+				B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy JS Scripts */,
 				B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy JS Scripts */,
 			);
 			name = "Copy JS Scripts";
@@ -173,7 +173,6 @@
 		B75219AF291984AD005CF8F0 /* NavigationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModal.swift; sourceTree = "<group>"; };
 		B75219BF291F0742005CF8F0 /* PersonalisedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalisedData.swift; sourceTree = "<group>"; };
 		B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchedGeometryReader.swift; sourceTree = "<group>"; };
-		B755C72E28C7F00800A46FB9 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = CiderWebAuth/dist/index.js; sourceTree = "<group>"; };
 		B75C7C1229B12AE500F7693E /* CatalogActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogActions.swift; sourceTree = "<group>"; };
 		B76887112948F9C600C623C9 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		B76887132949172300C623C9 /* PreferencesPanes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesPanes.swift; sourceTree = "<group>"; };
@@ -249,13 +248,14 @@
 		B7C9CD922908797C00A67CE4 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		B7C9CD94290879F500A67CE4 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKitWorker.swift; sourceTree = "<group>"; };
-		B7C9CD9E2908861500A67CE4 /* index-cpa.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "index-cpa.js"; path = "CiderPlaybackAgent/Web Scripts/dist/index-cpa.js"; sourceTree = "<group>"; };
 		B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderPlayback.swift; sourceTree = "<group>"; };
 		B7CF3766299A942000922CDA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		B7CF3768299AC10B00922CDA /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApp.swift; sourceTree = "<group>"; };
 		B7D46444293574A0000B1E9A /* DetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedView.swift; sourceTree = "<group>"; };
 		B7D5B9E1292C2F9900046B7F /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderwebauth.js; path = CiderWebAuth/dist/ciderwebauth.js; sourceTree = "<group>"; };
+		B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderplaybackagent.js; path = "CiderPlaybackAgent/Web Scripts/dist/ciderplaybackagent.js"; sourceTree = "<group>"; };
 		B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestions.swift; sourceTree = "<group>"; };
 		B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaArtistPresentable.swift; sourceTree = "<group>"; };
 		B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscordRPCModal.swift; sourceTree = "<group>"; };
@@ -306,8 +306,8 @@
 		B700C17428B920F10069FDF5 = {
 			isa = PBXGroup;
 			children = (
-				B7C9CD9E2908861500A67CE4 /* index-cpa.js */,
-				B755C72E28C7F00800A46FB9 /* index.js */,
+				B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */,
+				B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */,
 				B700C17F28B920F10069FDF5 /* Cider */,
 				B7C9CD882908467A00A67CE4 /* CiderPlaybackAgent */,
 				B700C17E28B920F10069FDF5 /* Products */,
@@ -614,7 +614,6 @@
 				B700C17B28B920F10069FDF5 /* Resources */,
 				B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */,
 				B7C9CDA129088F4F00A67CE4 /* Copy JS Scripts */,
-				B755C73028C7F0CA00A46FB9 /* Finalise JS Scripts */,
 				DAE76AC54B0D06B316E9E6E2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -759,28 +758,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
 			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile DiscordRPCAgent\"\n    curl \"localhost:2345/perform-task?task=build:native-utils-lib\"\nfi\n";
-		};
-		B755C73028C7F0CA00A46FB9 /* Finalise JS Scripts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/index.js,
-				"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/index-cpa.js",
-			);
-			name = "Finalise JS Scripts";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/ciderwebauth.js,
-				$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/ciderplaybackagent.js,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/zsh;
-			shellScript = "mv $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/index.js \"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/ciderwebauth.js\"\nmv $CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/index-cpa.js \"$CONFIGURATION_BUILD_DIR/$CONTENTS_FOLDER_PATH/SharedSupport/ciderplaybackagent.js\"\n";
 		};
 		B76E1D5129A01A120087D3E5 /* Build DIscordRPCAgent */ = {
 			isa = PBXShellScriptBuildPhase;

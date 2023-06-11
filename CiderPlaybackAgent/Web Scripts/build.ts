@@ -5,7 +5,7 @@ const lodashTransform = require('esbuild-plugin-lodash');
     await esbuild.build({
         entryPoints: ['src/index.ts'],
         bundle: true,
-        outfile: 'dist/index-cpa.js',
+        outfile: 'dist/ciderplaybackagent.js',
         minify: true,
         target: 'safari15',
         treeShaking: true,
