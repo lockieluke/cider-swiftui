@@ -1086,9 +1086,10 @@
 				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				EXECUTABLE_NAME = Cider;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Cider/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Cider;
+				INFOPLIST_KEY_CFBundleDisplayName = "Cider (Dev)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Cider has to get access to your music library to fetch Apple Music content";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1134,6 +1135,7 @@
 				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				EXECUTABLE_NAME = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Cider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Cider;
@@ -1158,6 +1160,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_STYLE = debugging;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cider/Cider-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
