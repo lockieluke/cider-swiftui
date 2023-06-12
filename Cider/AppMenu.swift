@@ -61,7 +61,7 @@ class AppMenu {
             NSMenuItem(title: NSLocalizedString("Show All", comment: ""), action: #selector(NSApplication.unhideAllApplications(_:)), keyEquivalent: ""),
             .separator(),
             signOutMenu,
-            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("Quit %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("Quit %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApp.terminate(_:)), keyEquivalent: "q")
         ]
         
         let fileMenu = NSMenuItem().then {
