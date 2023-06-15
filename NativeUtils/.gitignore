@@ -7,3 +7,6 @@ src/main.rs
 
 # IDE Specific
 .idea/
+
+# CMake build directory
+cmake-build-debug/

@@ -23,21 +23,42 @@ tasks:
     cmds:
       - rm -rf target/
 
-  build:native-utils-lib:
-    desc: "Build NativeUtils"
+  build:cxx-native-utils-lib:
+    desc: "Build CXX NativeUtils"
+    dir: NativeUtils/
+    sources:
+      - cxx/**/*.cpp
+      - cxx/**/*.h
+      - CMakeLists.txt
+    generates:
+      - build/libCider_CXXNativeUtils.a
+    cmds:
+      - cmake --build build/ --target Cider_CXXNativeUtils -j 8
+
+  build:rs-native-utils-lib:
+    desc: "Build Rust NativeUtils"
     dir: NativeUtils/
     sources:
       - src/**/*.rs
+      - Cargo.toml
+      - build.rs
     generates:
       - target/universal/libnative_utils.a
     cmds:
       - sh build.sh
+
+  build:native-utils-lib:
+    desc: "Build NativeUtils"
+    cmds:
+      - task: build:rs-native-utils-lib
+      - task: build:cxx-native-utils-lib
 
   clean:native-utils-lib:
     desc: "Clean NativeUtils's target folder"
     dir: NativeUtils/
     cmds:
       - rm -rf target/
+      - rm -rf build/
 
   install-deps:cpa-js:
     dir: 'CiderPlaybackAgent/Web Scripts/'
@@ -70,7 +91,7 @@ tasks:
     sources:
       - src/**/*.ts
     generates:
-      - dist/index.js
+      - dist/ciderwebauth.js
     cmds:
       - yarn build
 
@@ -80,7 +101,7 @@ tasks:
     sources:
       - src/**/*.ts
     generates:
-      - dist/index-cpa.js
+      - dist/ciderplaybackagent.js
     cmds:
       - yarn build
 

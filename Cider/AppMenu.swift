@@ -16,8 +16,9 @@ class AppMenu {
     private let wsModal: WSModal
     private let ciderPlayback: CiderPlayback
     private let appWindowModal: AppWindowModal
+    private let nativeUtilsWrapper: NativeUtilsWrapper
     
-    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal) {
+    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper) {
         let menu = NSMenu()
         
         self.window = window
@@ -28,6 +29,7 @@ class AppMenu {
         self.wsModal = wsModal
         self.ciderPlayback = ciderPlayback
         self.appWindowModal = appWindowModal
+        self.nativeUtilsWrapper = nativeUtilsWrapper
     }
     
     func loadMenus() {
@@ -61,7 +63,7 @@ class AppMenu {
             NSMenuItem(title: NSLocalizedString("Show All", comment: ""), action: #selector(NSApplication.unhideAllApplications(_:)), keyEquivalent: ""),
             .separator(),
             signOutMenu,
-            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("Quit %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApp.terminate(_:)), keyEquivalent: "q")
+            NSMenuItem(title: "Quit \(ProcessInfo.processInfo.processName)", action: #selector(self.terminate(_:)), keyEquivalent: "q")
         ]
         
         let fileMenu = NSMenuItem().then {
@@ -90,7 +92,8 @@ class AppMenu {
         let developerMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
-                wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: ""))
+                wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "")),
+                wrapMenuItem(NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: ""))
             ]
         }
         #endif
@@ -178,6 +181,16 @@ class AppMenu {
             appWindowModal: self.appWindowModal
         )
         wsDebugger.open()
+    }
+    
+    @objc func openLogViewer(_ sender: Any) {
+        showLogViewer()
+    }
+    
+    @objc func terminate(_ sender: Any) {
+        print("Terminating")
+        NSApp.terminate(nil)
+        print("Terminated")
     }
     
     func getMenu() -> NSMenu {

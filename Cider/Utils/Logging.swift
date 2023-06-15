@@ -24,11 +24,19 @@ class Logger {
     }
     
     func info(_ message: String) {
-        fputs("[\(self.getTimestampInString())] \("[\(self.label)]".bold) \(message)\n", stdout)
+        let time = self.getTimestampInString()
+        DispatchQueue.main.async {
+            addLogEntry(time, "info", message)
+        }
+        fputs("[\(time)] \("[\(self.label)]".bold) \(message)\n", stdout)
     }
     
     func success(_ message: String, displayTick: Bool = false) {
-        fputs("[\(self.getTimestampInString())] \("[\(self.label)]".bold) \(message.green)\(displayTick ? " ✔" : "")\n", stdout)
+        let time = self.getTimestampInString()
+        DispatchQueue.main.async {
+            addLogEntry(time, "success", message)
+        }
+        fputs("[\(time)] \("[\(self.label)]".bold) \(message.green)\(displayTick ? " ✔" : "")\n", stdout)
     }
     
     func error(_ message: String, displayCross: Bool = false) {
@@ -40,7 +48,11 @@ class Logger {
     }
     
     private func errorMessage(_ message: String, displayCross: Bool = false) -> String {
-        return "[\(self.getTimestampInString())] \("[\(self.label)]".bold) \("ERROR".red) \(message)\(displayCross ? " ✗" : "")"
+        let time = self.getTimestampInString()
+        DispatchQueue.main.async {
+            addLogEntry(time, "error", message)
+        }
+        return "[\(time)] \("[\(self.label)]".bold) \("ERROR".red) \(message)\(displayCross ? " ✗" : "")"
     }
     
     private func getTimestampInString() -> String {

@@ -47,6 +47,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ notification: Notification) {
+        terminateCXXNativeUtils()
         self.discordRPCModal.agent.stop()
         self.appWindow.ciderPlayback.shutdownSync()
     }

@@ -14,5 +14,8 @@ class NativeUtilsWrapper: ObservableObject {
 
     init () {
         self.nativeUtils = NativeUtils()
+        
+        initCXXNativeUtils()
+        initLogViewer()
     }
 }

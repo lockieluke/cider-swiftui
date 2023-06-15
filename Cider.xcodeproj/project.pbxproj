@@ -43,13 +43,15 @@
 		B71B82AA2A36764600DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A92A36764600DD8BC2 /* SwiftyJSON */; };
 		B71B82AC2A36766500DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AB2A36766500DD8BC2 /* SwiftyUtils */; };
 		B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AE2A3676AF00DD8BC2 /* Inject */; };
+		B71B82C62A37750900DD8BC2 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C52A37750900DD8BC2 /* libnative_utils.a */; };
+		B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */; };
+		B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */; };
 		B725013A28C2624300992F57 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* NSColor.swift */; };
 		B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* MediaPresentable.swift */; };
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
 		B740CE172991AD050096DF6E /* htmltext-style.css in Resources */ = {isa = PBXBuildFile; fileRef = B740CE162991AD050096DF6E /* htmltext-style.css */; };
 		B74EEBD229D7AEAB00711DB6 /* LyricsPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */; };
 		B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD329D86EEF00711DB6 /* SidePane.swift */; };
-		B74EEBDA29D8893100711DB6 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B74EEBD929D8892500711DB6 /* libnative_utils.a */; };
 		B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */; };
 		B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219A92918358C005CF8F0 /* MediaType.swift */; };
 		B75219AC291836B5005CF8F0 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219AB291836B5005CF8F0 /* MediaItem.swift */; };
@@ -97,8 +99,9 @@
 		B798983429D0B6DB00A734DC /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983329D0B6DB00A734DC /* List.swift */; };
 		B798983829D0E96900A734DC /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983729D0E96900A734DC /* DraggableView.swift */; };
 		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
-		B7A53E9829A0EE6A005E90F2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
+		B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD22A3A688900C2B489 /* libiconv.tbd */; };
+		B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD42A3A696500C2B489 /* Carbon.framework */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
 		B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70028BAD782009AABEA /* AppWindowModal.swift */; };
@@ -125,6 +128,12 @@
 		B7CF3767299A942000922CDA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3766299A942000922CDA /* SearchView.swift */; };
 		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
 		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
+		B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */; };
+		B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */; };
+		B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B62A37D45200A8405E /* libwxpng-3.3.a */; };
+		B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */; };
+		B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */; };
+		B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */; };
 		B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D46444293574A0000B1E9A /* DetailedView.swift */; };
 		B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D5B9E1292C2F9900046B7F /* Logging.swift */; };
 		B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */; };
@@ -173,13 +182,15 @@
 		B706050B28BD8CB2002AD76C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B706050C28BE0B4F002AD76C /* AMAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAPI.swift; sourceTree = "<group>"; };
 		B706051028BFA181002AD76C /* MediaShowcaseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaShowcaseRow.swift; sourceTree = "<group>"; };
+		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
+		B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiscord_rpc_agent.a; path = DiscordRPCAgent/target/universal/libdiscord_rpc_agent.a; sourceTree = "<group>"; };
+		B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCider_CXXNativeUtils.a; path = NativeUtils/build/libCider_CXXNativeUtils.a; sourceTree = "<group>"; };
 		B725013928C2624300992F57 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
 		B725013D28C2637F00992F57 /* MediaPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresentable.swift; sourceTree = "<group>"; };
 		B7284174290DABA100B7A525 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B740CE162991AD050096DF6E /* htmltext-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "htmltext-style.css"; sourceTree = "<group>"; };
 		B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsPaneView.swift; sourceTree = "<group>"; };
 		B74EEBD329D86EEF00711DB6 /* SidePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePane.swift; sourceTree = "<group>"; };
-		B74EEBD929D8892500711DB6 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
 		B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeUtils.swift; sourceTree = "<group>"; };
 		B75219A92918358C005CF8F0 /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
 		B75219AB291836B5005CF8F0 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
@@ -225,19 +236,14 @@
 		B797AFF7297F3B6A00D77282 /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
 		B797AFF9297F3E2000D77282 /* MediaArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaArtist.swift; sourceTree = "<group>"; };
 		B797AFFB297F3E7B00D77282 /* MediaAny.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaAny.swift; sourceTree = "<group>"; };
-		B798561E29259D85003CA787 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		B79856202925A3C3003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B79856222925A453003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B79856242925A4E9003CA787 /* GCDWebServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GCDWebServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B798562829285218003CA787 /* WKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebView.swift; sourceTree = "<group>"; };
 		B798562A292ADE13003CA787 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B798983329D0B6DB00A734DC /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		B798983729D0E96900A734DC /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		B798983929D22A9400A734DC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
-		B7A53E8929A0EBBD005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
-		B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
-		B7A53E9729A0EE46005E90F2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B7A6EB6729C539800041FDD7 /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
+		B7A80AD22A3A688900C2B489 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		B7A80AD42A3A696500C2B489 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		B7AAB6F928BABE83009AABEA /* SearchModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModal.swift; sourceTree = "<group>"; };
 		B7AAB6FB28BABF64009AABEA /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		B7AAB70028BAD782009AABEA /* AppWindowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowModal.swift; sourceTree = "<group>"; };
@@ -266,6 +272,12 @@
 		B7CF3766299A942000922CDA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		B7CF3768299AC10B00922CDA /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApp.swift; sourceTree = "<group>"; };
+		B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwx_osx_cocoau_core-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwx_osx_cocoau_core-3.3.a"; sourceTree = "<group>"; };
+		B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwx_baseu-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwx_baseu-3.3.a"; sourceTree = "<group>"; };
+		B7D276B62A37D45200A8405E /* libwxpng-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxpng-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxpng-3.3.a"; sourceTree = "<group>"; };
+		B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxtiff-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxtiff-3.3.a"; sourceTree = "<group>"; };
+		B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxjpeg-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxjpeg-3.3.a"; sourceTree = "<group>"; };
+		B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxregexu-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxregexu-3.3.a"; sourceTree = "<group>"; };
 		B7D46444293574A0000B1E9A /* DetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedView.swift; sourceTree = "<group>"; };
 		B7D5B9E1292C2F9900046B7F /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderwebauth.js; path = CiderWebAuth/dist/ciderwebauth.js; sourceTree = "<group>"; };
@@ -284,10 +296,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */,
+				B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */,
+				B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */,
+				B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */,
+				B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */,
+				B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */,
+				B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */,
+				B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */,
+				B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */,
+				B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */,
+				B71B82C62A37750900DD8BC2 /* libnative_utils.a in Frameworks */,
 				B71B82962A3671F900DD8BC2 /* FirebaseAnalyticsSwift in Frameworks */,
 				B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */,
 				B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */,
-				B74EEBDA29D8893100711DB6 /* libnative_utils.a in Frameworks */,
 				B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */,
 				B71B82872A36712600DD8BC2 /* Settings in Frameworks */,
 				B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */,
@@ -302,7 +324,6 @@
 				B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */,
 				B71B827B2A36708000DD8BC2 /* Rainbow in Frameworks */,
 				B71B828D2A36713B00DD8BC2 /* Throttler in Frameworks */,
-				B7A53E9829A0EE6A005E90F2 /* libdiscord_rpc_agent.a in Frameworks */,
 				B71B82722A36702700DD8BC2 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,20 +342,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		05E5EED94290D24B5EBA549B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B74EEBD929D8892500711DB6 /* libnative_utils.a */,
-				B7A53E9429A0EE46005E90F2 /* universal */,
-				B7A53E8829A0EBBD005E90F2 /* debug */,
-				B79856242925A4E9003CA787 /* GCDWebServer.framework */,
-				B79856222925A453003CA787 /* GCDWebServer.framework */,
-				B79856202925A3C3003CA787 /* GCDWebServer.framework */,
-				B798561E29259D85003CA787 /* libz.tbd */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B700C17428B920F10069FDF5 = {
 			isa = PBXGroup;
 			children = (
@@ -343,7 +350,7 @@
 				B700C17F28B920F10069FDF5 /* Cider */,
 				B7C9CD882908467A00A67CE4 /* CiderPlaybackAgent */,
 				B700C17E28B920F10069FDF5 /* Products */,
-				05E5EED94290D24B5EBA549B /* Frameworks */,
+				B71B82C42A37750900DD8BC2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -438,6 +445,24 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		B71B82C42A37750900DD8BC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7A80AD42A3A696500C2B489 /* Carbon.framework */,
+				B7A80AD22A3A688900C2B489 /* libiconv.tbd */,
+				B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */,
+				B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */,
+				B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */,
+				B7D276B62A37D45200A8405E /* libwxpng-3.3.a */,
+				B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */,
+				B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */,
+				B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */,
+				B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */,
+				B71B82C52A37750900DD8BC2 /* libnative_utils.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B740CE152991ACAE0096DF6E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,33 +528,6 @@
 				B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */,
 			);
 			path = RustInterop;
-			sourceTree = "<group>";
-		};
-		B7A53E8829A0EBBD005E90F2 /* debug */ = {
-			isa = PBXGroup;
-			children = (
-				B7A53E8929A0EBBD005E90F2 /* libdiscord_rpc_agent.a */,
-			);
-			name = debug;
-			path = DiscordRPCAgent/target/universal/debug;
-			sourceTree = "<group>";
-		};
-		B7A53E9429A0EE46005E90F2 /* universal */ = {
-			isa = PBXGroup;
-			children = (
-				B7A53E9529A0EE46005E90F2 /* libdiscord_rpc_agent.a */,
-				B7A53E9629A0EE46005E90F2 /* debug */,
-			);
-			name = universal;
-			path = DiscordRPCAgent/target/universal;
-			sourceTree = "<group>";
-		};
-		B7A53E9629A0EE46005E90F2 /* debug */ = {
-			isa = PBXGroup;
-			children = (
-				B7A53E9729A0EE46005E90F2 /* libdiscord_rpc_agent.a */,
-			);
-			path = debug;
 			sourceTree = "<group>";
 		};
 		B7AAB6F728BA2DBF009AABEA /* Utils */ = {
@@ -1082,6 +1080,11 @@
 					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal/",
 					"$(PROJECT_DIR)/NativeUtils/target/universal/",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
+					"$(PROJECT_DIR)/NativeUtils/build",
+					/opt/homebrew/Cellar/wxwidgets/3.2.2.1_1/lib,
+					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
+					"$(PROJECT_DIR)/NativeUtils/build/_deps/glfw-build/src",
+					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
 				);
 				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
@@ -1089,6 +1092,7 @@
 					"-Xlinker",
 					"-interposable",
 				);
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME) (Dev)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1130,6 +1134,11 @@
 					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal/",
 					"$(PROJECT_DIR)/NativeUtils/target/universal/",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
+					"$(PROJECT_DIR)/NativeUtils/build",
+					/opt/homebrew/Cellar/wxwidgets/3.2.2.1_1/lib,
+					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
+					"$(PROJECT_DIR)/NativeUtils/build/_deps/glfw-build/src",
+					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
 				);
 				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
@@ -1137,6 +1146,7 @@
 					"-Xlinker",
 					"-interposable",
 				);
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
