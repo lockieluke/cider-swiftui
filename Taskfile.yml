@@ -33,6 +33,8 @@ tasks:
     generates:
       - build/libCider_CXXNativeUtils.a
     cmds:
+      - mkdir -p build/
+      - (cd build/;cmake ..)
       - cmake --build build/ --target Cider_CXXNativeUtils -j 8
 
   build:rs-native-utils-lib:
