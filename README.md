@@ -22,20 +22,20 @@ cd Cider-macOS
 
 **Task** will be used for executing tasks like managing dependencies and compiling, we recommend you to follow their [guide](https://taskfile.dev/installation/#setup-completions) on installing shell autocomplete
 
-### Install JS Dependencies
-
-Cider for macOS uses some TypeScript for handling Authorisation and Playback.  However, before compiling anything, JS Dependencies would have to be installed
-
-```shell
-task install-deps:all-js
-```
-
 ### Install build tools
 
 Install CMake and Task with Homebrew
 
 ```shell
 brew bundle
+```
+
+### Install JS Dependencies
+
+Cider for macOS uses some TypeScript for handling Authorisation and Playback.  However, before compiling anything, JS Dependencies would have to be installed
+
+```shell
+task install-deps:all-js
 ```
 
 ### Start Dev Server for compiling code
