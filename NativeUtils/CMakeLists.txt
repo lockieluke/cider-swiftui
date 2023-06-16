@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.18)
+set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
+
 project(Cider_CXXNativeUtils LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)

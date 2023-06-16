@@ -34,7 +34,7 @@ tasks:
       - build/libCider_CXXNativeUtils.a
     cmds:
       - mkdir -p build/
-      - (cd build/;cmake ..)
+      - (cd build/;cmake .. -G Ninja)
       - cmake --build build/ --target Cider_CXXNativeUtils -j 8
 
   build:rs-native-utils-lib:
