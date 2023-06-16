@@ -13,7 +13,7 @@ brew bundle
 brew install node corepack
 echo "Installed Node `node --version` with corepack `corepack --version`"
 corepack enable
-corepack prepare yarn@stable --activate
+corepack prepare yarn@3.6.0 --activate
 
 # Install Rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain none
