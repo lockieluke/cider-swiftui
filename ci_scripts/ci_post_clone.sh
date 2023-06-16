@@ -26,9 +26,12 @@ echo "Installed Rust `rustc --version`"
 cargo +nightly install cargo-lipo
 echo "Installed cargo-lipo `cargo lipo --version`"
 
+# Configure Yarn
+yarn config set -H enableImmutableInstalls false
+
 # Compile stuff and add files
 task install-deps:all-js
-task build:discord-rpc-lib
-task build:native-utils-lib
 task build:all-js
 task fetch:google-services
+task build:discord-rpc-lib
+task build:native-utils-lib
