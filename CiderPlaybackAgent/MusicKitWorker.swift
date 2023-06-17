@@ -57,7 +57,11 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
             windowContainer.delegate = self
             wkWebView.navigationDelegate = self
             wkWebView.configuration.userContentController.add(self, name: "ciderkit")
+            #if DEBUG
             wkWebView.loadSimulatedRequest(URLRequest(url: URL(string: "https://beta.music.apple.com")!), responseHTML: self.bootstrapHTML)
+            #else
+            wkWebView.load(URLRequest(url: URL(string: "https://beta.music.apple.com/stub")!))
+            #endif
         }
         
         self.wkWebView = wkWebView

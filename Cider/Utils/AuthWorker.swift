@@ -13,6 +13,7 @@ final class AuthWorker {
     private var wkWebView: WKWebView?
     private let authWindow: NSWindow
     private var wkUIDelegate: AuthWorkerUIDelegate?
+    private var wkNavDelegate: AuthWorkerNavigationDelegate?
     
     private let appWindowModal: AppWindowModal
     private let mkModal: MKModal
@@ -24,6 +25,20 @@ final class AuthWorker {
     private static let IS_PASSING_LOGS: Bool = CommandLine.arguments.contains("-pass-auth-logs")
     
     var authenticatingCallback: ((_ userToken: String) -> Void)?
+    
+    class AuthWorkerNavigationDelegate : NSObject, WKNavigationDelegate {
+        
+        weak var parent: AuthWorker! = nil
+        
+        init(parent: AuthWorker) {
+            self.parent = parent
+        }
+        
+        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+            parent.logger.error("AuthWorker terminated")
+        }
+        
+    }
     
     class AuthWorkerUIDelegate : NSObject, WKUIDelegate {
         
@@ -99,7 +114,9 @@ final class AuthWorker {
         }
         
         self.wkWebView = WKWebView(frame: .zero).then {
+            #if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+            #endif
             $0.customUserAgent = AuthWorker.USER_AGENT
         }
         
@@ -117,9 +134,8 @@ final class AuthWorker {
         self.wkUIDelegate = AuthWorkerUIDelegate(parent: self)
         wkWebView?.uiDelegate = wkUIDelegate
         
-        Task {
-            
-        }
+        self.wkNavDelegate = AuthWorkerNavigationDelegate(parent: self)
+        wkWebView?.navigationDelegate = wkNavDelegate
     }
     
     func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) async {
@@ -160,7 +176,13 @@ final class AuthWorker {
                 authenticatingCallback?(userToken)
             }
             
+            // loadSimulatedRequest for some reason doesn't not work in sandbox mode
+            #if DEBUG
             self.wkWebView?.loadSimulatedRequest(AuthWorker.INITIAL_URL, responseHTML: "<p>Cider AuthWorker</p>")
+            #else
+            // go to /stub so it doesn't load all the images in Apple Music Web's homepage
+            self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
+            #endif
         }
     }
     
