@@ -784,7 +784,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile DiscordRPCAgent\"\n    curl \"localhost:2345/perform-task?task=build:native-utils-lib\"\nfi\n";
+			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile NativeUtils\"\n    curl \"localhost:2345/perform-task?task=build:native-utils-lib\"\nfi\n";
 		};
 		B76E1D5129A01A120087D3E5 /* Build DIscordRPCAgent */ = {
 			isa = PBXShellScriptBuildPhase;
