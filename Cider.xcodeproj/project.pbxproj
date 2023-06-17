@@ -1087,13 +1087,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal/",
-					"$(PROJECT_DIR)/NativeUtils/target/universal/",
+					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/build",
-					/opt/homebrew/Cellar/wxwidgets/3.2.2.1_1/lib,
-					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
-					"$(PROJECT_DIR)/NativeUtils/build/_deps/glfw-build/src",
 					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
 				);
 				MARKETING_VERSION = 0.0.1;
@@ -1141,13 +1137,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal/",
-					"$(PROJECT_DIR)/NativeUtils/target/universal/",
+					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/build",
-					/opt/homebrew/Cellar/wxwidgets/3.2.2.1_1/lib,
-					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
-					"$(PROJECT_DIR)/NativeUtils/build/_deps/glfw-build/src",
 					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
 				);
 				MARKETING_VERSION = 0.0.1;
