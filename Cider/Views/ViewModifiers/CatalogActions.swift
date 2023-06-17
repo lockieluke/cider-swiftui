@@ -87,8 +87,7 @@ struct CatalogActions: ViewModifier {
                         break
                         
                     case "copy-id":
-                        NSPasteboard.general.declareTypes([.string], owner: nil)
-                        NSPasteboard.general.setString(self.item.id, forType: .string)
+                        NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(self.item.id)
                         break
                         
                     default:

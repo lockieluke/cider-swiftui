@@ -18,6 +18,7 @@ struct ArtistView: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
     
     let artistViewParams: ArtistViewParams
     @State private var artist: MediaArtist?
@@ -108,8 +109,8 @@ struct ArtistView: View {
                                 .padding(60)
                                 .contextMenu {
                                     Button {
-                                        NSPasteboard.general.declareTypes([.string], owner: nil)
-                                        NSPasteboard.general.setString(artist.id, forType: .string)
+                                        self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(artist.id)
+                                        
                                     } label: {
                                         Text("Copy ID")
                                     }

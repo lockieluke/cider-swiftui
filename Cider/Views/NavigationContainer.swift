@@ -50,6 +50,7 @@ struct NavigationContainer: View {
                             .environmentObject(mkModal)
                             .environmentObject(ciderPlayback)
                             .environmentObject(navigationModal)
+                            .environmentObject(nativeUtilsWrapper)
                             .hideWithoutDestroying(!shouldUpperStackShow)
                             .allowsHitTesting(shouldUpperStackShow) 
                     

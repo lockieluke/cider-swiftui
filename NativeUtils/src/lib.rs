@@ -6,7 +6,7 @@ use serde::{Serialize, Deserialize};
 use uuid::Uuid;
 
 pub struct NativeUtils {
-    clipboardCtx: ClipboardContext,
+    clipboard_ctx: ClipboardContext,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -20,7 +20,7 @@ struct LyricsLine {
 impl NativeUtils {
     pub fn new() -> Self {
         NativeUtils {
-            clipboardCtx: ClipboardContext::new().unwrap()
+            clipboard_ctx: ClipboardContext::new().unwrap()
         }
     }
 
@@ -81,14 +81,12 @@ impl NativeUtils {
         }).to_string();
     }
 
-    pub fn prettifyXML
-
     pub fn copy_string_to_clipboard(&mut self, string: String) {
-        self.clipboardCtx.set_contents(string).unwrap();
+        self.clipboard_ctx.set_contents(string).unwrap();
     }
 
     pub fn get_clipboard_string(&mut self) -> String {
-        return self.clipboardCtx.get_contents().unwrap();
+        return self.clipboard_ctx.get_contents().unwrap();
     }
 
 }

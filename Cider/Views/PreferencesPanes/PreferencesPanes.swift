@@ -23,8 +23,7 @@ struct PrefValueField: View {
             Text("\(label): ")
             Text(value).foregroundColor(.blue).modifier(BasicHoverModifier())
                 .onTapGesture {
-                    NSPasteboard.general.declareTypes([.string], owner: nil)
-                    NSPasteboard.general.setString(value, forType: .string)
+                    NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(value)
                 }
         }
         .padding(.top)

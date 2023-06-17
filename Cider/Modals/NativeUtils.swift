@@ -8,12 +8,16 @@
 
 import Foundation
 
+private let _nativeUtilsGlobal = NativeUtils()
+
 class NativeUtilsWrapper: ObservableObject {
     
     let nativeUtils: NativeUtils
+    static let nativeUtilsGlobal = _nativeUtilsGlobal
+    
 
     init () {
-        self.nativeUtils = NativeUtils()
+        self.nativeUtils = _nativeUtilsGlobal
         
         initCXXNativeUtils()
         initLogViewer()

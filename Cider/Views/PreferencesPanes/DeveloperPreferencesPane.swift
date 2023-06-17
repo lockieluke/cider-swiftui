@@ -61,8 +61,7 @@ struct DeveloperPreferencesPane: View {
                                             .foregroundColor(.blue)
                                             .modifier(BasicHoverModifier())
                                             .onTapGesture {
-                                                NSPasteboard.general.declareTypes([.string], owner: nil)
-                                                NSPasteboard.general.setString(ciderPlayback.agentSessionId, forType: .string)
+                                                NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(self.ciderPlayback.agentSessionId)
                                             }
                                     }
                                     .padding(.leading, 3)
