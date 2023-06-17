@@ -200,6 +200,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
         self.wkWebView.evaluateJavaScript("window.ciderInterop.mk.\(script)")
     }
     
+    @discardableResult
     private func asyncRunJS(_ script: String) async -> Any? {
         do {
             return try await self.wkWebView.evaluateJavaScriptAsync(script)

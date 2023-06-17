@@ -770,6 +770,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		B74EEBD529D8862500711DB6 /* Build NativeUtils */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -788,6 +789,7 @@
 		};
 		B76E1D5129A01A120087D3E5 /* Build DIscordRPCAgent */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -806,6 +808,7 @@
 		};
 		B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
