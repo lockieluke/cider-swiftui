@@ -149,17 +149,24 @@ class AppMenu {
     }
     
     @objc func showPreferences(_ sender: Any) {
+        #if DEBUG
+        let additionalPanes = [
+            PreferencesPanes.DeveloperPreferencesViewController(
+                self.mkModal,
+                self.ciderPlayback
+            )
+        ]
+        #else
+        let additionalPanes: [SettingsPane] = []
+        #endif
+        
         SettingsWindowController(
             panes: [
                 PreferencesPanes.GeneralPreferenceViewController(),
                 PreferencesPanes.AudioPreferencesViewController(
                     self.ciderPlayback
-                ),
-                PreferencesPanes.DeveloperPreferencesViewController(
-                    self.mkModal,
-                    self.ciderPlayback
                 )
-            ],
+            ] + additionalPanes,
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: false
