@@ -77,4 +77,10 @@ class Diagnostic {
         }
     }
     
+    #if DEBUG
+    static let isDebug = true
+    #else
+    static let isDebug = false
+    #endif
+    
 }

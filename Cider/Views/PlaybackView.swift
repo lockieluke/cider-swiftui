@@ -9,6 +9,7 @@ struct PlaybackView: View {
     
     @ObservedObject private var iO = Inject.observer
     
+    @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
@@ -115,13 +116,24 @@ struct PlaybackView: View {
                         self.navigationModal.showQueue.toggle()
                     }
                 }
-                ActionButton(actionType: .Lyrics, enabled: $navigationModal.showLyrics) {
-                    withAnimation(.interactiveSpring()) {
-                        if !self.navigationModal.showLyrics {
-                            self.navigationModal.showQueue = false
+                if self.ciderPlayback.nowPlayingState.hasItemToPlay {
+                    ActionButton(actionType: .Lyrics, enabled: $navigationModal.showLyrics) {
+                        withAnimation(.interactiveSpring()) {
+                            if !self.navigationModal.showLyrics {
+                                self.navigationModal.showQueue = false
+                            }
+                            self.navigationModal.showLyrics.toggle()
                         }
-                        self.navigationModal.showLyrics.toggle()
                     }
+                    .contextMenu([ContextMenuArg("Copy Lyrics XML", isDev: true)],  { id in
+                        Task {
+                            if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
+                                NSPasteboard.general.declareTypes([.string], owner: nil)
+                                NSPasteboard.general.setString(lyricsXml, forType: .string)
+                            }
+                        }
+                    })
+                    .transition(.fade)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .trailing)

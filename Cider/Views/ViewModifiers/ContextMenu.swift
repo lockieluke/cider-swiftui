@@ -14,21 +14,24 @@ struct ContextMenuArg {
     let title: String?
     let id: String
     let type: ContextMenuArgType
+    let isDev: Bool
     
     enum ContextMenuArgType {
         case separator, general
     }
     
-    init(_ title: String, id: String? = nil) {
+    init(_ title: String, id: String? = nil, isDev: Bool = false) {
         self.title = title
         self.id = id ?? title.lowerKebabCased()
         self.type = .general
+        self.isDev = isDev
     }
     
     init(type: ContextMenuArgType = .separator) {
         self.title = nil
         self.id = UUID().uuidString
         self.type = type
+        self.isDev = false
     }
     
 }
@@ -49,14 +52,16 @@ struct ContextMenu: ViewModifier {
         content
             .contextMenu {
                 ForEach(args, id: \.id) { arg in
-                    if let title = arg.title {
-                        Button {
-                            self.onAction?(arg.id)
-                        } label: {
-                            Text(title)
+                    if arg.isDev == Diagnostic.isDebug {
+                        if let title = arg.title {
+                            Button {
+                                self.onAction?(arg.id)
+                            } label: {
+                                Text(title)
+                            }
+                        } else if arg.type == .separator {
+                            Divider()
                         }
-                    } else if arg.type == .separator {
-                        Divider()
                     }
                 }
                 .onAppear {

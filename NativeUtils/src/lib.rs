@@ -15,9 +15,7 @@ struct LyricsLine {
 }
 
 impl NativeUtils {
-    pub fn new() -> Self {
-        NativeUtils {}
-    }
+    pub fn new() -> Self { NativeUtils {} }
 
     fn get_name(&self) -> String {
         return "NativeUtils".to_string();
@@ -39,7 +37,19 @@ impl NativeUtils {
         for segment in segments {
             let lines = segment.children().filter(|n| n.has_tag_name("p"));
             for line in lines {
-                let text = line.text().unwrap();
+                let mut text = String::new();
+                if let Some(l_text) = line.text() {
+                    text = l_text.to_string();
+                } else {
+                    let words = line.children().filter(|n| n.has_tag_name("span"));
+                    for word in words {
+                        if let Some(w_text) = word.text() {
+                            text.push_str(w_text);
+                            text.push(' ');
+                        }
+                    }
+                }
+
                 let get_time_as_f64 = |attr_name: &str| -> f64 {
                     let time_atr = line.attribute(attr_name).unwrap();
                     let minutes = if time_atr.contains(":") { time_atr.split(":").next().unwrap_or("0.0").parse::<f64>().unwrap() } else { 0.0 };

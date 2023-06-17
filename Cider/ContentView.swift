@@ -49,6 +49,7 @@ struct ContentView: View {
                         .environmentObject(appWindowModal)
                         .environmentObject(ciderPlayback)
                         .environmentObject(navigationModal)
+                        .environmentObject(mkModal)
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
                 }
