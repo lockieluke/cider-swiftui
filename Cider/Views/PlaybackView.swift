@@ -126,10 +126,10 @@ struct PlaybackView: View {
                             self.navigationModal.showLyrics.toggle()
                         }
                     }
-                    .contextMenu([
-                        ContextMenuArg("Copy Lyrics XML", isDev: true),
-                        ContextMenuArg("Copy Prettified Lyrics XML", isDev: true)
-                    ],  { id in
+                    .contextMenu(Diagnostic.isDebug ? [
+                        ContextMenuArg("Copy Lyrics XML"),
+                        ContextMenuArg("Copy Prettified Lyrics XML")
+                    ] : [],  { id in
                         Task {
                             if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
                                 self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXml)
