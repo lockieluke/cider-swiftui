@@ -1172,6 +1172,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1192,6 +1193,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "";
