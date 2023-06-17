@@ -1,21 +1,28 @@
 #![feature(extern_types)]
 
+use cli_clipboard::{ClipboardContext, ClipboardProvider};
 use serde_json::{json};
 use serde::{Serialize, Deserialize};
 use uuid::Uuid;
 
-pub struct NativeUtils {}
+pub struct NativeUtils {
+    clipboardCtx: ClipboardContext,
+}
 
 #[derive(Serialize, Deserialize)]
 struct LyricsLine {
     id: String,
     line: String,
     start_time: f64,
-    end_time: f64
+    end_time: f64,
 }
 
 impl NativeUtils {
-    pub fn new() -> Self { NativeUtils {} }
+    pub fn new() -> Self {
+        NativeUtils {
+            clipboardCtx: ClipboardContext::new().unwrap()
+        }
+    }
 
     fn get_name(&self) -> String {
         return "NativeUtils".to_string();
@@ -62,7 +69,7 @@ impl NativeUtils {
                     id: Uuid::new_v4().to_string(),
                     line: text.to_string(),
                     start_time: get_time_as_f64("begin"),
-                    end_time: get_time_as_f64("end")
+                    end_time: get_time_as_f64("end"),
                 });
             }
         }
@@ -73,6 +80,17 @@ impl NativeUtils {
             "songwriters": if songwriters.is_none() { vec!() } else { songwriters.unwrap().children().map(|n| n.text().unwrap().to_string()).collect::<Vec<String>>() }
         }).to_string();
     }
+
+    pub fn prettifyXML
+
+    pub fn copy_string_to_clipboard(&mut self, string: String) {
+        self.clipboardCtx.set_contents(string).unwrap();
+    }
+
+    pub fn get_clipboard_string(&mut self) -> String {
+        return self.clipboardCtx.get_contents().unwrap();
+    }
+
 }
 
 #[swift_bridge::bridge]
@@ -85,5 +103,8 @@ mod ffi {
 
         fn get_name(&self) -> String;
         fn parse_lyrics_xml(&self, xml: String) -> String;
+
+        fn copy_string_to_clipboard(&mut self, string: String);
+        fn get_clipboard_string(&mut self) -> String;
     }
 }

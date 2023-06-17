@@ -13,6 +13,7 @@ struct PlaybackView: View {
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
     
     @State private var showCastMenu: Bool = false
     
@@ -125,11 +126,17 @@ struct PlaybackView: View {
                             self.navigationModal.showLyrics.toggle()
                         }
                     }
-                    .contextMenu([ContextMenuArg("Copy Lyrics XML", isDev: true)],  { id in
+                    .contextMenu([
+                        ContextMenuArg("Copy Lyrics XML", isDev: true),
+                        ContextMenuArg("Copy Prettified Lyrics XML", isDev: true)
+                    ],  { id in
                         Task {
                             if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
-                                NSPasteboard.general.declareTypes([.string], owner: nil)
-                                NSPasteboard.general.setString(lyricsXml, forType: .string)
+                                self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXml)
+                            }
+                            
+                            if id == "copy-prettified-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item), let lyricsXML = try? XMLDocument(xmlString: lyricsXml) {
+                                self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXML.xmlString(options: .nodePrettyPrint))
                             }
                         }
                     })
