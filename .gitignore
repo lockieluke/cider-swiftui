@@ -1,6 +1,7 @@
 .idea/
 .task/
 .coke/
+dest/
 Cider/GoogleService-Info.plist
 
 # Yarn 3 files

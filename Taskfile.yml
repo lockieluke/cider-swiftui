@@ -1,5 +1,10 @@
 version: '3'
 
+vars:
+  XC_PROJ: Cider.xcodeproj
+  XC_ARCHIVE: dest/Cider.xcarchive
+  CIDER_DEST_APP: dest/Cider.app
+
 tasks:
   default:
     desc: "Build, Run, Perform Tasks with Taskfile"
@@ -115,26 +120,46 @@ tasks:
   build:xc:
     desc: "Build all targets including Cider and CiderPlaybackAgent"
     cmds:
-      - xcodebuild -workspace Cider.xcworkspace -configuration Debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build
+      - xcodebuild -project {{.XC_PROJ}} -configuration debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build
 
   run:xc:
     desc: "Run Cider"
     cmds:
-      - open $(xcodebuild -workspace Cider.xcworkspace -scheme Cider -sdk macosx -configuration Debug -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*")/*.app
+      - open $(xcodebuild -project {{.XC_PROJ}} -scheme Cider -sdk macosx -configuration release -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*")/*.app
 
   clean:xc:
     desc: "Clean Xcode build folder"
     cmds:
-      - xcodebuild -workspace Cider.xcworkspace clean
+      - xcodebuild -project {{.XC_PROJ}} clean
+
+  archive:xc:
+    desc: "Archive Cider Release"
+    generates:
+      - "{{.XC_ARCHIVE}}"
+    preconditions:
+      - test -f "`which xcbeautify`"
+    cmds:
+      - rm -f {{.XC_ARCHIVE}}
+      - xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify
+
+  archive:build-app-bundle:
+    desc: "Export .app bundle from .xcarchive"
+    sources:
+      - "{{.XC_ARCHIVE}}"
+    generates:
+      - "{{.CIDER_DEST_APP}}"
+    preconditions:
+      - test -f "`which xcbeautify`"
+    cmds:
+      - rm -rf {{.CIDER_DEST_APP}}
+      - (cd dest/; rm -f DistributionSummary.plist ExportOptions.plist Packaging.log)
+      - xcodebuild -exportArchive -archivePath {{.XC_ARCHIVE}} -exportPath dest/ -exportOptionsPlist ExportOptions.plist | xcbeautify
 
   build:dmg:
-    desc: "Build DMG for Cider (Dev).app"
-    vars:
-      CIDER_DMG: "dist/Cider.dmg"
-      DEBUG_CIDER_APP:
-        sh: xcodebuild -workspace Cider.xcworkspace -scheme Cider -sdk macosx -configuration Debug -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
+    desc: "Build DMG for input .app"
     cmds:
-      - open "{{.DEBUG_CIDER_APP}}"/*.app
+      - mkdir -p dest/
+      - create-dmg --volname "Cider for macOS" --window-size 600 dest/Cider.dmg {{.CLI_ARGS}}
 
   start:dev-server:
     dir: 'CiderDevUtils/'
