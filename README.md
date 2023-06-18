@@ -90,7 +90,7 @@ Voila! Cider should now be live on your Mac, happy hacking 🥰
 
 ### Verifying build toolchain 🏗️
 
-If you are not sure about if you've installed all the required tools(dependency hell it really is), run this command.  Better yet, if you don't have `coke` installed correctly, it does it for you automatically.
+Make sure you have all the things required to build Cider
 
 ```shell
 task verify:toolchain
