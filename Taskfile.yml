@@ -126,7 +126,7 @@ tasks:
     preconditions:
       - test -f "`which xcbeautify`"
     cmds:
-      - xcodebuild -project {{.XC_PROJ}} -configuration debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build | xcbeautify
+      - xcodebuild -project {{.XC_PROJ}} -configuration Debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build | xcbeautify
 
   run:xc:
     desc: "Run Cider Debug"
@@ -168,7 +168,7 @@ tasks:
       - test -f "`which xcbeautify`"
     cmds:
       - rm -f {{.XC_ARCHIVE}}
-      - xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify
+      - xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify
 
   archive:build-app-bundle:
     desc: "Export .app bundle from .xcarchive"
