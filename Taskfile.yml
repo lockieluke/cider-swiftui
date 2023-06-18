@@ -119,8 +119,10 @@ tasks:
 
   build:xc:
     desc: "Build all targets including Cider and CiderPlaybackAgent"
+    preconditions:
+      - test -f "`which xcbeautify`"
     cmds:
-      - xcodebuild -project {{.XC_PROJ}} -configuration debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build
+      - xcodebuild -project {{.XC_PROJ}} -configuration debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build | xcbeautify
 
   run:xc:
     desc: "Run Cider"
@@ -129,8 +131,10 @@ tasks:
 
   clean:xc:
     desc: "Clean Xcode build folder"
+    preconditions:
+      - test -f "`which xcbeautify`"
     cmds:
-      - xcodebuild -project {{.XC_PROJ}} clean
+      - xcodebuild -project {{.XC_PROJ}} clean | xcbeautify
 
   archive:xc:
     desc: "Archive Cider Release"
