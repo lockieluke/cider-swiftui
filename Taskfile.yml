@@ -4,6 +4,10 @@ vars:
   XC_PROJ: Cider.xcodeproj
   XC_ARCHIVE: dest/Cider.xcarchive
   CIDER_DEST_APP: dest/Cider.app
+  DEBUG_BUILD_DIR:
+    sh: xcodebuild -project {{.XC_PROJ}} -scheme Cider -sdk macosx -configuration Debug -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
+  RELEASE_BUILD_DIR:
+    sh: xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" -sdk macosx -configuration Release -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
 
 tasks:
   default:
@@ -125,9 +129,29 @@ tasks:
       - xcodebuild -project {{.XC_PROJ}} -configuration debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build | xcbeautify
 
   run:xc:
-    desc: "Run Cider"
+    desc: "Run Cider Debug"
     cmds:
-      - open $(xcodebuild -project {{.XC_PROJ}} -scheme Cider -sdk macosx -configuration release -destination platform=macOS,arch=`arch` -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*")/*.app
+      - open {{.DEBUG_BUILD_DIR}}/*.app
+
+  run:xc-release:
+    desc: "Run Cider Release"
+    cmds:
+      - open {{.RELEASE_BUILD_DIR}}/*.app
+
+  open:xc-proj:
+    desc: "Open Cider.xcodeproj"
+    cmds:
+      - open {{.XC_PROJ}}
+
+  open:debug-build-dir:
+    desc: "Open Debug build folder in Finder"
+    cmds:
+      - open {{.DEBUG_BUILD_DIR}}
+
+  open:release-build-dir:
+    desc: "Open Release build folder in Finder"
+    cmds:
+      - open {{.RELEASE_BUILD_DIR}}
 
   clean:xc:
     desc: "Clean Xcode build folder"
