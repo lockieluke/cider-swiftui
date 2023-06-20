@@ -167,7 +167,7 @@ tasks:
     preconditions:
       - test -f "`which xcbeautify`"
     cmds:
-      - rm -f {{.XC_ARCHIVE}}
+      - rm -rf {{.XC_ARCHIVE}}
       - xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify
 
   archive:build-app-bundle:
