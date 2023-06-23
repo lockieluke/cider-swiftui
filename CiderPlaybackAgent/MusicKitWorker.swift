@@ -185,7 +185,11 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
     }
     
     func setAudioQuality(audioQuality: Int) async {
-        _ = try? await self.wkWebView.callAsyncJavaScript("window.ciderInterop.mk.bitrate = \(audioQuality)", contentWorld: .page)
+        if audioQuality == 0 {
+            
+        } else {
+            await self.asyncRunJS("window.ciderInterop.mk.bitrate = \(audioQuality)")
+        }
     }
     
     func reorderQueuedItem(from: Int, to: Int) async {

@@ -27,6 +27,9 @@ struct AudioPreferencesPane: View {
             case .High:
                 return "High Quality contains more detail of the audio but consumes more network bandwidth"
                 
+            case .Lossless:
+                return "Lossless contains every bit of the audio but consumes a lot more network bandwidth, this functionality is still in beta and only works on macOS 14.0 and newer"
+                
             }
         }
     }
@@ -41,6 +44,7 @@ struct AudioPreferencesPane: View {
                         Picker("Audio Quality", selection: $audioQuality) {
                             Text("High 256kbps").tag(AudioQuality.High)
                             Text("Standard 64kbps").tag(AudioQuality.Standard)
+                            Text("Lossless (Beta)").tag(AudioQuality.Lossless)
                         }
                         .onChange(of: audioQuality) { audioQuality in
                             Debouncer.debounce {

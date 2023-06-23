@@ -10,7 +10,7 @@ import Foundation
 import Defaults
 
 enum AudioQuality: Int {
-    case Standard = 65, High = 256
+    case Standard = 65, High = 256, Lossless = 0
 }
 
 extension Defaults.Keys {
