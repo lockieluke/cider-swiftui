@@ -28,6 +28,7 @@ tasks:
 
   clean:discord-rpc-lib:
     desc: "Clean DiscordRPCAgent's target folder"
+    prompt: "Cleaning DiscordRPCAgent's target folder, do you want to continue?"
     dir: DiscordRPCAgent/
     cmds:
       - rm -rf target/
@@ -66,6 +67,7 @@ tasks:
 
   clean:native-utils-lib:
     desc: "Clean NativeUtils's target folder"
+    prompt: "Cleaning NativeUtils' target folder, do you want to continue?"
     dir: NativeUtils/
     cmds:
       - rm -rf target/
@@ -155,6 +157,7 @@ tasks:
 
   clean:xc:
     desc: "Clean Xcode build folder"
+    prompt: "Cleaning Xcode build folder, do you want to continue?"
     preconditions:
       - test -f "`which xcbeautify`"
     cmds:
