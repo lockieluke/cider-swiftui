@@ -1,8 +1,5 @@
 import ora from "ora";
 import shelljs from "shelljs";
-import promptSync from "prompt-sync";
-
-const prompt = promptSync();
 
 const spinner = ora("Verifying toolchain").start();
 
