@@ -5,9 +5,9 @@ vars:
   XC_ARCHIVE: dest/Cider.xcarchive
   CIDER_DEST_APP: dest/Cider.app
   DEBUG_BUILD_DIR:
-    sh: xcodebuild -project {{.XC_PROJ}} -scheme Cider -sdk macosx -configuration Debug -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
+    sh: $(command -v bkt >/dev/null 2>&1 && echo "bkt --cwd --") xcodebuild -project {{.XC_PROJ}} -scheme Cider -sdk macosx -configuration Debug -showBuildSettings | $(command -v rg >/dev/null 2>&1 && echo "rg" || echo "grep") -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
   RELEASE_BUILD_DIR:
-    sh: xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" -sdk macosx -configuration Release -quiet -showBuildSettings | grep -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
+    sh: $(command -v bkt >/dev/null 2>&1 && echo "bkt --cwd --") xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" -sdk macosx -configuration Release -quiet -showBuildSettings | $(command -v rg >/dev/null 2>&1 && echo "rg" || echo "grep") -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
 
 tasks:
   default:
