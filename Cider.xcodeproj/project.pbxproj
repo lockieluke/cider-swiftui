@@ -125,7 +125,7 @@
 		B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD922908797C00A67CE4 /* Dictionary.swift */; };
 		B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD94290879F500A67CE4 /* Validation.swift */; };
 		B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */; };
-		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */; };
 		B7CF3767299A942000922CDA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3766299A942000922CDA /* SearchView.swift */; };
 		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
@@ -1121,7 +1121,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Cider/Cider-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1180,7 +1180,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cider/Cider-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
