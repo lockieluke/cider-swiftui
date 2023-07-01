@@ -13,7 +13,9 @@ struct PlaybackView: View {
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
+    #if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
+    #endif
     
     @State private var showCastMenu: Bool = false
     
@@ -94,6 +96,7 @@ struct PlaybackView: View {
             }
             
             HStack {
+                #if os(macOS)
                 if ciderPlayback.nowPlayingState.playbackPipelineInitialised {
                     ActionButton(actionType: .AirPlay) {
                         Task {
@@ -107,6 +110,7 @@ struct PlaybackView: View {
                     }
                     .transition(.fade)
                 }
+                #endif
                 // TODO: Add alternate cast menu
                 
                 ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
@@ -131,6 +135,7 @@ struct PlaybackView: View {
                         ContextMenuArg("Copy Prettified Lyrics XML")
                     ] : [],  { id in
                         Task {
+                            #if os(macOS)
                             if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
                                 self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXml)
                             }
@@ -138,6 +143,7 @@ struct PlaybackView: View {
                             if id == "copy-prettified-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item), let lyricsXML = try? XMLDocument(xmlString: lyricsXml) {
                                 self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXML.xmlString(options: .nodePrettyPrint))
                             }
+                            #endif
                         }
                     })
                     .transition(.fade)

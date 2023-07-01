@@ -3,7 +3,9 @@
 //  
 
 import SwiftUI
+#if canImport(Settings)
 import Settings
+#endif
 import Inject
 
 struct PrefValueField: View {

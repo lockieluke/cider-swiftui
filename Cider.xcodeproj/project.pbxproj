@@ -12,8 +12,8 @@
 		B700C18828B920F20069FDF5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18728B920F20069FDF5 /* Preview Assets.xcassets */; };
 		B700C19528B92A4C0069FDF5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19428B92A4C0069FDF5 /* main.swift */; };
 		B700C19828B92AF30069FDF5 /* NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19728B92AF30069FDF5 /* NSScreen.swift */; };
-		B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19928B92E020069FDF5 /* AppWindow.swift */; };
-		B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1A528B955090069FDF5 /* AppMenu.swift */; };
+		B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C19928B92E020069FDF5 /* AppWindow.swift */; platformFilters = (macos, ); };
+		B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1A528B955090069FDF5 /* AppMenu.swift */; platformFilters = (macos, ); };
 		B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1AA28B955C20069FDF5 /* AppTitleBar.swift */; };
 		B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */; };
 		B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B328B96DBD0069FDF5 /* ActionButton.swift */; };
@@ -30,7 +30,7 @@
 		B71B827E2A3670BD00DD8BC2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B71B827D2A3670BD00DD8BC2 /* Alamofire */; };
 		B71B82812A3670E100DD8BC2 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82802A3670E100DD8BC2 /* WrappingHStack */; };
 		B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82832A36711800DD8BC2 /* UIImageColors */; };
-		B71B82872A36712600DD8BC2 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82862A36712600DD8BC2 /* Settings */; };
+		B71B82872A36712600DD8BC2 /* Settings in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = B71B82862A36712600DD8BC2 /* Settings */; };
 		B71B828A2A36713300DD8BC2 /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82892A36713300DD8BC2 /* Sliders */; };
 		B71B828D2A36713B00DD8BC2 /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = B71B828C2A36713B00DD8BC2 /* Throttler */; };
 		B71B82902A36717400DD8BC2 /* AttributedText in Frameworks */ = {isa = PBXBuildFile; productRef = B71B828F2A36717400DD8BC2 /* AttributedText */; };
@@ -43,16 +43,16 @@
 		B71B82AA2A36764600DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A92A36764600DD8BC2 /* SwiftyJSON */; };
 		B71B82AC2A36766500DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AB2A36766500DD8BC2 /* SwiftyUtils */; };
 		B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AE2A3676AF00DD8BC2 /* Inject */; };
-		B71B82C62A37750900DD8BC2 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C52A37750900DD8BC2 /* libnative_utils.a */; };
-		B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */; };
-		B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */; };
-		B725013A28C2624300992F57 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* NSColor.swift */; };
+		B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */; platformFilters = (macos, ); };
+		B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */; platformFilters = (macos, ); };
+		B725013A28C2624300992F57 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* Color.swift */; };
 		B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* MediaPresentable.swift */; };
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
+		B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C52A37750900DD8BC2 /* libnative_utils.a */; platformFilters = (macos, ); };
 		B740CE172991AD050096DF6E /* htmltext-style.css in Resources */ = {isa = PBXBuildFile; fileRef = B740CE162991AD050096DF6E /* htmltext-style.css */; };
 		B74EEBD229D7AEAB00711DB6 /* LyricsPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */; };
 		B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD329D86EEF00711DB6 /* SidePane.swift */; };
-		B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */; };
+		B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */; platformFilters = (macos, ); };
 		B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219A92918358C005CF8F0 /* MediaType.swift */; };
 		B75219AC291836B5005CF8F0 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219AB291836B5005CF8F0 /* MediaItem.swift */; };
 		B75219AE29187526005CF8F0 /* MediaArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219AD29187525005CF8F0 /* MediaArtwork.swift */; };
@@ -61,22 +61,22 @@
 		B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */; };
 		B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75C7C1229B12AE500F7693E /* CatalogActions.swift */; };
 		B76887122948F9C600C623C9 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887112948F9C600C623C9 /* Support.swift */; };
-		B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887132949172300C623C9 /* PreferencesPanes.swift */; };
-		B768871729491B1800C623C9 /* GeneralPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */; };
-		B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */; };
+		B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887132949172300C623C9 /* PreferencesPanes.swift */; platformFilters = (macos, ); };
+		B768871729491B1800C623C9 /* GeneralPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */; platformFilters = (macos, ); };
+		B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */; platformFilters = (macos, ); };
 		B768871B2949225200C623C9 /* BasicHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871A2949225200C623C9 /* BasicHoverModifier.swift */; };
 		B7688723294A06F600C623C9 /* Diagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688722294A06F500C623C9 /* Diagnostic.swift */; };
 		B7688725294A076300C623C9 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688724294A076300C623C9 /* Process.swift */; };
-		B7688728294A314400C623C9 /* WSDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688727294A314400C623C9 /* WSDebugger.swift */; };
-		B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688729294A321200C623C9 /* WSDebuggerView.swift */; };
+		B7688728294A314400C623C9 /* WSDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688727294A314400C623C9 /* WSDebugger.swift */; platformFilters = (macos, ); };
+		B768872A294A321200C623C9 /* WSDebuggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688729294A321200C623C9 /* WSDebuggerView.swift */; platformFilters = (macos, ); };
 		B768872C294A359400C623C9 /* WSModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768872B294A359400C623C9 /* WSModal.swift */; };
 		B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE921299C03D400A19558 /* MediaPlaylist.swift */; };
 		B76AE924299C044800A19558 /* MediaDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE923299C044800A19558 /* MediaDescription.swift */; };
 		B76AE928299C162600A19558 /* MissingArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = B76AE927299C162600A19558 /* MissingArtwork.png */; };
 		B76AE92A299E993500A19558 /* Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE929299E993500A19558 /* Comparable.swift */; };
-		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; };
+		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; platformFilters = (macos, ); };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
-		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; };
+		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; platformFilters = (macos, ); };
 		B77AACEA293AD0F300F8E1E2 /* MultiColourGlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE9293AD0F300F8E1E2 /* MultiColourGlow.swift */; };
 		B77AACEC293AD90100F8E1E2 /* DisableScrollingModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACEB293AD90100F8E1E2 /* DisableScrollingModifier.swift */; };
 		B77AACEE293B702100F8E1E2 /* MediaTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACED293B702100F8E1E2 /* MediaTrack.swift */; };
@@ -86,10 +86,12 @@
 		B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */; };
 		B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */; };
 		B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77C91AD294FCCE100124B47 /* CaseIterable.swift */; };
-		B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720B29F09A15006EDC69 /* native-utils.swift */; };
-		B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */; };
-		B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */; };
-		B790345E29F091D5001B11AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B790345D29F091D5001B11AE /* Settings.swift */; };
+		B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720B29F09A15006EDC69 /* native-utils.swift */; platformFilters = (macos, ); };
+		B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */; platformFilters = (macos, ); };
+		B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */; platformFilters = (macos, ); };
+		B790345E29F091D5001B11AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B790345D29F091D5001B11AE /* Settings.swift */; platformFilters = (macos, ); };
+		B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79230B62A4B834B003F3D99 /* UIApplication.swift */; platformFilter = ios; };
+		B79230B92A4B8B46003F3D99 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79230B82A4B8B46003F3D99 /* URL.swift */; };
 		B797AFF6297F3AB900D77282 /* InteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF5297F3AB900D77282 /* InteractiveText.swift */; };
 		B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF7297F3B6A00D77282 /* ArtistView.swift */; };
 		B797AFFA297F3E2000D77282 /* MediaArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF9297F3E2000D77282 /* MediaArtist.swift */; };
@@ -100,8 +102,8 @@
 		B798983829D0E96900A734DC /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983729D0E96900A734DC /* DraggableView.swift */; };
 		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
-		B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD22A3A688900C2B489 /* libiconv.tbd */; };
-		B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD42A3A696500C2B489 /* Carbon.framework */; };
+		B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD22A3A688900C2B489 /* libiconv.tbd */; platformFilters = (macos, ); };
+		B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD42A3A696500C2B489 /* Carbon.framework */; platformFilters = (macos, ); };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
 		B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70028BAD782009AABEA /* AppWindowModal.swift */; };
@@ -123,24 +125,24 @@
 		B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD922908797C00A67CE4 /* Dictionary.swift */; };
 		B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD94290879F500A67CE4 /* Validation.swift */; };
 		B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */; };
-		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */; };
 		B7CF3767299A942000922CDA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3766299A942000922CDA /* SearchView.swift */; };
 		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
 		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
-		B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */; };
-		B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */; };
-		B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B62A37D45200A8405E /* libwxpng-3.3.a */; };
-		B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */; };
-		B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */; };
-		B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */; };
+		B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */; platformFilters = (macos, ); };
+		B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */; platformFilters = (macos, ); };
+		B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B62A37D45200A8405E /* libwxpng-3.3.a */; platformFilters = (macos, ); };
+		B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */; platformFilters = (macos, ); };
+		B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */; platformFilters = (macos, ); };
+		B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */; platformFilters = (macos, ); };
 		B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D46444293574A0000B1E9A /* DetailedView.swift */; };
 		B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D5B9E1292C2F9900046B7F /* Logging.swift */; };
-		B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */; };
-		B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy JS Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */; };
+		B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */; };
+		B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */; platformFilters = (macos, ); };
 		B7E1CE072996EC6800D25D0F /* SearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */; };
 		B7E72361299455430086EDA4 /* MediaArtistPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */; };
-		B7EA101A299FFA6A000998A5 /* DiscordRPCModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */; };
+		B7EA101A299FFA6A000998A5 /* DiscordRPCModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */; platformFilters = (macos, ); };
 		B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7A728FAD07D00B5DF11 /* Networking.swift */; };
 		B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7AC28FDC56600B5DF11 /* AMError.swift */; };
 		B7ECB7C6290497B000B5DF11 /* ObservableHoveringObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ECB7C5290497B000B5DF11 /* ObservableHoveringObject.swift */; };
@@ -148,17 +150,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B7C9CDA129088F4F00A67CE4 /* Copy JS Scripts */ = {
+		B7C9CDA129088F4F00A67CE4 /* Copy CPA */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 12;
 			files = (
-				B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy JS Scripts */,
-				B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy JS Scripts */,
-				B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy JS Scripts */,
+				B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy CPA */,
+				B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy CPA */,
+				B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CPA */,
 			);
-			name = "Copy JS Scripts";
+			name = "Copy CPA";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -185,7 +187,7 @@
 		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
 		B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiscord_rpc_agent.a; path = DiscordRPCAgent/target/universal/libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCider_CXXNativeUtils.a; path = NativeUtils/build/libCider_CXXNativeUtils.a; sourceTree = "<group>"; };
-		B725013928C2624300992F57 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
+		B725013928C2624300992F57 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		B725013D28C2637F00992F57 /* MediaPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresentable.swift; sourceTree = "<group>"; };
 		B7284174290DABA100B7A525 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B740CE162991AD050096DF6E /* htmltext-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "htmltext-style.css"; sourceTree = "<group>"; };
@@ -232,6 +234,8 @@
 		B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "discord-rpc-agent.swift"; path = "DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.swift"; sourceTree = SOURCE_ROOT; };
 		B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftBridgeCore.swift; path = NativeUtils/Generated/SwiftBridgeCore.swift; sourceTree = SOURCE_ROOT; };
 		B790345D29F091D5001B11AE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B79230B62A4B834B003F3D99 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		B79230B82A4B8B46003F3D99 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		B797AFF5297F3AB900D77282 /* InteractiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveText.swift; sourceTree = "<group>"; };
 		B797AFF7297F3B6A00D77282 /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
 		B797AFF9297F3E2000D77282 /* MediaArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaArtist.swift; sourceTree = "<group>"; };
@@ -306,8 +310,8 @@
 				B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */,
 				B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */,
 				B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */,
+				B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */,
 				B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */,
-				B71B82C62A37750900DD8BC2 /* libnative_utils.a in Frameworks */,
 				B71B82962A3671F900DD8BC2 /* FirebaseAnalyticsSwift in Frameworks */,
 				B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */,
 				B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */,
@@ -403,7 +407,7 @@
 			children = (
 				B700C19728B92AF30069FDF5 /* NSScreen.swift */,
 				B7AAB70628BCF89E009AABEA /* View.swift */,
-				B725013928C2624300992F57 /* NSColor.swift */,
+				B725013928C2624300992F57 /* Color.swift */,
 				B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */,
 				B798562A292ADE13003CA787 /* String.swift */,
 				B77AACF5293B93C200F8E1E2 /* TimeInterval.swift */,
@@ -414,6 +418,8 @@
 				B7C5C5DF29CF827F00EF4D11 /* Defaults.swift */,
 				B798983329D0B6DB00A734DC /* List.swift */,
 				B798983929D22A9400A734DC /* Array.swift */,
+				B79230B62A4B834B003F3D99 /* UIApplication.swift */,
+				B79230B82A4B8B46003F3D99 /* URL.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -640,7 +646,7 @@
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
 				B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */,
-				B7C9CDA129088F4F00A67CE4 /* Copy JS Scripts */,
+				B7C9CDA129088F4F00A67CE4 /* Copy CPA */,
 			);
 			buildRules = (
 			);
@@ -832,6 +838,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */,
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
 				B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */,
 				B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */,
@@ -914,10 +921,11 @@
 				B798983829D0E96900A734DC /* DraggableView.swift in Sources */,
 				B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */,
 				B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */,
+				B79230B92A4B8B46003F3D99 /* URL.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,
 				B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */,
 				B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */,
-				B725013A28C2624300992F57 /* NSColor.swift in Sources */,
+				B725013A28C2624300992F57 /* Color.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 				B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */,
 				B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */,
@@ -992,6 +1000,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1047,6 +1056,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1059,11 +1069,14 @@
 		B700C18D28B920F20069FDF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon-Dev";
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cider/CiderDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1079,6 +1092,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Cider has to get access to your music library to fetch Apple Music content";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1099,21 +1113,29 @@
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME) (Dev)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cider/Cider-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
 		B700C18E28B920F20069FDF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon";
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cider/Cider.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1129,6 +1151,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Cider has to get access to your music library to fetch Apple Music content";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1150,9 +1173,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = debugging;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cider/Cider-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

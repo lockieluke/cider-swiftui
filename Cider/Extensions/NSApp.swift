@@ -2,6 +2,7 @@
 //  Copyright © 2022 Cider Collective. All rights reserved.
 //  
 
+#if canImport(AppKit)
 import Foundation
 import AppKit
 
@@ -20,3 +21,4 @@ extension NSApplication {
     }
     
 }
+#endif

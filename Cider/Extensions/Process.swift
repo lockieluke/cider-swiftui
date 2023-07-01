@@ -4,6 +4,7 @@
 
 import Foundation
 
+#if os(macOS)
 extension Process {
     
     static func sysctlByName(name: String) -> String {
@@ -36,3 +37,4 @@ extension Process {
     static let vendor = sysctlByName(name: "machdep.cpu.vendor")
     static let family = sysctlByName(name: "machdep.cpu.family")
 }
+#endif

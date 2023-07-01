@@ -3,11 +3,16 @@
 //  
 
 import Foundation
+#if canImport(AppKit)
 import AppKit
+#elseif canImport(UIKit)
+import UIKit
+#endif
 import SwiftUI
 
-struct VisualEffectBackground: NSViewRepresentable {
+struct VisualEffectBackground: ViewRepresentable {
     
+    #if canImport(AppKit)
     private let material: NSVisualEffectView.Material
     
     init(material: NSVisualEffectView.Material = .windowBackground) {
@@ -15,12 +20,26 @@ struct VisualEffectBackground: NSViewRepresentable {
     }
     
     func makeNSView(context: Context) -> NSVisualEffectView {
-        let visualEffectView = NSVisualEffectView()
-        visualEffectView.material = self.material
-        return visualEffectView
+        return NSVisualEffectView()
     }
     
     func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
-        // Nothing to do.
+        nsView.material = material
     }
+    #elseif canImport(UIKit)
+    private let effect: UIVisualEffect
+    
+    init(effect: UIVisualEffect = UIBlurEffect(style: .systemMaterial)) {
+        self.effect = effect
+    }
+    
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        return UIVisualEffectView()
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = effect
+    }
+    
+    #endif
 }

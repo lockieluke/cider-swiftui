@@ -58,6 +58,7 @@ struct CatalogActions: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+        #if canImport(AppKit)
             .captureMouseEvent(.MouseEntered) {
                 Task {
                     if !self.prefetechedAttributes {
@@ -70,6 +71,7 @@ struct CatalogActions: ViewModifier {
                     }
                 }
             }
+        #endif
             .contextMenu(menu,  { id in
                 Task {
                     switch id {
@@ -86,9 +88,11 @@ struct CatalogActions: ViewModifier {
                         }
                         break
                         
+                    #if os(macOS)
                     case "copy-id":
                         NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(self.item.id)
                         break
+                    #endif
                         
                     default:
                         break

@@ -7,6 +7,8 @@ import WebKit
 import SwiftUI
 import SwiftyJSON
 
+#if canImport(AppKit)
+import AppKit
 final class AuthWorker {
     
     private let logger: Logger
@@ -213,3 +215,4 @@ final class AuthWorker {
     }
     
 }
+#endif

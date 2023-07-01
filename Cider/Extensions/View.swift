@@ -37,6 +37,7 @@ struct AnimatableSystemFontModifier: ViewModifier, Animatable {
     
 }
 
+#if canImport(AppKit)
 enum MouseEvent {
     
     case MouseEntered,
@@ -64,7 +65,7 @@ struct MouseModifier: ViewModifier {
         )
     }
     
-    private struct Representable: NSViewRepresentable {
+    private struct Representable: ViewRepresentable {
         
         let mouseEventCB: (MouseEvent) -> Void
         let frame: NSRect
@@ -134,6 +135,7 @@ struct MouseModifier: ViewModifier {
         }
     }
 }
+#endif
 
 /// An animatable modifier that is used for observing animations for a given animatable value.
 struct AnimationCompletionObserverModifier<Value>: AnimatableModifier where Value: VectorArithmetic {
@@ -190,6 +192,7 @@ extension View {
         self.frame(maxWidth: hidden ? .zero : .infinity, maxHeight: hidden ? .zero : .infinity)
     }
     
+    #if canImport(AppKit)
     func captureMouseEvents(_ mouseEventCB: @escaping (MouseEvent) -> Void) -> some View {
         modifier(MouseModifier(mouseEventCB))
     }
@@ -201,6 +204,7 @@ extension View {
             }
         }))
     }
+    #endif
     
     func contextMenu(_ contextMenuArgs: [ContextMenuArg] = [], onAppear: (() -> Void)? = nil, _ onAction: ((_ id: String) -> Void)? = nil) -> some View {
         modifier(ContextMenu(contextMenuArgs, onAppear: onAppear, onAction))
@@ -221,11 +225,15 @@ extension View {
     }
     
     func tooltip(_ toolTip: String) -> some View {
+        #if os(macOS)
         if #available(macOS 13.0, *) {
             return self.help(toolTip)
         } else {
             return self.overlay(TooltipView(tooltip: toolTip))
         }
+        #else
+        return self
+        #endif
     }
     
     func multicolourGlow(gradientColours: Gradient = Gradient(colors: [])) -> some View {

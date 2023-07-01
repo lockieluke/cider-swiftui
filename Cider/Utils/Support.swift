@@ -3,22 +3,26 @@
 //  
 
 import Foundation
+#if canImport(AppKit)
 import AppKit
+#elseif canImport(UIKit)
+import UIKit
+#endif
 
 class Support {
     
     static func openDiscord() {
-        NSWorkspace.shared.open(URL(string: "https://discord.com/invite/applemusic")!)
+        URL(string: "https://discord.com/invite/applemusic")!.open()
     }
     
     static func openCiderGitHub() {
         #if DEBUG
-        NSWorkspace.shared.open(URL(string: "https://github.com/ciderapp/project2-swiftui")!)
+        URL(string: "https://github.com/ciderapp/project2-swiftui")!.open()
         #endif
     }
     
     static func openOrgGitHub() {
-        NSWorkspace.shared.open(URL(string: "https://github.com/ciderapp/")!)
+        URL(string: "https://github.com/ciderapp/")!.open()
     }
     
 }

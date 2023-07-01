@@ -14,9 +14,13 @@ extension List {
   /// removing/changing it. listRowBackground() doesn't work either.
   /// This workaround works because List is backed by NSTableView.
   func removeBackground() -> some View {
-    return introspectTableView { tableView in
-      tableView.backgroundColor = .clear
-      tableView.enclosingScrollView!.drawsBackground = false
-    }
+      #if os(macOS)
+      return introspectTableView { tableView in
+        tableView.backgroundColor = .clear
+        tableView.enclosingScrollView!.drawsBackground = false
+      }
+      #else
+      return self
+      #endif
   }
 }

@@ -5,6 +5,7 @@
 //  Created by Sherlock LUK on 26/08/2022.
 //
 
+#if canImport(AppKit)
 import Foundation
 import AppKit
 
@@ -23,3 +24,4 @@ extension NSScreen {
         }
     }
 }
+#endif

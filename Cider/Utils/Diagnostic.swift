@@ -6,6 +6,7 @@ import Foundation
 
 class Diagnostic {
     
+    #if os(macOS)
     static var cpuName: String {
         get {
             return Process.processor
@@ -76,6 +77,7 @@ class Diagnostic {
             return "macOS \(Process.stringFromTerminal(command: "awk '/SOFTWARE LICENSE AGREEMENT FOR macOS/' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | awk -F 'macOS ' '{print $NF}' | awk '{print substr($0, 0, length($0)-1)}'"))"
         }
     }
+    #endif
     
     #if DEBUG
     static let isDebug = true

@@ -10,11 +10,15 @@ struct TransparentScrollbarsModifier: ViewModifier {
     var enabled: Bool
     
     func body(content: Content) -> some View {
+        #if canImport(AppKit)
         content
             .introspectScrollView { scrollView in
                 scrollView.autohidesScrollers = true
                 scrollView.scrollerStyle = .overlay
             }
+        #else
+        return content
+        #endif
     }
     
 }

@@ -4,6 +4,7 @@
 
 
 //#include "../DiscordRPCAgent/Generated/SwiftBridgeCore.h"
+#ifndef TARGET_OS_IPHONE
 #include "../NativeUtils/Generated/SwiftBridgeCore.h"
 
 #include "../DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.h"
@@ -21,4 +22,5 @@ void terminateCXXNativeUtils();
 
 #ifdef __cplusplus
 #define }
+#endif
 #endif

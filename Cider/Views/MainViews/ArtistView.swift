@@ -18,7 +18,9 @@ struct ArtistView: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
+    #if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
+    #endif
     
     let artistViewParams: ArtistViewParams
     @State private var artist: MediaArtist?
@@ -107,6 +109,7 @@ struct ArtistView: View {
                                 .frame(minWidth: 50, minHeight: 50)
                                 .shadow(radius: 10)
                                 .padding(60)
+                            #if os(macOS)
                                 .contextMenu {
                                     Button {
                                         self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(artist.id)
@@ -115,6 +118,7 @@ struct ArtistView: View {
                                         Text("Copy ID")
                                     }
                                 }
+                            #endif
                             
                             HStack(alignment: .center) {
                                 MediaActionButton(icon: .Play, size: 35)

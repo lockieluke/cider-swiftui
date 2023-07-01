@@ -52,7 +52,9 @@ struct LyricsPaneView: View {
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    #if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
+    #endif
     
     @ObservedObject private var iO = Inject.observer
     
@@ -116,12 +118,14 @@ struct LyricsPaneView: View {
             }
         })
         .task {
+            #if os(macOS)
             if let item = self.ciderPlayback.nowPlayingState.item, item.id != self.lyricsData?.id, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
                 let lyricsJson = JSON(parseJSON: self.nativeUtilsWrapper.nativeUtils.parse_lyrics_xml(lyricsXml).toString())
                 self.lyricsData = LyricsData(id: item.id, lyrics: lyricsJson["lyrics"].arrayValue.compactMap { line in
                     return LyricLineData(id: line["id"].stringValue, line: line["line"].stringValue, startTime: line["start_time"].floatValue, endTime: line["end_time"].floatValue)
                 }, leadingSilence: lyricsJson["leadingSilence"].floatValue, songwriters: lyricsJson["songwriters"].arrayObject as? [String] ?? [])
             }
+            #endif
         }
         .enableInjection()
     }

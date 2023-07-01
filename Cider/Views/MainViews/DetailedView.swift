@@ -84,7 +84,7 @@ struct DetailedView: View {
                         .onSuccess { image, data, cacheType in
                             image.getColors(quality: .highest) { colours in
                                 guard let colours = colours else { return }
-                                self.bgGlowGradientColours = Gradient(colors: [Color(nsColor: colours.primary), Color(nsColor: colours.secondary), Color(nsColor: colours.detail), Color(nsColor: colours.background)])
+                                self.bgGlowGradientColours = Gradient(colors: [Color(platformColor: colours.primary), Color(platformColor: colours.secondary), Color(platformColor: colours.detail), Color(platformColor: colours.background)])
                             }
                         }
                         .resizable()
@@ -93,7 +93,7 @@ struct DetailedView: View {
                         .frame(width: sqaureSize)
                         .background(
                             Rectangle()
-                                .background(Color(nsColor: artwork.bgColour))
+                                .background(Color(platformColor: artwork.bgColour))
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(5)
                                 .multicolourGlow()
@@ -129,7 +129,7 @@ struct DetailedView: View {
                             Text("\(title)")
                                 .font(.system(size: 18, weight: .bold))
                             if playlistType == .PersonalMix {
-                                Image(systemName: "person.crop.circle").foregroundColor(Color(nsColor: artwork.bgColour))
+                                Image(systemName: "person.crop.circle").foregroundColor(Color(platformColor: artwork.bgColour))
                                     .font(.system(size: 18))
                                     .tooltip("Playlist curated by Apple Music")
                                     .modifier(SimpleHoverModifier())

@@ -30,7 +30,9 @@ struct AppTitleBar: View {
                     Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
                 }
                 .gesture(TapGesture(count: 2).onEnded {
-                    appWindowModal.nsWindow?.zoom(nil)
+                    #if canImport(AppKit)
+                    self.appWindowModal.nsWindow?.zoom(nil)
+                    #endif
                 })
             
             if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {

@@ -34,10 +34,7 @@ struct MediaShowcaseRow: View {
                                     .padding()
                             }
                         }
-                        .introspectScrollView { scrollView in
-                            scrollView.autohidesScrollers = true
-                            scrollView.scrollerStyle = .overlay
-                        }
+                        .transparentScrollbars()
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }

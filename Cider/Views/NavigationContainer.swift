@@ -15,7 +15,9 @@ struct NavigationContainer: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var searchModal: SearchModal
+    #if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
+    #endif
     
     var body: some View {
         ZStack {
@@ -50,7 +52,9 @@ struct NavigationContainer: View {
                             .environmentObject(mkModal)
                             .environmentObject(ciderPlayback)
                             .environmentObject(navigationModal)
+                        #if os(macOS)
                             .environmentObject(nativeUtilsWrapper)
+                        #endif
                             .hideWithoutDestroying(!shouldUpperStackShow)
                             .allowsHitTesting(shouldUpperStackShow) 
                     
@@ -89,7 +93,9 @@ struct NavigationContainer: View {
                     LyricsPaneView()
                         .environmentObject(mkModal)
                         .environmentObject(ciderPlayback)
+                    #if os(macOS)
                         .environmentObject(nativeUtilsWrapper)
+                    #endif
                         .transition(.move(edge: .trailing))
                         .zIndex(1)
                 }

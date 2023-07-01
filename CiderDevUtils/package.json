@@ -9,6 +9,7 @@
     "fns/verify-and-install-toolchain": "tsx src/functions/verify-and-install-toolchain.ts"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4",
     "@types/node": "^18.15.9",
     "@types/shelljs": "^0",
     "tsx": "^3.12.6",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "fastify": "^4.15.0",
+    "lodash-es": "^4.17.21",
     "ora": "^6.3.0",
     "shelljs": "^0.8.5"
   }

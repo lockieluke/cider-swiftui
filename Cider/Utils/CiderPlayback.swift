@@ -61,8 +61,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     private let logger: Logger
     private let appWindowModal: AppWindowModal
-    private let discordRPCModal: DiscordRPCModal
+    #if os(macOS)
+    private let discordRPCModal: DiscordRPCModal!
     private let proc: Process
+    #endif
     private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
     
@@ -71,7 +73,13 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     var queue: [MediaTrack] = []
     
-    init(appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModal) {
+    #if os(macOS)
+    typealias DiscordRPCModalOrNil = DiscordRPCModal
+    #else
+    typealias DiscordRPCModalOrNil = NSObject
+    #endif
+    
+    init(appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModalOrNil? = nil) {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = NetworkingProvider.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
@@ -87,6 +95,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         // hack to access self before everything is initialised
         weak var weakSelf: CiderPlayback?
         
+        #if os(macOS)
         let proc = Process()
         let pipe = Pipe()
         pipe.fileHandleForReading.readabilityHandler = { fileHandle in
@@ -113,6 +122,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 }
             }
         }
+        #endif
         
         guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
         var config = JSON([
@@ -121,6 +131,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         #if DEBUG
         config["openWebInspectorAutomatically"].boolValue = Defaults[.debugOpenWebInspectorAutomatically]
         #endif
+        
+        #if os(macOS)
         proc.arguments = [
             "--agent-port", String(agentPort),
             "--agent-session-id", "\"\(agentSessionId)\"",
@@ -128,12 +140,15 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         ]
         proc.executableURL = execUrl
         proc.standardOutput = pipe
+        #endif
         
         self.logger = logger
         self.appWindowModal = appWindowModal
         self.agentSessionId = agentSessionId
-        self.discordRPCModal = discordRPCModal
+        #if os(macOS)
         self.proc = proc
+        self.discordRPCModal = discordRPCModal
+        #endif
         self.agentPort = agentPort
         self.isRunning = false
         
@@ -142,14 +157,18 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     func setDeveloperToken(developerToken: String, mkModal: MKModal) {
         if !self.isRunning {
+            #if os(macOS)
             self.proc.arguments?.append(contentsOf: ["--am-token", developerToken])
+            #endif
         }
         self.mkModal = mkModal
     }
     
     func setUserToken(userToken: String) {
         if !self.isRunning {
+            #if os(macOS)
             self.proc.arguments?.append(contentsOf: ["--am-user-token", userToken])
+            #endif
         }
     }
     
@@ -345,6 +364,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             return
         }
         
+        #if os(macOS)
         do {
             try proc.run()
             self.isRunning = true
@@ -352,6 +372,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         } catch {
             self.logger.error("Error running CiderPlaybackAgent: \(error)")
         }
+        #endif
     }
     
     @MainActor
@@ -379,12 +400,14 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
         
         let artworkURL = artwork.getUrl(width: 200, height: 200)
+        #if os(macOS)
         self.discordRPCModal.agent.setActivityAssets(artworkURL.absoluteString, title, "", "")
         self.discordRPCModal.agent.setActivityState(artistName)
         self.discordRPCModal.agent.setActivityDetails(title)
         DispatchQueue.global(qos: .default).async {
             self.discordRPCModal.agent.updateActivity()
         }
+        #endif
         self.nowPlayingState = NowPlayingState(
             item: item,
             name: title,
@@ -481,17 +504,21 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     
                 case "paused":
                     self.nowPlayingState.isPlaying = false
+                    #if os(macOS)
                     DispatchQueue.global(qos: .default).async {
                         self.discordRPCModal.agent.setActivityTimestamps(0, 0)
                         self.discordRPCModal.agent.updateActivity()
                     }
+                    #endif
                     break
                     
                 case "stopped":
                     self.nowPlayingState.reset()
+                    #if os(macOS)
                     DispatchQueue.global(qos: .default).async {
                         self.discordRPCModal.agent.clearActivity()
                     }
+                    #endif
                     break
                     
                 case "playing":

@@ -3,8 +3,12 @@
 //  
 
 import Foundation
+#if canImport(AppKit)
 import AppKit
 import Settings
+#elseif canImport(UIKit)
+import UIKit
+#endif
 
 class AppMenu {
     

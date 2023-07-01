@@ -13,10 +13,12 @@ struct ContentView: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
-    @EnvironmentObject private var discordRPCModal: DiscordRPCModal
-    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
     
+    #if os(macOS)
+    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
+    @EnvironmentObject private var discordRPCModal: DiscordRPCModal
     var authWorker: AuthWorker
+    #endif
     
     @StateObject private var searchModal = SearchModal()
     @StateObject private var navigationModal = NavigationModal()
@@ -35,7 +37,9 @@ struct ContentView: View {
                     .environmentObject(navigationModal)
                     .environmentObject(ciderPlayback)
                     .environmentObject(searchModal)
+                #if os(macOS)
                     .environmentObject(nativeUtilsWrapper)
+                #endif
                 
                 VStack {
                     AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top)
@@ -50,15 +54,20 @@ struct ContentView: View {
                         .environmentObject(ciderPlayback)
                         .environmentObject(navigationModal)
                         .environmentObject(mkModal)
+                    #if os(macOS)
                         .environmentObject(nativeUtilsWrapper)
+                    #endif
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
                 }
             }
             .onTapGesture {
+                #if canImport(AppKit)
                 NSApp.keyWindow?.makeFirstResponder(nil)
+                #endif
             }
             .task {
+                #if os(macOS)
                 await self.authWorker.presentAuthView() { userToken in
                     self.discordRPCModal.agent.start()
                     self.mkModal.authenticateWithToken(userToken: userToken)
@@ -70,6 +79,7 @@ struct ContentView: View {
                         self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .homeViewParams))
                     }
                 }
+                #endif
             }
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)
@@ -80,6 +90,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        #if os(macOS)
         ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())), appWindowModal: AppWindowModal()))
+        #elseif os(iOS)
+        ContentView()
+        #endif
     }
 }

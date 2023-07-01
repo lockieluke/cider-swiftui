@@ -3,9 +3,12 @@
 //  
 
 import Foundation
+#if canImport(AppKit)
+import AppKit
+#endif
 import SwiftUI
 
-struct TooltipView: NSViewRepresentable {
+struct TooltipView: ViewRepresentable {
     
     let tooltip: String
     

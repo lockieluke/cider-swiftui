@@ -25,17 +25,21 @@ class Logger {
     
     func info(_ message: String) {
         let time = self.getTimestampInString()
+        #if os(macOS)
         DispatchQueue.main.async {
             addLogEntry(time, "info", message)
         }
+        #endif
         fputs("[\(time)] \("[\(self.label)]".bold) \(message)\n", stdout)
     }
     
     func success(_ message: String, displayTick: Bool = false) {
         let time = self.getTimestampInString()
+        #if os(macOS)
         DispatchQueue.main.async {
             addLogEntry(time, "success", message)
         }
+        #endif
         fputs("[\(time)] \("[\(self.label)]".bold) \(message.green)\(displayTick ? " ✔" : "")\n", stdout)
     }
     
@@ -49,9 +53,11 @@ class Logger {
     
     private func errorMessage(_ message: String, displayCross: Bool = false) -> String {
         let time = self.getTimestampInString()
+        #if os(macOS)
         DispatchQueue.main.async {
             addLogEntry(time, "error", message)
         }
+        #endif
         return "[\(time)] \("[\(self.label)]".bold) \("ERROR".red) \(message)\(displayCross ? " ✗" : "")"
     }
     

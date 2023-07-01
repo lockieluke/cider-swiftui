@@ -210,6 +210,7 @@ struct SearchBar: View {
                         }
                 }
                 .focused($isFocused)
+            #if canImport(AppKit)
                 .onHover { isHovered in
                     if isHovered {
                         NSCursor.iBeam.push()
@@ -217,6 +218,7 @@ struct SearchBar: View {
                         NSCursor.pop()
                     }
                 }
+            #endif
                 .onChange(of: isFocused) { newIsFocused in
                     self.searchModal.isFocused = newIsFocused
                 }
@@ -231,7 +233,11 @@ struct SearchBar: View {
                         }
                     }
                         .frame(width: searchBarWidth)
+                    #if canImport(AppKit)
                         .background(VisualEffectBackground(material: .sheet))
+                    #elseif canImport(UIKit)
+                        .background(VisualEffectBackground())
+                    #endif
                         .cornerRadius(10)
                         .shadow(radius: 3)
                         .offset(y: 45)

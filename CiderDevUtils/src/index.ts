@@ -1,5 +1,6 @@
 import fastify from "fastify";
 import shelljs from 'shelljs';
+import * as _ from 'lodash-es';
 
 declare global {
     namespace NodeJS {
@@ -14,13 +15,17 @@ const app = fastify();
 const cwd = process.env.CWD ?? process.cwd();
 const taskBin = await shelljs.which('task');
 
-app.get<{
+app.all<{
     Querystring: {
         task: string;
+    },
+    Body: {
+        env: {[key: string]: string}
     }
 }>('/perform-task', (request, reply) => {
     const task = request.query.task;
-    const proc = shelljs.exec(`${taskBin} ${task}`, {
+    const {env} = request.body;
+    const proc = shelljs.exec(`${_.flatMap(env, (value, index) => `${index.toUpperCase()}=${value}`).join(' ')} ${taskBin} ${task}`, {
         cwd,
         silent: true
     });
