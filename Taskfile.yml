@@ -223,6 +223,16 @@ tasks:
     cmds:
       - periphery scan
 
+  sim:enable-stage-manager:
+    desc: "Enable Stage Manager for running iPad simulator"
+    cmds:
+      - xcrun simctl spawn booted defaults write -g SBChamoisWindowingEnabled -bool YES
+
+  sim:disable-stage-manager:
+    desc: "Disable Stage Manager for running iPad simulator"
+    cmds:
+      - xcrun simctl spawn booted defaults write -g SBChamoisWindowingEnabled -bool NO
+
   kill:cider-playback-agent:
     aliases: [ kill-cpa ]
     desc: "Kill a hanging CiderPlaybackAgent process"
