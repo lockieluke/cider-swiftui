@@ -21,6 +21,7 @@
 		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
 		B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050C28BE0B4F002AD76C /* AMAPI.swift */; };
 		B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* MediaShowcaseRow.swift */; };
+		B70D0A132A509D0C00968E7D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B70D0A122A509D0C00968E7D /* Settings.bundle */; };
 		B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82682A366F3B00DD8BC2 /* SwiftyUtils */; };
 		B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826B2A366FC400DD8BC2 /* SwiftyJSON */; };
 		B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826E2A36700300DD8BC2 /* Introspect */; };
@@ -184,6 +185,7 @@
 		B706050B28BD8CB2002AD76C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B706050C28BE0B4F002AD76C /* AMAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAPI.swift; sourceTree = "<group>"; };
 		B706051028BFA181002AD76C /* MediaShowcaseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaShowcaseRow.swift; sourceTree = "<group>"; };
+		B70D0A122A509D0C00968E7D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
 		B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiscord_rpc_agent.a; path = DiscordRPCAgent/target/universal/libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCider_CXXNativeUtils.a; path = NativeUtils/build/libCider_CXXNativeUtils.a; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				B700C19928B92E020069FDF5 /* AppWindow.swift */,
 				B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */,
 				B770D8CE29A0390A00E0A655 /* Cider-Bridging-Header.h */,
+				B70D0A122A509D0C00968E7D /* Settings.bundle */,
 			);
 			path = Cider;
 			sourceTree = "<group>";
@@ -767,6 +770,7 @@
 				B740CE172991AD050096DF6E /* htmltext-style.css in Resources */,
 				B700C18528B920F20069FDF5 /* Assets.xcassets in Resources */,
 				B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */,
+				B70D0A132A509D0C00968E7D /* Settings.bundle in Resources */,
 				B76AE928299C162600A19558 /* MissingArtwork.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
