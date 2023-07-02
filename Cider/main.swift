@@ -40,6 +40,7 @@ class AppDelegate : NSObject, ApplicationDelegate {
     
 #if canImport(AppKit)
     func applicationDidFinishLaunching(_ notification: Notification) {
+        self.commonEntryPoint()
         let discordRPCModal = DiscordRPCModal()
         let nativeUtilsWrapper = NativeUtilsWrapper()
         let appWindow = AppWindow(discordRPCModal: discordRPCModal, nativeUtilsWrapper: nativeUtilsWrapper)
@@ -95,6 +96,7 @@ class AppDelegate : NSObject, ApplicationDelegate {
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
         
+        self.commonEntryPoint()
     }
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
