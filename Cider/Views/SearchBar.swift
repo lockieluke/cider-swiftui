@@ -223,7 +223,9 @@ struct SearchBar: View {
                     self.searchModal.isFocused = newIsFocused
                 }
                 .onAppear {
+                    #if os(macOS)
                     self.isFocused = true
+                    #endif
                 }
                 .padding(.horizontal, 10)
                 .overlay(
@@ -265,7 +267,6 @@ struct SearchBar: View {
                     self.isFocused = false
                     self.searchModal.shouldDisplaySearchPage = true
                     self.updateSearchResults()
-                    
                 }
         }
         .enableInjection()
