@@ -1069,8 +1069,8 @@
 		B700C18D28B920F20069FDF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon-Dev";
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = "iOS-AppIcon-Dev";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -1128,8 +1128,8 @@
 		B700C18E28B920F20069FDF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon";
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = "iOS-AppIcon";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
