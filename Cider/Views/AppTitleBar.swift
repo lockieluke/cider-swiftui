@@ -9,18 +9,16 @@ struct AppTitleBar: View {
     
     @ObservedObject private var iO = Inject.observer
     
+    @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var searchModal: SearchModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    #if os(macOS)
+    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
+    #endif
     
-    var toolbarHeight: CGFloat = 0
-    
-    private var titleBarHeight: CGFloat {
-        get {
-            return toolbarHeight > 40 ? toolbarHeight : 40
-        }
-    }
+    private var titleBarHeight: CGFloat = 50
     
     var body: some View {
         ZStack {
@@ -35,28 +33,18 @@ struct AppTitleBar: View {
                     #endif
                 })
             
-            if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
-                Text("Searching *\"\(searchModal.currentSearchText)\"*")
-            } else {
-                SegmentedControl(
-                    items: [
-                        SegmentedControlItemData(title: "Home", icon: .Home),
-                        SegmentedControlItemData(title: "Library", icon: .Library)
-                    ],
-                    segmentedItemChanged: { currentSegmentedItem in
-                        self.navigationModal.currentRootStack = RootNavigationType(rawValue: currentSegmentedItem) ?? .AnyView
-                    }
-                )
-            }
+            SearchBar()
+                .environmentObject(searchModal)
+                .environmentObject(ciderPlayback)
+                .environmentObject(navigationModal)
             
-            HStack(spacing: 0) {
+            HStack {
                 Spacer()
                     .frame(width: appWindowModal.isFullscreen ? 2 : 85)
                     .animation(.linear, value: appWindowModal.isFullscreen)
                 
                 Divider()
                     .frame(height: 25)
-                    .padding(.trailing, 10)
                     .isHidden(appWindowModal.isFullscreen)
                     .animation(.linear, value: appWindowModal.isFullscreen)
                 
@@ -68,15 +56,59 @@ struct AppTitleBar: View {
                 
                 ActionButton(actionType: .Library)
                 Spacer()
+                #if os(macOS)
+                if ciderPlayback.nowPlayingState.playbackPipelineInitialised {
+                    ActionButton(actionType: .AirPlay) {
+                        Task {
+                            guard let frame = self.appWindowModal.nsWindow?.frame else { return }
+                            let supportsAirplay = await self.ciderPlayback.openAirPlayPicker(x: Int(frame.maxX - 113.5), y: Int(frame.maxY - 45))
+                            
+                            // TODO: Support third party casting services
+                        }
+                    }
+                    .transition(.fade)
+                }
+                #endif
+                ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
+                    withAnimation(.interactiveSpring()) {
+                        if !self.navigationModal.showQueue {
+                            self.navigationModal.showLyrics = false
+                        }
+                        self.navigationModal.showQueue.toggle()
+                    }
+                }
+                if self.ciderPlayback.nowPlayingState.hasItemToPlay {
+                    ActionButton(actionType: .Lyrics, enabled: $navigationModal.showLyrics) {
+                        withAnimation(.interactiveSpring()) {
+                            if !self.navigationModal.showLyrics {
+                                self.navigationModal.showQueue = false
+                            }
+                            self.navigationModal.showLyrics.toggle()
+                        }
+                    }
+                    .contextMenu(Diagnostic.isDebug ? [
+                        ContextMenuArg("Copy Lyrics XML"),
+                        ContextMenuArg("Copy Prettified Lyrics XML")
+                    ] : [],  { id in
+                        Task {
+                            #if os(macOS)
+                            if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
+                                self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXml)
+                            }
+                            
+                            if id == "copy-prettified-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item), let lyricsXML = try? XMLDocument(xmlString: lyricsXml) {
+                                self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXML.xmlString(options: .nodePrettyPrint))
+                            }
+                            #endif
+                        }
+                    })
+                    .transition(.fade)
+                }
+                Spacer()
+                    .frame(width: 10)
             }
-            
-            SearchBar()
-                .environmentObject(searchModal)
-                .environmentObject(ciderPlayback)
-                .environmentObject(navigationModal)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
         }
-        .frame(height: 40)
+        .frame(height: titleBarHeight)
         .enableInjection()
     }
 }

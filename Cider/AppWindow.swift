@@ -6,6 +6,7 @@
 import Foundation
 import AppKit
 import SwiftUI
+import SnapKit
 
 class AppWindow: NSObject, NSWindowDelegate {
     
@@ -45,9 +46,9 @@ class AppWindow: NSObject, NSWindowDelegate {
             $0.titleVisibility = .hidden
             $0.title = Bundle.main.displayName
             
-            let toolbar = NSToolbar()
-            $0.showsToolbarButton = false
-            $0.toolbar = toolbar
+//            let toolbar = NSToolbar()
+//            $0.showsToolbarButton = false
+//            $0.toolbar = toolbar
             
             var pos = NSPoint()
             pos.x = activeScreen.visibleFrame.midX
@@ -59,6 +60,8 @@ class AppWindow: NSObject, NSWindowDelegate {
         
         defer {
             window.delegate = self
+            
+            self.updateWindowButtons()
         }
         
         let appMenu = AppMenu(window,
@@ -83,12 +86,30 @@ class AppWindow: NSObject, NSWindowDelegate {
         super.init()
     }
     
-    func show() {
-        mainWindow.makeKeyAndOrderFront(nil)
-        if !mainWindow.isMainWindow {
-            mainWindow.makeMain()
+    func updateWindowButtons() {
+        if let closeButton = self.mainWindow.standardWindowButton(.closeButton), let minimiseButton = self.mainWindow.standardWindowButton(.miniaturizeButton), let zoomButton = self.mainWindow.standardWindowButton(.zoomButton) {
+            
+            func updateWindowButton(_ button: NSButton) {
+                button.snp.makeConstraints { make in
+                    make.top.equalTo(17)
+                    
+                    let currentX = button.frame.origin.x
+                    make.left.left.equalTo(currentX + 10.0)
+                }
+            }
+            
+            updateWindowButton(closeButton)
+            updateWindowButton(minimiseButton)
+            updateWindowButton(zoomButton)
         }
-        NSApp.mainMenu = appMenu.getMenu()
+    }
+    
+    func show() {
+        self.mainWindow.makeKeyAndOrderFront(nil)
+        if !self.mainWindow.isMainWindow {
+            self.mainWindow.makeMain()
+        }
+        NSApp.mainMenu = self.appMenu.getMenu()
         
         self.appWindowModal.isFocused = true
         self.appWindowModal.isVisibleInViewport = true

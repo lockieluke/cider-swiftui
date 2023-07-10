@@ -195,18 +195,23 @@ struct SearchBar: View {
     
     var body: some View {
         PatchedGeometryReader { geometry in
-            let searchBarWidth = geometry.size.width * 0.2
+            let searchBarWidth = (geometry.size.width * 0.21).clamped(to: 300...400)
             
-            TextField("Search", text: $searchModal.currentSearchText)
+            TextField("Artists, Songs, Lyrics, and More", text: $searchModal.currentSearchText)
                 .textFieldStyle(.plain)
                 .padding(.horizontal, 10)
-                .frame(width: searchBarWidth, height: 30)
+                .frame(width: searchBarWidth, height: 35)
                 .contentShape(Rectangle())
                 .overlay {
-                    RoundedRectangle(cornerRadius: 8)
+                    RoundedRectangle(cornerRadius: 6)
                         .stroke(Color("SecondaryColour"))
                         .onTapGesture {
                             self.isFocused = true
+                        }
+                        .overlay {
+                            Image(systemName: "magnifyingglass")
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .padding(.trailing, 10)
                         }
                 }
                 .focused($isFocused)

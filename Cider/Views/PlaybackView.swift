@@ -9,15 +9,9 @@ struct PlaybackView: View {
     
     @ObservedObject private var iO = Inject.observer
     
-    @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
-    #if os(macOS)
-    @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
-    #endif
-    
-    @State private var showCastMenu: Bool = false
     
     var repeatModeIcon: PlaybackButtonIcon {
         switch self.ciderPlayback.playbackBehaviour.repeatMode {
@@ -96,58 +90,7 @@ struct PlaybackView: View {
             }
             
             HStack {
-                #if os(macOS)
-                if ciderPlayback.nowPlayingState.playbackPipelineInitialised {
-                    ActionButton(actionType: .AirPlay) {
-                        Task {
-                            guard let frame = self.appWindowModal.nsWindow?.frame else { return }
-                            let supportsAirplay = await self.ciderPlayback.openAirPlayPicker(x: Int(frame.maxX - 125), y: Int(frame.minY + 70))
-                            
-                            if !supportsAirplay {
-                                self.showCastMenu = true
-                            }
-                        }
-                    }
-                    .transition(.fade)
-                }
-                #endif
-                // TODO: Add alternate cast menu
-                
-                ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
-                    withAnimation(.interactiveSpring()) {
-                        if !self.navigationModal.showQueue {
-                            self.navigationModal.showLyrics = false
-                        }
-                        self.navigationModal.showQueue.toggle()
-                    }
-                }
-                if self.ciderPlayback.nowPlayingState.hasItemToPlay {
-                    ActionButton(actionType: .Lyrics, enabled: $navigationModal.showLyrics) {
-                        withAnimation(.interactiveSpring()) {
-                            if !self.navigationModal.showLyrics {
-                                self.navigationModal.showQueue = false
-                            }
-                            self.navigationModal.showLyrics.toggle()
-                        }
-                    }
-                    .contextMenu(Diagnostic.isDebug ? [
-                        ContextMenuArg("Copy Lyrics XML"),
-                        ContextMenuArg("Copy Prettified Lyrics XML")
-                    ] : [],  { id in
-                        Task {
-                            #if os(macOS)
-                            if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
-                                self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXml)
-                            }
-                            
-                            if id == "copy-prettified-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item), let lyricsXML = try? XMLDocument(xmlString: lyricsXml) {
-                                self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXML.xmlString(options: .nodePrettyPrint))
-                            }
-                            #endif
-                        }
-                    })
-                    .transition(.fade)
-                }
+                // TODO: Add volume slider
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.horizontal, 20)

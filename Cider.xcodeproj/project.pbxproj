@@ -121,6 +121,7 @@
 		B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5DF29CF827F00EF4D11 /* Defaults.swift */; };
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
 		B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorker.swift */; };
+		B7C83DA92A561C9200470320 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B7C83DA82A561C9200470320 /* SnapKit */; };
 		B7C9CD8A2908467A00A67CE4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD892908467A00A67CE4 /* main.swift */; };
 		B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD922908797C00A67CE4 /* Dictionary.swift */; };
 		B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD94290879F500A67CE4 /* Validation.swift */; };
@@ -310,6 +311,7 @@
 				B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */,
 				B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */,
 				B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */,
+				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
 				B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */,
 				B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */,
 				B71B82962A3671F900DD8BC2 /* FirebaseAnalyticsSwift in Frameworks */,
@@ -672,6 +674,7 @@
 				B71B82972A3671F900DD8BC2 /* FirebaseAuth */,
 				B71B82992A3671F900DD8BC2 /* FirebaseFirestoreSwift */,
 				B71B82AE2A3676AF00DD8BC2 /* Inject */,
+				B7C83DA82A561C9200470320 /* SnapKit */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -747,6 +750,7 @@
 				B71B82A12A3673D500DD8BC2 /* XCRemoteSwiftPackageReference "swifter" */,
 				B71B82A42A36760600DD8BC2 /* XCRemoteSwiftPackageReference "ArgumentParserKit" */,
 				B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */,
+				B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1403,6 +1407,14 @@
 				minimumVersion = 1.2.3;
 			};
 		};
+		B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1515,6 +1527,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */;
 			productName = Inject;
+		};
+		B7C83DA82A561C9200470320 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

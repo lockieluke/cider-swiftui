@@ -42,21 +42,21 @@ struct ContentView: View {
                 #endif
                 
                 VStack {
-                    AppTitleBar(toolbarHeight: geometry.safeAreaInsets.top)
+                    AppTitleBar()
                     .environmentObject(appWindowModal)
                     .environmentObject(searchModal)
                     .environmentObject(navigationModal)
                     .environmentObject(ciderPlayback)
+                    .environmentObject(mkModal)
+                #if os(macOS)
+                    .environmentObject(nativeUtilsWrapper)
+                #endif
                     
                     Spacer()
                     PlaybackView()
                         .environmentObject(appWindowModal)
                         .environmentObject(ciderPlayback)
                         .environmentObject(navigationModal)
-                        .environmentObject(mkModal)
-                    #if os(macOS)
-                        .environmentObject(nativeUtilsWrapper)
-                    #endif
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
                 }
