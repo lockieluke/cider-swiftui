@@ -4,6 +4,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftUIIntrospect
 
 struct TransparentScrollbarsModifier: ViewModifier {
     
@@ -12,7 +13,7 @@ struct TransparentScrollbarsModifier: ViewModifier {
     func body(content: Content) -> some View {
         #if canImport(AppKit)
         content
-            .introspectScrollView { scrollView in
+            .introspect(.scrollView, on: .macOS(.v10_15, .v11, .v12, .v13, .v14)) { scrollView in
                 scrollView.autohidesScrollers = true
                 scrollView.scrollerStyle = .overlay
             }

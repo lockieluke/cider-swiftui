@@ -116,6 +116,7 @@
 		B7B02F57295629030065FCDD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02F56295629030065FCDD /* Double.swift */; };
 		B7B3D8C029B005100014F63D /* ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B3D8BF29B005100014F63D /* ContextMenu.swift */; };
 		B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C06F832932E1C5000C1192 /* NavigationContainer.swift */; };
+		B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */; };
 		B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5D929CE6F4C00EF4D11 /* QueueTrackView.swift */; };
 		B7C5C5DC29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */; };
 		B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5DF29CF827F00EF4D11 /* Defaults.swift */; };
@@ -306,6 +307,7 @@
 				B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */,
 				B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */,
 				B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */,
+				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
 				B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */,
 				B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */,
 				B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */,
@@ -675,6 +677,7 @@
 				B71B82992A3671F900DD8BC2 /* FirebaseFirestoreSwift */,
 				B71B82AE2A3676AF00DD8BC2 /* Inject */,
 				B7C83DA82A561C9200470320 /* SnapKit */,
+				B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1527,6 +1530,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */;
 			productName = Inject;
+		};
+		B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71B826D2A36700200DD8BC2 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = SwiftUIIntrospect;
 		};
 		B7C83DA82A561C9200470320 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
