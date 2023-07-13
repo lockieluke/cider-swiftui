@@ -128,6 +128,16 @@ class AppDelegate : NSObject, ApplicationDelegate {
     }
 #endif
     
+    
+    #if os(macOS)
+    func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
+        let menu = NSMenu()
+//        menu.addItem(Menu.wrapMenuItem(NSMenuItem(title: "Search", action: nil, keyEquivalent: "")))
+        
+        return menu
+    }
+    #endif
+    
     func applicationShouldHandleReopen(_ sender: Application, hasVisibleWindows flag: Bool) -> Bool {
 #if os(macOS)
         if (!flag) {

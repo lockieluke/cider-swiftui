@@ -96,8 +96,8 @@ class AppMenu {
         let developerMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
-                wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "")),
-                wrapMenuItem(NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: ""))
+                Menu.wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "")),
+                Menu.wrapMenuItem(NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: ""))
             ]
         }
         #endif
@@ -132,11 +132,6 @@ class AppMenu {
         #else
         menu.items = [appNameMenu, fileMenu, editMenu, windowMenu, helpMenu]
         #endif
-    }
-    
-    func wrapMenuItem(_ menuItem: NSMenuItem) -> NSMenuItem {
-        menuItem.target = self
-        return menuItem
     }
     
     @objc func signOut(_ sender: Any) {
