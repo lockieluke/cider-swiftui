@@ -249,7 +249,7 @@ struct SearchBar: View {
                         .shadow(radius: 3)
                         .offset(y: 45)
                         .onReceive(self.searchModal.$currentSearchText.debounce(for: .milliseconds(200), scheduler: DispatchQueue.main)) { newCurrentSearchText in
-                            guard !newCurrentSearchText.isEmpty else {
+                            guard !newCurrentSearchText.isEmpty, self.mkModal.isAuthorised, self.mkModal.hasDeveloperToken else {
                                 self.searchModal.shouldDisplaySearchPage = false
                                 return
                             }
