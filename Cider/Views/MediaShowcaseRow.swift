@@ -34,8 +34,8 @@ struct MediaShowcaseRow: View {
                                     .padding()
                             }
                         }
-                        .transparentScrollbars()
                     }
+                    .transparentScrollbars()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
