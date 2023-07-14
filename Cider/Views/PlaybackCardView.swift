@@ -40,7 +40,6 @@ struct PlaybackCardView: View {
             }
             .padding([.horizontal, .vertical], 10)
         }
-        .padding()
         .enableInjection()
     }
 }

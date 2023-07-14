@@ -73,6 +73,12 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     await self.musicKitWorker?.setAudioQuality(audioQuality: json?["quality"].int ?? 64)
                     break
                     
+                case "/set-volume":
+                    if let volume = json?["volume"].double {
+                        self.musicKitWorker?.setVolume(volume: volume)
+                    }
+                    break
+                    
                 case "/set-queue":
                     if let albumId = json?["albums-id"].string {
                         await self.musicKitWorker?.setQueueWithAlbumID(albumID: albumId)

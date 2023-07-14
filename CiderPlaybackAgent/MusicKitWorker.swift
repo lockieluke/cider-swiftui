@@ -186,10 +186,14 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
     
     func setAudioQuality(audioQuality: Int) async {
         if audioQuality == 0 {
-            
+            // TODO: Handle lossless setting
         } else {
             await self.asyncRunJS("window.ciderInterop.mk.bitrate = \(audioQuality)")
         }
+    }
+    
+    func setVolume(volume: Double) {
+        self.syncRunMKJS("volume = \(volume)")
     }
     
     func reorderQueuedItem(from: Int, to: Int) async {

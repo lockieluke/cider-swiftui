@@ -3,6 +3,8 @@
 //  
 
 import SwiftUI
+import Sliders
+import Throttler
 import Inject
 
 struct PlaybackView: View {
@@ -49,14 +51,10 @@ struct PlaybackView: View {
                     Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
                 }
             
-            PlaybackCardView()
-                .environmentObject(ciderPlayback)
-                .environmentObject(navigationModal)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            let playbackBehaviour = self.ciderPlayback.playbackBehaviour
             
             VStack {
                 let nowPlayingState = self.ciderPlayback.nowPlayingState
-                let playbackBehaviour = self.ciderPlayback.playbackBehaviour
                 
                 PlaybackBar()
                     .environmentObject(ciderPlayback)
@@ -90,9 +88,25 @@ struct PlaybackView: View {
             }
             
             HStack {
-                // TODO: Add volume slider
+                PlaybackCardView()
+                    .environmentObject(ciderPlayback)
+                    .environmentObject(navigationModal)
+                
+                Spacer()
+                
+                let volume = Binding<Double>(get: { self.ciderPlayback.playbackBehaviour.volume }, set: { newVolume in self.ciderPlayback.playbackBehaviour.volume = newVolume })
+                
+                PatchedGeometryReader { geometry in
+                    VolumeSlider(value: volume, inRange: 0.0...1.0, activeFillColor: .secondary, fillColor: .secondary.opacity(0.5), emptyColor: .secondary.opacity(0.3), height: 8) { started in
+                        Throttler.throttle {
+                            Task {
+                                await self.ciderPlayback.setVolume(volume.wrappedValue)
+                            }
+                        }
+                    }
+                    .frame(width: (geometry.maxRelative * 0.3).clamped(to: 100...150))
+                }
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.horizontal, 20)
         }
         .enableInjection()

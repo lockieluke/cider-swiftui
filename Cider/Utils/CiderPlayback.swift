@@ -43,6 +43,7 @@ struct PlaybackBehaviour {
     var shuffle = false
     var repeatMode: RepeatMode = .None
     var autoplayEnabled: Bool
+    var volume = 1.0
     
     init() {
         self.autoplayEnabled = Defaults[.playbackAutoplay]
@@ -356,6 +357,17 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             ])
         } catch {
             self.logger.error("Failed to set audio quality to \(quality.rawValue)", displayCross: true)
+        }
+    }
+    
+    @MainActor
+    func setVolume(_ volume: Double) async {
+        do {
+            _ = try await self.wsCommClient.request("/set-volume", body: [
+                "volume": volume
+            ])
+        } catch {
+            self.logger.error("Failed to set volume to \(volume)", displayCross: true)
         }
     }
     
