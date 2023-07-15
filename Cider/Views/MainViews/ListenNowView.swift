@@ -15,7 +15,7 @@ struct ListenNowView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
-        VStack {
+        Group {
             if mkModal.isAuthorised && self.personalisedData.recommendationSections != nil {
                 ScrollView(.vertical) {
                     VStack {
