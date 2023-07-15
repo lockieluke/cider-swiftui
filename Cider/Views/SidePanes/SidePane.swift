@@ -16,9 +16,15 @@ struct SidePane<HeaderChildren: View, Content: View>: View {
     @ViewBuilder private let content: Content
     @ViewBuilder private let headerChildren: HeaderChildren
     private let title: String?
+    private let direction: SidePaneDirection
     
-    init(title: String? = nil, @ViewBuilder content: @escaping () -> Content, @ViewBuilder headerChildren: @escaping () -> HeaderChildren) {
+    enum SidePaneDirection {
+        case Left, Right
+    }
+    
+    init(title: String? = nil, direction: SidePaneDirection = .Right, @ViewBuilder content: @escaping () -> Content, @ViewBuilder headerChildren: @escaping () -> HeaderChildren) {
         self.title = title
+        self.direction = direction
         self.content = content()
         self.headerChildren = headerChildren()
     }
@@ -47,8 +53,9 @@ struct SidePane<HeaderChildren: View, Content: View>: View {
             .shadow(radius: 7)
             .cornerRadius(10)
         }
-        .padding(.trailing, 10)
-        .frame(maxWidth: .infinity, alignment: .trailing)
+        .padding(direction == .Left ? .leading : .trailing, 10)
+        .padding(.top, 7)
+        .frame(maxWidth: .infinity, alignment: direction == .Left ? .leading : .trailing)
         .enableInjection()
     }
 }

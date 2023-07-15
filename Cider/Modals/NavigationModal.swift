@@ -8,6 +8,7 @@ import SwiftUI
 enum RootNavigationType : String {
     
     case Home = "Home",
+         ListenNow = "ListenNow",
          Library = "Library",
          AnyView = "Any"
     
@@ -15,7 +16,7 @@ enum RootNavigationType : String {
 
 enum NavigationStackType {
     
-    case Home, Media, Artist
+    case Root, Media, Artist
     
 }
 
@@ -28,7 +29,7 @@ enum NavigationDynamicParams: Equatable {
     
     var value: String {
         switch self {
-        case .homeViewParams:
+        case .rootViewParams:
             return "home"
             
         case .detailedViewParams(let detailedViewParams):
@@ -52,7 +53,7 @@ enum NavigationDynamicParams: Equatable {
         }
     }
     
-    case detailedViewParams(DetailedViewParams), artistViewParams(ArtistViewParams), homeViewParams
+    case detailedViewParams(DetailedViewParams), artistViewParams(ArtistViewParams), rootViewParams
 }
 
 struct DetailedViewParams {
@@ -135,8 +136,8 @@ class NavigationModal : ObservableObject {
             
             switch currentPresentViewStack?.params {
                 
-            case .homeViewParams:
-                self.currentlyPresentViewType = .Home
+            case .rootViewParams:
+                self.currentlyPresentViewType = .Root
                 
             case .artistViewParams:
                 self.currentlyPresentViewType = .Artist
@@ -152,7 +153,7 @@ class NavigationModal : ObservableObject {
     }
     
     func appendViewStack(_ viewStack: NavigationStack, backAction: (() -> Void)? = nil) {
-        if (viewStack.params == .homeViewParams && self.currentlyPresentViewType == .Home) || viewStack.params == self.currentlyPresentViewStack?.params {
+        if (viewStack.params == .rootViewParams && self.currentlyPresentViewType == .Root) || viewStack.params == self.currentlyPresentViewStack?.params {
             return
         }
         var modifyingViewStack = viewStack
@@ -170,5 +171,6 @@ class NavigationModal : ObservableObject {
     
     @Published var showQueue: Bool = false
     @Published var showLyrics: Bool = false
+    @Published var showSidebar: Bool = false
     
 }

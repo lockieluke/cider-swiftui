@@ -76,7 +76,7 @@ struct ContentView: View {
                     
                     Task {
                         await self.mkModal.AM_API.initStorefront()
-                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .homeViewParams))
+                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
                     }
                 }
                 #endif

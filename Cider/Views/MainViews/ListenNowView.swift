@@ -5,7 +5,7 @@
 import SwiftUI
 import Inject
 
-struct HomeView: View {
+struct ListenNowView: View {
     
     @ObservedObject private var iO = Inject.observer
     
@@ -23,13 +23,13 @@ struct HomeView: View {
                             MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
                                 .environmentObject(ciderPlayback)
                                 .environmentObject(navigationModal)
-                                .isHidden(navigationModal.currentlyPresentViewType != .Home)
+                                .isHidden(navigationModal.currentlyPresentViewType != .Root && navigationModal.currentRootStack != .ListenNow)
                         }
                     }
                     .padding(.vertical, 10)
                 }
                 .transparentScrollbars()
-                .allowsHitTesting(navigationModal.currentlyPresentViewType == .Home)
+                .allowsHitTesting(navigationModal.currentlyPresentViewType == .Root && navigationModal.currentRootStack == .ListenNow)
             } else {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -44,9 +44,9 @@ struct HomeView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
+struct ListenNowView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        ListenNowView()
             .environmentObject(AppWindowModal())
         #if os(macOS)
             .environmentObject(MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())))

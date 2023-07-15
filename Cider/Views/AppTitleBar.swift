@@ -54,7 +54,11 @@ struct AppTitleBar: View {
                     }
                 }
                 
-                ActionButton(actionType: .Library)
+                ActionButton(actionType: .Library) {
+                    withAnimation(.interactiveSpring()) {
+                        self.navigationModal.showSidebar.toggle()
+                    }
+                }
                 Spacer()
                 #if os(macOS)
                 if ciderPlayback.nowPlayingState.playbackPipelineInitialised {

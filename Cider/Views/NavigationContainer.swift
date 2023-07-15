@@ -30,14 +30,15 @@ struct NavigationContainer: View {
                     
                     switch viewStack.params {
                         
-                    case .homeViewParams:
-                        HomeView()
-                            .environmentObject(mkModal)
-                            .environmentObject(personalisedData)
-                            .environmentObject(navigationModal)
-                            .environmentObject(ciderPlayback)
-                            .hideWithoutDestroying(currentRootStack != .Home)
-                            .allowsHitTesting(shouldUpperStackShow)
+                    case .rootViewParams:
+                        Group {
+                            ListenNowView()
+                                .environmentObject(mkModal)
+                                .environmentObject(personalisedData)
+                                .environmentObject(navigationModal)
+                                .environmentObject(ciderPlayback)
+                                .hideWithoutDestroying(currentRootStack != .ListenNow)
+                        }
                         
                     case .detailedViewParams(let detailedViewParams):
                         DetailedView(detailedViewParams: detailedViewParams)
@@ -97,6 +98,13 @@ struct NavigationContainer: View {
                         .environmentObject(nativeUtilsWrapper)
                     #endif
                         .transition(.move(edge: .trailing))
+                        .zIndex(1)
+                }
+                
+                if navigationModal.showSidebar {
+                    SidebarPane()
+                        .environmentObject(navigationModal)
+                        .transition(.move(edge: .leading))
                         .zIndex(1)
                 }
             }
