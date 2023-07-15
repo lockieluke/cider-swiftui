@@ -115,10 +115,6 @@ class AppWindow: NSObject, NSWindowDelegate {
         self.appWindowModal.isVisibleInViewport = true
     }
     
-    func getWindow() -> NSWindow {
-        return self.mainWindow
-    }
-    
     func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
         return [.fullScreen, .autoHideDock, .autoHideToolbar, .autoHideMenuBar]
     }
