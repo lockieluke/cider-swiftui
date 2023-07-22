@@ -21,7 +21,7 @@ struct NavigationContainer: View {
     
     @State private var showProgressBar = false
     
-    private let progressBarAnimation = Animation.smooth
+    private let progressBarAnimation = Animation.spring
     
     var body: some View {
         ZStack {
