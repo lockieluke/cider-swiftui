@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import Foundation
 
@@ -12,7 +12,8 @@ enum MediaType: String {
          Album = "albums",
          AnyMedia = "any",
          Song = "songs",
-         Artist = "artists"
+         Artist = "artists",
+         Catalog = "catalog"
     
 }
 
@@ -58,6 +59,36 @@ extension MediaDynamic: Identifiable, Hashable {
             
         }
         
+    }
+    
+    var title: String {
+        switch self {
+            
+        case .mediaItem(let mediaItem):
+            return mediaItem.title
+            
+        case .mediaTrack(let mediaTrack):
+            return mediaTrack.title
+            
+        case .mediaPlaylist(let mediaPlaylist):
+            return mediaPlaylist.title
+            
+        }
+    }
+    
+    var artwork: MediaArtwork {
+        switch self {
+            
+        case .mediaItem(let mediaItem):
+            return mediaItem.artwork
+            
+        case .mediaTrack(let mediaTrack):
+            return mediaTrack.artwork
+            
+        case .mediaPlaylist(let mediaPlaylist):
+            return mediaPlaylist.artwork
+            
+        }
     }
     
     

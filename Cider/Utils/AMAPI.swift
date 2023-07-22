@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import Foundation
 import StoreKit
@@ -107,7 +107,7 @@ class AMAPI {
         }
     }
     
-    func fetchRecommendations() async throws -> MediaRecommendationSections {
+    func fetchRecommendations() async -> MediaRecommendationSections {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recommendations").serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch recommendations: \(error)")
@@ -116,6 +116,48 @@ class AMAPI {
         }
         
         return MediaRecommendationSections(datas: [])
+    }
+    
+    func fetchPersonalRecommendation() async -> [MediaPlaylist] {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recommendations", parameters: [
+            "timezone": DateUtils.formatTimezoneOffset(),
+            "name": "listen-now",
+            "with": "friendsMix,library,social",
+            "art[social-profiles:url]": "c",
+            "art[url]": "c,f",
+            "omit[resource]": "autos",
+            "relate[editorial-items]": "contents",
+            "extend": "editorialCard,editorialVideo",
+            "extend[albums]": "artistUrl",
+            "extend[library-albums]": "artistUrl,editorialVideo",
+            "extend[playlists]": "artistNames,editorialArtwork,editorialVideo",
+            "extend[library-playlists]": "artistNames,editorialArtwork,editorialVideo",
+            "extend[social-profiles]": "topGenreNames",
+            "include[albums]": "artists",
+            "include[songs]": "artists",
+            "include[music-videos]": "artists",
+            "fields[albums]": "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialVideo,name,playParams,releaseDate,url",
+            "fields[artists]": "name,url",
+            "extend[stations]": "airDate,supportsAirTimeUpdates",
+            "meta[stations]": "inflectionPoints",
+            "types": "artists,albums,editorial-items,library-albums,library-playlists,music-movies,music-videos,playlists,stations,uploaded-audios,uploaded-videos,activities,apple-curators,curators,tv-shows,social-upsells",
+            "platform": "web"
+        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch personal recommendations: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let sections = json["data"].array {
+            // https://github.com/ciderapp/project2/blob/main/src/components/applemusic/pageContent/AMHome.vue#L130
+            let section = sections.filter { section in
+                return section["meta"]["metrics"]["moduleType"].intValue == 6
+            }.first
+            
+            let items = section?["relationships"]["contents"]["data"].arrayValue.compactMap { item in
+                return MediaPlaylist(data: item)
+            }
+            return items ?? []
+        }
+        
+        return []
     }
     
     func fetchTracks(id: String, type: MediaType) async throws -> [MediaTrack] {
@@ -281,6 +323,59 @@ class AMAPI {
         }
         
         return nil
+    }
+    
+    struct SocialProfile {
+        let handle, name, url: String
+        let isPrivate, isVerified: Bool
+        
+        init(attributes: JSON) {
+            self.handle = attributes["handle"].stringValue
+            self.isPrivate = attributes["isPrivate"].boolValue
+            self.isVerified = attributes["isVerified"].boolValue
+            self.name = attributes["name"].stringValue
+            self.url = attributes["url"].stringValue
+        }
+    }
+    
+    @MainActor
+    func fetchPersonalSocialProfile() async -> SocialProfile? {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/social-profile").serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch personal social profile: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let attributes = json["data"].array?.first?["attributes"] {
+            return SocialProfile(attributes: attributes)
+        }
+        
+        return nil
+    }
+    
+    @MainActor func fetchRecentlyPlayed(limit: Int? = nil) async -> [MediaDynamic] {
+        var parameters: [String : Any]? = nil
+        if let limit = limit {
+            parameters?["limit"] = limit
+        }
+        
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: parameters, encoding: URLEncoding(destination: .queryString)).serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch personal social profile: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
+            return items.compactMap { item in
+                switch MediaType(rawValue: item["type"].stringValue) {
+                    
+                case .Song:
+                    return .mediaTrack(MediaTrack(data: item))
+                    
+                case .Playlist:
+                    return .mediaPlaylist(MediaPlaylist(data: item))
+                    
+                default:
+                    return .mediaItem(MediaItem(data: item))
+                }
+            }
+        }
+        
+        return []
     }
     
 }

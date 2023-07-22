@@ -1,0 +1,97 @@
+//
+//  MediaTableRepresentable.swift
+//  Cider
+//
+//  Created by Sherlock LUK on 16/07/2023.
+//  Copyright © 2023 Cider Collective. All rights reserved.
+//
+
+import SwiftUI
+import SDWebImageSwiftUI
+import Inject
+
+struct MediaItemRepresentable: View {
+    
+    @ObservedObject private var iO = Inject.observer
+    
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
+    
+    @State private var isHovering: Bool = false
+    @State private var isClicked: Bool = false
+    
+    private let item: MediaDynamic
+    
+    init(item: MediaDynamic) {
+        self.item = item
+    }
+    
+    var body: some View {
+        HStack(alignment: .center) {
+            WebImage(url: item.artwork.getUrl(width: 40, height: 40))
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 30)
+                .cornerRadius(5, antialiased: true)
+                .brightness(isHovering ? -0.5 : 0)
+                .overlay {
+                    if isHovering {
+                        Image(systemName: "play.fill")
+                    }
+                }
+            Text(item.title)
+            Spacer()
+        }
+        .padding(.vertical, 5)
+        .padding(.horizontal, 10)
+        .frame(width: 300)
+        .background(
+            RoundedRectangle(cornerRadius: 5)
+                .fill(isHovering ? Color("SecondaryColour").opacity(isClicked ? 0.7 : 0.5) : Color.clear)
+                .animation(.interactiveSpring(), value: isHovering || isClicked)
+        )
+        .onHover { isHovering in
+            withAnimation(.easeIn.speed(10)) {
+                self.isHovering = isHovering
+            }
+        }
+        .onTapGesture {
+            Task {
+                await self.ciderPlayback.setQueue(item: self.item)
+                await self.ciderPlayback.clearAndPlay(shuffle: false, item: self.item)
+            }
+        }
+        .modifier(PressActions(onEvent: { isPressed in
+            self.isClicked = isPressed
+        }))
+        .enableInjection()
+    }
+    
+}
+
+#Preview {
+    MediaItemRepresentable(item: .mediaTrack(MediaTrack(data: [])))
+}
+
+struct MediaTableRepresentable: View {
+    
+    @ObservedObject private var iO = Inject.observer
+    @EnvironmentObject private var ciderPlayback: CiderPlayback
+    
+    private let items: [MediaDynamic]
+    private let columnSpacing: CGFloat
+    
+    init(_ items: [MediaDynamic], columnSpacing: CGFloat = 300) {
+        self.items = items
+        self.columnSpacing = columnSpacing
+    }
+    
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: columnSpacing))], alignment: .center, spacing: 10) {
+            ForEach(items, id: \.id) { item in
+                MediaItemRepresentable(item: item)
+                    .environmentObject(ciderPlayback)
+            }
+        }
+    }
+    
+}

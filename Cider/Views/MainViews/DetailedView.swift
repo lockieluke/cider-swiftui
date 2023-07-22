@@ -80,7 +80,7 @@ struct DetailedView: View {
                 VStack {
                     let sqaureSize = geometry.minRelative * 0.4
                     
-                    let cover = WebImage(url: artwork.getUrl(width: 600, height: 600))
+                    let cover = WebImage(url: artwork.getUrl(width: 600, height: 600, kind: self.detailedViewParams.coverKind))
                         .onSuccess { image, data, cacheType in
                             image.getColors(quality: .highest) { colours in
                                 guard let colours = colours else { return }
@@ -88,9 +88,11 @@ struct DetailedView: View {
                             }
                         }
                         .resizable()
-                        .scaledToFit()
+                        .indicator(.progress)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: sqaureSize, height: sqaureSize, alignment: .center)
+                        .clipped()
                         .cornerRadius(5)
-                        .frame(width: sqaureSize)
                         .background(
                             Rectangle()
                                 .background(Color(platformColor: artwork.bgColour))
@@ -98,7 +100,6 @@ struct DetailedView: View {
                                 .cornerRadius(5)
                                 .multicolourGlow()
                         )
-                        .aspectRatio(1, contentMode: .fill)
                         .onAppear {
                             self.size = originalSize
                             withAnimation(.interactiveSpring()) {

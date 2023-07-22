@@ -32,12 +32,18 @@ struct NavigationContainer: View {
                         
                     case .rootViewParams:
                         Group {
+                            HomeView()
+                                .environmentObject(mkModal)
+                                .environmentObject(ciderPlayback)
+                                .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
+                                .hideWithoutDestroying(currentRootStack != .Home || !isPresent)
+                            
                             ListenNowView()
                                 .environmentObject(mkModal)
                                 .environmentObject(personalisedData)
                                 .environmentObject(navigationModal)
                                 .environmentObject(ciderPlayback)
-                                .hideWithoutDestroying(currentRootStack != .ListenNow)
+                                .hideWithoutDestroying(currentRootStack != .ListenNow || !isPresent)
                         }
                         
                     case .detailedViewParams(let detailedViewParams):
@@ -64,8 +70,8 @@ struct NavigationContainer: View {
                     }
                     
                 }
-                .zIndex(0)
                 .hideWithoutDestroying(searchModal.shouldDisplaySearchPage)
+                .zIndex(0)
                 
                 if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
                     SearchView()

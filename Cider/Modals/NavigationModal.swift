@@ -60,6 +60,14 @@ struct DetailedViewParams {
     let item: MediaDynamic
     let geometryMatching: Namespace.ID?
     let originalSize: CGSize
+    let coverKind: String
+    
+    init(item: MediaDynamic, geometryMatching: Namespace.ID?, originalSize: CGSize, coverKind: String = "bb") {
+        self.item = item
+        self.geometryMatching = geometryMatching
+        self.originalSize = originalSize
+        self.coverKind = coverKind
+    }
 }
 
 struct ArtistViewParams {

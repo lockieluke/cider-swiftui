@@ -24,12 +24,12 @@ struct MediaArtwork {
         self.bgColour = PlatformColor(hex: data["bgColor"].stringValue)
     }
     
-    func getUrl(_ dimension: CGSize) -> URL {
-        return URL(string: self.rawUrl.replacingOccurrences(of: "{w}", with: dimension.width.formatted()).replacingOccurrences(of: "{h}", with: dimension.height.formatted())) ?? Bundle.main.url(forResource: "MissingArtwork", withExtension: "png")!
+    func getUrl(_ dimension: CGSize, kind: String = "bb", format: String = "jpg") -> URL {
+        return URL(string: self.rawUrl.replacingOccurrences(of: "{w}", with: dimension.width.formatted()).replacingOccurrences(of: "{h}", with: dimension.height.formatted()).replacingOccurrences(of: "bb.", with: "\(kind).").replacingOccurrences(of: "{c}", with: kind).replacingOccurrences(of: "{f}", with: format)) ?? Bundle.main.url(forResource: "MissingArtwork", withExtension: "png")!
     }
     
-    func getUrl(width: Int, height: Int) -> URL {
-        return self.getUrl(CGSize(width: width, height: height))
+    func getUrl(width: Int, height: Int, kind: String = "bb", format: String = "jpg") -> URL {
+        return self.getUrl(CGSize(width: width, height: height), kind: kind, format: format)
     }
     
 }

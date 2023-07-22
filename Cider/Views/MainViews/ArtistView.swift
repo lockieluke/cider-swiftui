@@ -33,64 +33,6 @@ struct ArtistView: View {
         }
     }
     
-    struct TopSongView: View {
-        
-        @ObservedObject private var iO = Inject.observer
-        
-        @EnvironmentObject private var ciderPlayback: CiderPlayback
-        
-        @State private var isHovering: Bool = false
-        @State private var isClicked: Bool = false
-        
-        private let mediaTrack: MediaTrack
-        
-        init(_ mediaTrack: MediaTrack) {
-            self.mediaTrack = mediaTrack
-        }
-        
-        var body: some View {
-            HStack(alignment: .center) {
-                WebImage(url: mediaTrack.artwork.getUrl(width: 40, height: 40))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-                    .cornerRadius(5, antialiased: true)
-                    .brightness(isHovering ? -0.5 : 0)
-                    .overlay {
-                        if isHovering {
-                            Image(systemName: "play.fill")
-                        }
-                    }
-                Text(mediaTrack.title)
-                Spacer()
-            }
-            .padding(.vertical, 5)
-            .padding(.horizontal, 10)
-            .frame(width: 300)
-            .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(isHovering ? Color("SecondaryColour").opacity(isClicked ? 0.7 : 0.5) : Color.clear)
-                    .animation(.interactiveSpring(), value: isHovering || isClicked)
-            )
-            .onHover { isHovering in
-                withAnimation(.easeIn.speed(10)) {
-                    self.isHovering = isHovering
-                }
-            }
-            .onTapGesture {
-                Task {
-                    await self.ciderPlayback.setQueue(item: .mediaTrack(self.mediaTrack))
-                    await self.ciderPlayback.clearAndPlay(shuffle: false, item: .mediaTrack(self.mediaTrack))
-                }
-            }
-            .modifier(PressActions(onEvent: { isPressed in
-                self.isClicked = isPressed
-            }))
-            .enableInjection()
-        }
-        
-    }
-    
     init(params: ArtistViewParams) {
         self.artistViewParams = params
     }
@@ -144,12 +86,8 @@ struct ArtistView: View {
                             VStack(alignment: .leading) {
                                 Text("Top Songs")
                                     .font(.title2.bold())
-                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 300))], alignment: .center, spacing: 10) {
-                                    ForEach(artist.topSongs, id: \.id) { topSong in
-                                        TopSongView(topSong)
-                                            .environmentObject(ciderPlayback)
-                                    }
-                                }
+                                MediaTableRepresentable(artist.topSongs.map { topSong in .mediaTrack(topSong) })
+                                    .environmentObject(ciderPlayback)
                             }
                             Spacer()
                         }

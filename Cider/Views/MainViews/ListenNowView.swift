@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Inject
@@ -15,31 +15,24 @@ struct ListenNowView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
-        Group {
-            if mkModal.isAuthorised && self.personalisedData.recommendationSections != nil {
-                ScrollView(.vertical) {
-                    VStack {
-                        ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
-                            MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
-                                .environmentObject(ciderPlayback)
-                                .environmentObject(navigationModal)
-                                .isHidden(navigationModal.currentlyPresentViewType != .Root && navigationModal.currentRootStack != .ListenNow)
-                        }
-                    }
-                    .padding(.vertical, 10)
+        ScrollView(.vertical) {
+            VStack {
+                ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
+                    MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
+                        .environmentObject(ciderPlayback)
+                        .environmentObject(navigationModal)
+                        .isHidden(navigationModal.currentlyPresentViewType != .Root && navigationModal.currentRootStack != .ListenNow)
                 }
-                .transparentScrollbars()
-                .allowsHitTesting(navigationModal.currentlyPresentViewType == .Root && navigationModal.currentRootStack == .ListenNow)
-            } else {
-                ProgressView()
-                    .progressViewStyle(.circular)
             }
+            .padding(.vertical, 10)
         }
+        .transparentScrollbars()
         .task {
             if self.personalisedData.recommendationSections != nil { return }
             
             self.personalisedData.recommendationSections = try? await self.mkModal.AM_API.fetchRecommendations()
         }
+        .allowsHitTesting(navigationModal.currentlyPresentViewType == .Root && navigationModal.currentRootStack == .ListenNow)
         .enableInjection()
     }
 }
@@ -48,10 +41,10 @@ struct ListenNowView_Previews: PreviewProvider {
     static var previews: some View {
         ListenNowView()
             .environmentObject(AppWindowModal())
-        #if os(macOS)
+#if os(macOS)
             .environmentObject(MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())))
-        #else
+#else
             .environmentObject(MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal())))
-        #endif
+#endif
     }
 }
