@@ -19,6 +19,7 @@
 		B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B328B96DBD0069FDF5 /* ActionButton.swift */; };
 		B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */; };
 		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
+		B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */ = {isa = PBXBuildFile; productRef = B70524BA2A6C96C2001654B3 /* SwiftUIBackports */; };
 		B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050C28BE0B4F002AD76C /* AMAPI.swift */; };
 		B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* MediaShowcaseRow.swift */; };
 		B70D0A132A509D0C00968E7D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B70D0A122A509D0C00968E7D /* Settings.bundle */; platformFilter = ios; };
@@ -320,6 +321,7 @@
 				B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */,
 				B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */,
 				B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */,
+				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
 				B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */,
 				B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */,
@@ -698,6 +700,7 @@
 				B71B82AE2A3676AF00DD8BC2 /* Inject */,
 				B7C83DA82A561C9200470320 /* SnapKit */,
 				B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */,
+				B70524BA2A6C96C2001654B3 /* SwiftUIBackports */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -774,6 +777,7 @@
 				B71B82A42A36760600DD8BC2 /* XCRemoteSwiftPackageReference "ArgumentParserKit" */,
 				B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */,
 				B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1296,6 +1300,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/shaps80/SwiftUIBackports.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.0;
+			};
+		};
 		B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tbaranes/SwiftyUtils.git";
@@ -1451,6 +1463,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B70524BA2A6C96C2001654B3 /* SwiftUIBackports */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */;
+			productName = SwiftUIBackports;
+		};
 		B71B82682A366F3B00DD8BC2 /* SwiftyUtils */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */;
