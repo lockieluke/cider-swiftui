@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Inject
@@ -15,12 +15,24 @@ struct NavigationContainer: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var searchModal: SearchModal
-    #if os(macOS)
+#if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
-    #endif
+#endif
+    
+    @State private var showProgressBar = false
+    
+    private let progressBarAnimation = Animation.smooth
     
     var body: some View {
         ZStack {
+            PatchedGeometryReader { geometry in
+                ProgressView()
+                    .progressViewStyle(.linear)
+                    .tint(.primary)
+                    .frame(width: geometry.maxRelative * 0.2)
+            }
+            .opacity(showProgressBar ? 1 : 0)
+            
             if self.mkModal.isAuthorised {
                 ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
                     let isPresent = viewStack.isPresent
@@ -32,7 +44,11 @@ struct NavigationContainer: View {
                         
                     case .rootViewParams:
                         Group {
-                            HomeView()
+                            HomeView(onDataLoaded: {
+                                withAnimation(self.progressBarAnimation) {
+                                    self.showProgressBar = false
+                                }
+                            })
                                 .environmentObject(mkModal)
                                 .environmentObject(ciderPlayback)
                                 .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
@@ -59,12 +75,12 @@ struct NavigationContainer: View {
                             .environmentObject(mkModal)
                             .environmentObject(ciderPlayback)
                             .environmentObject(navigationModal)
-                        #if os(macOS)
+#if os(macOS)
                             .environmentObject(nativeUtilsWrapper)
-                        #endif
+#endif
                             .hideWithoutDestroying(!shouldUpperStackShow)
-                            .allowsHitTesting(shouldUpperStackShow) 
-                    
+                            .allowsHitTesting(shouldUpperStackShow)
+                        
                     default:
                         Color.clear
                     }
@@ -100,9 +116,9 @@ struct NavigationContainer: View {
                     LyricsPaneView()
                         .environmentObject(mkModal)
                         .environmentObject(ciderPlayback)
-                    #if os(macOS)
+#if os(macOS)
                         .environmentObject(nativeUtilsWrapper)
-                    #endif
+#endif
                         .transition(.move(edge: .trailing))
                         .zIndex(1)
                 }
@@ -117,6 +133,11 @@ struct NavigationContainer: View {
         }
         .padding(.top, 40)
         .padding(.bottom, 100)
+        .onAppear {
+            withAnimation(self.progressBarAnimation.delay(0.1)) {
+                self.showProgressBar = true
+            }
+        }
         .enableInjection()
     }
 }

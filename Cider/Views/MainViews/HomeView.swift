@@ -25,8 +25,14 @@ struct HomeView: View {
     
     @ObservedObject private var iO = Inject.observer
     
+    private let onDataLoaded: (() -> Void)?
+    
+    init(onDataLoaded: (() -> Void)? = nil) {
+        self.onDataLoaded = onDataLoaded
+    }
+    
     var body: some View {
-        ScrollView(.vertical) {
+        ScrollView(.vertical, showsIndicators: dataLoaded) {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Good \(DateUtils.timeOfDayInWords.lowercased()), \(homeViewData?.personalSocialProfile?.name ?? "")")
@@ -70,7 +76,7 @@ struct HomeView: View {
             }
             .padding()
             .opacity(dataLoaded ? 1 : 0)
-            .animation(.easeIn, value: dataLoaded)
+            .animation(.easeIn.delay(0.55), value: dataLoaded)
         }
         .transparentScrollbars()
         .task {
@@ -81,6 +87,7 @@ struct HomeView: View {
             
             self.homeViewData = await HomeViewData(personalSocialProfile: personalSocialProfile, recentlyPlayedItems: recentlyPlayedItems, personalRecommendation: personalRecommendation)
             self.dataLoaded = true
+            self.onDataLoaded?()
         }
         .enableInjection()
     }
