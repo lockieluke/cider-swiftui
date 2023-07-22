@@ -6,7 +6,7 @@
 //  Copyright © 2023 Cider Collective. All rights reserved.
 //
 
-import Introspect
+import SwiftUIIntrospect
 import SwiftUI
 
 extension List {
@@ -15,9 +15,9 @@ extension List {
   /// This workaround works because List is backed by NSTableView.
   func removeBackground() -> some View {
       #if os(macOS)
-      return introspectTableView { tableView in
-        tableView.backgroundColor = .clear
-        tableView.enclosingScrollView!.drawsBackground = false
+      return introspect(.table, on: .macOS(.v12, .v13, .v14)) { tableView in
+          tableView.backgroundColor = .clear
+          tableView.enclosingScrollView!.drawsBackground = false
       }
       #else
       return self
