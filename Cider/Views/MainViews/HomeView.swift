@@ -27,7 +27,7 @@ struct HomeView: View {
     
     var body: some View {
         ScrollView(.vertical) {
-            VStack {
+            VStack(alignment: .leading) {
                 HStack {
                     Text("Good \(DateUtils.timeOfDayInWords.lowercased()), \(homeViewData?.personalSocialProfile?.name ?? "")")
                         .font(.title)
@@ -47,21 +47,22 @@ struct HomeView: View {
                     }
                     .buttonStyle(.borderless)
                 }
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Recently Played")
-                        .font(.title2.bold())
-                    if let recentlyPlayedItems = homeViewData?.recentlyPlayedItems {
-                        MediaTableRepresentable(recentlyPlayedItems)
-                            .environmentObject(ciderPlayback)
-                    }
-                    
-                    Text("Made For You")
-                        .font(.title2.bold())
-                    PatchedGeometryReader { geometry in
-                        HStack {
-                            ForEach(homeViewData?.personalRecommendation ?? [], id: \.id) { recommendationItem in
-                                MediaPresentable(item: .mediaPlaylist(recommendationItem), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), coverKind: "ss", geometryMatched: true)
-                            }
+                
+                Text("Recently Played")
+                    .font(.title2.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let recentlyPlayedItems = homeViewData?.recentlyPlayedItems {
+                    MediaTableRepresentable(recentlyPlayedItems)
+                        .environmentObject(ciderPlayback)
+                        .padding(.vertical)
+                }
+                
+                Text("Made For You")
+                    .font(.title2.bold())
+                PatchedGeometryReader { geometry in
+                    HStack {
+                        ForEach(homeViewData?.personalRecommendation ?? [], id: \.id) { recommendationItem in
+                            MediaPresentable(item: .mediaPlaylist(recommendationItem), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), coverKind: "ss", geometryMatched: true)
                         }
                     }
                 }
