@@ -14,9 +14,13 @@ struct HomeView: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
-    @State private var personalSocialProfile: AMAPI.SocialProfile?
-    @State private var recentlyPlayedItems: [MediaDynamic] = []
-    @State private var personalRecommendation: [MediaPlaylist] = []
+    struct HomeViewData {
+        let personalSocialProfile: AMAPI.SocialProfile?
+        let recentlyPlayedItems: [MediaDynamic]
+        let personalRecommendation: [MediaPlaylist]
+    }
+    
+    @State private var homeViewData: HomeViewData?
     @State private var dataLoaded = false
     
     @ObservedObject private var iO = Inject.observer
@@ -25,7 +29,7 @@ struct HomeView: View {
         ScrollView(.vertical) {
             VStack {
                 HStack {
-                    Text("Good \(DateUtils.timeOfDayInWords.lowercased()), \(personalSocialProfile?.name ?? "")")
+                    Text("Good \(DateUtils.timeOfDayInWords.lowercased()), \(homeViewData?.personalSocialProfile?.name ?? "")")
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,14 +50,16 @@ struct HomeView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Recently Played")
                         .font(.title2.bold())
-                    MediaTableRepresentable(recentlyPlayedItems)
-                        .environmentObject(ciderPlayback)
+                    if let recentlyPlayedItems = homeViewData?.recentlyPlayedItems {
+                        MediaTableRepresentable(recentlyPlayedItems)
+                            .environmentObject(ciderPlayback)
+                    }
                     
                     Text("Made For You")
                         .font(.title2.bold())
                     PatchedGeometryReader { geometry in
                         HStack {
-                            ForEach(personalRecommendation, id: \.id) { recommendationItem in
+                            ForEach(homeViewData?.personalRecommendation ?? [], id: \.id) { recommendationItem in
                                 MediaPresentable(item: .mediaPlaylist(recommendationItem), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), coverKind: "ss", geometryMatched: true)
                             }
                         }
@@ -67,9 +73,12 @@ struct HomeView: View {
         }
         .transparentScrollbars()
         .task {
-            self.personalSocialProfile = await self.mkModal.AM_API.fetchPersonalSocialProfile()
-            self.recentlyPlayedItems = await self.mkModal.AM_API.fetchRecentlyPlayed()
-            self.personalRecommendation = await self.mkModal.AM_API.fetchPersonalRecommendation()
+            // load data in parallel
+            async let personalSocialProfile = self.mkModal.AM_API.fetchPersonalSocialProfile()
+            async let recentlyPlayedItems = self.mkModal.AM_API.fetchRecentlyPlayed()
+            async let personalRecommendation = self.mkModal.AM_API.fetchPersonalRecommendation()
+            
+            self.homeViewData = await HomeViewData(personalSocialProfile: personalSocialProfile, recentlyPlayedItems: recentlyPlayedItems, personalRecommendation: personalRecommendation)
             self.dataLoaded = true
         }
         .enableInjection()
