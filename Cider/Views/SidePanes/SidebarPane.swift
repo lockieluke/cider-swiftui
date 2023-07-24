@@ -145,6 +145,8 @@ struct SidebarPane: View {
     }
 }
 
-#Preview {
-    SidebarPane()
+struct SidebarPane_Previews: PreviewProvider {
+    static var previews: some View {
+        SidebarPane()
+    }
 }

@@ -68,8 +68,10 @@ struct MediaItemRepresentable: View {
     
 }
 
-#Preview {
-    MediaItemRepresentable(item: .mediaTrack(MediaTrack(data: [])))
+struct MediaItemRepresentable_Previews: PreviewProvider {
+    static var previews: some View {
+        MediaItemRepresentable(item: .mediaTrack(MediaTrack(data: [])))
+    }
 }
 
 struct MediaTableRepresentable: View {
