@@ -17,7 +17,8 @@ struct ContentView: View {
     #if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
     @EnvironmentObject private var discordRPCModal: DiscordRPCModal
-    var authWorker: AuthWorker
+    @EnvironmentObject private var authModal: AuthModal
+    @EnvironmentObject private var cacheModal: CacheModal
     #endif
     
     @StateObject private var searchModal = SearchModal()
@@ -37,6 +38,7 @@ struct ContentView: View {
                     .environmentObject(navigationModal)
                     .environmentObject(ciderPlayback)
                     .environmentObject(searchModal)
+                    .environmentObject(cacheModal)
                 #if os(macOS)
                     .environmentObject(nativeUtilsWrapper)
                 #endif
@@ -68,17 +70,22 @@ struct ContentView: View {
             }
             .task {
                 #if os(macOS)
-                await self.authWorker.presentAuthView() { userToken in
+                do {
+                    let timer = ParkBenchTimer()
+                    let userToken = try await self.authModal.retrieveUserToken()
+                    print("Authentication took \(timer.stop()) seconds")
+                    
                     self.discordRPCModal.agent.start()
+                    
                     self.mkModal.authenticateWithToken(userToken: userToken)
                     self.ciderPlayback.setUserToken(userToken: userToken)
-                    self.ciderPlayback.start()
-                    
-                    Task {
-                        await self.mkModal.AM_API.initStorefront()
-                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
-                    }
+                } catch {
+                    Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")
                 }
+                self.ciderPlayback.start()
+                
+                await self.mkModal.AM_API.initStorefront()
+                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
                 #endif
             }
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
@@ -91,7 +98,8 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         #if os(macOS)
-        ContentView(authWorker: AuthWorker(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())), appWindowModal: AppWindowModal()))
+        ContentView()
+            .environmentObject(AuthModal(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())), appWindowModal: AppWindowModal(), cacheModel: CacheModal()))
         #elseif os(iOS)
         ContentView()
         #endif

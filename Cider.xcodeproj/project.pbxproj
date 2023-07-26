@@ -20,6 +20,9 @@
 		B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */; };
 		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
 		B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */ = {isa = PBXBuildFile; productRef = B70524BA2A6C96C2001654B3 /* SwiftUIBackports */; };
+		B70524C22A6D2E39001654B3 /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */; };
+		B70524C52A6F15D8001654B3 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = B70524C42A6F15D8001654B3 /* Cache */; };
+		B70524C72A6F2931001654B3 /* CacheModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70524C62A6F2931001654B3 /* CacheModal.swift */; };
 		B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050C28BE0B4F002AD76C /* AMAPI.swift */; };
 		B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* MediaShowcaseRow.swift */; };
 		B70D0A132A509D0C00968E7D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B70D0A122A509D0C00968E7D /* Settings.bundle */; platformFilter = ios; };
@@ -128,7 +131,7 @@
 		B7C5C5DC29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */; };
 		B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5C5DF29CF827F00EF4D11 /* Defaults.swift */; };
 		B7C651D428C415F000D32DDC /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D328C415F000D32DDC /* AppleAuth.swift */; };
-		B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthWorker.swift */; };
+		B7C651D628C4B8E200D32DDC /* AuthModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C651D528C4B8E200D32DDC /* AuthModal.swift */; };
 		B7C83DA92A561C9200470320 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B7C83DA82A561C9200470320 /* SnapKit */; };
 		B7C9CD8A2908467A00A67CE4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD892908467A00A67CE4 /* main.swift */; };
 		B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD922908797C00A67CE4 /* Dictionary.swift */; };
@@ -191,6 +194,8 @@
 		B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		B703BBCE28CC05FA00228324 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		B70524B72A6B3EE4001654B3 /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
+		B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkBenchTimer.swift; sourceTree = "<group>"; };
+		B70524C62A6F2931001654B3 /* CacheModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModal.swift; sourceTree = "<group>"; };
 		B706050B28BD8CB2002AD76C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B706050C28BE0B4F002AD76C /* AMAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAPI.swift; sourceTree = "<group>"; };
 		B706051028BFA181002AD76C /* MediaShowcaseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaShowcaseRow.swift; sourceTree = "<group>"; };
@@ -280,7 +285,7 @@
 		B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistNamesInteractiveText.swift; sourceTree = "<group>"; };
 		B7C5C5DF29CF827F00EF4D11 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B7C651D328C415F000D32DDC /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
-		B7C651D528C4B8E200D32DDC /* AuthWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWorker.swift; sourceTree = "<group>"; };
+		B7C651D528C4B8E200D32DDC /* AuthModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModal.swift; sourceTree = "<group>"; };
 		B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CiderPlaybackAgent; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7C9CD892908467A00A67CE4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7C9CD8E2908621400A67CE4 /* CiderPlaybackAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CiderPlaybackAgent.entitlements; sourceTree = "<group>"; };
@@ -317,6 +322,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B70524C52A6F15D8001654B3 /* Cache in Frameworks */,
 				B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */,
 				B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */,
 				B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */,
@@ -565,7 +571,6 @@
 			isa = PBXGroup;
 			children = (
 				B7688726294A313500C623C9 /* WSDebugger */,
-				B7C651D528C4B8E200D32DDC /* AuthWorker.swift */,
 				B706050C28BE0B4F002AD76C /* AMAPI.swift */,
 				B7C651D328C415F000D32DDC /* AppleAuth.swift */,
 				B703BBCE28CC05FA00228324 /* Alert.swift */,
@@ -579,6 +584,7 @@
 				B790345D29F091D5001B11AE /* Settings.swift */,
 				B7C364E32A60A87500D4711A /* Menu.swift */,
 				B736F2742A634F1D008A0458 /* DateUtils.swift */,
+				B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 		B7AAB6F828BABE57009AABEA /* Modals */ = {
 			isa = PBXGroup;
 			children = (
+				B7C651D528C4B8E200D32DDC /* AuthModal.swift */,
 				B7AAB6F928BABE83009AABEA /* SearchModal.swift */,
 				B7AAB70028BAD782009AABEA /* AppWindowModal.swift */,
 				B7AAB70A28BD24B4009AABEA /* MKModal.swift */,
@@ -594,6 +601,7 @@
 				B768872B294A359400C623C9 /* WSModal.swift */,
 				B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */,
 				B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */,
+				B70524C62A6F2931001654B3 /* CacheModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -701,6 +709,7 @@
 				B7C83DA82A561C9200470320 /* SnapKit */,
 				B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */,
 				B70524BA2A6C96C2001654B3 /* SwiftUIBackports */,
+				B70524C42A6F15D8001654B3 /* Cache */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -778,6 +787,7 @@
 				B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */,
 				B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */,
+				B70524C32A6F15D8001654B3 /* XCRemoteSwiftPackageReference "Cache" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -905,6 +915,7 @@
 				B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */,
 				B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */,
 				B768871729491B1800C623C9 /* GeneralPreferencesPane.swift in Sources */,
+				B70524C72A6F2931001654B3 /* CacheModal.swift in Sources */,
 				B7B02F57295629030065FCDD /* Double.swift in Sources */,
 				B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */,
 				B7AAB70D28BD2640009AABEA /* ListenNowView.swift in Sources */,
@@ -923,7 +934,7 @@
 				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
 				B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */,
 				B77AACF4293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift in Sources */,
-				B7C651D628C4B8E200D32DDC /* AuthWorker.swift in Sources */,
+				B7C651D628C4B8E200D32DDC /* AuthModal.swift in Sources */,
 				B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */,
 				B768871B2949225200C623C9 /* BasicHoverModifier.swift in Sources */,
 				B75219AA2918358C005CF8F0 /* MediaType.swift in Sources */,
@@ -951,6 +962,7 @@
 				B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */,
 				B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */,
 				B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */,
+				B70524C22A6D2E39001654B3 /* ParkBenchTimer.swift in Sources */,
 				B75219AC291836B5005CF8F0 /* MediaItem.swift in Sources */,
 				B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */,
 				B7EA101A299FFA6A000998A5 /* DiscordRPCModal.swift in Sources */,
@@ -1308,6 +1320,14 @@
 				minimumVersion = 2.8.0;
 			};
 		};
+		B70524C32A6F15D8001654B3 /* XCRemoteSwiftPackageReference "Cache" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hyperoslo/Cache.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tbaranes/SwiftyUtils.git";
@@ -1467,6 +1487,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */;
 			productName = SwiftUIBackports;
+		};
+		B70524C42A6F15D8001654B3 /* Cache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B70524C32A6F15D8001654B3 /* XCRemoteSwiftPackageReference "Cache" */;
+			productName = Cache;
 		};
 		B71B82682A366F3B00DD8BC2 /* SwiftyUtils */ = {
 			isa = XCSwiftPackageProductDependency;

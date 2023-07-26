@@ -7,7 +7,7 @@ import Darwin
 import Rainbow
 
 enum SharedLoggers {
-    case UIInteraction, DiscordRPC
+    case UIInteraction, DiscordRPC, Authentication
 }
 
 class Logger {

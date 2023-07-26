@@ -21,29 +21,31 @@ class MKModal : ObservableObject {
         self.ciderPlayback = ciderPlayback
     }
     
-    func authorise() async -> String {
-        self.logger.info("Fetching MusicKit Developer Token")
-        return await withCheckedContinuation { continuation in
-            self.AM_API.requestSKAuthorisation { skStatus in
-                if skStatus != .authorized {
-                    self.resetAuthorisation()
-                }
-                Task {
-                    guard let developerToken = try? await self.AM_API.fetchMKDeveloperToken() else {
-                        self.resetAuthorisation()
-                        return
-                    }
+    func fetchDeveloperToken() async throws -> String {
+        return try await withCheckedThrowingContinuation { continuation in
+//            self.AM_API.requestSKAuthorisation { skStatus in
+//                if skStatus != .authorized {
+//                    self.resetAuthorisation()
+//                }
+//            }
+            
+            Task {
+                do {
+                    let developerToken = try await self.AM_API.fetchMKDeveloperToken()
+//                        let mkAuthStatus = await self.AM_API.requestMKAuthorisation()
+//                        if mkAuthStatus != .authorized {
+//                            continuation.resume(throwing: NSError(domain: "Failed to request native MusicKit permissions", code: 0))
+//                        }
                     DispatchQueue.main.async {
                         self.hasDeveloperToken = true
                         self.ciderPlayback.setDeveloperToken(developerToken: developerToken, mkModal: self)
                         self.logger.success("Successfully fetched MusicKit Developer Token", displayTick: true)
                         continuation.resume(returning: developerToken)
                     }
-                    self.AM_API.requestMKAuthorisation { mkStatus in
-                        if mkStatus != .authorized {
-                            self.resetAuthorisation()
-                        }
-                    }
+                } catch {
+                    self.resetAuthorisation()
+                    self.logger.error("Failed to fetch MusicKit Developer Token")
+                    continuation.resume(throwing: error)
                 }
             }
         }

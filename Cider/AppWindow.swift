@@ -15,8 +15,9 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let mkModal: MKModal
     private let discordRPCModal: DiscordRPCModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
+    private let cacheModal: CacheModal
     private let wsModal = WSModal.shared
-    private let authWorker: AuthWorker
+    private let authModal: AuthModal
     private let appMenu: AppMenu
     
     let ciderPlayback: CiderPlayback
@@ -25,16 +26,19 @@ class AppWindow: NSObject, NSWindowDelegate {
         let activeScreen = NSScreen.activeScreen
         
         let discordRPCModal = DiscordRPCModal()
+        let cacheModal = CacheModal()
         let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback)
-        let authWorker = AuthWorker(mkModal: mkModal, appWindowModal: self.appWindowModal)
+        let authModal = AuthModal(mkModal: mkModal, appWindowModal: self.appWindowModal, cacheModel: cacheModal)
         
-        let contentView = ContentView(authWorker: authWorker)
+        let contentView = ContentView()
+            .environmentObject(authModal)
             .environmentObject(self.appWindowModal)
             .environmentObject(mkModal)
             .environmentObject(ciderPlayback)
             .environmentObject(discordRPCModal)
             .environmentObject(nativeUtilsWrapper)
+            .environmentObject(cacheModal)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false).then {
@@ -66,7 +70,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         
         let appMenu = AppMenu(window,
                               mkModal: mkModal,
-                              authWorker: authWorker,
+                              authModal: authModal,
                               wsModal: self.wsModal,
                               ciderPlayback: ciderPlayback,
                               appWindowModal: self.appWindowModal,
@@ -76,9 +80,10 @@ class AppWindow: NSObject, NSWindowDelegate {
 
         self.mainWindow = window
         self.appWindowModal.nsWindow = window
-        self.authWorker = authWorker
+        self.authModal = authModal
         self.discordRPCModal = discordRPCModal
         self.nativeUtilsWrapper = nativeUtilsWrapper
+        self.cacheModal = cacheModal
         self.appMenu = appMenu
         self.mkModal = mkModal
         self.ciderPlayback = ciderPlayback

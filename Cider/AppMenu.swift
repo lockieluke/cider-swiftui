@@ -16,20 +16,20 @@ class AppMenu {
     private let appName: String
     private let window: NSWindow
     private let mkModal: MKModal
-    private let authWorker: AuthWorker
+    private let authModal: AuthModal
     private let wsModal: WSModal
     private let ciderPlayback: CiderPlayback
     private let appWindowModal: AppWindowModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
     
-    init(_ window: NSWindow, mkModal: MKModal, authWorker: AuthWorker, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper) {
+    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper) {
         let menu = NSMenu()
         
         self.window = window
         self.appName = ProcessInfo.processInfo.processName
         self.menu = menu
         self.mkModal = mkModal
-        self.authWorker = authWorker
+        self.authModal = authModal
         self.wsModal = wsModal
         self.ciderPlayback = ciderPlayback
         self.appWindowModal = appWindowModal
@@ -137,7 +137,7 @@ class AppMenu {
     @objc func signOut(_ sender: Any) {
         Task {
             Logger.shared.info("Signing out")
-            await AuthWorker.clearAuthCache()
+            await AuthModal.clearAuthCache()
             self.mkModal.resetAuthorisation()
             DispatchQueue.main.async {
                 Alert.showModal(on: self.window, message: "Cider will have to be restarted so we can sign you out") {

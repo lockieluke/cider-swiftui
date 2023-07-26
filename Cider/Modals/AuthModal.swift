@@ -9,16 +9,17 @@ import SwiftyJSON
 
 #if canImport(AppKit)
 import AppKit
-final class AuthWorker {
+class AuthModal: ObservableObject {
     
     private let logger: Logger
     private var wkWebView: WKWebView?
     private let authWindow: NSWindow
-    private var wkUIDelegate: AuthWorkerUIDelegate?
-    private var wkNavDelegate: AuthWorkerNavigationDelegate?
+    private var wkUIDelegate: AuthModalUIDelegate?
+    private var wkNavDelegate: AuthModalNavigationDelegate?
     
     private let appWindowModal: AppWindowModal
     private let mkModal: MKModal
+    private let cacheModel: CacheModal
     
     private static let INITIAL_URL = URLRequest(url: URL(string: "https://www.apple.com/legal/privacy/en-ww/cookies/")!)
     private static let USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15"
@@ -28,25 +29,25 @@ final class AuthWorker {
     
     var authenticatingCallback: ((_ userToken: String) -> Void)?
     
-    class AuthWorkerNavigationDelegate : NSObject, WKNavigationDelegate {
+    class AuthModalNavigationDelegate : NSObject, WKNavigationDelegate {
         
-        weak var parent: AuthWorker! = nil
+        weak var parent: AuthModal! = nil
         
-        init(parent: AuthWorker) {
+        init(parent: AuthModal) {
             self.parent = parent
         }
         
         func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-            parent.logger.error("AuthWorker terminated")
+            parent.logger.error("AuthModal terminated")
         }
         
     }
     
-    class AuthWorkerUIDelegate : NSObject, WKUIDelegate {
+    class AuthModalUIDelegate : NSObject, WKUIDelegate {
         
-        weak var parent: AuthWorker! = nil
+        weak var parent: AuthModal! = nil
         
-        init(parent: AuthWorker) {
+        init(parent: AuthModal) {
             self.parent = parent
         }
         
@@ -62,9 +63,9 @@ final class AuthWorker {
                 return
             }
             
-            if AuthWorker.IS_PASSING_LOGS {
+            if AuthModal.IS_PASSING_LOGS {
                 if let rawJson = json.rawString() {
-                    parent.logger.info("JSON message from AuthWorker: \(rawJson)")
+                    parent.logger.info("JSON message from AuthModal: \(rawJson)")
                 }
             }
             
@@ -105,11 +106,11 @@ final class AuthWorker {
         
     }
     
-    init(mkModal: MKModal, appWindowModal: AppWindowModal) {
-        if AuthWorker.IS_FORGETTING_AUTH {
+    init(mkModal: MKModal, appWindowModal: AppWindowModal, cacheModel: CacheModal) {
+        if AuthModal.IS_FORGETTING_AUTH {
             let semaphore = DispatchSemaphore(value: 0)
             Task {
-                await AuthWorker.clearAuthCache()
+                await AuthModal.clearAuthCache()
                 semaphore.signal()
             }
             _ = semaphore.wait(timeout: .now() + .milliseconds(300))
@@ -119,7 +120,7 @@ final class AuthWorker {
             #if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
             #endif
-            $0.customUserAgent = AuthWorker.USER_AGENT
+            $0.customUserAgent = AuthModal.USER_AGENT
         }
         
         self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false).then {
@@ -130,61 +131,76 @@ final class AuthWorker {
         
         self.mkModal = mkModal
         self.appWindowModal = appWindowModal
+        self.cacheModel = cacheModel
         
-        self.logger = Logger(label: "AuthWorker")
+        self.logger = Logger(label: "AuthModal")
 
-        self.wkUIDelegate = AuthWorkerUIDelegate(parent: self)
+        self.wkUIDelegate = AuthModalUIDelegate(parent: self)
         wkWebView?.uiDelegate = wkUIDelegate
         
-        self.wkNavDelegate = AuthWorkerNavigationDelegate(parent: self)
+        self.wkNavDelegate = AuthModalNavigationDelegate(parent: self)
         wkWebView?.navigationDelegate = wkNavDelegate
     }
     
-    func presentAuthView(authenticatingCallback: ((_ userToken: String) -> Void)? = nil) async {
-        guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderwebauth.js"),
-              let script = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
-            fatalError("Unable to load CiderWebAuth Scripts")
-        }
-        
-        let developerToken = await self.mkModal.authorise()
-        
-        DispatchQueue.main.async {
-            let userScript = WKUserScript(source: """
-                                          const initialURL = \"\(AuthWorker.INITIAL_URL)\";
-                                          const amToken = \"\(developerToken)\";
-                                          const isForgettingAuth = \(AuthWorker.IS_FORGETTING_AUTH);
-                                          \(script)
-                                          """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-            self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
-            self.wkWebView?.configuration.userContentController.addUserScript(userScript)
-            
-            if self.mkModal.isAuthorised {
-                self.logger.success("Logged in with previously fetched user token", displayTick: true)
-                return
+    func retrieveUserToken() async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            Task {
+                let developerToken = try await self.mkModal.fetchDeveloperToken()
+                
+                if let lastAmUserToken = try? self.cacheModel.storage?.object(forKey: "last_am_usertoken") {
+                    self.logger.success("Logged in with previously cached user token", displayTick: true)
+                    continuation.resume(returning: lastAmUserToken)
+                    return
+                }
+                
+                guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderwebauth.js"),
+                      let script = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
+                    fatalError("Unable to load CiderWebAuth Scripts")
+                }
+                
+                DispatchQueue.main.async {
+                    let userScript = WKUserScript(source: """
+                                                  const initialURL = \"\(AuthModal.INITIAL_URL)\";
+                                                  const amToken = \"\(developerToken)\";
+                                                  const isForgettingAuth = \(AuthModal.IS_FORGETTING_AUTH);
+                                                  \(script)
+                                                  """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+                    self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+                    self.wkWebView?.configuration.userContentController.addUserScript(userScript)
+                    
+                    if self.mkModal.isAuthorised , let userToken = self.mkModal.AM_API.AM_USER_TOKEN {
+                        self.logger.success("Logged in with previously fetched user token", displayTick: true)
+                        continuation.resume(returning: userToken)
+                    }
+                    
+                    self.authenticatingCallback = { userToken in
+                        do {
+                            try self.cacheModel.storage?.setObject(userToken, forKey: "last_am_usertoken", expiry: .date(Date().addingTimeInterval(2 * 60 * 60)))
+                        } catch {
+                            self.logger.error("Failed to cache Apple Music user token: \(error)")
+                        }
+                        continuation.resume(returning: userToken)
+                        self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
+                        
+                        // hack to dispose wkwebview manually
+            //            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+            //            self.wkWebView?.perform(disposeSel)
+                        
+                        self.wkWebView?.removeFromSuperview()
+                        self.authWindow.close()
+                        
+                        self.wkWebView = nil
+                    }
+                    
+                    // loadSimulatedRequest for some reason doesn't not work in sandbox mode
+                    #if DEBUG
+                    self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: "<p>CiderWebAuth</p>")
+                    #else
+                    // go to /stub so it doesn't load all the images in Apple Music Web's homepage
+                    self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
+                    #endif
+                }
             }
-            
-            self.logger.info("Presenting AuthWindow")
-            self.authenticatingCallback = { userToken in
-                self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
-                
-                // hack to dispose wkwebview manually
-    //            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
-    //            self.wkWebView?.perform(disposeSel)
-                
-                self.wkWebView?.removeFromSuperview()
-                self.authWindow.close()
-                
-                self.wkWebView = nil
-                authenticatingCallback?(userToken)
-            }
-            
-            // loadSimulatedRequest for some reason doesn't not work in sandbox mode
-            #if DEBUG
-            self.wkWebView?.loadSimulatedRequest(AuthWorker.INITIAL_URL, responseHTML: "<p>Cider AuthWorker</p>")
-            #else
-            // go to /stub so it doesn't load all the images in Apple Music Web's homepage
-            self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
-            #endif
         }
     }
     

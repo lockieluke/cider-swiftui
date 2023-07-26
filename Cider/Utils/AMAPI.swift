@@ -22,6 +22,20 @@ class AMAPI {
     private let logger = Logger(label: "Apple Music API")
     
     private var STOREFRONT_ID: String?
+    private var noAuthHeaders: HTTPHeaders {
+        get {
+            var headers: HTTPHeaders = [
+                "User-Agent": "Music/1.3.3 (Macintosh; OS X 13.2) AppleWebKit/614.4.6.1.5 build/2 (dt:1)",
+                "Origin": "https://beta.music.apple.com",
+                "Referer": "https://beta.music.apple.com"
+            ]
+            if let AM_TOKEN = self.AM_TOKEN {
+                headers["Authorization"] = "Bearer \(AM_TOKEN)"
+            }
+            
+            return headers
+        }
+    }
     
     func requestSKAuthorisation(completion: @escaping (_ status: SKCloudServiceAuthorizationStatus) -> Void) {
         SKCloudServiceController.requestAuthorization { status in
@@ -29,12 +43,8 @@ class AMAPI {
         }
     }
     
-    func requestMKAuthorisation(completion: @escaping (_ mkStatus: MusicAuthorization.Status) -> Void) {
-        Task {
-            let status = await MusicAuthorization.request()
-            
-            completion(status)
-        }
+    func requestMKAuthorisation() async -> MusicAuthorization.Status {
+        return await MusicAuthorization.request()
     }
     
     func fetchMKDeveloperToken() async throws -> String {
@@ -78,16 +88,10 @@ class AMAPI {
     
     func initialiseAMNetworking() throws {
         guard let AM_USER_TOKEN = self.AM_USER_TOKEN else { throw AMAuthError.invalidUserToken }
-        guard let AM_TOKEN = self.AM_TOKEN else { throw AMAuthError.invalidDeveloperToken }
         
         let configuration = URLSessionConfiguration.default
-        let headers = HTTPHeaders([
-            "User-Agent": "Music/1.3.3 (Macintosh; OS X 13.2) AppleWebKit/614.4.6.1.5 build/2 (dt:1)",
-            "Authorization": "Bearer \(AM_TOKEN)",
-            "Music-User-Token": AM_USER_TOKEN,
-            "Origin": "https://beta.music.apple.com",
-            "Referer": "https://beta.music.apple.com"
-        ].merging(HTTPHeaders.default.dictionary, uniquingKeysWith: { (current, _) in current }))
+        var headers = self.noAuthHeaders
+        headers["Music-User-Token"] = AM_USER_TOKEN
         configuration.headers = headers
         
         AMAPI.amSession = Session(configuration: configuration)
@@ -105,6 +109,21 @@ class AMAPI {
         } else if let data = res.data, let json = try? JSON(data: data) {
             self.STOREFRONT_ID = json["data"].array?.first?["id"].stringValue
         }
+    }
+    
+    func validateUserToken(_ userToken: String) async -> Bool {
+        let res = await AF.request("\(APIEndpoints.AMAPI)/me/account", parameters: [
+            "meta": "subscription",
+            "challenge[subscriptionCapabilities]": "voice,premium"
+        ], headers: self.noAuthHeaders).serializingData().response
+        
+        if let error = res.error {
+            self.logger.error("Failed to validate user token: \(error)")
+        } else if res.response?.statusCode == 200, let data = res.data, let json = try? JSON(data: data) {
+            return json["data"]["meta"]["subscription"].boolValue
+        }
+        
+        return false
     }
     
     func fetchRecommendations() async -> MediaRecommendationSections {
