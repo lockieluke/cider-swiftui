@@ -68,25 +68,8 @@ struct ContentView: View {
                 NSApp.keyWindow?.makeFirstResponder(nil)
                 #endif
             }
-            .task {
-                #if os(macOS)
-                do {
-                    let timer = ParkBenchTimer()
-                    let userToken = try await self.authModal.retrieveUserToken()
-                    print("Authentication took \(timer.stop()) seconds")
-                    
-                    self.discordRPCModal.agent.start()
-                    
-                    self.mkModal.authenticateWithToken(userToken: userToken)
-                    self.ciderPlayback.setUserToken(userToken: userToken)
-                } catch {
-                    Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")
-                }
-                self.ciderPlayback.start()
-                
-                await self.mkModal.AM_API.initStorefront()
+            .onAppear {
                 self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
-                #endif
             }
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)

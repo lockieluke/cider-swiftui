@@ -31,6 +31,23 @@ class AppWindow: NSObject, NSWindowDelegate {
         let mkModal = MKModal(ciderPlayback: ciderPlayback)
         let authModal = AuthModal(mkModal: mkModal, appWindowModal: self.appWindowModal, cacheModel: cacheModal)
         
+        Task {
+            do {
+                let timer = ParkBenchTimer()
+                let userToken = try await authModal.retrieveUserToken()
+                mkModal.authenticateWithToken(userToken: userToken)
+                print("Authentication took \(timer.stop()) seconds")
+                
+                discordRPCModal.agent.start()
+                ciderPlayback.setUserToken(userToken: userToken)
+            } catch {
+                Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")
+            }
+            ciderPlayback.start()
+            
+            await mkModal.AM_API.initStorefront()
+        }
+        
         let contentView = ContentView()
             .environmentObject(authModal)
             .environmentObject(self.appWindowModal)
