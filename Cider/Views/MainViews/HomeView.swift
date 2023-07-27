@@ -76,7 +76,7 @@ struct HomeView: View {
             }
             .padding()
             .opacity(dataLoaded ? 1 : 0)
-            .animation(.easeIn.delay(0.45), value: dataLoaded)
+            .animation(.easeIn, value: dataLoaded)
         }
         .transparentScrollbars()
         .task {
