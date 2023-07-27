@@ -20,6 +20,7 @@ class AMAPI {
     
     private static var amSession: Session!
     private let logger = Logger(label: "Apple Music API")
+    private let cacheModal: CacheModal
     
     private var STOREFRONT_ID: String?
     private var noAuthHeaders: HTTPHeaders {
@@ -37,11 +38,15 @@ class AMAPI {
         }
     }
     
+    init(cacheModal: CacheModal) {
+        self.cacheModal = cacheModal
+    }
+    
     func requestMKAuthorisation() async -> MusicAuthorization.Status {
         return await MusicAuthorization.request()
     }
     
-    func fetchMKDeveloperToken() async throws -> String {
+    func fetchMKDeveloperToken(ignoreCache: Bool = false) async throws -> String {
         // Spends less time on decoding when JSON is hardcoded
         struct CiderAPIResponse: Decodable {
             let token: String
@@ -49,6 +54,11 @@ class AMAPI {
         }
         
         let timer = ParkBenchTimer()
+        if !ignoreCache, let lastAmToken = try? self.cacheModal.storage?.object(forKey: "last_am_token") {
+            self.logger.info("Fetching cached developer token took \(timer.stop())")
+            self.AM_TOKEN = lastAmToken
+            return lastAmToken
+        }
         
         var request = URLRequest(url: URL(string: APIEndpoints.CIDER)!)
         request.headers = [
@@ -59,6 +69,7 @@ class AMAPI {
         
         let json = try JSONDecoder().decode(CiderAPIResponse.self, from: data)
         self.AM_TOKEN = json.token
+        try self.cacheModal.storage?.setObject(json.token, forKey: "last_am_token", expiry: .date(Date().addingTimeInterval(60 * 60 * 24 * 30)))
         self.logger.info("Fetching developer token took \(timer.stop())")
         return json.token
     }
@@ -78,14 +89,18 @@ class AMAPI {
         self.AM_USER_TOKEN = ""
     }
     
-    func initStorefront() async {
+    func initStorefront() async -> Bool {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/storefront").serializingData().response
         
         if let error = res.error {
             self.logger.error("Failed to fetch storefront: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data) {
             self.STOREFRONT_ID = json["data"].array?.first?["id"].stringValue
+            
+            return true
         }
+        
+        return false
     }
     
     func validateUserToken(_ userToken: String) async -> Bool {

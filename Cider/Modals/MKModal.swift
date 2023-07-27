@@ -15,17 +15,18 @@ class MKModal : ObservableObject {
     private let logger = Logger(label: "MusicKit Wrapper")
     private let ciderPlayback: CiderPlayback
     
-    let AM_API = AMAPI()
+    let AM_API: AMAPI
     
-    init(ciderPlayback: CiderPlayback) {
+    init(ciderPlayback: CiderPlayback, cacheModal: CacheModal) {
         self.ciderPlayback = ciderPlayback
+        self.AM_API = AMAPI(cacheModal: cacheModal)
     }
     
-    func fetchDeveloperToken() async throws -> String {
-        return try await withCheckedThrowingContinuation { continuation in            
+    func fetchDeveloperToken(ignoreCache: Bool = false) async throws -> String {
+        return try await withCheckedThrowingContinuation { continuation in
             Task {
                 do {
-                    let developerToken = try await self.AM_API.fetchMKDeveloperToken()
+                    let developerToken = try await self.AM_API.fetchMKDeveloperToken(ignoreCache: ignoreCache)
 //                        let mkAuthStatus = await self.AM_API.requestMKAuthorisation()
 //                        if mkAuthStatus != .authorized {
 //                            continuation.resume(throwing: NSError(domain: "Failed to request native MusicKit permissions", code: 0))
@@ -42,6 +43,13 @@ class MKModal : ObservableObject {
                     continuation.resume(throwing: error)
                 }
             }
+        }
+    }
+    
+    func initStorefront() async {
+        if !(await self.AM_API.initStorefront()) {
+            _ = try? await self.fetchDeveloperToken(ignoreCache: true)
+            await self.AM_API.initStorefront()
         }
     }
     

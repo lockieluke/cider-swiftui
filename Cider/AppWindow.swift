@@ -28,7 +28,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         let discordRPCModal = DiscordRPCModal()
         let cacheModal = CacheModal()
         let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
-        let mkModal = MKModal(ciderPlayback: ciderPlayback)
+        let mkModal = MKModal(ciderPlayback: ciderPlayback, cacheModal: cacheModal)
         let authModal = AuthModal(mkModal: mkModal, appWindowModal: self.appWindowModal, cacheModel: cacheModal)
         
         Task {
@@ -45,7 +45,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             }
             ciderPlayback.start()
             
-            await mkModal.AM_API.initStorefront()
+            await mkModal.initStorefront()
         }
         
         let contentView = ContentView()

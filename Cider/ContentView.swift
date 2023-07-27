@@ -82,7 +82,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         #if os(macOS)
         ContentView()
-            .environmentObject(AuthModal(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal())), appWindowModal: AppWindowModal(), cacheModel: CacheModal()))
+            .environmentObject(AuthModal(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal()), cacheModal: CacheModal()), appWindowModal: AppWindowModal(), cacheModel: CacheModal()))
         #elseif os(iOS)
         ContentView()
         #endif
