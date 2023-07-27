@@ -38,16 +38,16 @@ struct ArtistView: View {
     }
     
     var body: some View {
-        PatchedGeometryReader { geometry in
-            ScrollView(.vertical) {
-                if let artist = self.artist {
-                    VStack {
+        ScrollView(.vertical) {
+            if let artist = self.artist {
+                VStack {
+                    PatchedGeometryReader { geometry in
                         if readyToDisplay {
                             WebImage(url: artist.artwork.getUrl(width: 500, height: 500))
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(.infinity)
-                                .frame(width: geometry.minRelative * 0.3, height: geometry.minRelative * 0.3)
+                                .frame(width: geometry.maxRelative * 0.12, height: geometry.maxRelative * 0.12)
                                 .frame(minWidth: 50, minHeight: 50)
                                 .shadow(radius: 10)
                                 .padding(60)
@@ -70,7 +70,6 @@ struct ArtistView: View {
                                 Spacer()
                                 MediaActionButton(icon: .Shuffle, size: 35)
                             }
-                            .padding(.horizontal, 30)
                         }
                         
                         HStack(alignment: .top) {
@@ -124,44 +123,44 @@ struct ArtistView: View {
                             .transparentScrollbars()
                         }
                         .padding(.vertical)
-                        
-                        if let artistBio = artist.artistBio {
-                            Text("About \(artist.artistName)")
-                                .font(.title2.bold())
-                            
-                            AttributedText(artistBio)
-                                .multilineTextAlignment(.leading)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical)
-                                .modifier(SimpleHoverModifier())
-                        }
-                        
-                        if let origin = artist.origin {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text("Hometown")
-                                        .font(.title2.bold())
-                                    Text("\(origin)")
-                                }
-                                .modifier(SimpleHoverModifier())
-                                
-                                VStack(alignment: .leading) {
-                                    Text("Born")
-                                        .font(.title2.bold())
-                                    Text("12th December 2023")
-                                }
-                                .modifier(SimpleHoverModifier())
-                                .padding(.leading)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.bottom)
-                        }
                     }
-                    .padding(.horizontal)
+                    
+                    if let artistBio = artist.artistBio {
+                        Text("About \(artist.artistName)")
+                            .font(.title2.bold())
+                        
+                        AttributedText(artistBio)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical)
+                            .modifier(SimpleHoverModifier())
+                    }
+                    
+                    if let origin = artist.origin {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Hometown")
+                                    .font(.title2.bold())
+                                Text("\(origin)")
+                            }
+                            .modifier(SimpleHoverModifier())
+                            
+                            VStack(alignment: .leading) {
+                                Text("Born")
+                                    .font(.title2.bold())
+                                Text("12th December 2023")
+                            }
+                            .modifier(SimpleHoverModifier())
+                            .padding(.leading)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.bottom)
+                    }
                 }
+                .padding(.horizontal)
             }
-            .transparentScrollbars()
         }
+        .transparentScrollbars()
         .task {
             let selectingArtistIndex = self.artistViewParams.selectingArtistIndex
             
