@@ -24,7 +24,7 @@ app.all<{
     }
 }>('/perform-task', (request, reply) => {
     const task = request.query.task;
-    const {env} = request.body;
+    const {env} = request.body ?? {env: {}};
     const proc = shelljs.exec(`${_.flatMap(env, (value, index) => `${index.toUpperCase()}=${value}`).join(' ')} ${taskBin} ${task}`, {
         cwd,
         silent: true
