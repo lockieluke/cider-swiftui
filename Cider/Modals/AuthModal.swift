@@ -24,7 +24,6 @@ class AuthModal: ObservableObject {
     private static let INITIAL_URL = URLRequest(url: URL(string: "https://www.apple.com/legal/privacy/en-ww/cookies/")!)
     private static let USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15"
     
-    private static let IS_FORGETTING_AUTH: Bool = CommandLine.arguments.contains("-clear-auth")
     private static let IS_PASSING_LOGS: Bool = CommandLine.arguments.contains("-pass-auth-logs")
     
     var authenticatingCallback: ((_ userToken: String) -> Void)?
@@ -107,15 +106,6 @@ class AuthModal: ObservableObject {
     }
     
     init(mkModal: MKModal, appWindowModal: AppWindowModal, cacheModel: CacheModal) {
-        if AuthModal.IS_FORGETTING_AUTH {
-            let semaphore = DispatchSemaphore(value: 0)
-            Task {
-                await AuthModal.clearAuthCache()
-                semaphore.signal()
-            }
-            _ = semaphore.wait(timeout: .now() + .milliseconds(300))
-        }
-        
         self.wkWebView = WKWebView(frame: .zero).then {
             #if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
@@ -162,13 +152,12 @@ class AuthModal: ObservableObject {
                     let userScript = WKUserScript(source: """
                                                   const initialURL = \"\(AuthModal.INITIAL_URL)\";
                                                   const amToken = \"\(developerToken)\";
-                                                  const isForgettingAuth = \(AuthModal.IS_FORGETTING_AUTH);
                                                   \(script)
                                                   """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
                     self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
                     self.wkWebView?.configuration.userContentController.addUserScript(userScript)
                     
-                    if self.mkModal.isAuthorised , let userToken = self.mkModal.AM_API.AM_USER_TOKEN {
+                    if self.mkModal.isAuthorised, let userToken = self.mkModal.AM_API.AM_USER_TOKEN {
                         self.logger.success("Logged in with previously fetched user token", displayTick: true)
                         continuation.resume(returning: userToken)
                     }
@@ -193,11 +182,11 @@ class AuthModal: ObservableObject {
                     }
                     
                     // loadSimulatedRequest for some reason doesn't not work in sandbox mode
-                    #if DEBUG
-                    self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: "<p>CiderWebAuth</p>")
-                    #else
+                    #if !os(macOS)
                     // go to /stub so it doesn't load all the images in Apple Music Web's homepage
                     self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
+                    #else
+                    self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: "<p>CiderWebAuth</p>")
                     #endif
                 }
             }
@@ -218,10 +207,12 @@ class AuthModal: ObservableObject {
         })
     }
     
-    static func clearAuthCache() async {
+    func clearAuthCache() async {
         return await withCheckedContinuation { continuation in
             DispatchQueue.main.async {
-                WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache], modifiedSince: Date(timeIntervalSince1970: 0)) {
+                URLCache.shared.removeAllCachedResponses()
+                HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+                WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast) {
                     // TODO: better way to handle signout
                     Logger.shared.info("Successfully cleared auth cache")
                     continuation.resume()

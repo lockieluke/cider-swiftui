@@ -49,7 +49,7 @@ class MKModal : ObservableObject {
     func initStorefront() async {
         if !(await self.AM_API.initStorefront()) {
             _ = try? await self.fetchDeveloperToken(ignoreCache: true)
-            await self.AM_API.initStorefront()
+            _ = await self.AM_API.initStorefront()
         }
     }
     
