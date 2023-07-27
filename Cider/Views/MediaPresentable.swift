@@ -60,49 +60,8 @@ struct MediaPresentable: View {
                     .cornerRadius(5)
                     .brightness(isHovering ? -0.1 : 0)
                     .animation(.easeIn(duration: 0.15), value: isHovering)
-                    .overlay {
-                        if isHovering {
-                            HStack {
-                                VStack {
-                                    let background = RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    
-                                    Spacer()
-                                    HStack {
-                                        Image(systemName: "play.fill")
-                                            .font(.system(size: 13, weight: .bold, design: .rounded))
-                                            .foregroundColor(isHoveringPlay ? .pink : .primary)
-                                        Text("Play")
-                                    }
-                                    .font(.system(.body, design: .rounded))
-                                    .foregroundColor(.primary)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 5)
-                                    .background(.ultraThinMaterial, in: background)
-                                    .contentShape(background)
-                                    .onHover { isHovering in
-                                        self.isHoveringPlay = isHovering
-                                    }
-                                    .onTapGesture {
-                                        Task {
-                                            await self.ciderPlayback.setQueue(item: self.item)
-                                            await self.ciderPlayback.play()
-                                        }
-                                    }
-                                }
-                                .padding(.bottom, 10)
-                                Spacer()
-                            }
-                            .padding(.leading, 10)
-                            .transition(.opacity)
-                        }
-                    }
                     .allowsHitTesting(false)
-                    .modifier(CatalogActions(item: item))
-                
-                Rectangle()
-                    .fill(.clear)
-                    .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
-                    .whenHovered { isHovering in
+                    .onHover { isHovering in
                         self.isHovering = isHovering
                     }
                     .onTapGesture {
@@ -114,6 +73,43 @@ struct MediaPresentable: View {
                             }
                         }
                     }
+                    .modifier(CatalogActions(item: item))
+                
+                if isHovering {
+                    HStack {
+                        VStack {
+                            let background = RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            
+                            Spacer()
+                            HStack {
+                                Image(systemName: "play.fill")
+                                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                                    .foregroundColor(isHoveringPlay ? .pink : .primary)
+                                Text("Play")
+                            }
+                            .font(.system(.body, design: .rounded))
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(.ultraThinMaterial, in: background)
+                            .contentShape(background)
+                            .onHover { isHoveringPlay in
+                                self.isHoveringPlay = isHoveringPlay
+                            }
+                            .onTapGesture {
+                                Task {
+                                    await self.ciderPlayback.setQueue(item: self.item)
+                                    await self.ciderPlayback.play()
+                                }
+                            }
+                        }
+                        .padding(.bottom, 10)
+                        Spacer()
+                    }
+                    .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
+                    .padding(.leading, 10)
+                    .transition(.opacity)
+                }
             }
             
             if geometryMatched, let id = self.id {
