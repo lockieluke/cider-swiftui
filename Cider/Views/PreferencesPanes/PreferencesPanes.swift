@@ -55,13 +55,14 @@ struct PrefSectionText: View {
 
 struct PreferencesPanes {
     
-    static let GeneralPreferenceViewController: () -> SettingsPane = {
+    static let GeneralPreferenceViewController: (_ cacheModal: CacheModal) -> SettingsPane = { cacheModal in
         let paneView = Settings.Pane(
             identifier: .general,
             title: "General",
             toolbarIcon: NSImage(systemSymbolName: "gearshape", accessibilityDescription: "General Preferences")!
         ) {
             GeneralPreferencesPane()
+                .environmentObject(cacheModal)
         }
         
         return Settings.PaneHostingController(pane: paneView)

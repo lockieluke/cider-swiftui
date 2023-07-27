@@ -12,6 +12,7 @@ import Cache
 class CacheModal: ObservableObject {
     
     @Published var storage: Storage<String, String>?
+    @Published var clearedCache: Bool = false
     
     private let logger = Logger(label: "Caching")
     
@@ -34,6 +35,15 @@ class CacheModal: ObservableObject {
             try self.storage?.removeExpiredObjects()
         } catch {
             self.logger.error("Failed to remove expired cache objects: \(error)")
+        }
+    }
+    
+    func clear() {
+        do {
+            try self.storage?.removeAll()
+            self.clearedCache = true
+        } catch {
+            self.logger.error("Failed to remove all cached objects", displayCross: true)
         }
     }
     

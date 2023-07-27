@@ -21,8 +21,9 @@ class AppMenu {
     private let ciderPlayback: CiderPlayback
     private let appWindowModal: AppWindowModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
+    private let cacheModal: CacheModal
     
-    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper) {
+    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal) {
         let menu = NSMenu()
         
         self.window = window
@@ -34,6 +35,7 @@ class AppMenu {
         self.ciderPlayback = ciderPlayback
         self.appWindowModal = appWindowModal
         self.nativeUtilsWrapper = nativeUtilsWrapper
+        self.cacheModal = cacheModal
     }
     
     func loadMenus() {
@@ -161,7 +163,7 @@ class AppMenu {
         
         SettingsWindowController(
             panes: [
-                PreferencesPanes.GeneralPreferenceViewController(),
+                PreferencesPanes.GeneralPreferenceViewController(self.cacheModal),
                 PreferencesPanes.AudioPreferencesViewController(
                     self.ciderPlayback
                 )

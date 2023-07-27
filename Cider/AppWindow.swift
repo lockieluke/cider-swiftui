@@ -93,7 +93,8 @@ class AppWindow: NSObject, NSWindowDelegate {
                               wsModal: self.wsModal,
                               ciderPlayback: ciderPlayback,
                               appWindowModal: self.appWindowModal,
-                              nativeUtilsWrapper: nativeUtilsWrapper
+                              nativeUtilsWrapper: nativeUtilsWrapper,
+                              cacheModal: cacheModal
         )
         appMenu.loadMenus()
 
