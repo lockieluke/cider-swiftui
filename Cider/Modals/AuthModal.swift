@@ -175,7 +175,7 @@ class AuthModal: ObservableObject {
                     
                     self.authenticatingCallback = { userToken in
                         do {
-                            try self.cacheModel.storage?.setObject(userToken, forKey: "last_am_usertoken", expiry: .date(Date().addingTimeInterval(2 * 60 * 60)))
+                            try self.cacheModel.storage?.setObject(userToken, forKey: "last_am_usertoken", expiry: .date(Date().addingTimeInterval(7 * 60 * 60)))
                         } catch {
                             self.logger.error("Failed to cache Apple Music user token: \(error)")
                         }
