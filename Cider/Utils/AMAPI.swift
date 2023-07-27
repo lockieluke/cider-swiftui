@@ -37,53 +37,30 @@ class AMAPI {
         }
     }
     
-    func requestSKAuthorisation(completion: @escaping (_ status: SKCloudServiceAuthorizationStatus) -> Void) {
-        SKCloudServiceController.requestAuthorization { status in
-            completion(status)
-        }
-    }
-    
     func requestMKAuthorisation() async -> MusicAuthorization.Status {
         return await MusicAuthorization.request()
     }
     
     func fetchMKDeveloperToken() async throws -> String {
-        let res = await AF.request(APIEndpoints.CIDER, headers: [
+        // Spends less time on decoding when JSON is hardcoded
+        struct CiderAPIResponse: Decodable {
+            let token: String
+            let time: Int
+        }
+        
+        let timer = ParkBenchTimer()
+        
+        var request = URLRequest(url: URL(string: APIEndpoints.CIDER)!)
+        request.headers = [
             "User-Agent": "Cider;?client=swiftui&env=dev&platform=darwin",
             "Referer": "localhost"
-        ]).serializingData().response
+        ]
+        let (data, _) = try await URLSession.shared.data(for: request)
         
-        if let error = res.error {
-            self.logger.error("MusicKit Developer Token could not be fetched: \(error)", displayCross: true)
-            throw error
-        } else if let data = res.data, let json = try? JSON(data: data), let token = json["token"].string {
-            self.AM_TOKEN = token
-            return token
-        }
-        
-        throw NSError(domain: "Failed to fetch MK Developer Account", code: 1)
-    }
-    
-    func fetchMKUserToken(completion: @escaping (_ succeeded: Bool, _ userToken: String?, _ error: Error?) -> Void) {
-        if let AM_TOKEN = self.AM_TOKEN {
-            SKCloudServiceController().requestUserToken(forDeveloperToken: AM_TOKEN) { token, error in
-                if error != nil {
-                    self.logger.error("Error occurred when fetching AM User Token: \(error!.localizedDescription)")
-                    completion(false, nil, error)
-                    return
-                }
-                
-                guard let token = token else {
-                    self.logger.error("MK User Token is undefined")
-                    completion(false, nil, nil)
-                    return
-                }
-                self.AM_USER_TOKEN = token
-                completion(true, token, nil)
-            }
-        } else {
-            completion(false, nil, AMAuthError.invalidDeveloperToken)
-        }
+        let json = try JSONDecoder().decode(CiderAPIResponse.self, from: data)
+        self.AM_TOKEN = json.token
+        self.logger.info("Fetching developer token took \(timer.stop())")
+        return json.token
     }
     
     func initialiseAMNetworking() throws {

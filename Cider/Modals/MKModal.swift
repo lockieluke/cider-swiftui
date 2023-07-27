@@ -22,13 +22,7 @@ class MKModal : ObservableObject {
     }
     
     func fetchDeveloperToken() async throws -> String {
-        return try await withCheckedThrowingContinuation { continuation in
-//            self.AM_API.requestSKAuthorisation { skStatus in
-//                if skStatus != .authorized {
-//                    self.resetAuthorisation()
-//                }
-//            }
-            
+        return try await withCheckedThrowingContinuation { continuation in            
             Task {
                 do {
                     let developerToken = try await self.AM_API.fetchMKDeveloperToken()
@@ -43,8 +37,8 @@ class MKModal : ObservableObject {
                         continuation.resume(returning: developerToken)
                     }
                 } catch {
+                    self.logger.error("Failed to fetch MusicKit Developer Token: \(error)")
                     self.resetAuthorisation()
-                    self.logger.error("Failed to fetch MusicKit Developer Token")
                     continuation.resume(throwing: error)
                 }
             }
