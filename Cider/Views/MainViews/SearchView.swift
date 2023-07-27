@@ -19,15 +19,15 @@ struct SearchView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     var body: some View {
-        PatchedGeometryReader { geometry in
-            ScrollView(.vertical) {
-                VStack {
-                    Text("**Search Results for** *\(searchModal.currentSearchText)*")
-                        .font(.title2)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom)
-                    
-                    if let searchResults = self.searchModal.searchResults, !searchResults.isEmpty {
+        ScrollView(.vertical) {
+            VStack {
+                Text("**Search Results for** *\(searchModal.currentSearchText)*")
+                    .font(.title2)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom)
+                
+                if let searchResults = self.searchModal.searchResults, !searchResults.isEmpty {
+                    PatchedGeometryReader { geometry in
                         if let artists = searchResults.artists, !artists.isEmpty {
                             Text("Artists")
                                 .font(.title2.bold())
@@ -95,25 +95,25 @@ struct SearchView: View {
                             }
                             .transparentScrollbars()
                         }
-                        
-                        Spacer()
-                    } else if searchModal.isLoadingResults {
-                        ProgressView()
-                            .progressViewStyle(.circular)
-                            .frame(maxHeight: .infinity, alignment: .center)
-                    } else {
-                        Text("""
-                             **No Results**
-                             Try a new search and check your spellings
-                             """)
-                        .multilineTextAlignment(.center)
-                        .frame(maxHeight: .infinity, alignment: .center)
                     }
+                    
+                    Spacer()
+                } else if searchModal.isLoadingResults {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .frame(maxHeight: .infinity, alignment: .center)
+                } else {
+                    Text("""
+                         **No Results**
+                         Try a new search and check your spellings
+                         """)
+                    .multilineTextAlignment(.center)
+                    .frame(maxHeight: .infinity, alignment: .center)
                 }
-                .padding()
             }
-            .transparentScrollbars()
+            .padding()
         }
+        .transparentScrollbars()
         .enableInjection()
     }
 }
