@@ -32,11 +32,12 @@ class AppWindow: NSObject, NSWindowDelegate {
         let authModal = AuthModal(mkModal: mkModal, appWindowModal: self.appWindowModal, cacheModel: cacheModal)
         
         Task {
+            let timer = ParkBenchTimer()
             do {
-                let timer = ParkBenchTimer()
+                let authTimer = ParkBenchTimer()
                 let userToken = try await authModal.retrieveUserToken()
                 mkModal.authenticateWithToken(userToken: userToken)
-                print("Authentication took \(timer.stop()) seconds")
+                Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
                 
                 discordRPCModal.agent.start()
                 ciderPlayback.setUserToken(userToken: userToken)
@@ -46,6 +47,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             ciderPlayback.start()
             
             await mkModal.initStorefront()
+            Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
         }
         
         let contentView = ContentView()
