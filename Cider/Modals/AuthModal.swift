@@ -147,7 +147,7 @@ class AuthModal: ObservableObject {
             Task {
                 let developerToken = try await self.mkModal.fetchDeveloperToken()
                 
-                if let lastAmUserToken = try? self.cacheModel.storage?.object(forKey: "last_am_usertoken") {
+                if let lastAmUserToken = try? self.cacheModel.storage?.object(forKey: "last_am_usertoken"), await self.mkModal.AM_API.validateUserToken(lastAmUserToken) {
                     self.logger.success("Logged in with previously cached user token", displayTick: true)
                     continuation.resume(returning: lastAmUserToken)
                     return
