@@ -39,7 +39,7 @@ class MKModal : ObservableObject {
                     }
                 } catch {
                     self.logger.error("Failed to fetch MusicKit Developer Token: \(error)")
-                    self.resetAuthorisation()
+                    await self.resetAuthorisation()
                     continuation.resume(throwing: error)
                 }
             }
@@ -53,12 +53,14 @@ class MKModal : ObservableObject {
         }
     }
     
+    @MainActor
     func authenticateWithToken(userToken: String) {
         self.AM_API.AM_USER_TOKEN = userToken
         try? self.AM_API.initialiseAMNetworking()
         self.isAuthorised = true
     }
     
+    @MainActor
     func resetAuthorisation() {
         self.AM_API.unauthorise()
         self.isAuthorised = false

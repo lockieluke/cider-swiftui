@@ -36,7 +36,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             do {
                 let authTimer = ParkBenchTimer()
                 let userToken = try await authModal.retrieveUserToken()
-                mkModal.authenticateWithToken(userToken: userToken)
+                await mkModal.authenticateWithToken(userToken: userToken)
                 Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
                 
                 discordRPCModal.agent.start()
