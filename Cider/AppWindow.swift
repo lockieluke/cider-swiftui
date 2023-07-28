@@ -47,6 +47,9 @@ class AppWindow: NSObject, NSWindowDelegate {
             ciderPlayback.start()
             
             await mkModal.initStorefront()
+            DispatchQueue.main.async {
+                mkModal.isAuthorised = true
+            }
             Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
         }
         
