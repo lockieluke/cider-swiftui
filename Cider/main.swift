@@ -151,6 +151,9 @@ class AppDelegate : NSObject, ApplicationDelegate {
 }
 
 autoreleasepool {
+    #if DEBUG
+    NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.johnholdsworth.InjectionIII")?.open()
+    #endif
     let delegate = AppDelegate()
 #if canImport(AppKit)
     Application.shared.delegate = delegate
