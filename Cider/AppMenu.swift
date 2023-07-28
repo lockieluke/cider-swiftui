@@ -12,7 +12,7 @@ import UIKit
 
 class AppMenu {
     
-    private let menu: NSMenu
+    let menu: NSMenu
     private let appName: String
     private let window: NSWindow
     private let mkModal: MKModal
@@ -199,10 +199,6 @@ class AppMenu {
         print("Terminating")
         NSApp.terminate(nil)
         print("Terminated")
-    }
-    
-    func getMenu() -> NSMenu {
-        return self.menu
     }
     
 }

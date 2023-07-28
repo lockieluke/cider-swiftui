@@ -134,7 +134,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         if !self.mainWindow.isMainWindow {
             self.mainWindow.makeMain()
         }
-        NSApp.mainMenu = self.appMenu.getMenu()
+        NSApp.mainMenu = self.appMenu.menu
         
         self.appWindowModal.isFocused = true
         self.appWindowModal.isVisibleInViewport = true
