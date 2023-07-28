@@ -237,7 +237,6 @@ class AMAPI {
         case activities, albums, appleCurators = "apple-curators", artists, curators, musicVideos = "music-videos", playlists, recordLabels = "record-labels", songs, stations
     }
     
-    @MainActor
     func fetchSearchSuggestions(term: String, kinds: [FetchSearchSuggestionsKinds] = [.terms, .topResults], types: [FetchSearchTypes] = [.artists, .songs, .musicVideos]) async throws -> SearchSuggestions {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/search/suggestions", parameters: [
             "kinds": kinds.map { kind in kind.rawValue }.joined(separator: ","),
@@ -254,7 +253,6 @@ class AMAPI {
         return SearchSuggestions(data: [])
     }
     
-    @MainActor
     func fetchSearchResults(term: String, types: [FetchSearchTypes]) async -> SearchResults {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/search", parameters: [
             "types": types.map { type in type.rawValue }.joined(separator: ","),
@@ -269,7 +267,6 @@ class AMAPI {
         return SearchResults(data: [])
     }
     
-    @MainActor
     func fetchRatings(item: MediaDynamic) async -> MediaRatings {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)").serializingData().response
         if let error = res.error {
@@ -281,7 +278,7 @@ class AMAPI {
         return .Neutral
     }
     
-    @MainActor @discardableResult
+    @discardableResult
     func setRatings(item: MediaDynamic, ratings: MediaRatings) async -> MediaRatings {
         let res = await (ratings == .Neutral ? AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .delete) : AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .put, parameters: ["type": "rating", "attributes": [ "value": ratings.rawValue ]], encoding: JSONEncoding.default)).serializingData().response
         if let error = res.error {
@@ -308,13 +305,11 @@ class AMAPI {
         return nil
     }
     
-    @MainActor
     func isInLibrary(item: MediaDynamic) async -> Bool {
         let libraryCatalog = await self.fetchLibraryCatalog(item: item)
         return libraryCatalog?.0 ?? false
     }
     
-    @MainActor
     func addToLibray(item: MediaDynamic, libraryId: String, _ add: Bool = true) async {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library\(add ? "" : "/\(item.type)/\(libraryId)")", method: add ? .post : .delete, parameters: add ? [
             "ids[\(item.type)]": (item.id as NSString).integerValue
@@ -324,7 +319,6 @@ class AMAPI {
         }
     }
     
-    @MainActor
     func fetchLyricsXml(item: MediaDynamic) async -> String? {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/gb/\(item.type)/\(item.id)/syllable-lyrics").serializingData().response
         if let error = res.error {
@@ -349,7 +343,6 @@ class AMAPI {
         }
     }
     
-    @MainActor
     func fetchPersonalSocialProfile() async -> SocialProfile? {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/social-profile").serializingData().response
         if let error = res.error {
@@ -361,7 +354,7 @@ class AMAPI {
         return nil
     }
     
-    @MainActor func fetchRecentlyPlayed(limit: Int? = nil) async -> [MediaDynamic] {
+    func fetchRecentlyPlayed(limit: Int? = nil) async -> [MediaDynamic] {
         var parameters: [String : Any]? = nil
         if let limit = limit {
             parameters?["limit"] = limit

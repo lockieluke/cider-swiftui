@@ -37,7 +37,7 @@ struct SidebarItem: View {
     init(_ title: String, icon: SidebarItemIcon, stackType: RootNavigationType? = nil) {
         self.title = title
         self.icon = icon
-        self.stackType = stackType ?? RootNavigationType(rawValue: title) ?? .AnyView
+        self.stackType = stackType ?? .AnyView
     }
     
     var body: some View {
@@ -110,9 +110,9 @@ struct SidebarPane: View {
         SidePane(direction: .Left, content: {
             List {
                 SidebarSection("Apple Music") {
-                    SidebarItem("Home", icon: .Home)
+                    SidebarItem("Home", icon: .Home, stackType: .Home)
                     SidebarItem("Listen Now", icon: .ListenNow, stackType: .ListenNow)
-                    SidebarItem("Browse", icon: .Browse)
+                    SidebarItem("Browse", icon: .Browse, stackType: .Browse)
                     SidebarItem("Radio", icon: .Radio)
                 }
                 
