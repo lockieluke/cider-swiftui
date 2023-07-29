@@ -46,11 +46,6 @@ struct PlaybackView: View {
     
     var body: some View {
         ZStack {
-            VisualEffectBackground()
-                .overlay {
-                    Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
-                }
-            
             let playbackBehaviour = self.ciderPlayback.playbackBehaviour
             
             VStack {

@@ -28,9 +28,6 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                VisualEffectBackground()
-                    .opacity(0.98)
-                
                 NavigationContainer()
                     .environmentObject(appWindowModal)
                     .environmentObject(mkModal)
@@ -71,6 +68,7 @@ struct ContentView: View {
             .onAppear {
                 self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
             }
+            .background(VisualEffectBackground(material: .fullScreenUI).edgesIgnoringSafeArea(.top))
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)
             .enableInjection()

@@ -22,17 +22,6 @@ struct AppTitleBar: View {
     
     var body: some View {
         ZStack {
-            VisualEffectBackground()
-                .frame(height: titleBarHeight)
-                .overlay {
-                    Rectangle().fill(Color("PrimaryColour")).opacity(0.5)
-                }
-                .gesture(TapGesture(count: 2).onEnded {
-                    #if canImport(AppKit)
-                    self.appWindowModal.nsWindow?.zoom(nil)
-                    #endif
-                })
-            
             SearchBar()
                 .environmentObject(searchModal)
                 .environmentObject(ciderPlayback)
