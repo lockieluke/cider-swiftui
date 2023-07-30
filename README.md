@@ -25,7 +25,7 @@ cd Cider-macOS
 ### (Summary Command - All the quick start stuff)
 
 ```shell
-brew bundle && task install-deps:all-js && task build:discord-rpc-lib && task fetch:google-services
+task quickstart
 ```
 
 ### Install build tools ⬇️

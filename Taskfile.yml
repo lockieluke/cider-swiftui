@@ -16,6 +16,14 @@ tasks:
     cmds:
       - echo -e "Build, Run, Perform Tasks with Taskfile!\nRun 'task build-xc' to build Cider, consult README.md for documentation"
 
+  quickstart:
+    desc: "Quickstart command for setting everything up as a Cider developer"
+    cmds:
+      - brew bundle
+      - task: install-deps:all-js
+      - task: build:discord-rpc-lib
+      - task: fetch:google-services
+
   build:discord-rpc-lib:
     desc: "Build DiscordRPCAgent"
     dir: DiscordRPCAgent/
