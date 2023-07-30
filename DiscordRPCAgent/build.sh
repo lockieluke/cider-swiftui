@@ -10,7 +10,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 #  export LIBRARY_PATH="${DEVELOPER_SDK_DIR}/MacOSX.sdk/usr/lib:${LIBRARY_PATH:-}"
 #fi
 
-TARGETS="aarch64-apple-darwin,x86_64-apple-darwin"
+TARGETS="aarch64-apple-darwin" # x86_64-apple-darwin
 if [[ $CONFIGURATION == "Release" ]]; then
     echo "BUIlDING FOR RELEASE ($TARGETS)"
     cargo +nightly lipo --release --targets $TARGETS
