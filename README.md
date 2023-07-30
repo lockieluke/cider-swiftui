@@ -22,6 +22,12 @@ cd Cider-macOS
 
 **Task** will be used for executing tasks like managing dependencies and compiling, we recommend you to follow their [guide](https://taskfile.dev/installation/#setup-completions) on installing shell autocomplete
 
+### (Summary Command - All the quick start stuff)
+
+```shell
+brew bundle && task install-deps:all-js && task build:discord-rpc-lib && task fetch:google-services
+```
+
 ### Install build tools ⬇️
 
 Install build dependencies with Homebrew
