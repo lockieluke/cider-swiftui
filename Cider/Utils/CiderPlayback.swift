@@ -253,7 +253,6 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     @MainActor
     func clearAndPlay(shuffle: Bool = false, item: MediaDynamic) async {
-        self.updateNowPlayingStateBeforeReady(item: item)
         await self.stop()
         await self.play(shuffle: shuffle)
     }
@@ -414,7 +413,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         let artworkURL = artwork.getUrl(width: 200, height: 200)
         #if os(macOS)
         self.discordRPCModal.agent.setActivityAssets(artworkURL.absoluteString, title, "", "")
-        self.discordRPCModal.agent.setActivityState(artistName)
+        self.discordRPCModal.agent.setActivityState("by " + artistName)
         self.discordRPCModal.agent.setActivityDetails(title)
         DispatchQueue.global(qos: .default).async {
             self.discordRPCModal.agent.updateActivity()
@@ -484,12 +483,16 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 }
                 let mediaParams = json["mediaParams"]
                 
+            
+                
                 Task {
                     let id = mediaParams["id"].stringValue
                     guard let mediaTrack = try? await self.mkModal?.AM_API.fetchSong(id: id) else {
                         self.logger.error("Unable to fetch now playing track: \(id)")
                         return
                     }
+                    
+                    await self.updateNowPlayingStateBeforeReady(item: .mediaTrack(mediaTrack))
                     
                     DispatchQueue.main.async {
                         if let name = mediaParams["name"].string,
