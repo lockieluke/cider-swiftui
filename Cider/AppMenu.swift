@@ -6,9 +6,7 @@ import Foundation
 #if canImport(AppKit)
 import AppKit
 import Settings
-#elseif canImport(UIKit)
-import UIKit
-#endif
+import SwiftUI
 
 class AppMenu {
     
@@ -22,6 +20,9 @@ class AppMenu {
     private let appWindowModal: AppWindowModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
     private let cacheModal: CacheModal
+    
+    private var hasPreviouslyOpenedPlayground: Bool = false
+    private var playgroundWindowDelegate: NSWindowDelegate!
     
     init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal) {
         let menu = NSMenu()
@@ -98,9 +99,11 @@ class AppMenu {
         let developerMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
-                Menu.wrapMenuItem(NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "")),
-                Menu.wrapMenuItem(NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: ""))
+                NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "").then { $0.target = self },
+                NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: "").then { $0.target = self },
+                NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self }
             ]
+            $0.target = self
         }
         #endif
         
@@ -195,6 +198,69 @@ class AppMenu {
         showLogViewer()
     }
     
+    @objc func openPlaygrounds(_ sender: Any) {
+        if hasPreviouslyOpenedPlayground {
+            return
+        }
+        
+        typealias TestAction = CiderPlayground.CiderPlaygroundTestAction
+        let activeScreen = NSScreen.activeScreen
+
+        
+        let ciderPlayground = CiderPlayground(testActions: [
+            TestAction(name: "Fetch Browse Data", description: "Fetch browse storefront data and parse JSON", action: {
+                if (self.mkModal.isAuthorised) {
+                    return await self.mkModal.AM_API.fetchBrowse()
+                }
+                
+                return nil
+            })
+        ])
+            .frame(minWidth: 800, minHeight: 600)
+            .environmentObject(self.mkModal)
+        let playgroundWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false).then {
+            $0.collectionBehavior = $0.collectionBehavior.union(.fullScreenNone)
+            $0.contentViewController = NSHostingController(rootView: ciderPlayground)
+            $0.titlebarAppearsTransparent = true
+            $0.titleVisibility = .hidden
+            $0.isMovableByWindowBackground = true
+            $0.isOpaque = false
+            $0.backgroundColor = .clear
+            $0.title = "Cider Playground"
+            
+            let toolbar = NSToolbar()
+            $0.showsToolbarButton = false
+            $0.toolbar = toolbar
+            
+            class PlaygroundWindowDelegate: NSObject, NSWindowDelegate {
+                
+                weak var parent: AppMenu! = nil
+                
+                init(parent: AppMenu) {
+                    self.parent = parent
+                }
+                
+                func windowWillClose(_ notification: Notification) {
+                    self.parent.hasPreviouslyOpenedPlayground = false
+                }
+            }
+            
+            let delegate = PlaygroundWindowDelegate(parent: self)
+            $0.delegate = delegate
+            self.playgroundWindowDelegate = delegate
+            
+            var pos = NSPoint()
+            pos.x = activeScreen.visibleFrame.midX
+            pos.y = activeScreen.visibleFrame.midY
+            $0.setFrameOrigin(pos)
+            $0.isReleasedWhenClosed = false
+            $0.center()
+        }
+        
+        playgroundWindow.makeKeyAndOrderFront(sender)
+        self.hasPreviouslyOpenedPlayground = true
+    }
+    
     @objc func terminate(_ sender: Any) {
         print("Terminating")
         NSApp.terminate(nil)
@@ -202,3 +268,5 @@ class AppMenu {
     }
     
 }
+
+#endif

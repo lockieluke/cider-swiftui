@@ -96,7 +96,6 @@ class AMAPI {
             self.logger.error("Failed to fetch storefront: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data) {
             self.STOREFRONT_ID = json["data"].array?.first?["id"].stringValue
-            
             return true
         }
         
@@ -172,7 +171,7 @@ class AMAPI {
     }
     
     func fetchTracks(id: String, type: MediaType) async throws -> [MediaTrack] {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/\(type.rawValue)/\(id)").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/\(type.rawValue)/\(id)").serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch tracks: \(error)")
             throw error
@@ -254,7 +253,7 @@ class AMAPI {
     }
     
     func fetchSearchResults(term: String, types: [FetchSearchTypes]) async -> SearchResults {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/search", parameters: [
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/search", parameters: [
             "types": types.map { type in type.rawValue }.joined(separator: ","),
             "term": term.replacingOccurrences(of: "", with: "+")
         ], encoding: URLEncoding(destination: .queryString)).serializingData().response
@@ -382,4 +381,30 @@ class AMAPI {
         return []
     }
     
+    func fetchBrowse() async -> [MediaBrowseData] {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/editorial/\(self.STOREFRONT_ID!)/groupings", parameters: [
+            "art[url]": "f",
+            "extend": "artistUrl,editorialArtwork,plainEditorialNotes",
+            "extend[station-events]": "editorialVideo",
+            "fields[albums]":
+                "artistName,artistUrl,artwork,contentRating,editorialArtwork,plainEditorialNotes,name,playParams,releaseDate,url,trackCount",
+            "fields[artists]": "name,url,artwork",
+            "include[albums]": "artists",
+            "include[music-videos]": "artists",
+            "include[songs]": "artists",
+            "include[stations]": "events",
+            "name": "music",
+            "omit[resource:artists]": "relationships",
+            "platform": "web",
+            "relate[songs]": "albums",
+            "tabs": "subscriber"
+        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch browse: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let tabsChildren = json["data"].array?.first?["relationships"]["tabs"]["data"].array?.first?["relationships"]["children"]["data"] {
+            return tabsChildren.arrayValue.compactMap { MediaBrowseData(data: $0) }
+        }
+        
+        return []
+    }
 }

@@ -16,7 +16,11 @@ struct ListenNowView: View {
     
     var body: some View {
         ScrollView(.vertical) {
-            VStack {
+            VStack(spacing: 0) {
+                Text("Listen Now")
+                    .font(.largeTitle.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
                 ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
                     MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
                         .environmentObject(ciderPlayback)
@@ -24,13 +28,12 @@ struct ListenNowView: View {
                         .isHidden(navigationModal.currentlyPresentViewType != .Root && navigationModal.currentRootStack != .ListenNow)
                 }
             }
-            .padding(.vertical, 10)
         }
         .transparentScrollbars()
         .task {
             if self.personalisedData.recommendationSections != nil { return }
             
-            self.personalisedData.recommendationSections = try? await self.mkModal.AM_API.fetchRecommendations()
+            self.personalisedData.recommendationSections = await self.mkModal.AM_API.fetchRecommendations()
         }
         .allowsHitTesting(navigationModal.currentlyPresentViewType == .Root && navigationModal.currentRootStack == .ListenNow)
         .enableInjection()

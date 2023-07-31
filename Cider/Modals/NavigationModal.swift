@@ -5,12 +5,9 @@
 import Foundation
 import SwiftUI
 
-enum RootNavigationType : String {
+enum RootNavigationType {
     
-    case Home = "Home",
-         ListenNow = "ListenNow",
-         Library = "Library",
-         AnyView = "Any"
+    case Home, ListenNow, Browse, Library, AnyView
     
 }
 

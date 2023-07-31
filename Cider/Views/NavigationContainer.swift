@@ -60,6 +60,10 @@ struct NavigationContainer: View {
                                 .environmentObject(navigationModal)
                                 .environmentObject(ciderPlayback)
                                 .hideWithoutDestroying(currentRootStack != .ListenNow || !isPresent)
+                            
+                            BrowseView()
+                                .environmentObject(mkModal)
+                                .hideWithoutDestroying(currentRootStack != .Browse || !isPresent)
                         }
                         
                     case .detailedViewParams(let detailedViewParams):

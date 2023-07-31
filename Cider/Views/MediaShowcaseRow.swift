@@ -21,10 +21,9 @@ struct MediaShowcaseRow: View {
             PatchedGeometryReader { geometry in
                 VStack {
                     Text(rowTitle)
-                        .font(.system(size: 15).bold())
+                        .font(.title2.bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 15)
-                        .padding(.top, 10)
                     ScrollView([.horizontal]) {
                         LazyHStack {
                             ForEach(recommendations, id: \.self) { recommendation in
