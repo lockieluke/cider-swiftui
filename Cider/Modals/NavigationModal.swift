@@ -10,6 +10,7 @@ enum RootNavigationType : String {
     case Home = "Home",
          ListenNow = "ListenNow",
          Library = "Library",
+         Browse = "Browse",
          AnyView = "Any"
     
 }

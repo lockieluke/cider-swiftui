@@ -22,6 +22,8 @@ tasks:
       - brew bundle
       - task: install-deps:all-js
       - task: build:discord-rpc-lib
+      - task: build:native-utils-lib
+      - task: build:all-js
       - task: fetch:google-services
 
   build:discord-rpc-lib:
