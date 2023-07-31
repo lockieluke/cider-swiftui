@@ -73,7 +73,7 @@ struct QueueView: View {
                     Defaults[.playbackAutoplay] = self.ciderPlayback.playbackBehaviour.autoplayEnabled
                 }
             } label: {
-                Image(systemName: "infinity")
+                Image(systemSymbol: .infinity)
                     .padding()
                     .frame(width: 25, height: 25)
                     .background(.thickMaterial)

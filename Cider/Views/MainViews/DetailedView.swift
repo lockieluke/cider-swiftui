@@ -54,7 +54,7 @@ struct DetailedView: View {
             
         } label: {
             HStack {
-                Image(systemName: "plus")
+                Image(systemSymbol: .plus)
                 Text("Add to Library")
             }
             .padding(.horizontal)
@@ -130,7 +130,7 @@ struct DetailedView: View {
                             Text("\(title)")
                                 .font(.system(size: 18, weight: .bold))
                             if playlistType == .PersonalMix {
-                                Image(systemName: "person.crop.circle").foregroundColor(Color(platformColor: artwork.bgColour))
+                                Image(systemSymbol: .personCropCircle).foregroundColor(Color(platformColor: artwork.bgColour))
                                     .font(.system(size: 18))
                                     .tooltip("Playlist curated by Apple Music")
                                     .modifier(SimpleHoverModifier())

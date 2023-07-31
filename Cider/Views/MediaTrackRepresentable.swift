@@ -25,7 +25,7 @@ struct MediaTrackRepresentable: View {
         HStack {
             Group {
                 HStack {
-                    Image(systemName: "play.fill")
+                    Image(systemSymbol: .playFill)
                         .font(.system(size: 14))
                         .foregroundColor(isHovering ? .pink : .primary)
                         .animation(.interactiveSpring(), value: isHovering)

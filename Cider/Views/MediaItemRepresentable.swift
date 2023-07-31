@@ -35,7 +35,7 @@ struct MediaItemRepresentable: View {
                 .brightness(isHovering ? -0.5 : 0)
                 .overlay {
                     if isHovering {
-                        Image(systemName: "play.fill")
+                        Image(systemSymbol: .playFill)
                     }
                 }
             Text(item.title)

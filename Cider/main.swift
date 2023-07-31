@@ -7,6 +7,7 @@ import FirebaseCore
 import FirebaseAnalytics
 import SwiftyUtils
 import SwiftUI
+import SFSafeSymbols
 
 #if canImport(AppKit)
 import AppKit

@@ -90,7 +90,7 @@ struct SearchBar: View {
                             .brightness(isArtworkHovering ? -0.5 : 0)
                             .overlay {
                                 if isArtworkHovering {
-                                    Image(systemName: "play.fill")
+                                    Image(systemSymbol: .playFill)
                                         .foregroundColor(.white)
                                 }
                             }
@@ -171,7 +171,7 @@ struct SearchBar: View {
     var clearSearchView: some View {
         Group {
             if !self.searchModal.currentSearchText.isEmpty {
-                Image(systemName: "xmark")
+                Image(systemSymbol: .xmark)
                     .font(.system(size: 10, design: .rounded))
                     .foregroundColor(.secondary)
                     .background {
@@ -209,7 +209,7 @@ struct SearchBar: View {
                             self.isFocused = true
                         }
                         .overlay {
-                            Image(systemName: "magnifyingglass")
+                            Image(systemSymbol: .magnifyingglass)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 .padding(.trailing, 10)
                         }

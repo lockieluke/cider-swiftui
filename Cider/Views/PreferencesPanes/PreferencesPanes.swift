@@ -59,7 +59,7 @@ struct PreferencesPanes {
         let paneView = Settings.Pane(
             identifier: .general,
             title: "General",
-            toolbarIcon: NSImage(systemSymbolName: "gearshape", accessibilityDescription: "General Preferences")!
+            toolbarIcon: NSImage(systemSymbol: .gearshape, accessibilityDescription: "General Preferences")
         ) {
             GeneralPreferencesPane()
                 .environmentObject(cacheModal)
@@ -73,7 +73,7 @@ struct PreferencesPanes {
         let paneView = Settings.Pane(
             identifier: .developer,
             title: "Developer",
-            toolbarIcon: NSImage(systemSymbolName: "wrench.and.screwdriver.fill", accessibilityDescription: "Developer Preferences")!
+            toolbarIcon: NSImage(systemSymbol: .wrenchAndScrewdriverFill, accessibilityDescription: "Developer Preferences")
         ) {
             DeveloperPreferencesPane()
                 .environmentObject(mkModal)
@@ -87,7 +87,7 @@ struct PreferencesPanes {
         let paneView = Settings.Pane(
             identifier: .audio,
             title: "Audio",
-            toolbarIcon: NSImage(systemSymbolName: "waveform", accessibilityDescription: "Audio Preferences")!
+            toolbarIcon: NSImage(systemSymbol: .waveform, accessibilityDescription: "Audio Preferences")
         ) {
             AudioPreferencesPane()
                 .environmentObject(ciderPlayback)

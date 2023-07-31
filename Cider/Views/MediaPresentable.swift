@@ -82,7 +82,7 @@ struct MediaPresentable: View {
                             
                             Spacer()
                             HStack {
-                                Image(systemName: "play.fill")
+                                Image(systemSymbol: .playFill)
                                     .font(.system(size: 13, weight: .bold, design: .rounded))
                                     .foregroundColor(isHoveringPlay ? .pink : .primary)
                                 Text("Play")

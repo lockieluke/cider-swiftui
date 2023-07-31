@@ -47,7 +47,7 @@ struct HomeView: View {
                         newIssueUrl?.open()
                     } label: {
                         HStack {
-                            Image(systemName: "ladybug")
+                            Image(systemSymbol: .ladybug)
                             Text("Report A Bug")
                         }
                     }

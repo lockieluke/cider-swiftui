@@ -114,6 +114,14 @@ task --list
 
 Please open an issue if you happen to run into any problems when building or developing Cider
 
+## Notes ✏️
+
+- Use [SFSafeSymbols](https://github.com/SFSafeSymbols/SFSafeSymbols) for SF symbols
+
+- Make use of [SwiftyUtils](https://github.com/tbaranes/SwiftyUtils) where possible
+
+- Utilise [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) when dynamic JSON parsing is needed, use Decoder for parsing static JSON content if possible
+
 ## Credits ❤️
 
 [cryptofyre](https://github.com/cryptofyre) CEO of Cider Collective

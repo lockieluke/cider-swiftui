@@ -43,7 +43,7 @@ struct QueueTrackView: View {
                     .padding(.vertical, 2)
                     .overlay {
                         if isHovering {
-                            Image(systemName: "play.fill")
+                            Image(systemSymbol: .playFill)
                         }
                     }
                     .onTapGesture {

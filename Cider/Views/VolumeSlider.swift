@@ -33,7 +33,7 @@ struct VolumeSlider<T: BinaryFloatingPoint>: View {
             
             ZStack {
                 HStack {
-                    Image(systemName: value == 0.0 ? "speaker.slash.fill" : "speaker.fill")
+                    Image(systemSymbol: value == 0.0 ? .speakerSlashFill : .speakerFill)
                         .font(.system(.body))
                         .foregroundColor(shouldExpand ? activeFillColor : fillColor)
                         .onTapGesture {
@@ -60,7 +60,7 @@ struct VolumeSlider<T: BinaryFloatingPoint>: View {
                         }
                     }
                     
-                    Image(systemName: "speaker.wave.3.fill")
+                    Image(systemSymbol: .speakerWave3Fill)
                         .font(.system(size: 12, weight: .bold, design: .rounded))
                         .foregroundColor(shouldExpand ? activeFillColor : fillColor)
                 }
