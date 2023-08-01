@@ -15,7 +15,7 @@ struct MultiColourGlow: ViewModifier {
                 Rectangle()
                     .fill(AngularGradient(gradient: self.gradientColours, center: .center))
                     .mask(content.blur(radius: 10))
-                    .overlay(content.blur(radius: 5 - CGFloat(i * 10)))
+                    .overlay(content.blur(radius: 5 - (i * 10).f))
             }
         }
     }

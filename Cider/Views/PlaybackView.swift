@@ -131,7 +131,7 @@ struct PlaybackButton: View {
     private var onClick: (() -> Void)? = nil
     
     @State private var isHovered = false
-    @State private var bouncyFontSize = CGFloat(18)
+    @State private var bouncyFontSize: CGFloat = 18
     @Binding private var highlighted: Bool
     
     init(icon: PlaybackButtonIcon, tooltip: String? = nil, highlighted: Binding<Bool> = .constant(false), size: CGFloat = 18, onClick: (() -> Void)? = nil) {

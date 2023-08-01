@@ -36,7 +36,7 @@ struct SegmentedControl: View {
         }
     }
     @State private var hoveredItem: Int = -1
-    @State private var selectedWidth: CGFloat = 0
+    @State private var selectedWidth: CGFloat = .zero
     
     @State private var segmentedControlsSize: [CGSize] = []
     @State private var segmentedSize = CGSize(width: 0, height: 0)
