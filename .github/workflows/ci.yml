@@ -49,6 +49,11 @@ jobs:
           cache-node-modules: true
           cache-install-state: true
 
+      - name: Setup Xcode version
+        uses: maxim-lobanov/setup-xcode@v1.5.1
+        with:
+          xcode-version: latest
+
       - name: Setup Rust Toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1.5.0
         with:
