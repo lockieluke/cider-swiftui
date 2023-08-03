@@ -60,14 +60,10 @@ jobs:
           toolchain: nightly
           target: x86_64-apple-darwin
 
-      - name: Install cargo-lipo
-        run: cargo +nightly install cargo-lipo
-
-      - name: Install Task
-        uses: arduino/setup-task@v1
+      - name: Install cargo-hack from crates.io
+        uses: baptiste0928/cargo-install@v2
         with:
-          version: 3.x
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          crate: cargo-lipo
 
       - name: Build JS modules
         run: task build:all-js
@@ -80,3 +76,12 @@ jobs:
 
       - name: Build NativeUtils module
         run: task build:native-utils-lib
+
+      - name: Build Release Archive
+        run: task archive:xc XC_ARCHIVE=$RUNNER_TEMP/Cider.xcarchive
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Cider XCArchive
+          path: $RUNNER_TEMP/Cider.xcarchive
