@@ -1,0 +1,77 @@
+name: 🏗️ Build on CI
+
+on:
+  push:
+    branches: ['master']
+
+jobs:
+  build-mac:
+    name:  Build Mac
+    runs-on: [self-hosted, macOS, ARM64]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Homebrew dependencies
+        run: brew bundle
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+
+      - name: Prepare Yarn
+        run: export YARN_ENABLE_IMMUTABLE_INSTALLS=false
+
+      - name: Install CiderWebAuth's dependencies with Yarn
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cwd: 'CiderWebAuth/'
+          enable-corepack: true
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Install CiderPlaybackAgent's dependencies with Yarn
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cwd: 'CiderPlaybackAgent/Web Scripts/'
+          enable-corepack: true
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Install CiderDevUtils's dependencies with Yarn
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cwd: 'CiderDevUtils/'
+          enable-corepack: true
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Setup Rust Toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1.5.0
+        with:
+          toolchain: nightly
+          target: x86_64-apple-darwin
+
+      - name: Install cargo-lipo
+        run: cargo +nightly install cargo-lipo
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build JS modules
+        run: task build:all-js
+
+      - name: Fetch Google API credentials
+        run: task fetch:google-services
+
+      - name: Build Discord RPC module
+        run: task build:discord-rpc-lib
+
+      - name: Build NativeUtils module
+        run: task build:native-utils-lib
