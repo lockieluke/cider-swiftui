@@ -16,6 +16,10 @@ tasks:
     cmds:
       - echo -e "Build, Run, Perform Tasks with Taskfile!\nRun 'task build-xc' to build Cider, consult README.md for documentation"
 
+  test:
+    cmds:
+      - echo "{{.XC_ARCHIVE}}"
+
   quickstart:
     desc: "Quickstart command for setting everything up as a Cider developer"
     cmds:
@@ -138,7 +142,7 @@ tasks:
     preconditions:
       - test -f "`which xcbeautify`"
     cmds:
-      - xcodebuild -project {{.XC_PROJ}} -configuration Debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build | xcbeautify
+      - set -o pipefail && xcodebuild -project {{.XC_PROJ}} -configuration Debug -sdk macosx -destination platform=macOS,arch=`arch` -scheme Cider build | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
   run:xc:
     desc: "Run Cider Debug"
@@ -171,7 +175,7 @@ tasks:
     preconditions:
       - test -f "`which xcbeautify`"
     cmds:
-      - xcodebuild -project {{.XC_PROJ}} clean | xcbeautify
+      - set -o pipefail && xcodebuild -project {{.XC_PROJ}} clean | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
   archive:xc:
     desc: "Archive Cider Release"
@@ -181,7 +185,7 @@ tasks:
       - test -f "`which xcbeautify`"
     cmds:
       - rm -rf {{.XC_ARCHIVE}}
-      - xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
+      - set -o pipefail && xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
   archive:build-app-bundle:
     desc: "Export .app bundle from .xcarchive"
@@ -194,7 +198,7 @@ tasks:
     cmds:
       - rm -rf {{.CIDER_DEST_APP}}
       - (cd dest/; rm -f DistributionSummary.plist ExportOptions.plist Packaging.log)
-      - xcodebuild -exportArchive -archivePath {{.XC_ARCHIVE}} -exportPath dest/ -exportOptionsPlist ExportOptions.plist | xcbeautify
+      - set -o pipefail && xcodebuild -exportArchive -archivePath {{.XC_ARCHIVE}} -exportPath dest/ -exportOptionsPlist ExportOptions.plist | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
   build:dmg:
     desc: "Build DMG for input .app"
