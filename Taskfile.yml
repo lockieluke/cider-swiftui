@@ -16,10 +16,6 @@ tasks:
     cmds:
       - echo -e "Build, Run, Perform Tasks with Taskfile!\nRun 'task build-xc' to build Cider, consult README.md for documentation"
 
-  test:
-    cmds:
-      - echo "{{.XC_ARCHIVE}}"
-
   quickstart:
     desc: "Quickstart command for setting everything up as a Cider developer"
     cmds:
@@ -184,6 +180,10 @@ tasks:
     preconditions:
       - test -f "`which xcbeautify`"
     cmds:
+      - |
+        if [ -n "$GITHUB_ACTIONS" ] && [ -n "$RUNNER_TEMP" ]; then
+          echo "Exporting archive to {{.XC_ARCHIVE}} on CI"
+        fi
       - rm -rf {{.XC_ARCHIVE}}
       - set -o pipefail && xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 

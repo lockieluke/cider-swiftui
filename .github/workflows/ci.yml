@@ -79,10 +79,11 @@ jobs:
         run: task build:native-utils-lib
 
       - name: Build Release Archive
-        run: task archive:xc XC_ARCHIVE=$RUNNER_TEMP/Cider.xcarchive
+        run: task archive:xc XC_ARCHIVE="$RUNNER_TEMP/Cider.xcarchive"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Cider XCArchive
-          path: $RUNNER_TEMP/Cider.xcarchive
+          path: ${{ runner.temp }}/Cider.xcarchive
+          retention-days: 3
