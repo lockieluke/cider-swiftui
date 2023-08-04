@@ -2,8 +2,12 @@ version: '3'
 
 vars:
   XC_PROJ: Cider.xcodeproj
-  XC_ARCHIVE: dest/Cider.xcarchive
-  CIDER_DEST_APP: dest/Cider.app
+  XC_ARCHIVE:
+    sh: echo ${RUNNER_TEMP:-`pwd`}/dest/Cider.xcarchive
+  DEST_PATH:
+    sh: echo ${RUNNER_TEMP:-`pwd`}/dest
+  CIDER_DEST_APP:
+    sh: echo ${RUNNER_TEMP:-`pwd`}/dest/Cider.app
   DEBUG_BUILD_DIR:
     sh: $(command -v bkt >/dev/null 2>&1 && echo "bkt --cwd --") xcodebuild clean -project {{.XC_PROJ}} -scheme Cider -sdk macosx -configuration Debug -showBuildSettings | $(command -v rg >/dev/null 2>&1 && echo "rg" || echo "grep") -m 1 TARGET_BUILD_DIR | grep -oEi "\/.*"
   RELEASE_BUILD_DIR:
@@ -197,14 +201,27 @@ tasks:
       - test -f "`which xcbeautify`"
     cmds:
       - rm -rf {{.CIDER_DEST_APP}}
-      - (cd dest/; rm -f DistributionSummary.plist ExportOptions.plist Packaging.log)
-      - set -o pipefail && xcodebuild -exportArchive -archivePath {{.XC_ARCHIVE}} -exportPath dest/ -exportOptionsPlist ExportOptions.plist | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
+      - set -o pipefail && xcodebuild -exportArchive -archivePath {{.XC_ARCHIVE}} -exportPath {{.DEST_PATH}} -exportOptionsPlist ExportOptions.plist | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
   build:dmg:
     desc: "Build DMG for input .app"
+    preconditions:
+      - test -f "`which create-dmg`"
+      - test -d {{.CIDER_DEST_APP}}
+    vars:
+      DEST_DMG_CIDER_APP: "{{.DEST_PATH}}/dmg/Cider.app"
+      DEST_DMG_PATH: "{{.DEST_PATH}}/Cider.dmg"
+      DMG_TITLE: "Cider"
     cmds:
-      - mkdir -p dest/
-      - create-dmg --volname "Cider for macOS" --window-size 600 dest/Cider.dmg {{.CLI_ARGS}}
+      - |
+        if [ -f "{{.DEST_DMG_PATH}}" ]; then
+          rm "{{.DEST_DMG_PATH}}"
+        fi
+      - rm -rf "{{.DEST_PATH}}/dmg/"
+      - mkdir -p "{{.DEST_PATH}}/dmg/"
+      - cp -R {{.CIDER_DEST_APP}} "{{.DEST_DMG_CIDER_APP}}"
+      - defer: rm -rf "{{.DEST_PATH}}/dmg/"
+      - create-dmg ${GITHUB_ACTIONS:+"--skip-jenkins"} --volname "{{.DMG_TITLE}}" --volicon assets/icon.icns --background assets/bg.tiff --window-pos 200 120 --window-size 540 380 --icon-size 100 --icon "Cider.app" 120 210 --hide-extension "Cider.app" --app-drop-link 410 210 "{{.DEST_DMG_PATH}}" "{{.DEST_PATH}}/dmg"
 
   start:dev-server:
     dir: 'CiderDevUtils/'

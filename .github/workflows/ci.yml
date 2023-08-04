@@ -83,16 +83,29 @@ jobs:
       - name: Build NativeUtils module
         run: task build:native-utils-lib
 
-      - name: Build Release Archive
-        run: task archive:xc XC_ARCHIVE="$XC_ARCHIVE"
+      - name: Build XCArchive
+        run: |
+          task archive:xc XC_ARCHIVE="$XC_ARCHIVE"
+
+      - name: Build DMG
+        run: |
+          task archive:build-app-bundle XC_ARCHIVE="$XC_ARCHIVE"
+          task build:dmg
 
       - name: Compress artifacts
         working-directory: ${{ runner.temp }}
         run: zip -r Cider.xcarchive.zip Cider.xcarchive/**/*
 
-      - name: Upload artifacts
+      - name: Upload XCArchive
         uses: actions/upload-artifact@v3
         with:
           name: Cider XCArchive (Compressed)
           path: ${{ env.XC_ARCHIVE }}.zip
+          retention-days: 1
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v3
+        with:
+          name: Cider.dmg
+          path: ${{ runner.temp }}/dest/Cider.dmg
           retention-days: 1
