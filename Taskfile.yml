@@ -181,7 +181,7 @@ tasks:
       - test -f "`which xcbeautify`"
     cmds:
       - rm -rf {{.XC_ARCHIVE}}
-      - xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify
+      - xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
   archive:build-app-bundle:
     desc: "Export .app bundle from .xcarchive"
