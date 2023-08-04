@@ -11,6 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Configure variables
+        run: |
+          XC_ARCHIVE=${RUNNER_TEMP}/Cider.xcarchive
+          echo "XC_ARCHIVE=${XC_ARCHIVE}" >> $GITHUB_ENV
+
       - name: Setup Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
@@ -79,11 +84,15 @@ jobs:
         run: task build:native-utils-lib
 
       - name: Build Release Archive
-        run: task archive:xc XC_ARCHIVE="$RUNNER_TEMP/Cider.xcarchive"
+        run: task archive:xc XC_ARCHIVE="$XC_ARCHIVE"
+
+      - name: Compress artifacts
+        working-directory: ${{ runner.temp }}
+        run: zip -r Cider.xcarchive.zip Cider.xcarchive/**/*
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: Cider XCArchive
-          path: ${{ runner.temp }}/Cider.xcarchive
-          retention-days: 3
+          name: Cider XCArchive (Compressed)
+          path: ${{ env.XC_ARCHIVE }}.zip
+          retention-days: 1
