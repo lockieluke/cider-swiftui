@@ -25,7 +25,7 @@ class Logger {
     
     func info(_ message: String) {
         let time = self.getTimestampInString()
-        #if os(macOS)
+        #if os(macOS) && DEBUG
         DispatchQueue.main.async {
             addLogEntry(time, "info", message)
         }
@@ -35,7 +35,7 @@ class Logger {
     
     func success(_ message: String, displayTick: Bool = false) {
         let time = self.getTimestampInString()
-        #if os(macOS)
+        #if os(macOS) && DEBUG
         DispatchQueue.main.async {
             addLogEntry(time, "success", message)
         }
@@ -53,7 +53,7 @@ class Logger {
     
     private func errorMessage(_ message: String, displayCross: Bool = false) -> String {
         let time = self.getTimestampInString()
-        #if os(macOS)
+        #if os(macOS) && DEBUG
         DispatchQueue.main.async {
             addLogEntry(time, "error", message)
         }

@@ -20,6 +20,8 @@ class NativeUtilsWrapper: ObservableObject {
         self.nativeUtils = _nativeUtilsGlobal
         
         initCXXNativeUtils()
+        #if DEBUG
         initLogViewer()
+        #endif
     }
 }

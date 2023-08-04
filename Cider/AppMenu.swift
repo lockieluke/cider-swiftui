@@ -194,9 +194,11 @@ class AppMenu {
         wsDebugger.open()
     }
     
+    #if DEBUG
     @objc func openLogViewer(_ sender: Any) {
         showLogViewer()
     }
+    #endif
     
     @objc func openPlaygrounds(_ sender: Any) {
         if hasPreviouslyOpenedPlayground {

@@ -221,7 +221,8 @@ tasks:
       - mkdir -p "{{.DEST_PATH}}/dmg/"
       - cp -R {{.CIDER_DEST_APP}} "{{.DEST_DMG_CIDER_APP}}"
       - defer: rm -rf "{{.DEST_PATH}}/dmg/"
-      - create-dmg ${GITHUB_ACTIONS:+"--skip-jenkins"} --volname "{{.DMG_TITLE}}" --volicon assets/icon.icns --background assets/bg.tiff --window-pos 200 120 --window-size 540 380 --icon-size 100 --icon "Cider.app" 120 210 --hide-extension "Cider.app" --app-drop-link 410 210 "{{.DEST_DMG_PATH}}" "{{.DEST_PATH}}/dmg"
+      - diskutil eject /Volumes/Cider
+      - create-dmg --volname "{{.DMG_TITLE}}" --volicon assets/icon.icns --background assets/bg.tiff --window-pos 200 120 --window-size 540 380 --icon-size 100 --icon "Cider.app" 120 210 --hide-extension "Cider.app" --app-drop-link 410 210 "{{.DEST_DMG_PATH}}" "{{.DEST_PATH}}/dmg"
 
   start:dev-server:
     dir: 'CiderDevUtils/'
