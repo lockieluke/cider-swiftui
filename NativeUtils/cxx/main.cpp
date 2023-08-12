@@ -39,7 +39,8 @@ extern "C" {
     }
 
     void addLogEntry(const char* time, const char* level, const char* message) {
-        if (auto list = logViewerList.value()) {
+        if (logViewer.has_value() && logViewerList.has_value()) {
+            auto list = logViewerList.value();
             list->InsertItem(list->GetItemCount(), time);
             list->SetItem(list->GetItemCount() - 1, 1, level);
             list->SetItem(list->GetItemCount() - 1, 2, message);
@@ -49,16 +50,17 @@ extern "C" {
     }
 
     void showLogViewer() {
-        if (auto logViewerWindow = logViewer.value()) {
+        if (logViewer.has_value()) {
+            auto logViewerWindow = logViewer.value();
             logViewerWindow->Center();
             logViewerWindow->Show(true);
         }
     }
 
     void terminateCXXNativeUtils() {
-        if (auto logViewerWindow = logViewer.value()) {
-            logViewerWindow->Destroy();
-            delete logViewerWindow;
+        if (logViewer.has_value()) {
+            logViewer.value()->Destroy();
+            logViewer.reset();
         }
     }
 
