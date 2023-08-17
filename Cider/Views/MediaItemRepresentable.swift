@@ -91,7 +91,6 @@ struct MediaTableRepresentable: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: columnSpacing))], alignment: .center, spacing: 10) {
             ForEach(items, id: \.id) { item in
                 MediaItemRepresentable(item: item)
-                    .environmentObject(ciderPlayback)
             }
         }
     }

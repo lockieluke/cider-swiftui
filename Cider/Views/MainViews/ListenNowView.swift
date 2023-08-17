@@ -23,8 +23,6 @@ struct ListenNowView: View {
                     .padding()
                 ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
                     MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
-                        .environmentObject(ciderPlayback)
-                        .environmentObject(navigationModal)
                         .isHidden(navigationModal.currentlyPresentViewType != .Root && navigationModal.currentRootStack != .ListenNow)
                 }
             }

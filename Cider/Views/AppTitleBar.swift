@@ -23,9 +23,6 @@ struct AppTitleBar: View {
     var body: some View {
         ZStack {
             SearchBar()
-                .environmentObject(searchModal)
-                .environmentObject(ciderPlayback)
-                .environmentObject(navigationModal)
             
             HStack {
                 Spacer()

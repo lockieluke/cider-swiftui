@@ -37,7 +37,6 @@ struct SearchView: View {
                                 LazyHStack {
                                     ForEach(artists, id: \.id) { artist in
                                         MediaArtistPresentable(artist: artist, maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
-                                            .environmentObject(navigationModal)
                                     }
                                 }
                             }
@@ -69,8 +68,6 @@ struct SearchView: View {
                                 LazyHStack {
                                     ForEach(albums, id: \.id) { album in
                                         MediaPresentable(item: .mediaItem(album), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: false)
-                                            .environmentObject(ciderPlayback)
-                                            .environmentObject(navigationModal)
                                             .padding(.vertical)
                                     }
                                 }
@@ -87,8 +84,6 @@ struct SearchView: View {
                                 LazyHStack {
                                     ForEach(playlists, id: \.id) { playlist in
                                         MediaPresentable(item: .mediaPlaylist(playlist), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: false)
-                                            .environmentObject(ciderPlayback)
-                                            .environmentObject(navigationModal)
                                             .padding(.vertical)
                                     }
                                 }

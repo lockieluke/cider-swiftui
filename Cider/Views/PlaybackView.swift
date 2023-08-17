@@ -52,7 +52,6 @@ struct PlaybackView: View {
                 let nowPlayingState = self.ciderPlayback.nowPlayingState
                 
                 PlaybackBar()
-                    .environmentObject(ciderPlayback)
                 
                 HStack {
                     PlaybackButton(icon: .Shuffle, tooltip: playbackBehaviour.shuffle ? "Don't Shuffle" : "Shuffle", highlighted: self.$ciderPlayback.playbackBehaviour.shuffle) {
@@ -84,8 +83,6 @@ struct PlaybackView: View {
             
             HStack {
                 PlaybackCardView()
-                    .environmentObject(ciderPlayback)
-                    .environmentObject(navigationModal)
                 
                 Spacer()
                 
