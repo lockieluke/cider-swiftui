@@ -29,33 +29,12 @@ struct ContentView: View {
         GeometryReader { geometry in
             ZStack {
                 NavigationContainer()
-                    .environmentObject(appWindowModal)
-                    .environmentObject(mkModal)
-                    .environmentObject(personalisedData)
-                    .environmentObject(navigationModal)
-                    .environmentObject(ciderPlayback)
-                    .environmentObject(searchModal)
-                    .environmentObject(cacheModal)
-                #if os(macOS)
-                    .environmentObject(nativeUtilsWrapper)
-                #endif
                 
                 VStack {
                     AppTitleBar()
-                    .environmentObject(appWindowModal)
-                    .environmentObject(searchModal)
-                    .environmentObject(navigationModal)
-                    .environmentObject(ciderPlayback)
-                    .environmentObject(mkModal)
-                #if os(macOS)
-                    .environmentObject(nativeUtilsWrapper)
-                #endif
                     
                     Spacer()
                     PlaybackView()
-                        .environmentObject(appWindowModal)
-                        .environmentObject(ciderPlayback)
-                        .environmentObject(navigationModal)
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
                 }
@@ -73,6 +52,9 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.top)
             .enableInjection()
         }
+        .environmentObject(searchModal)
+        .environmentObject(navigationModal)
+        .environmentObject(personalisedData)
     }
 }
 

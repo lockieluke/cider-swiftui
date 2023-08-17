@@ -49,39 +49,23 @@ struct NavigationContainer: View {
                                     self.showProgressBar = false
                                 }
                             })
-                                .environmentObject(mkModal)
-                                .environmentObject(ciderPlayback)
                                 .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
                                 .hideWithoutDestroying(currentRootStack != .Home || !isPresent)
                             
                             ListenNowView()
-                                .environmentObject(mkModal)
-                                .environmentObject(personalisedData)
-                                .environmentObject(navigationModal)
-                                .environmentObject(ciderPlayback)
                                 .hideWithoutDestroying(currentRootStack != .ListenNow || !isPresent)
                             
                             BrowseView()
-                                .environmentObject(mkModal)
                                 .hideWithoutDestroying(currentRootStack != .Browse || !isPresent)
                         }
                         
                     case .detailedViewParams(let detailedViewParams):
                         DetailedView(detailedViewParams: detailedViewParams)
-                            .environmentObject(mkModal)
-                            .environmentObject(navigationModal)
-                            .environmentObject(ciderPlayback)
                             .opacity(shouldUpperStackShow ? 1 : 0)
                             .allowsHitTesting(shouldUpperStackShow)
                         
                     case .artistViewParams(let artistViewParams):
                         ArtistView(params: artistViewParams)
-                            .environmentObject(mkModal)
-                            .environmentObject(ciderPlayback)
-                            .environmentObject(navigationModal)
-#if os(macOS)
-                            .environmentObject(nativeUtilsWrapper)
-#endif
                             .hideWithoutDestroying(!shouldUpperStackShow)
                             .allowsHitTesting(shouldUpperStackShow)
                         
@@ -100,10 +84,6 @@ struct NavigationContainer: View {
                         .onChange(of: self.navigationModal.currentlyPresentViewStackIndex) { _ in
                             self.searchModal.shouldDisplaySearchPage = false
                         }
-                        .environmentObject(searchModal)
-                        .environmentObject(mkModal)
-                        .environmentObject(navigationModal)
-                        .environmentObject(ciderPlayback)
                         .onDisappear {
                             self.searchModal.searchResults = nil
                         }
@@ -111,25 +91,18 @@ struct NavigationContainer: View {
                 
                 if navigationModal.showQueue {
                     QueueView()
-                        .environmentObject(ciderPlayback)
                         .transition(.move(edge: .trailing))
                         .zIndex(1)
                 }
                 
                 if navigationModal.showLyrics {
                     LyricsPaneView()
-                        .environmentObject(mkModal)
-                        .environmentObject(ciderPlayback)
-#if os(macOS)
-                        .environmentObject(nativeUtilsWrapper)
-#endif
                         .transition(.move(edge: .trailing))
                         .zIndex(1)
                 }
                 
                 if navigationModal.showSidebar {
                     SidebarPane()
-                        .environmentObject(navigationModal)
                         .transition(.move(edge: .leading))
                         .zIndex(1)
                 }

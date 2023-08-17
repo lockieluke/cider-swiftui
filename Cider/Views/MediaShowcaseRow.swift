@@ -28,8 +28,6 @@ struct MediaShowcaseRow: View {
                         LazyHStack {
                             ForEach(recommendations, id: \.self) { recommendation in
                                 MediaPresentable(item: recommendation, maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: true)
-                                    .environmentObject(ciderPlayback)
-                                    .environmentObject(navigationModal)
                                     .padding()
                             }
                         }

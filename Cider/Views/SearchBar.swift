@@ -159,8 +159,6 @@ struct SearchBar: View {
                             self.updateSearchResults()
                         }
                     })
-                    .environmentObject(ciderPlayback)
-                    .environmentObject(navigationModal)
                 }
             }
         }

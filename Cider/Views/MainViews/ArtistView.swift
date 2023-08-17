@@ -86,7 +86,6 @@ struct ArtistView: View {
                                 Text("Top Songs")
                                     .font(.title2.bold())
                                 MediaTableRepresentable(artist.topSongs.map { topSong in .mediaTrack(topSong) })
-                                    .environmentObject(ciderPlayback)
                             }
                             Spacer()
                         }
@@ -115,7 +114,6 @@ struct ArtistView: View {
                                 LazyHStack {
                                     ForEach(artist.similarArtists, id: \.id) { similarArtist in
                                         MediaArtistPresentable(artist: similarArtist, maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
-                                            .environmentObject(navigationModal)
                                             .padding(.vertical)
                                     }
                                 }

@@ -59,7 +59,6 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if let recentlyPlayedItems = homeViewData?.recentlyPlayedItems {
                     MediaTableRepresentable(recentlyPlayedItems)
-                        .environmentObject(ciderPlayback)
                         .padding(.vertical)
                 }
                 

@@ -166,8 +166,6 @@ struct DetailedView: View {
                         LazyVStack {
                             ForEach(tracks, id: \.id) { track in
                                 MediaTrackRepresentable(mediaTrack: track)
-                                    .environmentObject(navigationModal)
-                                    .environmentObject(mkModal)
                             }
                         }
                         .padding(.vertical)
