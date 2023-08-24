@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import Foundation
 #if canImport(AppKit)
@@ -13,6 +13,7 @@ class AppMenu {
     let menu: NSMenu
     private let appName: String
     private let window: NSWindow
+    private let settingsWindowController: SettingsWindowController
     private let mkModal: MKModal
     private let authModal: AuthModal
     private let wsModal: WSModal
@@ -20,12 +21,37 @@ class AppMenu {
     private let appWindowModal: AppWindowModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
     private let cacheModal: CacheModal
+    private let connectModal: ConnectModal
     
     private var hasPreviouslyOpenedPlayground: Bool = false
     private var playgroundWindowDelegate: NSWindowDelegate!
     
-    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal) {
+    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal) {
         let menu = NSMenu()
+        
+        #if DEBUG
+        let additionalPanes = [
+            PreferencesPanes.DeveloperPreferencesViewController(
+                mkModal,
+                ciderPlayback
+            )
+        ]
+        #else
+        let additionalPanes: [SettingsPane] = []
+        #endif
+        
+        self.settingsWindowController = SettingsWindowController(
+            panes: [
+                PreferencesPanes.GeneralPreferenceViewController(cacheModal),
+                PreferencesPanes.AccountPreferencesViewController(connectModal),
+                PreferencesPanes.AudioPreferencesViewController(
+                    ciderPlayback
+                )
+            ] + additionalPanes,
+            style: .toolbarItems,
+            animated: true,
+            hidesToolbarForSingleItem: false
+        )
         
         self.window = window
         self.appName = ProcessInfo.processInfo.processName
@@ -37,6 +63,7 @@ class AppMenu {
         self.appWindowModal = appWindowModal
         self.nativeUtilsWrapper = nativeUtilsWrapper
         self.cacheModal = cacheModal
+        self.connectModal = connectModal
     }
     
     func loadMenus() {
@@ -49,7 +76,7 @@ class AppMenu {
         var preferencesName = "Preferences..."
         if #available(macOS 13.0, *) {
             preferencesName = "Settings..."
-        }   
+        }
         
         let preferencesMenu = NSMenuItem(title: preferencesName, action: #selector(self.showPreferences(_:)), keyEquivalent: ",")
         preferencesMenu.target = self
@@ -95,7 +122,7 @@ class AppMenu {
             ]
         }
         
-        #if DEBUG
+#if DEBUG
         let developerMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
@@ -105,7 +132,7 @@ class AppMenu {
             ]
             $0.target = self
         }
-        #endif
+#endif
         
         let windowMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Window")
@@ -132,11 +159,11 @@ class AppMenu {
             githubMenu
         ]
         
-        #if DEBUG
+#if DEBUG
         menu.items = [appNameMenu, fileMenu, editMenu, developerMenu, windowMenu, helpMenu]
-        #else
+#else
         menu.items = [appNameMenu, fileMenu, editMenu, windowMenu, helpMenu]
-        #endif
+#endif
     }
     
     @objc func signOut(_ sender: Any) {
@@ -153,28 +180,7 @@ class AppMenu {
     }
     
     @objc func showPreferences(_ sender: Any) {
-        #if DEBUG
-        let additionalPanes = [
-            PreferencesPanes.DeveloperPreferencesViewController(
-                self.mkModal,
-                self.ciderPlayback
-            )
-        ]
-        #else
-        let additionalPanes: [SettingsPane] = []
-        #endif
-        
-        SettingsWindowController(
-            panes: [
-                PreferencesPanes.GeneralPreferenceViewController(self.cacheModal),
-                PreferencesPanes.AudioPreferencesViewController(
-                    self.ciderPlayback
-                )
-            ] + additionalPanes,
-            style: .toolbarItems,
-            animated: true,
-            hidesToolbarForSingleItem: false
-        ).show()
+        self.settingsWindowController.show()
     }
     
     @objc func openDiscord(_ sender: Any) {
@@ -194,11 +200,11 @@ class AppMenu {
         wsDebugger.open()
     }
     
-    #if DEBUG
+#if DEBUG
     @objc func openLogViewer(_ sender: Any) {
         showLogViewer()
     }
-    #endif
+#endif
     
     @objc func openPlaygrounds(_ sender: Any) {
         if hasPreviouslyOpenedPlayground {
@@ -207,7 +213,7 @@ class AppMenu {
         
         typealias TestAction = CiderPlayground.CiderPlaygroundTestAction
         let activeScreen = NSScreen.activeScreen
-
+        
         
         let ciderPlayground = CiderPlayground(testActions: [
             TestAction(name: "Fetch Browse Data", description: "Fetch browse storefront data and parse JSON", action: {
