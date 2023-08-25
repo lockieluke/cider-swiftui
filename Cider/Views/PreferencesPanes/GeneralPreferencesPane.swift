@@ -24,7 +24,7 @@ struct GeneralPreferencesPane: View {
                     }
                     .disabled(cacheModal.clearedCache)
                     
-                    Text("\(Bundle.main.displayName) will have to refetch data next you time it launches and it will take significantly more time to startup")
+                    Text("\(Bundle.main.displayName) will have to refetch data next time it launches and it will take significantly more time to startup")
                         .settingDescription()
                 }
                 .fixedSize(horizontal: false, vertical: true)
