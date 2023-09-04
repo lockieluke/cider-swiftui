@@ -46,4 +46,8 @@ extension String {
         return self.words.joined(separator: "-")
     }
     
+    func contains(_ strings: [String]) -> Bool {
+        strings.contains { contains($0) }
+    }
+    
 }

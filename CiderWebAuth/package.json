@@ -4,15 +4,20 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/lodash-es": "^4",
     "esbuild": "^0.17.18",
     "generate-license-file": "^2.0.0",
     "musickit-typescript": "^1.2.4"
   },
   "dependencies": {
-    "await-to-js": "^3.0.0"
+    "await-to-js": "^3.0.0",
+    "firebase": "^10.2.0",
+    "lodash-es": "^4.17.21"
   },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/ciderwebauth.js",
+    "build:webauth": "esbuild src/webauth/index.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/ciderwebauth.js",
+    "build:connectauth": "esbuild src/cider-connect/index.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/ciderconnectauth.js",
+    "build:connectauth-userscript": "esbuild src/cider-connect/user.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/ciderconnectauth.user.js",
     "clean": "rm -rf dist/"
   }
 }

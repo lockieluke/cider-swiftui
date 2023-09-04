@@ -1,11 +1,13 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import Foundation
 import SwiftyJSON
 import Starscream
 import Throttler
+import Alamofire
+import Cache
 
 enum HTTPMethod : String {
     case GET = "GET", POST = "POST", PUT = "PUT", DELETE = "DELETE"
@@ -19,8 +21,8 @@ struct HTTPResponse {
 
 enum CiderWSError : Error {
     
-case failedToCreateJSON,
-    wsNotConnected(String)
+    case failedToCreateJSON,
+         wsNotConnected(String)
     
 }
 
@@ -134,7 +136,7 @@ class CiderWSProvider {
                 continuation.resume(throwing: CiderWSError.failedToCreateJSON)
                 return
             }
-
+            
             DispatchQueue.main.async {
                 Throttler.throttle(delay: .milliseconds(100), shouldRunImmediately: false) {
                     WSModal.shared.traffic.append(WSTrafficRecord(target: self.wsTarget, rawJSONString: requestBodyString, dateSent: .now, trafficType: .Send, requestId: requestId))
@@ -150,7 +152,6 @@ class NetworkingProvider {
     
     private let baseURL: URL
     private let logger: Logger
-    private static let sharedLogger = Logger(label: "Shared Networking Provider")
     private var defaultHeaders: [String : String]
     
     init(baseURL: URL, defaultHeaders: [String : String]? = nil) {
@@ -205,7 +206,7 @@ class NetworkingProvider {
                     do {
                         request.httpBody = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
                     } catch {
-                        self.sharedLogger.error("Failed to serialise JSON \(endpoint): \(error)")
+                        Networking.logger.error("Failed to serialise JSON \(endpoint): \(error)")
                     }
                 }
             }
@@ -225,12 +226,74 @@ class NetworkingProvider {
         return HTTPResponse(data: responseData)
     }
     
+}
+
+class Networking {
+    
+    static let logger = Logger(label: "Networking")
+    private static let DEFAULT_UA: String = "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15"
+    private static var storage: Storage<String, String>?
+    
+    static func initialise() {
+        let diskConfig = DiskConfig(name: "Cider-Networking")
+        let memoryConfig = MemoryConfig(expiry: .never, countLimit: 10, totalCostLimit: 10)
+        
+        do {
+            self.storage = try Storage<String, String>(
+                diskConfig: diskConfig,
+                memoryConfig: memoryConfig,
+                transformer: TransformerFactory.forCodable(ofType: String.self)
+            )
+        } catch {
+            self.logger.error("Failed to initialise Networking Cache: \(error)")
+            self.storage = nil
+        }
+        
+        do {
+            try self.storage?.removeExpiredObjects()
+        } catch {
+            self.logger.error("Failed to remove expired cache objects: \(error)")
+        }
+    }
+    
+    static func findLatestWebViewUA() async -> String {
+        if let cachedLatestUA = try? self.storage?.object(forKey: "latest-ua") {
+            return cachedLatestUA
+        }
+        
+        let res = await AF.request("https://jnrbsn.github.io/user-agents/user-agents.json", headers: [
+            "Accept": "application/json"
+        ]).validate().serializingData().response
+        
+        if res.error.isNil, let data = res.data, let json = try? JSON(data: data), let uaArray = json.array {
+            let ua = uaArray[19].stringValue
+            
+            do {
+                try self.storage?.setObject(ua, forKey: "latest-ua", expiry: .date(Date().addingTimeInterval(7 * 60 * 60)))
+            } catch {
+                self.logger.error("Failed to cache latest UAs: \(error)")
+            }
+            
+            return ua
+        }
+        
+        return self.DEFAULT_UA
+    }
+    
+    static func clearUserAgentCache() {
+        do {
+            try self.storage?.removeObject(forKey: "latest-ua")
+        } catch {
+            self.logger.error("Failed to clear UA cache: \(error)")
+        }
+    }
+    
     static func findFreeLocalPort() -> UInt16 {
         var port: UInt16 = 8000;
         
         let socketFD = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         if socketFD == -1 {
-            sharedLogger.error("Error creating socket: \(errno)")
+            self.logger.error("Error creating socket: \(errno)")
             return port;
         }
         

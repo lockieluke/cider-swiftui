@@ -25,7 +25,11 @@
 		B70524C72A6F2931001654B3 /* CacheModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70524C62A6F2931001654B3 /* CacheModal.swift */; };
 		B706050D28BE0B4F002AD76C /* AMAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706050C28BE0B4F002AD76C /* AMAPI.swift */; };
 		B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B706051028BFA181002AD76C /* MediaShowcaseRow.swift */; };
+		B709E8722A8848E7004B7D98 /* AccountPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709E8712A8848E7004B7D98 /* AccountPreferencesPane.swift */; };
 		B70D0A132A509D0C00968E7D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B70D0A122A509D0C00968E7D /* Settings.bundle */; platformFilter = ios; };
+		B7107BB72AA2B8D300A83306 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B7107BB62AA2B8D300A83306 /* FirebaseAnalytics */; };
+		B7107BB92AA2B8D300A83306 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B7107BB82AA2B8D300A83306 /* FirebaseAuth */; };
+		B7107BD42AA3840300A83306 /* ciderconnectauth.user.js in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7107BD32AA3840300A83306 /* ciderconnectauth.user.js */; };
 		B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82682A366F3B00DD8BC2 /* SwiftyUtils */; };
 		B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826B2A366FC400DD8BC2 /* SwiftyJSON */; };
 		B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826E2A36700300DD8BC2 /* Introspect */; };
@@ -40,9 +44,6 @@
 		B71B828D2A36713B00DD8BC2 /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = B71B828C2A36713B00DD8BC2 /* Throttler */; };
 		B71B82902A36717400DD8BC2 /* AttributedText in Frameworks */ = {isa = PBXBuildFile; productRef = B71B828F2A36717400DD8BC2 /* AttributedText */; };
 		B71B82932A36718800DD8BC2 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82922A36718800DD8BC2 /* Defaults */; };
-		B71B82962A3671F900DD8BC2 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82952A3671F900DD8BC2 /* FirebaseAnalyticsSwift */; };
-		B71B82982A3671F900DD8BC2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82972A3671F900DD8BC2 /* FirebaseAuth */; };
-		B71B829A2A3671F900DD8BC2 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82992A3671F900DD8BC2 /* FirebaseFirestoreSwift */; };
 		B71B82A62A36760600DD8BC2 /* ArgumentParserKit in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A52A36760600DD8BC2 /* ArgumentParserKit */; };
 		B71B82A82A36763700DD8BC2 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A72A36763700DD8BC2 /* Swifter */; };
 		B71B82AA2A36764600DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A92A36764600DD8BC2 /* SwiftyJSON */; };
@@ -55,6 +56,9 @@
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
 		B728B0562A75CAA200BAC665 /* MediaBrowseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B728B0552A75CAA200BAC665 /* MediaBrowseData.swift */; };
 		B728B0592A78453100BAC665 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = B728B0582A78453100BAC665 /* SFSafeSymbols */; };
+		B7332B0C2A96C0870019221D /* ciderconnectauth.js in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7332B0B2A96C0870019221D /* ciderconnectauth.js */; platformFilters = (macos, ); };
+		B7332B0E2A96C4A50019221D /* NativeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7332B0D2A96C4A50019221D /* NativeComponent.swift */; };
+		B7332B102A97D7C60019221D /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = B7332B0F2A97D7C60019221D /* Swifter */; };
 		B736F2732A634DFF008A0458 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B736F2722A634DFF008A0458 /* HomeView.swift */; };
 		B736F2752A634F1D008A0458 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B736F2742A634F1D008A0458 /* DateUtils.swift */; };
 		B736F2792A648BFA008A0458 /* MediaItemRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B736F2782A648BFA008A0458 /* MediaItemRepresentable.swift */; };
@@ -69,6 +73,8 @@
 		B75219C0291F0742005CF8F0 /* PersonalisedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219BF291F0742005CF8F0 /* PersonalisedData.swift */; };
 		B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */; };
 		B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75C7C1229B12AE500F7693E /* CatalogActions.swift */; };
+		B7663CC72A9223AC009E82DA /* Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC52A92223D009E82DA /* Apple.swift */; };
+		B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC82A922567009E82DA /* TapEffectModifier.swift */; };
 		B766B18C2A74064E00B974E6 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B18B2A74064E00B974E6 /* BrowseView.swift */; };
 		B76887122948F9C600C623C9 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887112948F9C600C623C9 /* Support.swift */; };
 		B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76887132949172300C623C9 /* PreferencesPanes.swift */; platformFilters = (macos, ); };
@@ -84,6 +90,10 @@
 		B76AE924299C044800A19558 /* MediaDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE923299C044800A19558 /* MediaDescription.swift */; };
 		B76AE928299C162600A19558 /* MissingArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = B76AE927299C162600A19558 /* MissingArtwork.png */; };
 		B76AE92A299E993500A19558 /* Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE929299E993500A19558 /* Comparable.swift */; };
+		B76FC6CC2A8F889D00F8F80E /* ConnectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */; };
+		B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B76FC6F52A8FE14900F8F80E /* GoogleSignIn */; };
+		B76FC6F82A8FE14900F8F80E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B76FC6F72A8FE14900F8F80E /* GoogleSignInSwift */; };
+		B76FC6FA2A902FB600F8F80E /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76FC6F92A902FB600F8F80E /* AuthButton.swift */; };
 		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; platformFilters = (macos, ); };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
 		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; platformFilters = (macos, ); };
@@ -96,6 +106,7 @@
 		B77AACF8293BA95F00F8E1E2 /* MediaActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */; };
 		B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */; };
 		B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77C91AD294FCCE100124B47 /* CaseIterable.swift */; };
+		B77D950D2A9CB7D9007ED4BD /* Any.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77D950C2A9CB7D9007ED4BD /* Any.swift */; };
 		B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720B29F09A15006EDC69 /* native-utils.swift */; platformFilters = (macos, ); };
 		B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */; platformFilters = (macos, ); };
 		B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */; platformFilters = (macos, ); };
@@ -140,7 +151,7 @@
 		B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD922908797C00A67CE4 /* Dictionary.swift */; };
 		B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD94290879F500A67CE4 /* Validation.swift */; };
 		B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */; };
-		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */; };
 		B7CF3767299A942000922CDA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3766299A942000922CDA /* SearchView.swift */; };
 		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
@@ -154,8 +165,8 @@
 		B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */; platformFilters = (macos, ); };
 		B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D46444293574A0000B1E9A /* DetailedView.swift */; };
 		B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D5B9E1292C2F9900046B7F /* Logging.swift */; };
-		B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */; };
-		B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy CPA */ = {isa = PBXBuildFile; fileRef = B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */; platformFilters = (macos, ); };
+		B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */; };
+		B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */; platformFilters = (macos, ); };
 		B7E1CE072996EC6800D25D0F /* SearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */; };
 		B7E72361299455430086EDA4 /* MediaArtistPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */; };
 		B7EA101A299FFA6A000998A5 /* DiscordRPCModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */; platformFilters = (macos, ); };
@@ -166,17 +177,39 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B7C9CDA129088F4F00A67CE4 /* Copy CPA */ = {
+		B76FC6E22A8FB5A000F8F80E /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B76FC6F32A8FB5EF00F8F80E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C9CDA129088F4F00A67CE4 /* Copy Scripts */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 12;
 			files = (
-				B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy CPA */,
-				B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy CPA */,
-				B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy CPA */,
+				B7107BD42AA3840300A83306 /* ciderconnectauth.user.js in Copy Scripts */,
+				B7332B0C2A96C0870019221D /* ciderconnectauth.js in Copy Scripts */,
+				B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy Scripts */,
+				B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy Scripts */,
+				B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy Scripts */,
 			);
-			name = "Copy CPA";
+			name = "Copy Scripts";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -197,13 +230,14 @@
 		B700C1B328B96DBD0069FDF5 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		B703BBCE28CC05FA00228324 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		B70524B72A6B3EE4001654B3 /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
 		B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkBenchTimer.swift; sourceTree = "<group>"; };
 		B70524C62A6F2931001654B3 /* CacheModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModal.swift; sourceTree = "<group>"; };
 		B706050B28BD8CB2002AD76C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B706050C28BE0B4F002AD76C /* AMAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAPI.swift; sourceTree = "<group>"; };
 		B706051028BFA181002AD76C /* MediaShowcaseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaShowcaseRow.swift; sourceTree = "<group>"; };
+		B709E8712A8848E7004B7D98 /* AccountPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPreferencesPane.swift; sourceTree = "<group>"; };
 		B70D0A122A509D0C00968E7D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B7107BD32AA3840300A83306 /* ciderconnectauth.user.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderconnectauth.user.js; path = CiderWebAuth/dist/ciderconnectauth.user.js; sourceTree = "<group>"; };
 		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
 		B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiscord_rpc_agent.a; path = DiscordRPCAgent/target/universal/libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCider_CXXNativeUtils.a; path = NativeUtils/build/libCider_CXXNativeUtils.a; sourceTree = "<group>"; };
@@ -211,6 +245,8 @@
 		B725013D28C2637F00992F57 /* MediaPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresentable.swift; sourceTree = "<group>"; };
 		B7284174290DABA100B7A525 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B728B0552A75CAA200BAC665 /* MediaBrowseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaBrowseData.swift; sourceTree = "<group>"; };
+		B7332B0B2A96C0870019221D /* ciderconnectauth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderconnectauth.js; path = CiderWebAuth/dist/ciderconnectauth.js; sourceTree = "<group>"; };
+		B7332B0D2A96C4A50019221D /* NativeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeComponent.swift; sourceTree = "<group>"; };
 		B736F2722A634DFF008A0458 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B736F2742A634F1D008A0458 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		B736F2782A648BFA008A0458 /* MediaItemRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemRepresentable.swift; sourceTree = "<group>"; };
@@ -224,6 +260,8 @@
 		B75219BF291F0742005CF8F0 /* PersonalisedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalisedData.swift; sourceTree = "<group>"; };
 		B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchedGeometryReader.swift; sourceTree = "<group>"; };
 		B75C7C1229B12AE500F7693E /* CatalogActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogActions.swift; sourceTree = "<group>"; };
+		B7663CC52A92223D009E82DA /* Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apple.swift; sourceTree = "<group>"; };
+		B7663CC82A922567009E82DA /* TapEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapEffectModifier.swift; sourceTree = "<group>"; };
 		B766B18B2A74064E00B974E6 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
 		B76887112948F9C600C623C9 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		B76887132949172300C623C9 /* PreferencesPanes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesPanes.swift; sourceTree = "<group>"; };
@@ -239,6 +277,9 @@
 		B76AE923299C044800A19558 /* MediaDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDescription.swift; sourceTree = "<group>"; };
 		B76AE927299C162600A19558 /* MissingArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingArtwork.png; sourceTree = "<group>"; };
 		B76AE929299E993500A19558 /* Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comparable.swift; sourceTree = "<group>"; };
+		B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectModal.swift; sourceTree = "<group>"; };
+		B76FC6D22A8FB5A000F8F80E /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		B76FC6F92A902FB600F8F80E /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		B770D8CE29A0390A00E0A655 /* Cider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cider-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreferencesPane.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
@@ -252,6 +293,7 @@
 		B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaActionButton.swift; sourceTree = "<group>"; };
 		B77C91AB294DE7E100124B47 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B77C91AD294FCCE100124B47 /* CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
+		B77D950C2A9CB7D9007ED4BD /* Any.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Any.swift; sourceTree = "<group>"; };
 		B78B720A29F09A15006EDC69 /* native-utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "native-utils.h"; path = "NativeUtils/Generated/native-utils/native-utils.h"; sourceTree = SOURCE_ROOT; };
 		B78B720B29F09A15006EDC69 /* native-utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "native-utils.swift"; path = "NativeUtils/Generated/native-utils/native-utils.swift"; sourceTree = SOURCE_ROOT; };
 		B78B720D29F09A32006EDC69 /* discord-rpc-agent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "discord-rpc-agent.h"; path = "DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.h"; sourceTree = SOURCE_ROOT; };
@@ -343,21 +385,23 @@
 				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
 				B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */,
 				B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */,
-				B71B82962A3671F900DD8BC2 /* FirebaseAnalyticsSwift in Frameworks */,
 				B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */,
 				B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */,
 				B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */,
 				B71B82872A36712600DD8BC2 /* Settings in Frameworks */,
+				B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */,
 				B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */,
 				B71B82812A3670E100DD8BC2 /* WrappingHStack in Frameworks */,
 				B71B827E2A3670BD00DD8BC2 /* Alamofire in Frameworks */,
 				B71B828A2A36713300DD8BC2 /* Sliders in Frameworks */,
 				B71B82932A36718800DD8BC2 /* Defaults in Frameworks */,
 				B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */,
-				B71B82982A3671F900DD8BC2 /* FirebaseAuth in Frameworks */,
+				B7332B102A97D7C60019221D /* Swifter in Frameworks */,
+				B76FC6F82A8FE14900F8F80E /* GoogleSignInSwift in Frameworks */,
+				B7107BB72AA2B8D300A83306 /* FirebaseAnalytics in Frameworks */,
 				B71B82902A36717400DD8BC2 /* AttributedText in Frameworks */,
-				B71B829A2A3671F900DD8BC2 /* FirebaseFirestoreSwift in Frameworks */,
 				B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */,
+				B7107BB92AA2B8D300A83306 /* FirebaseAuth in Frameworks */,
 				B71B827B2A36708000DD8BC2 /* Rainbow in Frameworks */,
 				B71B828D2A36713B00DD8BC2 /* Throttler in Frameworks */,
 				B728B0592A78453100BAC665 /* SFSafeSymbols in Frameworks */,
@@ -382,6 +426,8 @@
 		B700C17428B920F10069FDF5 = {
 			isa = PBXGroup;
 			children = (
+				B7107BD32AA3840300A83306 /* ciderconnectauth.user.js */,
+				B7332B0B2A96C0870019221D /* ciderconnectauth.js */,
 				B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */,
 				B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */,
 				B700C17F28B920F10069FDF5 /* Cider */,
@@ -403,6 +449,7 @@
 		B700C17F28B920F10069FDF5 /* Cider */ = {
 			isa = PBXGroup;
 			children = (
+				B7663CC42A922231009E82DA /* Icons */,
 				B78B720929F09A08006EDC69 /* RustInterop */,
 				B740CE152991ACAE0096DF6E /* Resources */,
 				B7F623F32915DB2100316F8E /* API */,
@@ -452,7 +499,6 @@
 				B798983929D22A9400A734DC /* Array.swift */,
 				B79230B62A4B834B003F3D99 /* UIApplication.swift */,
 				B79230B82A4B8B46003F3D99 /* URL.swift */,
-				B70524B72A6B3EE4001654B3 /* NSImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -485,6 +531,7 @@
 				B7C5C5DB29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift */,
 				B7C364E52A61E90400D4711A /* VolumeSlider.swift */,
 				B736F2782A648BFA008A0458 /* MediaItemRepresentable.swift */,
+				B76FC6F92A902FB600F8F80E /* AuthButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -503,6 +550,7 @@
 				B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */,
 				B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */,
 				B71B82C52A37750900DD8BC2 /* libnative_utils.a */,
+				B76FC6D22A8FB5A000F8F80E /* AuthenticationServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -527,11 +575,20 @@
 			path = SidePanes;
 			sourceTree = "<group>";
 		};
+		B7663CC42A922231009E82DA /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				B7663CC52A92223D009E82DA /* Apple.swift */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
 		B768871529491AFE00C623C9 /* PreferencesPanes */ = {
 			isa = PBXGroup;
 			children = (
 				B76887132949172300C623C9 /* PreferencesPanes.swift */,
 				B768871629491B1800C623C9 /* GeneralPreferencesPane.swift */,
+				B709E8712A8848E7004B7D98 /* AccountPreferencesPane.swift */,
 				B768871829491B3B00C623C9 /* DeveloperPreferencesPane.swift */,
 				B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */,
 			);
@@ -558,6 +615,7 @@
 				B75C7C1229B12AE500F7693E /* CatalogActions.swift */,
 				B7B3D8BF29B005100014F63D /* ContextMenu.swift */,
 				B798983729D0E96900A734DC /* DraggableView.swift */,
+				B7663CC82A922567009E82DA /* TapEffectModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -592,6 +650,8 @@
 				B7C364E32A60A87500D4711A /* Menu.swift */,
 				B736F2742A634F1D008A0458 /* DateUtils.swift */,
 				B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */,
+				B7332B0D2A96C4A50019221D /* NativeComponent.swift */,
+				B77D950C2A9CB7D9007ED4BD /* Any.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -609,6 +669,7 @@
 				B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */,
 				B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */,
 				B70524C62A6F2931001654B3 /* CacheModal.swift */,
+				B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -689,7 +750,9 @@
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
 				B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */,
-				B7C9CDA129088F4F00A67CE4 /* Copy CPA */,
+				B7C9CDA129088F4F00A67CE4 /* Copy Scripts */,
+				B76FC6E22A8FB5A000F8F80E /* Embed Foundation Extensions */,
+				B76FC6F32A8FB5EF00F8F80E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -711,15 +774,17 @@
 				B71B828C2A36713B00DD8BC2 /* Throttler */,
 				B71B828F2A36717400DD8BC2 /* AttributedText */,
 				B71B82922A36718800DD8BC2 /* Defaults */,
-				B71B82952A3671F900DD8BC2 /* FirebaseAnalyticsSwift */,
-				B71B82972A3671F900DD8BC2 /* FirebaseAuth */,
-				B71B82992A3671F900DD8BC2 /* FirebaseFirestoreSwift */,
 				B71B82AE2A3676AF00DD8BC2 /* Inject */,
 				B7C83DA82A561C9200470320 /* SnapKit */,
 				B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */,
 				B70524BA2A6C96C2001654B3 /* SwiftUIBackports */,
 				B70524C42A6F15D8001654B3 /* Cache */,
 				B728B0582A78453100BAC665 /* SFSafeSymbols */,
+				B76FC6F52A8FE14900F8F80E /* GoogleSignIn */,
+				B76FC6F72A8FE14900F8F80E /* GoogleSignInSwift */,
+				B7332B0F2A97D7C60019221D /* Swifter */,
+				B7107BB62AA2B8D300A83306 /* FirebaseAnalytics */,
+				B7107BB82AA2B8D300A83306 /* FirebaseAuth */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -754,7 +819,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = "Cider Collective";
 				TargetAttributes = {
@@ -791,7 +856,6 @@
 				B71B828B2A36713B00DD8BC2 /* XCRemoteSwiftPackageReference "Throttler" */,
 				B71B828E2A36717400DD8BC2 /* XCRemoteSwiftPackageReference "AttributedText" */,
 				B71B82912A36718800DD8BC2 /* XCRemoteSwiftPackageReference "Defaults" */,
-				B71B82942A3671F900DD8BC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B71B82A12A3673D500DD8BC2 /* XCRemoteSwiftPackageReference "swifter" */,
 				B71B82A42A36760600DD8BC2 /* XCRemoteSwiftPackageReference "ArgumentParserKit" */,
 				B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */,
@@ -799,6 +863,8 @@
 				B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */,
 				B70524C32A6F15D8001654B3 /* XCRemoteSwiftPackageReference "Cache" */,
 				B728B0572A78453100BAC665 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
+				B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -890,6 +956,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7663CC72A9223AC009E82DA /* Apple.swift in Sources */,
 				B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */,
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
 				B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */,
@@ -946,7 +1013,9 @@
 				B77AACF2293B871700F8E1E2 /* MediaTrackRepresentable.swift in Sources */,
 				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
 				B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */,
+				B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */,
 				B77AACF4293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift in Sources */,
+				B7332B0E2A96C4A50019221D /* NativeComponent.swift in Sources */,
 				B7C651D628C4B8E200D32DDC /* AuthModal.swift in Sources */,
 				B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */,
 				B768871B2949225200C623C9 /* BasicHoverModifier.swift in Sources */,
@@ -966,10 +1035,12 @@
 				B75219AE29187526005CF8F0 /* MediaArtwork.swift in Sources */,
 				B77AACEE293B702100F8E1E2 /* MediaTrack.swift in Sources */,
 				B7E72361299455430086EDA4 /* MediaArtistPresentable.swift in Sources */,
+				B709E8722A8848E7004B7D98 /* AccountPreferencesPane.swift in Sources */,
 				B728B0562A75CAA200BAC665 /* MediaBrowseData.swift in Sources */,
 				B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */,
 				B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */,
 				B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */,
+				B77D950D2A9CB7D9007ED4BD /* Any.swift in Sources */,
 				B797AFFC297F3E7B00D77282 /* MediaAny.swift in Sources */,
 				B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */,
 				B77AACEA293AD0F300F8E1E2 /* MultiColourGlow.swift in Sources */,
@@ -985,9 +1056,11 @@
 				B7ECB7AD28FDC56600B5DF11 /* AMError.swift in Sources */,
 				B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */,
 				B79230B92A4B8B46003F3D99 /* URL.swift in Sources */,
+				B76FC6CC2A8F889D00F8F80E /* ConnectModal.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,
 				B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */,
 				B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */,
+				B76FC6FA2A902FB600F8F80E /* AuthButton.swift in Sources */,
 				B725013A28C2624300992F57 /* Color.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 				B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */,
@@ -1132,20 +1205,22 @@
 		B700C18D28B920F20069FDF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon-Dev";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = "iOS-AppIcon-Dev";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cider/CiderDebug.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
-				DEVELOPMENT_TEAM = 8R23J2835D;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8R23J2835D;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1178,6 +1253,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME) (Dev)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "macOS Resign";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = macOS;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1193,27 +1270,29 @@
 		B700C18E28B920F20069FDF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = "iOS-AppIcon";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cider/Cider.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
-				DEVELOPMENT_TEAM = 8R23J2835D;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8R23J2835D;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				EXECUTABLE_NAME = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Cider/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Cider;
+				INFOPLIST_KEY_CFBundleDisplayName = "Cider (Dev)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Cider has to get access to your music library to fetch Apple Music content";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1239,6 +1318,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "macOS Resign";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = macOS;
 				STRIP_STYLE = debugging;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -1255,17 +1336,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 8R23J2835D;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
@@ -1277,17 +1359,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 8R23J2835D;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
@@ -1342,6 +1425,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.0.0;
+			};
+		};
+		B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.14.0;
 			};
 		};
 		B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */ = {
@@ -1456,14 +1547,6 @@
 				kind = branch;
 			};
 		};
-		B71B82942A3671F900DD8BC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.10.0;
-			};
-		};
 		B71B82A12A3673D500DD8BC2 /* XCRemoteSwiftPackageReference "swifter" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ciderapp/swifter.git";
@@ -1496,6 +1579,14 @@
 				minimumVersion = 4.1.1;
 			};
 		};
+		B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1516,6 +1607,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B70524C32A6F15D8001654B3 /* XCRemoteSwiftPackageReference "Cache" */;
 			productName = Cache;
+		};
+		B7107BB62AA2B8D300A83306 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B7107BB82AA2B8D300A83306 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 		B71B82682A366F3B00DD8BC2 /* SwiftyUtils */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1587,21 +1688,6 @@
 			package = B71B82912A36718800DD8BC2 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
 		};
-		B71B82952A3671F900DD8BC2 /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B71B82942A3671F900DD8BC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
-		};
-		B71B82972A3671F900DD8BC2 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B71B82942A3671F900DD8BC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		B71B82992A3671F900DD8BC2 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B71B82942A3671F900DD8BC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
 		B71B82A52A36760600DD8BC2 /* ArgumentParserKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82A42A36760600DD8BC2 /* XCRemoteSwiftPackageReference "ArgumentParserKit" */;
@@ -1631,6 +1717,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B728B0572A78453100BAC665 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
 			productName = SFSafeSymbols;
+		};
+		B7332B0F2A97D7C60019221D /* Swifter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71B82A12A3673D500DD8BC2 /* XCRemoteSwiftPackageReference "swifter" */;
+			productName = Swifter;
+		};
+		B76FC6F52A8FE14900F8F80E /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		B76FC6F72A8FE14900F8F80E /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;

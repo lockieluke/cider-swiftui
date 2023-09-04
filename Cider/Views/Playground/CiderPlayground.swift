@@ -65,7 +65,10 @@ struct CiderPlayground: View {
                             Task {
                                 self.currentTestAction = testAction
                                 self.loadingResults = true
-                                self.results = await testAction.action()
+                                self.results = "No Results"
+                                if let results = await testAction.action() {
+                                    self.results = unwrapAny(results)
+                                }
                                 self.showResults = true
                                 self.loadingResults = false
                             }

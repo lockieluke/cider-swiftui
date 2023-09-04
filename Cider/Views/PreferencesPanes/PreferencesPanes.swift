@@ -68,6 +68,18 @@ struct PreferencesPanes {
         return Settings.PaneHostingController(pane: paneView)
     }
     
+    static let AccountPreferencesViewController: (_ connectModal: ConnectModal) -> SettingsPane = { connectModal in
+        let paneView = Settings.Pane(
+            identifier: .account,
+            title: "Connect",
+            toolbarIcon: NSImage(systemSymbol: .personCircle, accessibilityDescription: "Cider Connect Preferences")
+        ) {
+            AccountPreferencesPane()
+                .environmentObject(connectModal)
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
     
     static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ ciderPlayback: CiderPlayback) -> SettingsPane = { mkModal, ciderPlayback in
         let paneView = Settings.Pane(

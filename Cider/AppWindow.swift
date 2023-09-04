@@ -16,6 +16,7 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let discordRPCModal: DiscordRPCModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
     private let cacheModal: CacheModal
+    private let connectModal: ConnectModal
     private let wsModal = WSModal.shared
     private let authModal: AuthModal
     private let appMenu: AppMenu
@@ -27,6 +28,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         
         let discordRPCModal = DiscordRPCModal()
         let cacheModal = CacheModal()
+        let connectModal = ConnectModal()
         let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback, cacheModal: cacheModal)
         let authModal = AuthModal(mkModal: mkModal, appWindowModal: self.appWindowModal, cacheModel: cacheModal)
@@ -61,6 +63,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             .environmentObject(discordRPCModal)
             .environmentObject(nativeUtilsWrapper)
             .environmentObject(cacheModal)
+            .environmentObject(connectModal)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false).then {
@@ -97,7 +100,8 @@ class AppWindow: NSObject, NSWindowDelegate {
                               ciderPlayback: ciderPlayback,
                               appWindowModal: self.appWindowModal,
                               nativeUtilsWrapper: nativeUtilsWrapper,
-                              cacheModal: cacheModal
+                              cacheModal: cacheModal,
+                              connectModal: connectModal
         )
         appMenu.loadMenus()
 
@@ -107,6 +111,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         self.discordRPCModal = discordRPCModal
         self.nativeUtilsWrapper = nativeUtilsWrapper
         self.cacheModal = cacheModal
+        self.connectModal = connectModal
         self.appMenu = appMenu
         self.mkModal = mkModal
         self.ciderPlayback = ciderPlayback

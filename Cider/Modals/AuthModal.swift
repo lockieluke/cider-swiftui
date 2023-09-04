@@ -22,8 +22,6 @@ class AuthModal: ObservableObject {
     private let cacheModel: CacheModal
     
     private static let INITIAL_URL = URLRequest(url: URL(string: "https://www.apple.com/legal/privacy/en-ww/cookies/")!)
-    private static let USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15"
-    
     private static let IS_PASSING_LOGS: Bool = CommandLine.arguments.contains("-pass-auth-logs")
     
     var authenticatingCallback: ((_ userToken: String) -> Void)?
@@ -110,7 +108,6 @@ class AuthModal: ObservableObject {
             #if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
             #endif
-            $0.customUserAgent = AuthModal.USER_AGENT
         }
         
         self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false).then {
@@ -148,12 +145,14 @@ class AuthModal: ObservableObject {
                     fatalError("Unable to load CiderWebAuth Scripts")
                 }
                 
+                let ua = await Networking.findLatestWebViewUA()
                 DispatchQueue.main.async {
                     let userScript = WKUserScript(source: """
                                                   const initialURL = \"\(AuthModal.INITIAL_URL)\";
                                                   const amToken = \"\(developerToken)\";
                                                   \(script)
                                                   """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+//                    self.wkWebView?.customUserAgent = ua
                     self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
                     self.wkWebView?.configuration.userContentController.addUserScript(userScript)
                     

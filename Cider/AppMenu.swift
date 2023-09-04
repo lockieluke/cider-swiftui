@@ -7,6 +7,7 @@ import Foundation
 import AppKit
 import Settings
 import SwiftUI
+import WebKit
 
 class AppMenu {
     
@@ -128,7 +129,9 @@ class AppMenu {
             $0.submenu?.items = [
                 NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: "").then { $0.target = self },
-                NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self }
+                NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self },
+                .separator(),
+                NSMenuItem(title: "Clear WebKit cache", action: #selector(self.clearWebViewCache(_:)), keyEquivalent: "").then { $0.target = self }
             ]
             $0.target = self
         }
@@ -201,6 +204,12 @@ class AppMenu {
     }
     
 #if DEBUG
+    @objc func clearWebViewCache(_ sender: Any) {
+        WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast) {
+            Logger.shared.info("Successfully cleared WebKit cache")
+        }
+    }
+    
     @objc func openLogViewer(_ sender: Any) {
         showLogViewer()
     }
@@ -221,6 +230,13 @@ class AppMenu {
                     return await self.mkModal.AM_API.fetchBrowse()
                 }
                 
+                return nil
+            }),
+            TestAction(name: "Fetch latest User Agent", description: "Fetch latest User Agent for WKWebView", action: {
+                return await Networking.findLatestWebViewUA()
+            }),
+            TestAction(name: "Remove UA Cache", description: "Remove latest User Agent from cache", action: {
+                Networking.clearUserAgentCache()
                 return nil
             })
         ])

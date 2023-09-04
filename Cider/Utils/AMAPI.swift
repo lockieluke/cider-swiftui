@@ -90,7 +90,7 @@ class AMAPI {
     }
     
     func initStorefront() async -> Bool {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/storefront").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/storefront").validate().serializingData().response
         
         if let error = res.error {
             self.logger.error("Failed to fetch storefront: \(error)")
@@ -106,7 +106,7 @@ class AMAPI {
         let res = await AF.request("\(APIEndpoints.AMAPI)/me/account", parameters: [
             "meta": "subscription",
             "challenge[subscriptionCapabilities]": "voice,premium"
-        ], headers: self.noAuthHeaders).serializingData().response
+        ], headers: self.noAuthHeaders).validate().serializingData().response
         
         if let error = res.error {
             self.logger.error("Failed to validate user token: \(error)")
@@ -118,7 +118,7 @@ class AMAPI {
     }
     
     func fetchRecommendations() async -> MediaRecommendationSections {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recommendations").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recommendations").validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch recommendations: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data) {
@@ -152,7 +152,7 @@ class AMAPI {
             "meta[stations]": "inflectionPoints",
             "types": "artists,albums,editorial-items,library-albums,library-playlists,music-movies,music-videos,playlists,stations,uploaded-audios,uploaded-videos,activities,apple-curators,curators,tv-shows,social-upsells",
             "platform": "web"
-        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch personal recommendations: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let sections = json["data"].array {
@@ -171,7 +171,7 @@ class AMAPI {
     }
     
     func fetchTracks(id: String, type: MediaType) async throws -> [MediaTrack] {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/\(type.rawValue)/\(id)").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/\(type.rawValue)/\(id)").validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch tracks: \(error)")
             throw error
@@ -183,7 +183,7 @@ class AMAPI {
     }
     
     func fetchSong(id: String) async throws -> MediaTrack {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/songs/\(id)").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/songs/\(id)").validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch song: \(error)")
             throw error
@@ -217,7 +217,7 @@ class AMAPI {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/artists/\(id)", parameters: [
             "views": params.map { param in param.rawValue }.joined(separator: ","),
             "extend": extendParams.map { param in param.rawValue }.joined(separator: ",")
-        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch artist: \(error)")
             throw error
@@ -241,7 +241,7 @@ class AMAPI {
             "kinds": kinds.map { kind in kind.rawValue }.joined(separator: ","),
             "types": types.map { type in type.rawValue }.joined(separator: ","),
             "term": term
-        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch search suggestions: \(error)")
             throw error
@@ -256,7 +256,7 @@ class AMAPI {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/search", parameters: [
             "types": types.map { type in type.rawValue }.joined(separator: ","),
             "term": term.replacingOccurrences(of: "", with: "+")
-        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch search results: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data) {
@@ -267,7 +267,7 @@ class AMAPI {
     }
     
     func fetchRatings(item: MediaDynamic) async -> MediaRatings {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)").validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch ratings: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let rawRatings = json["data"].array?.first?["attributes"]["value"].int {
@@ -279,7 +279,7 @@ class AMAPI {
     
     @discardableResult
     func setRatings(item: MediaDynamic, ratings: MediaRatings) async -> MediaRatings {
-        let res = await (ratings == .Neutral ? AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .delete) : AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .put, parameters: ["type": "rating", "attributes": [ "value": ratings.rawValue ]], encoding: JSONEncoding.default)).serializingData().response
+        let res = await (ratings == .Neutral ? AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .delete) : AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .put, parameters: ["type": "rating", "attributes": [ "value": ratings.rawValue ]], encoding: JSONEncoding.default)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch ratings: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let rawRatings = json["data"].array?.first?["attributes"]["value"].int {
@@ -294,7 +294,7 @@ class AMAPI {
             "ids[\(item.type)]": (item.id as NSString).integerValue,
             "relate": "library",
             "fields": "inLibrary"
-        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to check if \(item.id) is in library: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let data = json["data"].array?.first, let inLibrary = data["attributes"]["inLibrary"].bool, let libraryId = data["relationships"]["library"]["data"].array?.first?["id"].string {
@@ -319,7 +319,7 @@ class AMAPI {
     }
     
     func fetchLyricsXml(item: MediaDynamic) async -> String? {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/gb/\(item.type)/\(item.id)/syllable-lyrics").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/gb/\(item.type)/\(item.id)/syllable-lyrics").validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch lyrics \(item.id): \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let ttml = json["data"].array?.first?["attributes"]["ttml"].string {
@@ -343,7 +343,7 @@ class AMAPI {
     }
     
     func fetchPersonalSocialProfile() async -> SocialProfile? {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/social-profile").serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/social-profile").validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch personal social profile: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let attributes = json["data"].array?.first?["attributes"] {
@@ -359,7 +359,7 @@ class AMAPI {
             parameters?["limit"] = limit
         }
         
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: parameters, encoding: URLEncoding(destination: .queryString)).serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: parameters, encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch personal social profile: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
@@ -398,7 +398,7 @@ class AMAPI {
             "platform": "web",
             "relate[songs]": "albums",
             "tabs": "subscriber"
-        ], encoding: URLEncoding(destination: .queryString)).serializingData().response
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch browse: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let tabsChildren = json["data"].array?.first?["relationships"]["tabs"]["data"].array?.first?["relationships"]["children"]["data"] {

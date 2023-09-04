@@ -82,7 +82,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     init(appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModalOrNil? = nil) {
         let logger = Logger(label: "CiderPlayback")
-        let agentPort = NetworkingProvider.findFreeLocalPort()
+        let agentPort = Networking.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
         self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, wsTarget: .CiderPlaybackAgent, defaultHeaders:  [
             "Agent-Session-ID": agentSessionId,

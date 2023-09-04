@@ -5,6 +5,7 @@
 import Foundation
 import FirebaseCore
 import FirebaseAnalytics
+import GoogleSignIn
 import SwiftyUtils
 import SwiftUI
 import SFSafeSymbols
@@ -42,6 +43,9 @@ class AppDelegate : NSObject, ApplicationDelegate {
 #if canImport(AppKit)
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.commonEntryPoint()
+        
+        Networking.initialise()
+        
         let discordRPCModal = DiscordRPCModal()
         let nativeUtilsWrapper = NativeUtilsWrapper()
         let appWindow = AppWindow(discordRPCModal: discordRPCModal, nativeUtilsWrapper: nativeUtilsWrapper)
@@ -136,6 +140,12 @@ class AppDelegate : NSObject, ApplicationDelegate {
 //        menu.addItem(Menu.wrapMenuItem(NSMenuItem(title: "Search", action: nil, keyEquivalent: "")))
         
         return menu
+    }
+    
+    func application(_ application: NSApplication, open urls: [URL]) {
+        if let firstUrl = urls.first {
+            GIDSignIn.sharedInstance.handle(firstUrl)
+        }
     }
     #endif
     

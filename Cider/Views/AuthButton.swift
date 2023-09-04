@@ -7,13 +7,79 @@
 //
 
 import SwiftUI
+import Inject
 
 struct AuthButton: View {
+    
+    @ObservedObject private var iO = Inject.observer
+    
+    enum AuthType {
+        case apple, google, azure
+        
+        var name: String {
+            switch self {
+            case .apple:
+                return "Apple"
+                
+            case .google:
+                return "Google"
+                
+            case .azure:
+                return "Azure"
+            }
+        }
+        
+        var icon: AnyView {
+            switch self {
+            case .apple:
+                return AppleIcon()
+                    .fill(.white)
+                    .frame(width: 20, height: 20)
+                    .erasedToAnyView()
+                
+            case .google:
+                return Image("Google")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 15, height: 15)
+                    .erasedToAnyView()
+                
+            case .azure:
+                return Image("Azure")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 15, height: 15)
+                    .erasedToAnyView()
+            }
+        }
+    }
+    
+    private let authType: AuthType
+    private let onClick: (() -> Void)?
+    
+    init(_ authType: AuthType, _ onClick: (() -> Void)? = nil) {
+        self.authType = authType
+        self.onClick = onClick
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            authType.icon
+            
+            Text("Sign in with \(authType.name)")
+                .foregroundStyle(.white)
+        }
+        .padding(10)
+        .background(RoundedRectangle(cornerRadius: 5).fill(.black).frame(minWidth: 170))
+        .onTapGesture {
+            self.onClick?()
+        }
+        .modifier(TapEffectModifier())
+        .contentShape(RoundedRectangle(cornerRadius: 5))
+        .enableInjection()
     }
 }
 
 #Preview {
-    AuthButton()
+    AuthButton(.apple)
 }

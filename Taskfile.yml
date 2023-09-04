@@ -114,13 +114,17 @@ tasks:
 
   build:cwa-js:
     dir: 'CiderWebAuth/'
-    desc: "Build CiderWebAuth"
+    desc: "Build CiderWebAuth - Connect and WebAuth"
     sources:
       - src/**/*.ts
     generates:
       - dist/ciderwebauth.js
+      - dist/ciderconnectauth.js
+      - dist/ciderconnectauth.user.js
     cmds:
-      - yarn build
+      - yarn build:webauth
+      - yarn build:connectauth
+      - yarn build:connectauth-userscript
 
   build:cpa-js:
     dir: 'CiderPlaybackAgent/Web Scripts/'

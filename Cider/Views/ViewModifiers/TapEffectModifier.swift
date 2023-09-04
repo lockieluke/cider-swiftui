@@ -7,3 +7,18 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct TapEffectModifier: ViewModifier {
+    
+    @State private var isClicking = false
+    
+    func body(content: Content) -> some View {
+        content
+            .brightness(isClicking ? -0.2 : 0)
+            .modifier(PressActions(onEvent: { isClicking in
+                self.isClicking = isClicking
+            }))
+    }
+    
+}

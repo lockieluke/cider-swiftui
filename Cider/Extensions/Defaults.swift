@@ -16,8 +16,9 @@ enum AudioQuality: Int {
 extension Defaults.Keys {
     
     static let audioQuality = Key<Int>("audioQuality", default: 256)
-    
     static let playbackAutoplay = Key<Bool>("playbackAutoplay", default: true)
+    
+    static let signInMethod = Key<SignInMethod?>("signInMethod")
     
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)
