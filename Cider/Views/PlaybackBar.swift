@@ -24,11 +24,11 @@ struct PlaybackBar: View {
         PatchedGeometryReader { geometry in
             HStack {
                 let nowPlayingState = ciderPlayback.nowPlayingState
-                let overlayBarWidth = currentTimeValue / (nowPlayingState.duration ?? 1)
+                let overlayBarWidth = currentTimeValue / nowPlayingState.duration
                 let playbackBarWidth = currentTimeValue == 0 ? 0 : playbackBarWidth * overlayBarWidth.f + 1
                 Text("\(isEditingTrack ? currentTimeValue.minuteSecond : (nowPlayingState.currentTime?.minuteSecond ?? "0:00"))").isHidden(!nowPlayingState.hasItemToPlay)
                 
-                ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...(nowPlayingState.duration ?? 0), step: 1, onEditingChanged: { isEditing in
+                ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...nowPlayingState.duration, step: 1, onEditingChanged: { isEditing in
                     if isEditing != self.isEditingTrack {
                         Debouncer.debounce(delay: .milliseconds(100), shouldRunImmediately: false) {
                             DispatchQueue.main.async {
@@ -95,7 +95,7 @@ struct PlaybackBar: View {
                 ))
                 .frame(width: geometry.minRelative * 20, height: 5)
                 
-                Text("\(nowPlayingState.duration?.minuteSecond ?? "0:00")").isHidden(!nowPlayingState.hasItemToPlay)
+                Text("\(ciderPlayback.nowPlayingState.duration.minuteSecond)").isHidden(!nowPlayingState.hasItemToPlay)
             }
             .onChange(of: self.ciderPlayback.nowPlayingState.currentTime) { newCurrentTime in
                 if newCurrentTime == self.ciderPlayback.nowPlayingState.duration {

@@ -17,7 +17,7 @@ struct NowPlayingState {
     var isPlaying = false, isReady = true, hasItemToPlay = false, playbackPipelineInitialised = false
     var currentTime: TimeInterval?
     var remainingTime: TimeInterval?
-    var duration: TimeInterval?
+    var duration: TimeInterval = 0.0
     
     mutating func reset() {
         self.item = nil
@@ -29,7 +29,7 @@ struct NowPlayingState {
         self.hasItemToPlay = false
         self.currentTime = nil
         self.remainingTime = nil
-        self.duration = nil
+        self.duration = 0.0
     }
     
 }
@@ -391,6 +391,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         let title, artistName: String
         let artwork: MediaArtwork
         
+        if item.id == self.nowPlayingState.item?.id {
+            return
+        }
+        
         switch item {
             
         case .mediaTrack(let mediaTrack):
@@ -412,10 +416,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         
         let artworkURL = artwork.getUrl(width: 200, height: 200)
         #if os(macOS)
-        self.discordRPCModal.agent.setActivityAssets(artworkURL.absoluteString, title, "", "")
-        self.discordRPCModal.agent.setActivityState("by " + artistName)
-        self.discordRPCModal.agent.setActivityDetails(title)
         DispatchQueue.global(qos: .default).async {
+            self.discordRPCModal.agent.setActivityAssets(artworkURL.absoluteString, title, "", "")
+            self.discordRPCModal.agent.setActivityState("by " + artistName)
+            self.discordRPCModal.agent.setActivityDetails(title)
             self.discordRPCModal.agent.updateActivity()
         }
         #endif
@@ -551,7 +555,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 Throttler.throttle(shouldRunImmediately: true) {
                     DispatchQueue.main.async {
                         let currentTime = TimeInterval(json["currentTime"].intValue + 1)
-                        let remainingTime = TimeInterval(json["remainingTime"].int ?? 0)
+                        let remainingTime = TimeInterval(json["remainingTime"].intValue)
                         if self.appWindowModal.isFocused || self.appWindowModal.isVisibleInViewport {
                             self.nowPlayingState.currentTime = currentTime
                             self.nowPlayingState.remainingTime = remainingTime
@@ -561,7 +565,12 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 break
                 
             case "playbackDurationDidChange":
-                self.nowPlayingState.duration = TimeInterval(json["duration"].int ?? 0)
+                DispatchQueue.main.async {
+                    let timeInterval = TimeInterval(json["duration"].doubleValue)
+                    if self.nowPlayingState.duration != timeInterval {
+                        self.nowPlayingState.duration = timeInterval
+                    }
+                }
                 break
                 
             case "queueItemsDidChange":
