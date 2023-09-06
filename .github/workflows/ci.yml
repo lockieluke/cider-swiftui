@@ -22,6 +22,14 @@ jobs:
       - name: Install Homebrew dependencies
         run: brew bundle
 
+      - name: Install provisioning profile
+        env:
+          MACOS_PROVISIONING_PROFILE_UUID: ${{ secrets.MACOS_PROVISIONING_PROFILE_UUID }}
+          MACOS_PROVISIONING_PROFILE_B64: ${{ secrets.MACOS_PROVISIONING_PROFILE_B64 }}
+        run: |
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          echo -n $MACOS_PROVISIONING_PROFILE_B64 | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/$MACOS_PROVISIONING_PROFILE_UUID.provisionprofile"
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
