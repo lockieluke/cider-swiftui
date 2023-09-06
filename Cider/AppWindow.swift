@@ -75,9 +75,11 @@ class AppWindow: NSObject, NSWindowDelegate {
             $0.titleVisibility = .hidden
             $0.title = Bundle.main.displayName
             
-//            let toolbar = NSToolbar()
-//            $0.showsToolbarButton = false
-//            $0.toolbar = toolbar
+            if #unavailable(macOS 14.0) {
+                let toolbar = NSToolbar()
+                $0.showsToolbarButton = false
+                $0.toolbar = toolbar
+            }
             
             var pos = NSPoint()
             pos.x = activeScreen.visibleFrame.midX
@@ -127,7 +129,11 @@ class AppWindow: NSObject, NSWindowDelegate {
                     make.top.equalTo(17)
                     
                     let currentX = button.frame.origin.x
-                    make.left.left.equalTo(currentX + 10.0)
+                    if #available(macOS 14.0, *) {
+                        make.left.equalTo(currentX + 10.0)
+                    } else {
+                        make.left.equalTo(currentX + 7.0)
+                    }
                 }
             }
             
