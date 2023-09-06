@@ -357,6 +357,7 @@
 		B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderwebauth.js; path = CiderWebAuth/dist/ciderwebauth.js; sourceTree = "<group>"; };
 		B7D62BF12A365FD000E26C84 /* ciderplaybackagent.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderplaybackagent.js; path = "CiderPlaybackAgent/Web Scripts/dist/ciderplaybackagent.js"; sourceTree = "<group>"; };
 		B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestions.swift; sourceTree = "<group>"; };
+		B7E5A4EC2AA9395E00B9A784 /* CiderPlaybackAgentRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CiderPlaybackAgentRelease.entitlements; sourceTree = "<group>"; };
 		B7E72360299455430086EDA4 /* MediaArtistPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaArtistPresentable.swift; sourceTree = "<group>"; };
 		B7EA1019299FFA6A000998A5 /* DiscordRPCModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscordRPCModal.swift; sourceTree = "<group>"; };
 		B7ECB7A728FAD07D00B5DF11 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -677,6 +678,7 @@
 		B7C9CD882908467A00A67CE4 /* CiderPlaybackAgent */ = {
 			isa = PBXGroup;
 			children = (
+				B7E5A4EC2AA9395E00B9A784 /* CiderPlaybackAgentRelease.entitlements */,
 				B7C9CD912908796D00A67CE4 /* Extensions */,
 				B7C9CD8E2908621400A67CE4 /* CiderPlaybackAgent.entitlements */,
 				B7C9CD892908467A00A67CE4 /* main.swift */,
@@ -1214,7 +1216,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cider/CiderDebug.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1276,7 +1278,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
 				DEVELOPMENT_TEAM = 8R23J2835D;
@@ -1332,11 +1334,13 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1350,15 +1354,17 @@
 		B7C9CD8C2908467A00A67CE4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgentRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.CiderPlaybackAgent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
