@@ -65,6 +65,7 @@ jobs:
           source "$HOME/.cargo/env"
           rustup +nightly target add aarch64-apple-darwin x86_64-apple-darwin
           rustup default nightly
+          echo "${HOME}/.cargo/bin" >> $GITHUB_PATH
 
       - name: Install cargo-lipo from crates.io
         uses: baptiste0928/cargo-install@v2
