@@ -8,6 +8,8 @@ jobs:
   build-mac:
     name:  Build Mac
     runs-on: [self-hosted, macOS, ARM64]
+    env:
+      KEYCHAIN: job-${{ github.job }}-${{ github.run_id	}}-${{ github.run_number }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v3
 
@@ -25,6 +27,7 @@ jobs:
       - name: Install P12 Key
         uses: apple-actions/import-codesign-certs@v2
         with: 
+          keychain: ${{ env.KEYCHAIN }}
           p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
           p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
 
@@ -129,6 +132,11 @@ jobs:
           name: Cider.dmg
           path: ${{ runner.temp }}/dest/Cider.dmg
           retention-days: 1
+
+      - name: Delete keychain
+        if: always() # Always run this step to ensure the keychain is properly disposed of
+        run: |
+          security delete-keychain "${{ env.KEYCHAIN }}".keychain
 
       - uses: sarisia/actions-status-discord@v1
         if: always()
