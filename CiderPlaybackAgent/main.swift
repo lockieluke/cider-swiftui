@@ -153,6 +153,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
                     requestObj["supportsAirPlay"].bool = supportsAirPlay
                     break
                     
+                case "/open-inspector":
+                    self.musicKitWorker?.openInspectorInNewWindow()
+                    break
+                    
                 default:
                     break
                 }

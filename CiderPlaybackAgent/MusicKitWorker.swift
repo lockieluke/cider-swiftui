@@ -246,17 +246,17 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
     
     func openInspectorInNewWindow() {
 #if DEBUG
-        if self.config["openWebInspectorAutomatically"].boolValue {
-            if let inspector = self.wkWebView.value(forKey: "_inspector") as? AnyObject {
-                _ = inspector.perform(Selector(("showConsole")))
-            }
+        if let inspector = self.wkWebView.value(forKey: "_inspector") as? AnyObject {
+            _ = inspector.perform(Selector(("showConsole")))
         }
 #endif
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // hack to show WKInspector of the headless WKWebView without Safari
-        self.openInspectorInNewWindow()
+        if self.config["openWebInspectorAutomatically"].boolValue {
+            self.openInspectorInNewWindow()
+        }
         
         self.callCallbacks("ciderPlaybackAgentReady", [:])
     }

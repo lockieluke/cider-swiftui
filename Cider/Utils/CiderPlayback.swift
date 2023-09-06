@@ -342,6 +342,17 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     }
     
     @MainActor
+    func openInspector() async {
+        if self.isReady {
+            do {
+                _ = try await self.wsCommClient.request("/open-inspector")
+            } catch {
+                self.logger.error("Failed to open CIderWebAgent's inspector", displayCross: true)
+            }
+        }
+    }
+    
+    @MainActor
     func togglePlaybackSync() {
         Task {
             await (self.nowPlayingState.isPlaying ? self.pause() : self.play())

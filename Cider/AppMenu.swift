@@ -129,6 +129,7 @@ class AppMenu {
             $0.submenu?.items = [
                 NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: "").then { $0.target = self },
+                NSMenuItem(title: "Open CiderPlaybackAgent debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self },
                 .separator(),
                 NSMenuItem(title: "Clear WebKit cache", action: #selector(self.clearWebViewCache(_:)), keyEquivalent: "").then { $0.target = self }
@@ -213,7 +214,6 @@ class AppMenu {
     @objc func openLogViewer(_ sender: Any) {
         showLogViewer()
     }
-#endif
     
     @objc func openPlaygrounds(_ sender: Any) {
         if hasPreviouslyOpenedPlayground {
@@ -284,6 +284,13 @@ class AppMenu {
         playgroundWindow.makeKeyAndOrderFront(sender)
         self.hasPreviouslyOpenedPlayground = true
     }
+    
+    @objc func openInspector(_ sender: Any) {
+        Task {
+            await self.ciderPlayback.openInspector()
+        }
+    }
+#endif
     
     @objc func terminate(_ sender: Any) {
         print("Terminating")
