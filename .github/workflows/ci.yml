@@ -22,6 +22,11 @@ jobs:
       - name: Install Homebrew dependencies
         run: brew bundle
 
+      - uses: apple-actions/import-codesign-certs@v2
+        with: 
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
       - name: Install provisioning profile
         env:
           MACOS_PROVISIONING_PROFILE_UUID: ${{ secrets.MACOS_PROVISIONING_PROFILE_UUID }}
