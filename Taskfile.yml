@@ -193,7 +193,7 @@ tasks:
           echo "Exporting archive to {{.XC_ARCHIVE}} on CI"
         fi
       - rm -rf {{.XC_ARCHIVE}}
-      - set -o pipefail && xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
+      - set -o pipefail && xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -allowProvisioningUpdates -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
   archive:build-app-bundle:
     desc: "Export .app bundle from .xcarchive"
