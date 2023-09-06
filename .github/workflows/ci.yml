@@ -22,7 +22,8 @@ jobs:
       - name: Install Homebrew dependencies
         run: brew bundle
 
-      - uses: apple-actions/import-codesign-certs@v2
+      - name: Install P12 Key
+        uses: apple-actions/import-codesign-certs@v2
         with: 
           p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
           p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
@@ -34,6 +35,11 @@ jobs:
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
           echo -n $MACOS_PROVISIONING_PROFILE_B64 | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/$MACOS_PROVISIONING_PROFILE_UUID.provisionprofile"
+
+      - name: Update SPM Packages
+        uses: GetSidetrack/action-xcodeproj-spm-update@main
+        with:
+          scheme: 'Cider - Release'
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
