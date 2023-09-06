@@ -66,7 +66,7 @@ jobs:
           rustup +nightly target add aarch64-apple-darwin x86_64-apple-darwin
           rustup default nightly
 
-      - name: Install cargo-hack from crates.io
+      - name: Install cargo-lipo from crates.io
         uses: baptiste0928/cargo-install@v2
         with:
           crate: cargo-lipo
