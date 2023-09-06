@@ -476,7 +476,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             case "ciderPlaybackAgentReady":
                 Task {
                     await self.setAutoPlay(self.playbackBehaviour.autoplayEnabled)
-                    await self.setAudioQuality(AudioQuality(rawValue: Defaults[.audioQuality])!)
+                    await self.setAudioQuality(Defaults[.audioQuality])
                 }
                 break
                 

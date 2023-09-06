@@ -14,7 +14,7 @@ struct AudioPreferencesPane: View {
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
-    @State private var audioQuality: AudioQuality = .High
+    @Default(.audioQuality) private var audioQuality
     
     var audioQualityDescription: String {
         get {
@@ -49,7 +49,7 @@ struct AudioPreferencesPane: View {
                         .onChange(of: audioQuality) { audioQuality in
                             Debouncer.debounce {
                                 Task {
-                                    Defaults[.audioQuality] = audioQuality.rawValue
+                                    Defaults[.audioQuality] = audioQuality
                                     await self.ciderPlayback.setAudioQuality(audioQuality)
                                 }
                             }

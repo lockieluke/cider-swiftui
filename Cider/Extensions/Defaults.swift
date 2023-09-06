@@ -9,13 +9,13 @@
 import Foundation
 import Defaults
 
-enum AudioQuality: Int {
-    case Standard = 65, High = 256, Lossless = 0
+enum AudioQuality: Int, Defaults.Serializable {
+    case Standard = 64, High = 256, Lossless = 0
 }
 
 extension Defaults.Keys {
     
-    static let audioQuality = Key<Int>("audioQuality", default: 256)
+    static let audioQuality = Key<AudioQuality>("audioQuality", default: .High)
     static let playbackAutoplay = Key<Bool>("playbackAutoplay", default: true)
     
     static let signInMethod = Key<SignInMethod?>("signInMethod")
