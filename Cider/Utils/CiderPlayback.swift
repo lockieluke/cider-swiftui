@@ -446,8 +446,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         semaphore.wait()
     }
     
-    
-    func didReceive(event: WebSocketEvent, client: WebSocket) {
+    func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
             
         case .connected:
