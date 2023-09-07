@@ -746,7 +746,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B700C18C28B920F20069FDF5 /* Build configuration list for PBXNativeTarget "Cider" */;
 			buildPhases = (
-				B76E1D5129A01A120087D3E5 /* Build DIscordRPCAgent */,
+				B76E1D5129A01A120087D3E5 /* Build DiscordRPCAgent */,
 				B74EEBD529D8862500711DB6 /* Build NativeUtils */,
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
@@ -913,7 +913,7 @@
 			shellPath = /bin/zsh;
 			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile NativeUtils\"\n    curl \"localhost:2345/perform-task?task=build:native-utils-lib\"\nfi\n";
 		};
-		B76E1D5129A01A120087D3E5 /* Build DIscordRPCAgent */ = {
+		B76E1D5129A01A120087D3E5 /* Build DiscordRPCAgent */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -923,7 +923,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Build DIscordRPCAgent";
+			name = "Build DiscordRPCAgent";
 			outputFileListPaths = (
 			);
 			outputPaths = (
