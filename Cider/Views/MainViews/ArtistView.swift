@@ -97,7 +97,23 @@ struct ArtistView: View {
                             ScrollView(.horizontal) {
                                 LazyHStack {
                                     ForEach(artist.singles, id: \.id) { single in
-                                        MediaPresentable(item: .mediaTrack(single), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
+                                        MediaPresentable(item: .mediaItem(single), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
+                                            .padding(.vertical)
+                                    }
+                                }
+                            }
+                            .transparentScrollbars()
+                        }
+                        .padding(.vertical)
+                        
+                        VStack(alignment: .leading) {
+                            Text("Albums")
+                                .font(.title2.bold())
+                            
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(artist.fullAlbums, id: \.id) { fullAlbum in
+                                        MediaPresentable(item: .mediaItem(fullAlbum), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
                                             .padding(.vertical)
                                     }
                                 }
@@ -164,7 +180,7 @@ struct ArtistView: View {
             
             let fetchById: (_ id: String) async -> Void = { id in
                 do {
-                    self.artist = try await self.mkModal.AM_API.fetchArtist(id: id, params: [.TopSongs, .Singles, .LatestRelease, .SimilarAritsts], extendParams: [.artistBio, .origin])
+                    self.artist = try await self.mkModal.AM_API.fetchArtist(id: id, params: [.TopSongs, .Singles, .FullAlbums, .LatestRelease, .SimilarAritsts], extendParams: [.artistBio, .origin])
                 } catch {
                     print(error)
                 }

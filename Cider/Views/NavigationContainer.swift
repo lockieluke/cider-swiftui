@@ -21,7 +21,7 @@ struct NavigationContainer: View {
     
     @State private var showProgressBar = false
     
-    private let progressBarAnimation = Animation.spring
+    private let progressBarAnimation = Animation.spring()
     
     var body: some View {
         ZStack {
@@ -45,7 +45,7 @@ struct NavigationContainer: View {
                     case .rootViewParams:
                         Group {
                             HomeView(onDataLoaded: {
-                                withAnimation(self.progressBarAnimation) {
+                                withAnimation(progressBarAnimation) {
                                     self.showProgressBar = false
                                 }
                             })
@@ -111,7 +111,7 @@ struct NavigationContainer: View {
         .padding(.top, 40)
         .padding(.bottom, 100)
         .onAppear {
-            withAnimation(self.progressBarAnimation.delay(0.1)) {
+            withAnimation(progressBarAnimation.delay(0.1)) {
                 self.showProgressBar = true
             }
         }

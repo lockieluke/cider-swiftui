@@ -20,10 +20,8 @@ struct AuthButton: View {
             switch self {
             case .apple:
                 return "Apple"
-                
             case .google:
                 return "Google"
-                
             case .azure:
                 return "Azure"
             }
@@ -36,14 +34,12 @@ struct AuthButton: View {
                     .fill(.white)
                     .frame(width: 20, height: 20)
                     .erasedToAnyView()
-                
             case .google:
                 return Image("Google")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 15, height: 15)
                     .erasedToAnyView()
-                
             case .azure:
                 return Image("Azure")
                     .resizable()
@@ -78,8 +74,4 @@ struct AuthButton: View {
         .contentShape(RoundedRectangle(cornerRadius: 5))
         .enableInjection()
     }
-}
-
-#Preview {
-    AuthButton(.apple)
 }
