@@ -92,8 +92,25 @@ struct ArtistView: View {
                         .padding(.vertical, 10)
                         
                         VStack(alignment: .leading) {
-                            Text("Singles")
+                            Text("Albums")
                                 .font(.title2.bold())
+                            
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(artist.fullAlbums, id: \.id) { fullAlbum in
+                                        MediaPresentable(item: .mediaItem(fullAlbum), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
+                                            .padding(.vertical)
+                                    }
+                                }
+                            }
+                            .transparentScrollbars()
+                        }
+                        .padding(.vertical)
+                        
+                        VStack(alignment: .leading) {
+                            Text("Singles & EPs")
+                                .font(.title2.bold())
+                            
                             ScrollView(.horizontal) {
                                 LazyHStack {
                                     ForEach(artist.singles, id: \.id) { single in
@@ -107,13 +124,13 @@ struct ArtistView: View {
                         .padding(.vertical)
                         
                         VStack(alignment: .leading) {
-                            Text("Albums")
+                            Text("Appears On")
                                 .font(.title2.bold())
                             
                             ScrollView(.horizontal) {
                                 LazyHStack {
-                                    ForEach(artist.fullAlbums, id: \.id) { fullAlbum in
-                                        MediaPresentable(item: .mediaItem(fullAlbum), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
+                                    ForEach(artist.appearsOnAlbums, id: \.id) { album in
+                                        MediaPresentable(item: .mediaItem(album), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
                                             .padding(.vertical)
                                     }
                                 }
@@ -140,36 +157,67 @@ struct ArtistView: View {
                     }
                     
                     if let artistBio = artist.artistBio {
-                        Text("About \(artist.artistName)")
-                            .font(.title2.bold())
-                        
-                        AttributedText(artistBio)
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical)
-                            .modifier(SimpleHoverModifier())
-                    }
-                    
-                    if let origin = artist.origin {
-                        HStack {
+                        HStack(spacing: 20) {
                             VStack(alignment: .leading) {
-                                Text("Hometown")
+                                Text("About \(artist.artistName)")
                                     .font(.title2.bold())
-                                Text("\(origin)")
+
+                                AttributedText(artistBio)
+                                    .multilineTextAlignment(.leading)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical)
+                                    .modifier(SimpleHoverModifier())
                             }
-                            .modifier(SimpleHoverModifier())
-                            
+
                             VStack(alignment: .leading) {
-                                Text("Born")
-                                    .font(.title2.bold())
-                                Text("12th December 2023")
+                                if let origin = artist.origin {
+                                    VStack(alignment: .leading) {
+                                        Text("Origin")
+                                            .font(.title2.bold())
+                                        Text("\(origin)")
+                                            .padding(.vertical)
+                                    }
+                                    .modifier(SimpleHoverModifier())
+                                }
+
+                                if let bornOrFormed = artist.bornOrFormed {
+                                    VStack(alignment: .leading) {
+                                        Text("Born")
+                                            .font(.title2.bold())
+                                        Text("\(bornOrFormed)")
+                                            .padding(.vertical)
+                                    }
+                                    .modifier(SimpleHoverModifier())
+                                }
+                                
+                                Spacer()
                             }
-                            .modifier(SimpleHoverModifier())
-                            .padding(.leading)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom)
+                    } else {
+                        HStack(spacing: 20) {
+                            if let origin = artist.origin {
+                                VStack(alignment: .leading) {
+                                    Text("Origin")
+                                        .font(.title2.bold())
+                                    Text("\(origin)")
+                                        .padding(.vertical)
+                                }
+                                .modifier(SimpleHoverModifier())
+                            }
+
+                            if let bornOrFormed = artist.bornOrFormed {
+                                VStack(alignment: .leading) {
+                                    Text("Born")
+                                        .font(.title2.bold())
+                                    Text("\(bornOrFormed)")
+                                        .padding(.vertical)
+                                }
+                                .modifier(SimpleHoverModifier())
+                            }
+                        }
                     }
+
+
                 }
                 .padding(.horizontal)
             }
@@ -180,7 +228,7 @@ struct ArtistView: View {
             
             let fetchById: (_ id: String) async -> Void = { id in
                 do {
-                    self.artist = try await self.mkModal.AM_API.fetchArtist(id: id, params: [.TopSongs, .Singles, .FullAlbums, .LatestRelease, .SimilarAritsts], extendParams: [.artistBio, .origin])
+                    self.artist = try await self.mkModal.AM_API.fetchArtist(id: id, params: [.TopSongs, .Singles, .FullAlbums, .LatestRelease, .SimilarAritsts, .AppearsOnAlbum], extendParams: [.artistBio, .origin, .bornOrFormed])
                 } catch {
                     print(error)
                 }

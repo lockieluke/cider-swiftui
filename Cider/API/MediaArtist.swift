@@ -21,9 +21,11 @@ struct MediaArtist {
     let singles: [MediaItem]
     let fullAlbums: [MediaItem]
     let similarArtists: [MediaArtist]
+    let appearsOnAlbums: [MediaItem]
     
     let artistBio: String?
     let origin: String?
+    let bornOrFormed: String?
     
     init(data: JSON) {
         self.id = data["id"].stringValue
@@ -35,6 +37,7 @@ struct MediaArtist {
         
         self.artistBio = attributes["artistBio"].string
         self.origin = attributes["origin"].string
+        self.bornOrFormed = attributes["bornOrFormed"].string
         
         let views = data["views"]
         self.topSongs = views["top-songs"]["data"].arrayValue.map { MediaTrack(data: $0) }
@@ -42,6 +45,7 @@ struct MediaArtist {
         self.singles = views["singles"]["data"].arrayValue.map { MediaItem(data: $0) }
         self.fullAlbums = views["full-albums"]["data"].arrayValue.map { MediaItem(data: $0) }
         self.similarArtists = views["similar-artists"]["data"].arrayValue.map { MediaArtist(data: $0) }
+        self.appearsOnAlbums = views["appears-on-albums"]["data"].arrayValue.map { MediaItem(data: $0) }
     }
     
 }
