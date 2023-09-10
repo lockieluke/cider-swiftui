@@ -16,6 +16,12 @@ struct BrowseView: View {
     @EnvironmentObject private var mkModal: MKModal
     
     @State private var browseData: [MediaBrowseData] = []
+    @State private var browseData316: [MediaBrowseData] = []
+    
+    @Namespace private var animationNamespace
+    
+    let heroCardSize: CGSize = CGSize(width: 550, height: 225)
+    let coverKindValue: String = "bb"
     
     var body: some View {
         ScrollView(.vertical) {
@@ -25,14 +31,29 @@ struct BrowseView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 
-                ForEach(browseData, id: \.id) { browseDataRow in
-                    Text(browseDataRow.name)
+                ScrollView(.horizontal) {
+                    LazyHStack {
+                        ForEach(browseData316, id: \.id) { browseDataRow in
+                            ForEach(browseDataRow.items, id: \.self) { item in
+                                HeroCard(
+                                    item: item,
+                                    geometryMatching: animationNamespace,
+                                    originalSize: heroCardSize,
+                                    coverKind: coverKindValue
+                                )
+                                .frame(width: heroCardSize.width, height: heroCardSize.height)
+                            }
+                        }
+                    }
                 }
+                
+                
+                
             }
         }
-        .transparentScrollbars()
         .task {
             self.browseData = await self.mkModal.AM_API.fetchBrowse()
+            self.browseData316 = browseData.filter { $0.kind.rawValue == "316" }
         }
         .enableInjection()
     }
