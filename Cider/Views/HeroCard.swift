@@ -83,7 +83,7 @@ struct HeroCard: View {
                     }
                 }.onTapGesture {
                     Task {
-                        await navigateArtist(artistID: item.id)
+                        await navigateArtist(artistID: item.artistId)
                     }
                 }.modifier(SimpleHoverModifier())
                 

@@ -22,6 +22,7 @@ struct BrowseItemAttributes: Hashable {
     let artistName: String
     let url: String
     let artistUrl: String
+    let artistId: String
     let subscriptionHero: String
     let plainEditorialNotes: String
 }
@@ -70,10 +71,11 @@ struct MediaBrowseData {
         let kind = actualMeta["playParams"]["kind"].string ?? ""
         let url = actualMeta["url"].string ?? ""
         let artistUrl = actualMeta["artistUrl"].string ?? ""
+        let artistId = actualMeta["artistUrl"].string?.split(separator: "/").last.map(String.init) ?? ""
         let subscriptionHero = getArtwork(from: actualMeta)
         let plainEditorialNotes = actualMeta["plainEditorialNotes"]["short"].string ?? ""
         
-        return BrowseItemAttributes(designBadge: badge, name: name, id: id, kind: kind, artistName: artist, url: url, artistUrl: artistUrl, subscriptionHero: subscriptionHero, plainEditorialNotes: plainEditorialNotes)
+        return BrowseItemAttributes(designBadge: badge, name: name, id: id, kind: kind, artistName: artist, url: url, artistUrl: artistUrl, artistId: artistId, subscriptionHero: subscriptionHero, plainEditorialNotes: plainEditorialNotes)
     }
     
     private static func getArtwork(from meta: JSON) -> String {
