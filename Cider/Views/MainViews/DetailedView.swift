@@ -140,10 +140,10 @@ struct DetailedView: View {
                             .foregroundColor(.gray)
                         
                         
-                        Text("\(description.standard)")
+                        Text(description.standard.htmlToString)
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: 300)
-                        
+
                         HStack {
                             MediaActionButton(icon: .Play) {
                                 self.playSync(item: self.detailedViewParams.item)
@@ -198,5 +198,16 @@ struct DetailedView_Previews: PreviewProvider {
     
     static var previews: some View {
         DetailedView(detailedViewParams: DetailedViewParams(item: .mediaItem(MediaItem(data: [])), geometryMatching: stubId, originalSize: .zero))
+    }
+}
+
+extension String {
+    var htmlToAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else { return nil }
+        return try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+    }
+    
+    var htmlToString: String {
+        return htmlToAttributedString?.string ?? ""
     }
 }
