@@ -18,6 +18,7 @@
 		B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */; };
 		B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B328B96DBD0069FDF5 /* ActionButton.swift */; };
 		B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */; };
+		B70189442AAFA55500A7EAA0 /* HeroCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70189432AAFA55500A7EAA0 /* HeroCard.swift */; };
 		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
 		B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */ = {isa = PBXBuildFile; productRef = B70524BA2A6C96C2001654B3 /* SwiftUIBackports */; };
 		B70524C22A6D2E39001654B3 /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */; };
@@ -229,6 +230,7 @@
 		B700C1AF28B969F70069FDF5 /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
 		B700C1B328B96DBD0069FDF5 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		B70189432AAFA55500A7EAA0 /* HeroCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroCard.swift; sourceTree = "<group>"; };
 		B703BBCE28CC05FA00228324 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkBenchTimer.swift; sourceTree = "<group>"; };
 		B70524C62A6F2931001654B3 /* CacheModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModal.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				B725013D28C2637F00992F57 /* MediaPresentable.swift */,
 				B7C06F832932E1C5000C1192 /* NavigationContainer.swift */,
 				B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */,
+				B70189432AAFA55500A7EAA0 /* HeroCard.swift */,
 				B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */,
 				B77AACF1293B871700F8E1E2 /* MediaTrackRepresentable.swift */,
 				B77AACF7293BA95F00F8E1E2 /* MediaActionButton.swift */,
@@ -1039,6 +1042,7 @@
 				B7E72361299455430086EDA4 /* MediaArtistPresentable.swift in Sources */,
 				B709E8722A8848E7004B7D98 /* AccountPreferencesPane.swift in Sources */,
 				B728B0562A75CAA200BAC665 /* MediaBrowseData.swift in Sources */,
+				B70189442AAFA55500A7EAA0 /* HeroCard.swift in Sources */,
 				B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */,
 				B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */,
 				B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */,
