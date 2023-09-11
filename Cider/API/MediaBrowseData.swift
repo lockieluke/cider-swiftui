@@ -30,61 +30,64 @@ struct MediaBrowseData {
     
     let id: String
     let items: [BrowseItemAttributes]
+    let editorialTitle: String
     let kind: EditorialKind
     
     init(data: JSON) {
         self.id = data["id"].stringValue
+        self.editorialTitle = data["attributes"]["name"].string ?? ""
         self.kind = EditorialKind(rawValue: data["attributes"]["editorialElementKind"].string ?? "unknown")
         
-        self.items = data["relationships"]["children"]["data"].array?.compactMap { child -> BrowseItemAttributes? in
-            let badge = child["attributes"]["designBadge"].string ?? ""
-            let meta = child["relationships"]["contents"]["data"].array?.first?["attributes"]
-            
-            guard let meta = meta else { return nil }
-                        
-            let name = meta["name"].string ?? meta["designTag"].string ?? ""
-            let artist = meta["curatorName"].string ?? meta["designTag"].string ?? meta["artistName"].string ?? ""
-            
-            let id = meta["playParams"]["id"].string ?? ""
-            let kind = meta["playParams"]["kind"].string ?? ""
-            
-            let url = meta["url"].string ?? ""
-            let artistUrl = meta["artistUrl"].string ?? ""
-            
-            // we're following my hierarchy :)
-            
-            var subscriptionHero: String
-            
-            if let url = meta["editorialArtwork"]["subscriptionHero"]["url"].string, !url.isEmpty {
-                let width = meta["editorialArtwork"]["subscriptionHero"]["width"].intValue
-                let height = meta["editorialArtwork"]["subscriptionHero"]["height"].intValue
-                subscriptionHero = url.replacingOccurrences(of: "{w}", with: "\(width)")
-                    .replacingOccurrences(of: "{h}", with: "\(height)")
-                    .replacingOccurrences(of: "{f}", with: "jpg")
-            } else if let url = meta["editorialArtwork"]["emailFeature"]["url"].string, !url.isEmpty {
-                let width = meta["editorialArtwork"]["emailFeature"]["width"].intValue
-                let height = meta["editorialArtwork"]["emailFeature"]["height"].intValue
-                subscriptionHero = url.replacingOccurrences(of: "{w}", with: "\(width)")
-                    .replacingOccurrences(of: "{h}", with: "\(height)")
-                    .replacingOccurrences(of: "{f}", with: "jpg")
-            } else if let url = meta["editorialArtwork"]["subscriptionCover"]["url"].string, !url.isEmpty {
-                let width = meta["editorialArtwork"]["subscriptionCover"]["width"].intValue
-                let height = meta["editorialArtwork"]["subscriptionCover"]["height"].intValue
-                subscriptionHero = url.replacingOccurrences(of: "{w}", with: "\(width)")
-                    .replacingOccurrences(of: "{h}", with: "\(height)")
-                    .replacingOccurrences(of: "{f}", with: "jpg")
-            } else {
-                let url = meta["artwork"]["url"].string ?? ""
-                let width = meta["artwork"]["width"].intValue
-                let height = meta["artwork"]["height"].intValue
-                subscriptionHero = url.replacingOccurrences(of: "{w}", with: "\(width)")
+        if ["316", "385", "323"].contains(self.kind.rawValue) {
+            self.items = MediaBrowseData.parseChildren(from: data)
+        } else {
+            self.items = MediaBrowseData.parseContents(from: data)
+        }
+    }
+    
+    // fuck you apple
+    
+    private static func parseChildren(from data: JSON) -> [BrowseItemAttributes] {
+        return data["relationships"]["children"]["data"].array?.compactMap { child -> BrowseItemAttributes? in
+            guard let meta = child["relationships"]["contents"]["data"].array?.first?["attributes"] else { return nil }
+            return createBrowseItem(from: child, withMeta: meta)
+        } ?? []
+    }
+    
+    private static func parseContents(from data: JSON) -> [BrowseItemAttributes] {
+        return data["relationships"]["contents"]["data"].array?.compactMap { child -> BrowseItemAttributes? in
+            return createBrowseItem(from: child)
+        } ?? []
+    }
+    
+    private static func createBrowseItem(from child: JSON, withMeta meta: JSON? = nil) -> BrowseItemAttributes {
+        let actualMeta = meta ?? child["attributes"]
+        
+        let badge = child["attributes"]["designBadge"].string ?? ""
+        let name = actualMeta["name"].string ?? actualMeta["designTag"].string ?? ""
+        let artist = actualMeta["curatorName"].string ?? actualMeta["designTag"].string ?? actualMeta["artistName"].string ?? ""
+        let id = actualMeta["playParams"]["id"].string ?? ""
+        let kind = actualMeta["playParams"]["kind"].string ?? ""
+        let url = actualMeta["url"].string ?? ""
+        let artistUrl = actualMeta["artistUrl"].string ?? ""
+        let subscriptionHero = getArtwork(from: actualMeta)
+        let plainEditorialNotes = actualMeta["plainEditorialNotes"]["short"].string ?? ""
+        
+        return BrowseItemAttributes(designBadge: badge, name: name, id: id, kind: kind, artistName: artist, url: url, artistUrl: artistUrl, subscriptionHero: subscriptionHero, plainEditorialNotes: plainEditorialNotes)
+    }
+    
+    private static func getArtwork(from meta: JSON) -> String {
+        let monosHierarchy = ["subscriptionHero", "emailFeature", "subscriptionCover", "artwork"]
+        
+        for artwork in monosHierarchy {
+            if let url = meta["editorialArtwork"][artwork]["url"].string, !url.isEmpty {
+                let width = meta["editorialArtwork"][artwork]["width"].intValue
+                let height = meta["editorialArtwork"][artwork]["height"].intValue
+                return url.replacingOccurrences(of: "{w}", with: "\(width)")
                     .replacingOccurrences(of: "{h}", with: "\(height)")
                     .replacingOccurrences(of: "{f}", with: "jpg")
             }
-            
-            let plainEditorialNotes = meta["plainEditorialNotes"]["short"].string ?? ""
-            
-            return BrowseItemAttributes(designBadge: badge, name: name, id: id, kind: kind, artistName: artist, url: url, artistUrl: artistUrl, subscriptionHero: subscriptionHero, plainEditorialNotes: plainEditorialNotes)
-        } ?? []
+        }
+        return ""
     }
 }
