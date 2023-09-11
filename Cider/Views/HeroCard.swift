@@ -91,7 +91,6 @@ struct HeroCard: View {
                     WebImage(url: URL(string: item.subscriptionHero))
                         .resizable()
                         .scaledToFit()
-                        .aspectRatio(contentMode: .fit)
                         .frame(maxWidth: 530)
                         .cornerRadius(15)
                         .shadow(radius: 12)
@@ -100,13 +99,14 @@ struct HeroCard: View {
                         .onHover { isHovering in
                             self.isHovering = isHovering
                         }
-                    
-                    if !item.subscriptionHero.isEmpty {
-                        Text(item.plainEditorialNotes)
-                            .padding(.leading, 10)
-                            .padding(.bottom, 10)
-                            .padding(.trailing, 10)
-                            .frame(maxWidth: 530 * 0.75)
+
+                    VStack(alignment: .leading) {
+                        Spacer()
+                        if !item.subscriptionHero.isEmpty {
+                            Text(item.plainEditorialNotes)
+                                .padding(10)
+                                .frame(maxWidth: 530 * 0.75, alignment: .leading)
+                        }
                     }
                 }.onTapGesture {
                     Task {
