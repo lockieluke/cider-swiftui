@@ -37,7 +37,7 @@ struct PatchedGeometryReader<Content: View>: View {
             GeometryReader { geometry in
                 Color.clear
                     .onChange(of: geometry.size) { newSize in
-                        self.geometryProxy = PatchedGeometryProxy(size: newSize, minRelative: min(newSize.width, newSize.height), maxRelative: max(geometry.size.width, geometry.size.height))
+                        self.geometryProxy = PatchedGeometryProxy(size: newSize, minRelative: min(newSize.width, newSize.height), maxRelative: max(newSize.width, newSize.height))
                     }
                     .onAppear {
                         self.geometryProxy = PatchedGeometryProxy(size: geometry.size, minRelative: min(geometry.size.width, geometry.size.height), maxRelative: max(geometry.size.width, geometry.size.height))
