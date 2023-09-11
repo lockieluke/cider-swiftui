@@ -228,6 +228,30 @@ class AMAPI {
         return MediaArtist(data: [])
     }
     
+    func fetchPlaylist(id: String) async throws -> MediaPlaylist {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/playlists/\(id)", encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch playlist: \(error)")
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data), let playlistData = json["data"].array?.first {
+            return MediaPlaylist(data: playlistData)
+        }
+        
+        return MediaPlaylist(data: [])
+    }
+    
+    func fetchAlbum(id: String) async throws -> MediaItem {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/albums/\(id)", encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch album: \(error)")
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data), let albumData = json["data"].array?.first {
+            return MediaItem(data: albumData)
+        }
+        
+        return MediaItem(data: [])
+    }
+    
     enum FetchSearchSuggestionsKinds: String {
         case terms, topResults
     }
@@ -401,8 +425,8 @@ class AMAPI {
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch browse: \(error)")
-        } else if let data = res.data, let json = try? JSON(data: data), let tabsChildren = json["data"].array?.first?["relationships"]["tabs"]["data"].array?.first?["relationships"]["children"]["data"] {
-            return tabsChildren.arrayValue.compactMap { MediaBrowseData(data: $0) }
+        } else if let data = res.data, let json = try? JSON(data: data), let tabsChildren = json["data"].array?.first?["relationships"]["tabs"]["data"].array?.first?["relationships"]["children"]["data"].array {
+            return tabsChildren.compactMap { MediaBrowseData(data: $0) }
         }
         
         return []
