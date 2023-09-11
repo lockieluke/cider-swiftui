@@ -43,7 +43,6 @@ struct BrowseView: View {
                     Text("Browse")
                         .font(.largeTitle.bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom)
                     
                     ScrollView(.horizontal) {
                         LazyHStack {

@@ -101,7 +101,6 @@ struct HeroCard: View {
                         }
 
                     VStack(alignment: .leading) {
-                        Spacer()
                         if !item.subscriptionHero.isEmpty {
                             Text(item.plainEditorialNotes)
                                 .padding(10)
