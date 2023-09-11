@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Inject
+import SwiftyUtils
 
 struct BrowseView: View {
     
@@ -213,11 +214,5 @@ struct BrowseView: View {
 struct BrowseView_Previews: PreviewProvider {
     static var previews: some View {
         BrowseView()
-    }
-}
-
-extension Array {
-    subscript(safe index: Int) -> Element? {
-        return indices ~= index ? self[index] : nil
     }
 }
