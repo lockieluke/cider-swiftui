@@ -83,7 +83,7 @@ struct CatalogActions: ViewModifier {
                         
                     case "mod-library":
                         if let libraryId = self.libraryId {
-                            await self.mkModal.AM_API.addToLibray(item: self.item, libraryId: libraryId, !self.isInLibrary)
+                            await self.mkModal.AM_API.addToLibrary(item: self.item, libraryId: libraryId, !self.isInLibrary)
                             self.isInLibrary.toggle()
                         }
                         break

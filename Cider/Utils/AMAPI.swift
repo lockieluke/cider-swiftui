@@ -339,7 +339,7 @@ class AMAPI {
         return libraryCatalog?.0 ?? false
     }
     
-    func addToLibray(item: MediaDynamic, libraryId: String, _ add: Bool = true) async {
+    func addToLibrary(item: MediaDynamic, libraryId: String, _ add: Bool = true) async {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library\(add ? "" : "/\(item.type)/\(libraryId)")", method: add ? .post : .delete, parameters: add ? [
             "ids[\(item.type)]": (item.id as NSString).integerValue
         ] : [:], encoding: add ? URLEncoding(destination: .queryString) : .default).validate().serializingData().response
