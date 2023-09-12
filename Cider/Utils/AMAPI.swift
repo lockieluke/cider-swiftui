@@ -241,7 +241,13 @@ class AMAPI {
     }
     
     func fetchAlbum(id: String) async throws -> MediaItem {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/albums/\(id)", encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/albums/\(id)", parameters: [
+            "art[url]": "f",
+            "extend": "artistUrl,editorialArtwork,plainEditorialNotes",
+            "fields[albums]": "artistName,artistUrl,artwork,contentRating,editorialArtwork,plainEditorialNotes,name,playParams,releaseDate,url,trackCount,genreNames,isComplete,isSingle,recordLabel,audioVariants,copyright,isCompilation,isMasteredForItunes,upc",
+            "include[albums]": "artists,tracks,music-videos",
+            "platform": "web",
+        ],  encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch album: \(error)")
             throw error
