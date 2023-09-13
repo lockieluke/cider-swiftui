@@ -302,27 +302,47 @@ class AMAPI {
         return SearchResults(data: [])
     }
     
-    func fetchRatings(item: MediaDynamic) async -> MediaRatings {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)").validate().serializingData().response
-        if let error = res.error {
-            self.logger.error("Failed to fetch ratings: \(error)")
-        } else if let data = res.data, let json = try? JSON(data: data), let rawRatings = json["data"].array?.first?["attributes"]["value"].int {
-            return MediaRatings(rawValue: rawRatings)!
+    func fetchRating(item: MediaDynamic) async -> MediaRatings {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)", parameters: ["ids": "\(item.id)"])
+            .validate()
+            .serializingData()
+            .response
+        
+        guard
+            let data = res.data,
+            let json = try? JSON(data: data),
+            let rawRatings = json["data"].array?.first?["attributes"]["value"].int
+        else {
+            if let error = res.error {
+                self.logger.error("Failed to fetch ratings: \(error)")
+            }
+            return .Neutral
         }
         
-        return .Neutral
+        return MediaRatings(rawValue: rawRatings)!
     }
     
-    @discardableResult
-    func setRatings(item: MediaDynamic, ratings: MediaRatings) async -> MediaRatings {
-        let res = await (ratings == .Neutral ? AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .delete) : AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: .put, parameters: ["type": "rating", "attributes": [ "value": ratings.rawValue ]], encoding: JSONEncoding.default)).validate().serializingData().response
-        if let error = res.error {
-            self.logger.error("Failed to fetch ratings: \(error)")
-        } else if let data = res.data, let json = try? JSON(data: data), let rawRatings = json["data"].array?.first?["attributes"]["value"].int {
-            return MediaRatings(rawValue: rawRatings)!
+    func setRating(item: MediaDynamic, rating: MediaRatings) async -> MediaRatings {
+        let method: Alamofire.HTTPMethod = (rating == .Neutral) ? .delete : .put
+        let parameters: [String: Any]? = (rating != .Neutral) ? ["attributes": ["value": rating.rawValue]] : nil
+        
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/ratings/\(item.type)/\(item.id)", method: method, parameters: parameters, encoding: JSONEncoding.default)
+            .validate()
+            .serializingData()
+            .response
+        
+        guard
+            let data = res.data,
+            let json = try? JSON(data: data),
+            let rawRatings = json["data"].array?.first?["attributes"]["value"].int
+        else {
+            if let error = res.error {
+                self.logger.error("Error occurred when setting rating to \(rating): \(error)")
+            }
+            return rating
         }
         
-        return .Neutral
+        return MediaRatings(rawValue: rawRatings)!
     }
     
     func fetchLibraryCatalog(item: MediaDynamic) async -> Bool? {
