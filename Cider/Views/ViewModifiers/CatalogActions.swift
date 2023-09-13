@@ -15,7 +15,6 @@ struct CatalogActions: ViewModifier {
     
     @State private var prefetechedAttributes = false
     @State private var isInLibrary = false
-    @State private var libraryId: String?
     @State private var ratings: MediaRatings = .Disliked
     
     private let item: MediaDynamic
@@ -46,32 +45,31 @@ struct CatalogActions: ViewModifier {
             ContextMenuArg("Play Later")
         ]
         
-        #if DEBUG
+#if DEBUG
         m += [
             ContextMenuArg(),
             ContextMenuArg("Copy ID")
         ]
-        #endif
+#endif
         
         return m
     }
     
     func body(content: Content) -> some View {
         content
-        #if canImport(AppKit)
+#if canImport(AppKit)
             .captureMouseEvent(.MouseEntered) {
                 Task {
                     if !self.prefetechedAttributes {
                         self.ratings = await self.mkModal.AM_API.fetchRatings(item: self.item)
-                        if let (isInLibrary, libraryId) = await self.mkModal.AM_API.fetchLibraryCatalog(item: self.item) {
+                        if let isInLibrary = await self.mkModal.AM_API.fetchLibraryCatalog(item: self.item) {
                             self.isInLibrary = isInLibrary
-                            self.libraryId = libraryId
                         }
                         self.prefetechedAttributes = true
                     }
                 }
             }
-        #endif
+#endif
             .contextMenu(menu,  { id in
                 Task {
                     switch id {
@@ -82,17 +80,17 @@ struct CatalogActions: ViewModifier {
                         break
                         
                     case "mod-library":
-                        if let libraryId = self.libraryId {
-                            await self.mkModal.AM_API.addToLibrary(item: self.item, libraryId: libraryId, !self.isInLibrary)
+                        let result = await self.mkModal.AM_API.addToLibrary(item: self.item, !self.isInLibrary)
+                        if result {
                             self.isInLibrary.toggle()
                         }
                         break
                         
-                    #if os(macOS)
+#if os(macOS)
                     case "copy-id":
                         NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(self.item.id)
                         break
-                    #endif
+#endif
                         
                     default:
                         break

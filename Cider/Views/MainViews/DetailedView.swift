@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Inject
@@ -21,6 +21,8 @@ struct DetailedView: View {
     @State private var tracks: [MediaTrack] = []
     @State private var tracksShouldLoadIn: Bool = false
     @State private var bgGlowGradientColours = Gradient(colors: [])
+    @State private var isInLibrary = false
+    @State private var rotationAngle: Double = 0
     
     private let detailedViewParams: DetailedViewParams
     // Has to be done, because this view only accepts two types of MediaDynamic
@@ -51,18 +53,32 @@ struct DetailedView: View {
     
     var addToLibrary: some View {
         Button {
+            Task {
+                var result: Bool? = nil
+                if case .mediaItem(let mediaItem) = detailedViewParams.item {
+                    result = await self.mkModal.AM_API.addToLibrary(item: .mediaItem(mediaItem), !self.isInLibrary)
+                } else if case .mediaPlaylist(let mediaPlaylist) = detailedViewParams.item {
+                    result = await self.mkModal.AM_API.addToLibrary(item: .mediaPlaylist(mediaPlaylist), !self.isInLibrary)
+                }
+                if result == true {
+                    self.isInLibrary.toggle()
+                    self.rotationAngle += 45
+                }
+            }
             
         } label: {
             HStack {
                 Image(systemSymbol: .plus)
-                Text("Add to Library")
+                    .rotationEffect(.degrees(rotationAngle))
+                    .animation(.easeInOut(duration: 0.5), value: rotationAngle)
+                
+                Text(self.isInLibrary ? "Remove from Library" : "Add to Library")
             }
             .padding(.horizontal)
-        }
-        .buttonStyle(.borderless)
-        .frame(height: 25)
-        .background(RoundedRectangle(cornerRadius: 20).fill(Color("SecondaryColour").opacity(0.5)))
-        .modifier(SimpleHoverModifier())
+        }.buttonStyle(.borderless)
+            .frame(height: 25)
+            .background(RoundedRectangle(cornerRadius: 20).fill(Color("SecondaryColour").opacity(0.5)))
+            .modifier(SimpleHoverModifier())
     }
     
     func playSync(item: MediaDynamic, shuffle: Bool = false) {
@@ -115,6 +131,7 @@ struct DetailedView: View {
                                     }
                                 }
                             }
+                            rotationAngle = isInLibrary ? 45 : 0
                         }
                         .padding(.vertical, 5)
                     
@@ -143,7 +160,7 @@ struct DetailedView: View {
                         Text(description.standard.htmlToString)
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: 300)
-
+                        
                         HStack {
                             MediaActionButton(icon: .Play) {
                                 self.playSync(item: self.detailedViewParams.item)
@@ -175,12 +192,35 @@ struct DetailedView: View {
                 }
             }
             .task {
-                if case .mediaItem(let mediaItem) = detailedViewParams.item, let tracks = try? await self.mkModal.AM_API.fetchTracks(id: mediaItem.id, type: .Album) {
-                    self.tracks = tracks
-                } else if case .mediaPlaylist(let mediaPlaylist) = detailedViewParams.item, let tracks = try? await self.mkModal.AM_API.fetchTracks(id: mediaPlaylist.id, type: .Playlist) {
-                    self.tracks = tracks
+                print("Opened Detailed View")
+                
+                switch detailedViewParams.item {
+                case .mediaItem(let mediaItem):
+                    async let tracksResult = try? self.mkModal.AM_API.fetchTracks(id: mediaItem.id, type: .Album)
+                    async let libraryResult = self.mkModal.AM_API.fetchLibraryCatalog(item: .mediaItem(mediaItem))
+                    
+                    if let fetchedTracks = await tracksResult {
+                        self.tracks = fetchedTracks
+                    }
+                    if let isInLibrary = await libraryResult {
+                        self.isInLibrary = isInLibrary
+                    }
+                    
+                case .mediaPlaylist(let mediaPlaylist):
+                    async let tracksResult = try? self.mkModal.AM_API.fetchTracks(id: mediaPlaylist.id, type: .Playlist)
+                    async let libraryResult = self.mkModal.AM_API.fetchLibraryCatalog(item: .mediaPlaylist(mediaPlaylist))
+                    
+                    if let fetchedTracks = await tracksResult {
+                        self.tracks = fetchedTracks
+                    }
+                    if let isInLibrary = await libraryResult {
+                        self.isInLibrary = isInLibrary
+                    }
+                default:
+                    break
                 }
                 
+                rotationAngle = isInLibrary ? 45 : 0
                 withAnimation(.spring().delay(0.3)) {
                     self.tracksShouldLoadIn = true
                 }

@@ -183,7 +183,13 @@ class AMAPI {
     }
     
     func fetchSong(id: String) async throws -> MediaTrack {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/songs/\(id)").validate().serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/songs/\(id)", parameters: [
+            "art[url]": "f",
+            "extend": "artistUrl,editorialArtwork,plainEditorialNotes",
+            "fields[albums]": "artistName,artistUrl,artwork,contentRating,editorialArtwork,plainEditorialNotes,name,playParams,releaseDate,url,trackCount,genreNames,isComplete,isSingle,recordLabel,audioVariants,copyright,isCompilation,isMasteredForItunes,upc",
+            "include[albums]": "artists,tracks,music-videos",
+            "platform": "web",
+        ]).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch song: \(error)")
             throw error
@@ -243,8 +249,8 @@ class AMAPI {
     func fetchAlbum(id: String) async throws -> MediaItem {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/albums/\(id)", parameters: [
             "art[url]": "f",
-            "extend": "artistUrl,editorialArtwork,plainEditorialNotes",
-            "fields[albums]": "artistName,artistUrl,artwork,contentRating,editorialArtwork,plainEditorialNotes,name,playParams,releaseDate,url,trackCount,genreNames,isComplete,isSingle,recordLabel,audioVariants,copyright,isCompilation,isMasteredForItunes,upc",
+            "extend": "artistUrl,editorialArtwork,editorialNotes",
+            "fields[albums]": "artistName,artistUrl,artwork,attribution,composerName,discNumber,durationInMillis,contentRating,hasLyrics,isAppleDigitalMaster,isrc,movementCount,movementName,movementNumber,workName,editorialArtwork,editorialNotes,name,playParams,releaseDate,url,genreNames,audioVariants",
             "include[albums]": "artists,tracks,music-videos",
             "platform": "web",
         ],  encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
@@ -319,7 +325,7 @@ class AMAPI {
         return .Neutral
     }
     
-    func fetchLibraryCatalog(item: MediaDynamic) async -> (Bool, String)? {
+    func fetchLibraryCatalog(item: MediaDynamic) async -> Bool? {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/", parameters: [
             "ids[\(item.type)]": (item.id as NSString).integerValue,
             "relate": "library",
@@ -327,8 +333,8 @@ class AMAPI {
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to check if \(item.id) is in library: \(error)")
-        } else if let data = res.data, let json = try? JSON(data: data), let data = json["data"].array?.first, let inLibrary = data["attributes"]["inLibrary"].bool, let libraryId = data["relationships"]["library"]["data"].array?.first?["id"].string {
-            return (inLibrary, libraryId)
+        } else if let data = res.data, let json = try? JSON(data: data), let data = json["data"].array?.first { return data["attributes"]["inLibrary"].bool
+            
         }
         
         return nil
@@ -336,16 +342,66 @@ class AMAPI {
     
     func isInLibrary(item: MediaDynamic) async -> Bool {
         let libraryCatalog = await self.fetchLibraryCatalog(item: item)
-        return libraryCatalog?.0 ?? false
+        return libraryCatalog ?? false
     }
     
-    func addToLibrary(item: MediaDynamic, libraryId: String, _ add: Bool = true) async {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library\(add ? "" : "/\(item.type)/\(libraryId)")", method: add ? .post : .delete, parameters: add ? [
-            "ids[\(item.type)]": (item.id as NSString).integerValue
-        ] : [:], encoding: add ? URLEncoding(destination: .queryString) : .default).validate().serializingData().response
-        if let error = res.error {
-            self.logger.error("Failed to add \(item.id) to library: \(error)")
+    func addToLibrary(item: MediaDynamic, _ add: Bool = true) async -> Bool {
+        var query: String = "\(APIEndpoints.AMAPI)/me/library"
+        var parameters: Parameters = [:]
+        parameters["ids[\(item.type)]"] = item.id
+        
+        if !add {
+            query = "\(APIEndpoints.AMAPI)/me/library/\(item.type.replacingOccurrences(of: "library-", with: ""))/\(item.id)"
+            parameters["ids[\(item.type)]"] = item.id
+            
+            if !item.type.contains("library-") {
+                do {
+                    let libraryItem = try await fetchLibraryItem(item: item)
+                    query = "\(APIEndpoints.AMAPI)/me/library/\(item.type.replacingOccurrences(of: "library-", with: ""))/\(libraryItem.id)"
+                    parameters["ids[\(libraryItem.type)]"] = libraryItem.id
+                } catch {
+                    print("Error occurred while trying to fetch LibraryItem")
+                }
+            }
         }
+        
+        return await withCheckedContinuation { continuation in
+            AMAPI.amSession.request(query, method: add ? .post : .delete, parameters: parameters, encoding: URLEncoding(destination: .queryString)).validate().response { response in
+                switch response.result {
+                case .success:
+                    if let statusCode = response.response?.statusCode, (200..<300).contains(statusCode) {
+                        continuation.resume(returning: true)
+                    } else {
+                        self.logger.error("Unexpected status code: \(String(describing: response.response?.statusCode)) when trying to \(add ? "add" : "remove") \(item.id) from library.")
+                        continuation.resume(returning: false)
+                    }
+                case .failure(let error):
+                    if let statusCode = response.response?.statusCode, (200..<300).contains(statusCode) {
+                        continuation.resume(returning: true)
+                    } else {
+                        self.logger.error("Failed to \(add ? "add" : "remove") \(item.id) from library due to error: \(error.localizedDescription)")
+                        continuation.resume(returning: false)
+                    }
+                }
+            }
+        }
+    }
+    
+    func fetchLibraryItem(item: MediaDynamic) async throws -> MediaDynamic {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/\(item.type)/\(item.id)/library", parameters: [
+            "art[url]": "f",
+            "extend": "artistUrl,editorialArtwork,editorialNotes",
+            "fields[albums]": "artistName,artistUrl,artwork,attribution,composerName,discNumber,durationInMillis,contentRating,hasLyrics,isAppleDigitalMaster,isrc,movementCount,movementName,movementNumber,workName,editorialArtwork,editorialNotes,name,playParams,releaseDate,url,genreNames,audioVariants",
+            "include[albums]": "artists,tracks,music-videos",
+            "platform": "web",
+        ],  encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch library \(item.type): \(error)")
+            throw error
+        } else if let data = res.data, let json = try? JSON(data: data), let albumData = json["data"].array?.first {
+            return .mediaItem(MediaItem(data: albumData))
+        }
+        return .mediaItem(MediaItem(data: []))
     }
     
     func fetchLyricsXml(item: MediaDynamic) async -> String? {

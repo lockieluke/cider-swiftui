@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22336E972AB09B2800BE8D13 /* EditorialArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22336E962AB09B2800BE8D13 /* EditorialArtwork.swift */; };
+		22336E992AB09B4600BE8D13 /* PlayParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22336E982AB09B4600BE8D13 /* PlayParams.swift */; };
 		B700C18328B920F10069FDF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C18228B920F10069FDF5 /* ContentView.swift */; };
 		B700C18528B920F20069FDF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18428B920F20069FDF5 /* Assets.xcassets */; };
 		B700C18828B920F20069FDF5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18728B920F20069FDF5 /* Preview Assets.xcassets */; };
@@ -216,6 +218,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		22336E962AB09B2800BE8D13 /* EditorialArtwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialArtwork.swift; sourceTree = "<group>"; };
+		22336E982AB09B4600BE8D13 /* PlayParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayParams.swift; sourceTree = "<group>"; };
 		B700C17D28B920F10069FDF5 /* Cider (Dev).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cider (Dev).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B700C18228B920F10069FDF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B700C18428B920F20069FDF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Cider/Assets.xcassets; sourceTree = SOURCE_ROOT; };
@@ -730,9 +734,11 @@
 				B7F623F62915DBA500316F8E /* MediaRecommendation.swift */,
 				B75219A92918358C005CF8F0 /* MediaType.swift */,
 				B75219AB291836B5005CF8F0 /* MediaItem.swift */,
+				22336E982AB09B4600BE8D13 /* PlayParams.swift */,
 				B75219AD29187525005CF8F0 /* MediaArtwork.swift */,
 				B77AACED293B702100F8E1E2 /* MediaTrack.swift */,
 				B797AFF9297F3E2000D77282 /* MediaArtist.swift */,
+				22336E962AB09B2800BE8D13 /* EditorialArtwork.swift */,
 				B797AFFB297F3E7B00D77282 /* MediaAny.swift */,
 				B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */,
 				B7CF3768299AC10B00922CDA /* SearchResults.swift */,
@@ -1006,6 +1012,7 @@
 				B7688728294A314400C623C9 /* WSDebugger.swift in Sources */,
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
 				B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */,
+				22336E992AB09B4600BE8D13 /* PlayParams.swift in Sources */,
 				B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */,
 				B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */,
 				B77AACF6293B93C200F8E1E2 /* TimeInterval.swift in Sources */,
@@ -1017,6 +1024,7 @@
 				B7CF3767299A942000922CDA /* SearchView.swift in Sources */,
 				B77AACF2293B871700F8E1E2 /* MediaTrackRepresentable.swift in Sources */,
 				B706051128BFA181002AD76C /* MediaShowcaseRow.swift in Sources */,
+				22336E972AB09B2800BE8D13 /* EditorialArtwork.swift in Sources */,
 				B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */,
 				B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */,
 				B77AACF4293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift in Sources */,
@@ -1218,11 +1226,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cider/CiderDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1255,7 +1267,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME) (Dev)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "macOS Resign";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = macOS;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -1280,12 +1291,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cider/Cider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
-				DEVELOPMENT_TEAM = 8R23J2835D;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 8R23J2835D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1318,6 +1331,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.cider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = macOS;
 				STRIP_STYLE = debugging;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
