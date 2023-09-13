@@ -15,8 +15,7 @@ struct CatalogActions: ViewModifier {
     
     @State private var prefetechedAttributes = false
     @State private var isInLibrary = false
-    @State private var libraryId: String?
-    @State private var ratings: MediaRatings = .Disliked
+    @State private var rating: MediaRatings = .Neutral
     
     private let item: MediaDynamic
     
@@ -24,82 +23,80 @@ struct CatalogActions: ViewModifier {
         self.item = item
     }
     
-    private var ratingsPresentableText: String {
-        switch self.ratings {
-            
-        case .Disliked, .Neutral:
-            return "Love"
-            
-        case .Liked:
-            return "Unlove"
-            
-        }
+    private var loveActionText: String {
+        return rating == .Liked ? "Unlove" : "Love"
+    }
+    
+    private var dislikeActionText: String {
+        return rating == .Disliked ? "Undo Suggest Less" : "Suggest Less"
     }
     
     private var menu: [ContextMenuArg] {
-        var m = [
-            ContextMenuArg(ratingsPresentableText, id: "love"),
-            ContextMenuArg(self.isInLibrary ? "Remove from Library" : "Add to Library", id: "mod-library"),
+        var menuItems = [
+            ContextMenuArg(loveActionText, id: "love", disabled: rating == .Disliked),
+            ContextMenuArg(dislikeActionText, id: "dislike", disabled: rating == .Liked),
+            ContextMenuArg(isInLibrary ? "Remove from Library" : "Add to Library", id: "mod-library"),
             ContextMenuArg("Add to Playlist"),
             ContextMenuArg(),
             ContextMenuArg("Play Next"),
             ContextMenuArg("Play Later")
         ]
         
-        #if DEBUG
-        m += [
+#if DEBUG
+        menuItems += [
             ContextMenuArg(),
             ContextMenuArg("Copy ID")
         ]
-        #endif
+#endif
         
-        return m
+        return menuItems
     }
     
     func body(content: Content) -> some View {
         content
-        #if canImport(AppKit)
+#if canImport(AppKit)
             .captureMouseEvent(.MouseEntered) {
                 Task {
-                    if !self.prefetechedAttributes {
-                        self.ratings = await self.mkModal.AM_API.fetchRatings(item: self.item)
-                        if let (isInLibrary, libraryId) = await self.mkModal.AM_API.fetchLibraryCatalog(item: self.item) {
-                            self.isInLibrary = isInLibrary
-                            self.libraryId = libraryId
+                    if !prefetechedAttributes {
+                        rating = await mkModal.AM_API.fetchRating(item: item)
+                        if let inLibrary = await mkModal.AM_API.fetchLibraryCatalog(item: item) {
+                            isInLibrary = inLibrary
                         }
-                        self.prefetechedAttributes = true
+                        prefetechedAttributes = true
                     }
                 }
             }
-        #endif
-            .contextMenu(menu,  { id in
+#endif
+            .contextMenu(menu, { id in
                 Task {
-                    switch id {
-                        
-                    case "love":
-                        let newRatings: MediaRatings = self.ratings == .Liked ? .Neutral : .Liked
-                        self.ratings = await self.mkModal.AM_API.setRatings(item: self.item, ratings: newRatings)
-                        break
-                        
-                    case "mod-library":
-                        if let libraryId = self.libraryId {
-                            await self.mkModal.AM_API.addToLibrary(item: self.item, libraryId: libraryId, !self.isInLibrary)
-                            self.isInLibrary.toggle()
-                        }
-                        break
-                        
-                    #if os(macOS)
-                    case "copy-id":
-                        NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(self.item.id)
-                        break
-                    #endif
-                        
-                    default:
-                        break
-                        
-                    }
+                    await handleMenuAction(withId: id)
                 }
             })
+        
     }
     
+    private func handleMenuAction(withId id: String) async {
+        switch id {
+        case "love":
+            rating = (rating == .Liked) ? .Neutral : .Liked
+            _ = await mkModal.AM_API.setRating(item: item, rating: rating)
+            
+        case "dislike":
+            rating = (rating == .Disliked) ? .Neutral : .Disliked
+            _ = await mkModal.AM_API.setRating(item: item, rating: rating)
+            
+        case "mod-library":
+            if await mkModal.AM_API.addToLibrary(item: item, !isInLibrary) {
+                isInLibrary.toggle()
+            }
+            
+#if os(macOS)
+        case "copy-id":
+            NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(item.id)
+#endif
+            
+        default:
+            break
+        }
+    }
 }

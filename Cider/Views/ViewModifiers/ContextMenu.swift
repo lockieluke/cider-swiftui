@@ -14,23 +14,25 @@ struct ContextMenuArg {
     let title: String?
     let id: String
     let type: ContextMenuArgType
+    let disabled: Bool
     
     enum ContextMenuArgType {
         case separator, general
     }
     
-    init(_ title: String, id: String? = nil) {
+    init(_ title: String, id: String? = nil, disabled: Bool = false) {
         self.title = title
         self.id = id ?? title.lowerKebabCased()
         self.type = .general
+        self.disabled = disabled
     }
     
     init(type: ContextMenuArgType = .separator) {
         self.title = nil
         self.id = UUID().uuidString
         self.type = type
+        self.disabled = false
     }
-    
 }
 
 struct ContextMenu: ViewModifier {
@@ -50,11 +52,12 @@ struct ContextMenu: ViewModifier {
             .contextMenu {
                 ForEach(args, id: \.id) { arg in
                     if let title = arg.title  {
-                        Button {
+                        Button(action: {
                             self.onAction?(arg.id)
-                        } label: {
+                        }, label: {
                             Text(title)
-                        }
+                        })
+                        .disabled(arg.disabled)
                     } else if arg.type == .separator {
                         Divider()
                     }
