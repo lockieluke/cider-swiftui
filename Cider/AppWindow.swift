@@ -20,6 +20,7 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let wsModal = WSModal.shared
     private let authModal: AuthModal
     private let appMenu: AppMenu
+    private let navigationModal: NavigationModal
     
     let ciderPlayback: CiderPlayback
     
@@ -32,6 +33,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback, cacheModal: cacheModal)
         let authModal = AuthModal(mkModal: mkModal, appWindowModal: self.appWindowModal, cacheModel: cacheModal)
+        let navigationModal = NavigationModal()
         
         Task {
             let timer = ParkBenchTimer()
@@ -64,6 +66,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             .environmentObject(nativeUtilsWrapper)
             .environmentObject(cacheModal)
             .environmentObject(connectModal)
+            .environmentObject(navigationModal)
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false).then {
@@ -103,7 +106,8 @@ class AppWindow: NSObject, NSWindowDelegate {
                               appWindowModal: self.appWindowModal,
                               nativeUtilsWrapper: nativeUtilsWrapper,
                               cacheModal: cacheModal,
-                              connectModal: connectModal
+                              connectModal: connectModal,
+                              navigationModal: navigationModal
         )
         appMenu.loadMenus()
 
@@ -116,6 +120,7 @@ class AppWindow: NSObject, NSWindowDelegate {
         self.connectModal = connectModal
         self.appMenu = appMenu
         self.mkModal = mkModal
+        self.navigationModal = navigationModal
         self.ciderPlayback = ciderPlayback
         
         super.init()

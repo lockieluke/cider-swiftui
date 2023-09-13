@@ -13,6 +13,7 @@ struct ContentView: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     #if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
@@ -22,7 +23,6 @@ struct ContentView: View {
     #endif
     
     @StateObject private var searchModal = SearchModal()
-    @StateObject private var navigationModal = NavigationModal()
     @StateObject private var personalisedData = PersonalisedData()
     
     var body: some View {

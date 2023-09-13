@@ -23,11 +23,12 @@ class AppMenu {
     private let nativeUtilsWrapper: NativeUtilsWrapper
     private let cacheModal: CacheModal
     private let connectModal: ConnectModal
+    private let navigationModal: NavigationModal
     
     private var hasPreviouslyOpenedPlayground: Bool = false
     private var playgroundWindowDelegate: NSWindowDelegate!
     
-    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal) {
+    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal, navigationModal: NavigationModal) {
         let menu = NSMenu()
         
         #if DEBUG
@@ -65,6 +66,7 @@ class AppMenu {
         self.nativeUtilsWrapper = nativeUtilsWrapper
         self.cacheModal = cacheModal
         self.connectModal = connectModal
+        self.navigationModal = navigationModal
     }
     
     func loadMenus() {
@@ -123,6 +125,14 @@ class AppMenu {
             ]
         }
         
+        let viewMenu = NSMenuItem().then {
+            $0.submenu = NSMenu(title: "View").then {
+                $0.items = [
+                    NSMenuItem(title: "Toggle Sidebar", action: #selector(self.toggleSidebar(_:)), keyEquivalent: "s").then { $0.target = self }
+                ]
+            }
+        }
+        
 #if DEBUG
         let developerMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Developer")
@@ -164,9 +174,9 @@ class AppMenu {
         ]
         
 #if DEBUG
-        menu.items = [appNameMenu, fileMenu, editMenu, developerMenu, windowMenu, helpMenu]
+        menu.items = [appNameMenu, fileMenu, editMenu, viewMenu, developerMenu, windowMenu, helpMenu]
 #else
-        menu.items = [appNameMenu, fileMenu, editMenu, windowMenu, helpMenu]
+        menu.items = [appNameMenu, fileMenu, editMenu, viewMenu, windowMenu, helpMenu]
 #endif
     }
     
@@ -195,6 +205,13 @@ class AppMenu {
         Support.openOrgGitHub()
     }
     
+    @objc func toggleSidebar(_ sender: Any) {
+        withAnimation(.interactiveSpring()) {
+            self.navigationModal.showSidebar.toggle()
+        }
+    }
+    
+#if DEBUG
     @objc func openWSDebugger(_ sender: Any) {
         let wsDebugger = WSDebugger(
             wsModal: self.wsModal,
@@ -204,7 +221,6 @@ class AppMenu {
         wsDebugger.open()
     }
     
-#if DEBUG
     @objc func clearWebViewCache(_ sender: Any) {
         WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast) {
             Logger.shared.info("Successfully cleared WebKit cache")
