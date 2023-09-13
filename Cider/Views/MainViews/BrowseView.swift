@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Inject
-import SwiftyUtils
 
 struct BrowseView: View {
     
@@ -37,101 +36,51 @@ struct BrowseView: View {
     let coverKindValue: String = "bb"
     
     var body: some View {
-        PatchedGeometryReader { geometry in
-            ScrollView(.vertical) {
-                VStack(spacing: 0) {
-                    Text("Browse")
-                        .font(.largeTitle.bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    ScrollView(.horizontal) {
-                        LazyHStack {
-                            ForEach(heroCardData, id: \.id) { heroCardDataRow in
-                                ForEach(heroCardDataRow.items, id: \.self) { item in
-                                    HeroCard(
-                                        item: item,
-                                        geometryMatching: animationNamespace,
-                                        originalSize: heroCardSize,
-                                        coverKind: coverKindValue                                    )
-                                    .frame(width: heroCardSize.width, height: heroCardSize.height)
-                                }
+        ScrollView(.vertical) {
+            VStack(spacing: 0) {
+                Text("Browse")
+                    .font(.largeTitle.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                ScrollView(.horizontal) {
+                    LazyHStack {
+                        ForEach(heroCardData, id: \.id) { heroCardDataRow in
+                            ForEach(heroCardDataRow.items, id: \.self) { item in
+                                HeroCard(
+                                    item: item,
+                                    geometryMatching: animationNamespace,
+                                    originalSize: heroCardSize,
+                                    coverKind: coverKindValue
+                                )
                             }
                         }
-                    }
-                    .transparentScrollbars()
-                    .padding(.bottom)
-                    
-                    VStack {
-                        Text(playlistEditorialTitles[safe: 0] ?? "")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 15)
-                        ScrollView([.horizontal]) {
-                            LazyHStack {
-                                ForEach(playlists, id: \.id) { playlist in
-                                    MediaPresentable(item: .mediaPlaylist(playlist), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: true)
-                                        .padding()
-                                }
-                            }
-                        }
-                        .transparentScrollbars()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom)
-                    }
-                    
-                    VStack {
-                        Text(albumEditorialTitles[safe: 0] ?? "")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 15)
-                        ScrollView([.horizontal]) {
-                            LazyHStack {
-                                ForEach(albums, id: \.id) { album in
-                                    MediaPresentable(item: .mediaItem(album), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: true)
-                                        .padding()
-                                }
-                            }
-                        }
-                        .transparentScrollbars()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom)
-                    }
-                    
-                    VStack {
-                        Text(albumEditorialTitles[safe: 1] ?? "")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 15)
-                        ScrollView([.horizontal]) {
-                            LazyHStack {
-                                ForEach(featuredPlaylists, id: \.id) { playlist in
-                                    MediaPresentable(item: .mediaPlaylist(playlist), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: true)
-                                        .padding()
-                                }
-                            }
-                        }
-                        .transparentScrollbars()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom)
-                    }
-                    
-                    VStack {
-                        Text(songEditorialTitles[safe: 0] ?? "")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 15)
-                        
-                        MediaTableRepresentable(songs.map { song in .mediaTrack(song) })
-                            .padding(.bottom)
                     }
                 }
-                .padding()
+                .transparentScrollbars()
+                .padding(.bottom)
+                
+                MediaShowcaseRow(rowTitle: playlistEditorialTitles[safe: 0] ?? "", items: MediaDynamic.fromPlaylists(playlists))
+                MediaShowcaseRow(rowTitle: albumEditorialTitles[safe: 0] ?? "", items: MediaDynamic.fromMediaItems(albums))
+                MediaShowcaseRow(rowTitle: albumEditorialTitles[safe: 1] ?? "", items: MediaDynamic.fromPlaylists(featuredPlaylists))
+                
+                VStack {
+                    Text(songEditorialTitles[safe: 0] ?? "")
+                        .font(.title2.bold())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 15)
+                    
+                    MediaTableRepresentable(songs.map { song in .mediaTrack(song) })
+                        .padding(.bottom)
+                }
+                .padding(.vertical)
             }
-            .transparentScrollbars()
-            .task {
-                await fetchData()
-            }
+            .padding()
         }
+        .transparentScrollbars()
+        .task {
+            await fetchData()
+        }
+        .enableInjection()
     }
     
     private func fetchData() async {

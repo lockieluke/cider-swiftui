@@ -8,12 +8,16 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import Inject
 
 struct HeroCard: View {
+    
     var item: BrowseItemAttributes
     var geometryMatching: Namespace.ID
     var originalSize: CGSize
     var coverKind: String
+    
+    @ObservedObject private var observer = Inject.observer
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var navigationModal: NavigationModal
@@ -115,5 +119,7 @@ struct HeroCard: View {
             }
             .padding(.leading)
         }
+        .frame(width: originalSize.width, height: originalSize.height)
+        .enableInjection()
     }
 }

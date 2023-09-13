@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		22336E972AB09B2800BE8D13 /* EditorialArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22336E962AB09B2800BE8D13 /* EditorialArtwork.swift */; };
-		22336E992AB09B4600BE8D13 /* PlayParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22336E982AB09B4600BE8D13 /* PlayParams.swift */; };
 		B700C18328B920F10069FDF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C18228B920F10069FDF5 /* ContentView.swift */; };
 		B700C18528B920F20069FDF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18428B920F20069FDF5 /* Assets.xcassets */; };
 		B700C18828B920F20069FDF5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B700C18728B920F20069FDF5 /* Preview Assets.xcassets */; };
@@ -22,7 +21,6 @@
 		B700C1B628B97CAC0069FDF5 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700C1B528B97CAC0069FDF5 /* SegmentedControl.swift */; };
 		B70189442AAFA55500A7EAA0 /* HeroCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70189432AAFA55500A7EAA0 /* HeroCard.swift */; };
 		B70189472AB241CD00A7EAA0 /* PlayParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70189452AB241CD00A7EAA0 /* PlayParams.swift */; };
-		B70189482AB241CD00A7EAA0 /* EditorialArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70189462AB241CD00A7EAA0 /* EditorialArtwork.swift */; };
 		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
 		B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */ = {isa = PBXBuildFile; productRef = B70524BA2A6C96C2001654B3 /* SwiftUIBackports */; };
 		B70524C22A6D2E39001654B3 /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */; };
@@ -1019,10 +1017,8 @@
 				B7688728294A314400C623C9 /* WSDebugger.swift in Sources */,
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
 				B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */,
-				22336E992AB09B4600BE8D13 /* PlayParams.swift in Sources */,
 				B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */,
 				B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */,
-				B70189482AB241CD00A7EAA0 /* EditorialArtwork.swift in Sources */,
 				B77AACF6293B93C200F8E1E2 /* TimeInterval.swift in Sources */,
 				B7CF895B2A759281007808A2 /* CiderPlayground.swift in Sources */,
 				B736F2732A634DFF008A0458 /* HomeView.swift in Sources */,

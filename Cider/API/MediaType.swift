@@ -19,6 +19,14 @@ enum MediaType: String {
 
 enum MediaDynamic {
     case mediaTrack(MediaTrack), mediaItem(MediaItem), mediaPlaylist(MediaPlaylist)
+    
+    static func fromPlaylists(_ playlists: [MediaPlaylist]) -> [MediaDynamic] {
+        return playlists.map { MediaDynamic.mediaPlaylist($0) }
+    }
+    
+    static func fromMediaItems(_ mediaItems: [MediaItem]) -> [MediaDynamic] {
+        return mediaItems.map { MediaDynamic.mediaItem($0) }
+    }
 }
 
 enum MediaRatings: Int {

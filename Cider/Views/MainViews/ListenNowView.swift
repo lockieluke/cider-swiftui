@@ -22,7 +22,7 @@ struct ListenNowView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 ForEach(self.personalisedData.recommendationSections?.musicRecommendations ?? [], id: \.id) { musicRecommendation in
-                    MediaShowcaseRow(rowTitle: musicRecommendation.title, recommendationSection: musicRecommendation)
+                    MediaShowcaseRow(rowTitle: musicRecommendation.title, items: musicRecommendation.recommendations)
                         .isHidden(navigationModal.currentlyPresentViewType != .Root && navigationModal.currentRootStack != .ListenNow)
                 }
             }
