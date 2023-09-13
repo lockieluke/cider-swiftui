@@ -1228,7 +1228,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cider/CiderDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
@@ -1292,7 +1292,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cider/Cider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
