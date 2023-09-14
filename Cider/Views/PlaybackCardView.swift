@@ -5,6 +5,7 @@
 import SwiftUI
 import Inject
 import SDWebImageSwiftUI
+import SFSafeSymbols
 
 struct PlaybackCardView: View {
     
@@ -24,8 +25,14 @@ struct PlaybackCardView: View {
                 .cornerRadius(5)
             
             VStack(alignment: .leading) {
-                Text(nowPlayingState.name ?? "Not Playing")
-                    .font(.system(.headline))
+                HStack {
+                    Text(nowPlayingState.name ?? "Not Playing")
+                        .font(.system(.headline))
+                    
+                    if nowPlayingState.contentRating == "explicit" {
+                        Image(systemSymbol: .eSquareFill)
+                    }
+                }
                 
                 InteractiveText(nowPlayingState.artistName ?? "")
                     .onTapGesture {

@@ -84,6 +84,22 @@ extension MediaDynamic: Identifiable, Hashable {
         }
     }
     
+    var contentRating: String {
+        switch self {
+            
+        case .mediaItem(let mediaItem):
+            return mediaItem.contentRating
+            
+            
+        case .mediaTrack(let mediaTrack):
+            return mediaTrack.contentRating
+            
+        case .mediaPlaylist(_):
+            return ""
+            
+        }
+    }
+    
     var artwork: MediaArtwork {
         switch self {
             

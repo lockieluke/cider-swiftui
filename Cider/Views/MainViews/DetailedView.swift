@@ -26,7 +26,7 @@ struct DetailedView: View {
     
     private let detailedViewParams: DetailedViewParams
     // Has to be done, because this view only accepts two types of MediaDynamic
-    private var id, title, artistName: String!
+    private var id, title, artistName, contentRating: String!
     private var artwork: MediaArtwork!
     private var description: MediaDescription!
     private var playlistType: PlaylistType!
@@ -38,6 +38,7 @@ struct DetailedView: View {
             id = mediaItem.id
             title = mediaItem.title
             artwork = mediaItem.artwork
+            contentRating = mediaItem.contentRating
             artistName = mediaItem.artistName
             description = mediaItem.description
             playlistType = mediaItem.playlistType ?? .Unknown
@@ -146,6 +147,9 @@ struct DetailedView: View {
                         HStack {
                             Text("\(title)")
                                 .font(.system(size: 18, weight: .bold))
+                            if contentRating == "explicit" {
+                                Image(systemSymbol: .eSquareFill)
+                            }
                             if playlistType == .PersonalMix {
                                 Image(systemSymbol: .personCropCircle).foregroundColor(Color(platformColor: artwork.bgColour))
                                     .font(.system(size: 18))

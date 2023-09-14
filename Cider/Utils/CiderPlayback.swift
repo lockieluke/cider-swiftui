@@ -13,6 +13,7 @@ struct NowPlayingState {
     
     var item: MediaDynamic?
     var name: String? = nil, artistName: String? = nil
+    var contentRating: String?
     var artworkURL: URL?
     var isPlaying = false, isReady = true, hasItemToPlay = false, playbackPipelineInitialised = false
     var currentTime: TimeInterval?
@@ -22,6 +23,7 @@ struct NowPlayingState {
     mutating func reset() {
         self.item = nil
         self.name = nil
+        self.contentRating = nil
         self.artworkURL = nil
         self.artistName = nil
         self.isPlaying = false
@@ -399,7 +401,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     @MainActor
     func updateNowPlayingStateBeforeReady(item: MediaDynamic) {
-        let title, artistName: String
+        let title, artistName, contentRating: String
         let artwork: MediaArtwork
         
         if item.id == self.nowPlayingState.item?.id {
@@ -412,16 +414,19 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             title = mediaTrack.title
             artistName = mediaTrack.artistName
             artwork = mediaTrack.artwork
+            contentRating = mediaTrack.contentRating
             
         case .mediaItem(let musicItem):
             title = musicItem.title
             artistName = musicItem.artistName
             artwork = musicItem.artwork
+            contentRating = musicItem.contentRating
             
         case .mediaPlaylist(let mediaPlaylist):
             title = mediaPlaylist.title
             artistName = mediaPlaylist.curatorName
             artwork = mediaPlaylist.artwork
+            contentRating = ""
             
         }
         
@@ -438,6 +443,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             item: item,
             name: title,
             artistName: artistName,
+            contentRating: contentRating,
             artworkURL: artworkURL,
             isPlaying: false,
             isReady: false
@@ -510,10 +516,12 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     
                     DispatchQueue.main.async {
                         if let name = mediaParams["name"].string,
+                           let contentRating = mediaParams["contentRating"].string,
                            let artistName = mediaParams["artistName"].string {
                             self.nowPlayingState.item = .mediaTrack(mediaTrack)
                             self.nowPlayingState.name = name
                             self.nowPlayingState.artistName = artistName
+                            self.nowPlayingState.contentRating = contentRating
                         }
                         
                         let newArtworkURL = URL(string: mediaParams["artworkURL"].stringValue.replacingOccurrences(of: "{w}", with: "200").replacingOccurrences(of: "{h}", with: "200"))

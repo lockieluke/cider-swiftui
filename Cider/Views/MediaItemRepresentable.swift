@@ -39,6 +39,9 @@ struct MediaItemRepresentable: View {
                     }
                 }
             Text(item.title)
+            if item.contentRating == "explicit" {
+                Image(systemSymbol: .eSquare)
+            }
             Spacer()
         }
         .padding(.vertical, 5)

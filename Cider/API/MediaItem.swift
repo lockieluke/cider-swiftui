@@ -17,7 +17,7 @@ struct MediaItem {
     var tracks: [MediaTrack] = []
     let editorialArtwork: EditorialArtwork?
     
-    let contentRating: String?
+    let contentRating: String
     let copyright: String?
     let genreNames: [String]
     let isCompilation: Bool
@@ -50,7 +50,7 @@ struct MediaItem {
             self.editorialArtwork = nil
         }
         
-        self.contentRating = attributes["contentRating"].string
+        self.contentRating = attributes["contentRating"].stringValue
         self.copyright = attributes["copyright"].string
         self.genreNames = attributes["genreNames"].arrayValue.map { $0.stringValue }
         self.isCompilation = attributes["isCompilation"].boolValue

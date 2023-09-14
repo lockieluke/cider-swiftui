@@ -31,7 +31,12 @@ struct MediaTrackRepresentable: View {
                         .animation(.interactiveSpring(), value: isHovering)
                     VStack {
                         Group {
-                            Text("\(mediaTrack.title)")
+                            HStack {
+                                Text(mediaTrack.title)
+                                if mediaTrack.contentRating == "explicit" {
+                                    Image(systemSymbol: .eSquare)
+                                }
+                            }
                             ArtistNamesInteractiveText(item: .mediaTrack(mediaTrack))
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
