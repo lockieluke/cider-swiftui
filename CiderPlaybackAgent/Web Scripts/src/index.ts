@@ -56,7 +56,7 @@ type CiderMusicKitInstance = MusicKitInstance & {
 };
 
 const mkScript = document.createElement('script');
-mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/musickit.js";
+mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/amp/musickit.js";
 mkScript.setAttribute('data-web-component', undefined);
 mkScript.setAttribute('async', undefined);
 document.head.appendChild(mkScript);
