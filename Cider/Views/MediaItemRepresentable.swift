@@ -66,6 +66,7 @@ struct MediaItemRepresentable: View {
         .modifier(PressActions(onEvent: { isPressed in
             self.isClicked = isPressed
         }))
+        .modifier(CatalogActions(item: item))
         .enableInjection()
     }
     

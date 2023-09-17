@@ -15,16 +15,18 @@ struct ContextMenuArg {
     let id: String
     let type: ContextMenuArgType
     let disabled: Bool
+    let visible: Bool
     
     enum ContextMenuArgType {
         case separator, general
     }
     
-    init(_ title: String, id: String? = nil, disabled: Bool = false) {
+    init(_ title: String, id: String? = nil, disabled: Bool = false, visible: Bool = true) {
         self.title = title
         self.id = id ?? title.lowerKebabCased()
         self.type = .general
         self.disabled = disabled
+        self.visible = visible
     }
     
     init(type: ContextMenuArgType = .separator) {
@@ -32,6 +34,7 @@ struct ContextMenuArg {
         self.id = UUID().uuidString
         self.type = type
         self.disabled = false
+        self.visible = true
     }
 }
 
@@ -50,7 +53,7 @@ struct ContextMenu: ViewModifier {
     func body(content: Content) -> some View {
         content
             .contextMenu {
-                ForEach(args, id: \.id) { arg in
+                ForEach(args.filter { $0.visible }, id: \.id) { arg in
                     if let title = arg.title  {
                         Button(action: {
                             self.onAction?(arg.id)

@@ -7,7 +7,7 @@ import SwiftyJSON
 
 struct MediaTrack {
     
-    let id: String, title: String, artistName: String
+    let id: String, title: String, artistName: String, albumId: String
     let type: MediaType
     let artwork: MediaArtwork
     let contentRating: String
@@ -21,6 +21,7 @@ struct MediaTrack {
         let attributes = data["attributes"]
         self.title = attributes["name"].stringValue
         self.artistName = attributes["artistName"].stringValue
+        self.albumId = data["relationships"]["albums"]["data"][0]["id"].stringValue
         self.artwork = MediaArtwork(data: attributes["artwork"])
         self.contentRating = attributes["contentRating"].stringValue
         self.duration = TimeInterval(truncating: Int(Int(truncating: attributes["durationInMillis"].numberValue) + 1000) / Int(1000) as NSNumber)

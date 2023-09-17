@@ -100,6 +100,21 @@ extension MediaDynamic: Identifiable, Hashable {
         }
     }
     
+    var albumId: String? {
+        switch self {
+                        
+        case .mediaItem(let mediaItem):
+            return mediaItem.id
+            
+        case .mediaTrack(let mediaTrack):
+            return mediaTrack.albumId
+            
+        case .mediaPlaylist(_):
+            return nil
+            
+        }
+    }
+    
     var artwork: MediaArtwork {
         switch self {
             

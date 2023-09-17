@@ -12,10 +12,14 @@ import SwiftUI
 struct CatalogActions: ViewModifier {
     
     @EnvironmentObject private var mkModal: MKModal
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     @State private var prefetechedAttributes = false
     @State private var isInLibrary = false
     @State private var rating: MediaRatings = .Neutral
+    @State private var albumData: MediaItem?
+    
+    @Namespace private var animationNamespace
     
     private let item: MediaDynamic
     
@@ -31,11 +35,18 @@ struct CatalogActions: ViewModifier {
         return rating == .Disliked ? "Undo Suggest Less" : "Suggest Less"
     }
     
+    private var itemTypeText: String {
+        return item.type == "songs" ? "Album" :
+               item.type == "albums" ? "Album" :
+               "Playlist"
+    }
+    
     private var menu: [ContextMenuArg] {
         var menuItems = [
             ContextMenuArg(loveActionText, id: "love", disabled: rating == .Disliked),
             ContextMenuArg(dislikeActionText, id: "dislike", disabled: rating == .Liked),
             ContextMenuArg(isInLibrary ? "Remove from Library" : "Add to Library", id: "mod-library"),
+            ContextMenuArg("Go to \(itemTypeText)", id: "nav-item", visible: (item.albumId?.isEmpty == false)),
             ContextMenuArg("Add to Playlist"),
             ContextMenuArg(),
             ContextMenuArg("Play Next"),
@@ -90,6 +101,20 @@ struct CatalogActions: ViewModifier {
                 isInLibrary.toggle()
             }
             
+        case "nav-item":
+            do {
+            if item.type == "playlists" {
+                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: item, geometryMatching: animationNamespace, originalSize: CGSize(width: 550, height: 225), coverKind: "bb"))))
+            } else if item.type == "albums" {
+                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: item, geometryMatching: animationNamespace, originalSize: CGSize(width: 550, height: 225), coverKind: "bb"))))
+            } else if item.type == "songs", let albumId = item.albumId {
+                self.albumData = try await self.mkModal.AM_API.fetchAlbum(id: albumId)
+                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(self.albumData!), geometryMatching: animationNamespace, originalSize: CGSize(width: 550, height: 225), coverKind: "bb"))))
+            }
+            } catch {
+                print("Error navigating: \(error)")
+            }
+
 #if os(macOS)
         case "copy-id":
             NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(item.id)
