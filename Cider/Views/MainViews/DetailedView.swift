@@ -196,34 +196,6 @@ struct DetailedView: View {
                 }
             }
             .task {
-                print("Opened Detailed View")
-                
-                switch detailedViewParams.item {
-                case .mediaItem(let mediaItem):
-                    async let tracksResult = try? self.mkModal.AM_API.fetchTracks(id: mediaItem.id, type: .Album)
-                    async let libraryResult = self.mkModal.AM_API.fetchLibraryCatalog(item: .mediaItem(mediaItem))
-                    
-                    if let fetchedTracks = await tracksResult {
-                        self.tracks = fetchedTracks
-                    }
-                    if let isInLibrary = await libraryResult {
-                        self.isInLibrary = isInLibrary
-                    }
-                    
-                case .mediaPlaylist(let mediaPlaylist):
-                    async let tracksResult = try? self.mkModal.AM_API.fetchTracks(id: mediaPlaylist.id, type: .Playlist)
-                    async let libraryResult = self.mkModal.AM_API.fetchLibraryCatalog(item: .mediaPlaylist(mediaPlaylist))
-                    
-                    if let fetchedTracks = await tracksResult {
-                        self.tracks = fetchedTracks
-                    }
-                    if let isInLibrary = await libraryResult {
-                        self.isInLibrary = isInLibrary
-                    }
-                default:
-                    break
-                }
-                
                 rotationAngle = isInLibrary ? 45 : 0
                 withAnimation(.spring().delay(0.3)) {
                     self.tracksShouldLoadIn = true
@@ -231,6 +203,33 @@ struct DetailedView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.leading, 30)
+        }
+        .task {
+            switch detailedViewParams.item {
+            case .mediaItem(let mediaItem):
+                async let tracksResult = try? self.mkModal.AM_API.fetchTracks(id: mediaItem.id, type: .Album)
+                async let libraryResult = self.mkModal.AM_API.fetchLibraryCatalog(item: .mediaItem(mediaItem))
+                
+                if let fetchedTracks = await tracksResult {
+                    self.tracks = fetchedTracks
+                }
+                if let isInLibrary = await libraryResult {
+                    self.isInLibrary = isInLibrary
+                }
+                
+            case .mediaPlaylist(let mediaPlaylist):
+                async let tracksResult = try? self.mkModal.AM_API.fetchTracks(id: mediaPlaylist.id, type: .Playlist)
+                async let libraryResult = self.mkModal.AM_API.fetchLibraryCatalog(item: .mediaPlaylist(mediaPlaylist))
+                
+                if let fetchedTracks = await tracksResult {
+                    self.tracks = fetchedTracks
+                }
+                if let isInLibrary = await libraryResult {
+                    self.isInLibrary = isInLibrary
+                }
+            default:
+                break
+            }
         }
         .enableInjection()
     }
