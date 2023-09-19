@@ -51,12 +51,10 @@ struct MediaPresentable: View {
     var innerBody: some View {
         VStack {
             let artworkView = ZStack {
-                WebImage(url: artwork.getUrl(width: 200, height: 200, kind: coverKind))
+                WebImage(url: artwork.getUrl(width: 200, height: 200, kind: coverKind), options: [.retryFailed])
                     .resizable()
-                    .indicator(.progress)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
-                    .clipped()
                     .cornerRadius(5)
                     .brightness(isHovering ? -0.1 : 0)
                     .animation(.easeIn(duration: 0.15), value: isHovering)
