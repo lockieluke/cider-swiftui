@@ -40,7 +40,7 @@ struct MediaItemRepresentable: View {
                 }
             Text(item.title)
             if item.contentRating == "explicit" {
-                Image(systemSymbol: .eSquare)
+                Image(systemSymbol: .eSquareFill)
             }
             Spacer()
         }

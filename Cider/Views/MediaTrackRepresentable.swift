@@ -34,7 +34,7 @@ struct MediaTrackRepresentable: View {
                             HStack {
                                 Text(mediaTrack.title)
                                 if mediaTrack.contentRating == "explicit" {
-                                    Image(systemSymbol: .eSquare)
+                                    Image(systemSymbol: .eSquareFill)
                                 }
                             }
                             ArtistNamesInteractiveText(item: .mediaTrack(mediaTrack))
