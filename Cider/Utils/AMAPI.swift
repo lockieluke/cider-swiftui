@@ -103,15 +103,20 @@ class AMAPI {
     }
     
     func validateUserToken(_ userToken: String) async -> Bool {
-        let res = await AF.request("\(APIEndpoints.AMAPI)/me/account", parameters: [
-            "meta": "subscription",
-            "challenge[subscriptionCapabilities]": "voice,premium"
-        ], headers: self.noAuthHeaders).validate().serializingData().response
-        
-        if let error = res.error {
-            self.logger.error("Failed to validate user token: \(error)")
-        } else if res.response?.statusCode == 200, let data = res.data, let json = try? JSON(data: data) {
-            return json["data"]["meta"]["subscription"].boolValue
+        if let AM_TOKEN = self.AM_TOKEN {
+            let res = await AF.request("\(APIEndpoints.AMAPI)/me/account", parameters: [
+                "meta": "subscription",
+                "challenge[subscriptionCapabilities]": "voice,premium"
+            ], headers: [
+                "Music-User-Token": userToken,
+                "Authorization": "Bearer \(AM_TOKEN)"
+            ]).validate().serializingData().response
+            
+            if let error = res.error {
+                self.logger.error("Failed to validate user token: \(error)")
+            } else if res.response?.statusCode == 200, let data = res.data, let json = try? JSON(data: data) {
+                return json["data"]["meta"]["subscription"].boolValue
+            }
         }
         
         return false
