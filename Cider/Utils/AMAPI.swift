@@ -162,9 +162,9 @@ class AMAPI {
             self.logger.error("Failed to fetch personal recommendations: \(error)")
         } else if let data = res.data, let json = try? JSON(data: data), let sections = json["data"].array {
             // https://github.com/ciderapp/project2/blob/main/src/components/applemusic/pageContent/AMHome.vue#L130
-            let section = sections.filter { section in
+            let section = sections.first { section in
                 return section["meta"]["metrics"]["moduleType"].intValue == 6
-            }.first
+            }
             
             let items = section?["relationships"]["contents"]["data"].arrayValue.compactMap { item in
                 return MediaPlaylist(data: item)
