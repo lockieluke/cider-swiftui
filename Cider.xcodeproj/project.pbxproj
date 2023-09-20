@@ -97,6 +97,7 @@
 		B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B76FC6F52A8FE14900F8F80E /* GoogleSignIn */; };
 		B76FC6F82A8FE14900F8F80E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B76FC6F72A8FE14900F8F80E /* GoogleSignInSwift */; };
 		B76FC6FA2A902FB600F8F80E /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76FC6F92A902FB600F8F80E /* AuthButton.swift */; };
+		B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B7718F0A2ABB6EC5009CB966 /* ZippyJSON */; };
 		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; platformFilters = (macos, ); };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
 		B77AACE8293ACDE900F8E1E2 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE7293ACDE900F8E1E2 /* TooltipView.swift */; platformFilters = (macos, ); };
@@ -385,6 +386,7 @@
 				B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */,
 				B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */,
 				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
+				B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */,
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
 				B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */,
 				B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */,
@@ -800,6 +802,7 @@
 				B7332B0F2A97D7C60019221D /* Swifter */,
 				B7107BB62AA2B8D300A83306 /* FirebaseAnalytics */,
 				B7107BB82AA2B8D300A83306 /* FirebaseAuth */,
+				B7718F0A2ABB6EC5009CB966 /* ZippyJSON */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -880,6 +883,7 @@
 				B728B0572A78453100BAC665 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
 				B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1599,6 +1603,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/michaeleisel/ZippyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.10;
+			};
+		};
 		B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1744,6 +1756,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		B7718F0A2ABB6EC5009CB966 /* ZippyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */;
+			productName = ZippyJSON;
 		};
 		B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;

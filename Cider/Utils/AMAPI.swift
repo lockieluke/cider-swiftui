@@ -7,6 +7,7 @@ import StoreKit
 import MusicKit
 import SwiftyJSON
 import Alamofire
+import ZippyJSON
 
 struct APIEndpoints {
     static let AMAPI = "https://amp-api.music.apple.com/v1"
@@ -67,7 +68,7 @@ class AMAPI {
         ]
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        let json = try JSONDecoder().decode(CiderAPIResponse.self, from: data)
+        let json = try ZippyJSONDecoder().decode(CiderAPIResponse.self, from: data)
         self.AM_TOKEN = json.token
         try self.cacheModal.storage?.setObject(json.token, forKey: "last_am_token", expiry: .date(Date().addingTimeInterval(60 * 60 * 24 * 30)))
         self.logger.info("Fetching developer token took \(timer.stop())")
