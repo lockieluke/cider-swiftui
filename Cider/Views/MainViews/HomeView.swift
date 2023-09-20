@@ -31,6 +31,18 @@ struct HomeView: View {
         self.onDataLoaded = onDataLoaded
     }
     
+    func loadHomeViewData() async -> HomeViewData {
+        async let personalSocialProfile = self.mkModal.AM_API.fetchPersonalSocialProfile()
+        async let recentlyPlayedItems = self.mkModal.AM_API.fetchRecentlyPlayed()
+        async let personalRecommendation = self.mkModal.AM_API.fetchPersonalRecommendation()
+        
+        return await HomeViewData(
+            personalSocialProfile: personalSocialProfile,
+            recentlyPlayedItems: recentlyPlayedItems,
+            personalRecommendation: personalRecommendation
+        )
+    }
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: dataLoaded) {
             VStack(alignment: .leading) {
@@ -64,10 +76,12 @@ struct HomeView: View {
                 
                 Text("Made For You")
                     .font(.title2.bold())
-                PatchedGeometryReader { geometry in
-                    HStack {
-                        ForEach(homeViewData?.personalRecommendation ?? [], id: \.id) { recommendationItem in
-                            MediaPresentable(item: .mediaPlaylist(recommendationItem), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), coverKind: "ss", geometryMatched: true)
+                if let personalRecommendation = homeViewData?.personalRecommendation {
+                    PatchedGeometryReader { geometry in
+                        HStack {
+                            ForEach(personalRecommendation, id: \.id) { recommendationItem in
+                                MediaPresentable(item: .mediaPlaylist(recommendationItem), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), coverKind: "ss", geometryMatched: true)
+                            }
                         }
                     }
                 }
@@ -79,14 +93,13 @@ struct HomeView: View {
         }
         .transparentScrollbars()
         .task {
-            // load data in parallel
-            async let personalSocialProfile = self.mkModal.AM_API.fetchPersonalSocialProfile()
-            async let recentlyPlayedItems = self.mkModal.AM_API.fetchRecentlyPlayed()
-            async let personalRecommendation = self.mkModal.AM_API.fetchPersonalRecommendation()
-            
-            self.homeViewData = await HomeViewData(personalSocialProfile: personalSocialProfile, recentlyPlayedItems: recentlyPlayedItems, personalRecommendation: personalRecommendation)
-            self.dataLoaded = true
-            self.onDataLoaded?()
+            self.homeViewData = await self.loadHomeViewData()
+        }
+        .onChange(of: homeViewData?.personalSocialProfile.isNil) { _ in
+            if homeViewData?.personalSocialProfile != nil {
+                self.dataLoaded = true
+                self.onDataLoaded?()
+            }
         }
         .enableInjection()
     }

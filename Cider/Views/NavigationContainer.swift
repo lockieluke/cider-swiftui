@@ -111,7 +111,7 @@ struct NavigationContainer: View {
         .padding(.top, 40)
         .padding(.bottom, 100)
         .onAppear {
-            withAnimation(progressBarAnimation.delay(0.1)) {
+            withAnimation(progressBarAnimation) {
                 self.showProgressBar = true
             }
         }
