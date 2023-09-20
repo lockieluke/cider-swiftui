@@ -16,6 +16,7 @@ struct HeroCard: View {
     var geometryMatching: Namespace.ID
     var originalSize: CGSize
     var coverKind: String
+    var maxRelative: CGFloat
     
     @ObservedObject private var observer = Inject.observer
     
@@ -52,74 +53,81 @@ struct HeroCard: View {
     }
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(item.designBadge)
-                        .font(.footnote)
-                        .fontWeight(.light)
-                        .shadow(radius: 5)
-                        .foregroundColor(.gray)
-                    Spacer()
-                }
-                Text(item.name)
-                    .font(.title)
-                    .lineLimit(1) 
-                    .onTapGesture {
-                        Task {
-                            await navigateItem(itemID: item.id, itemKind: item.kind)
-                        }
-                    }.modifier(SimpleHoverModifier())
-                
-                Group {
-                    if !item.artistName.isEmpty {
-                        Text(item.artistName)
-                            .font(.footnote)
-                            .fontWeight(.medium)
-                            .shadow(radius: 5)
-                            .foregroundColor(.gray)
-                    } else {
-                        Text(" ")
-                            .font(.footnote)
-                            .fontWeight(.medium)
-                            .shadow(radius: 5)
-                            .foregroundColor(.gray)
-                    }
-                }.onTapGesture {
-                    Task {
-                        await navigateArtist(artistID: item.artistId)
-                    }
-                }.modifier(SimpleHoverModifier())
-                
-                ZStack(alignment: .bottomLeading) {
-                    WebImage(url: URL(string: item.subscriptionHero))
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 530)
-                        .cornerRadius(15)
-                        .shadow(radius: 12)
-                        .brightness(isHovering ? -0.1 : 0)
-                        .animation(.easeIn(duration: 0.15), value: isHovering)
-                        .onHover { isHovering in
-                            self.isHovering = isHovering
-                        }
-
-                    VStack(alignment: .leading) {
-                        if !item.subscriptionHero.isEmpty {
-                            Text(item.plainEditorialNotes)
-                                .padding(10)
-                                .frame(maxWidth: 530 * 0.75, alignment: .leading)
-                        }
-                    }
-                }.onTapGesture {
+        let scale = max(maxRelative * 0.00075, 0.8)
+        
+        VStack(alignment: .leading) {
+            HStack {
+                Text(item.designBadge)
+                    .font(.footnote)
+                    .fontWeight(.light)
+                    .shadow(radius: 5)
+                    .foregroundColor(.gray)
+                Spacer()
+            }
+            Text(item.name)
+                .font(.title)
+                .lineLimit(1)
+                .onTapGesture {
                     Task {
                         await navigateItem(itemID: item.id, itemKind: item.kind)
                     }
                 }.modifier(SimpleHoverModifier())
+            
+            Group {
+                if !item.artistName.isEmpty {
+                    Text(item.artistName)
+                        .font(.footnote)
+                        .fontWeight(.medium)
+                        .shadow(radius: 5)
+                        .foregroundColor(.gray)
+                } else {
+                    Text(" ")
+                        .font(.footnote)
+                        .fontWeight(.medium)
+                        .shadow(radius: 5)
+                        .foregroundColor(.gray)
+                }
             }
-            .padding(.leading)
+            .frame(maxWidth: 530 * scale - 30, alignment: .leading)
+            .onTapGesture {
+                Task {
+                    await navigateArtist(artistID: item.artistId)
+                }
+            }
+            .modifier(SimpleHoverModifier())
+            
+            WebImage(url: URL(string: item.subscriptionHero))
+                .resizable()
+                .frame(width: 530 * scale, height: 135 * scale, alignment: .leading)
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .shadow(radius: 8)
+                .brightness(isHovering ? -0.1 : 0)
+                .animation(.easeIn(duration: 0.15), value: isHovering)
+                .onHover { isHovering in
+                    self.isHovering = isHovering
+                }
+                .overlay {
+                    Group {
+                        if !item.subscriptionHero.isEmpty {
+                            Text(item.plainEditorialNotes)
+                                .foregroundStyle(.white)
+                                .frame(maxWidth: 530 * 0.75 * scale, alignment: .leading)
+                        }
+                    }
+                    .shadow(radius: 30)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    .padding(.horizontal)
+                    .padding(.vertical, 15)
+                }
+                .onTapGesture {
+                    Task {
+                        await navigateItem(itemID: item.id, itemKind: item.kind)
+                    }
+                }
+                .modifier(SimpleHoverModifier())
         }
-        .frame(width: originalSize.width, height: originalSize.height)
         .enableInjection()
     }
 }
