@@ -17,12 +17,13 @@ struct MediaShowcaseRow: View {
     var items: [MediaDynamic]
     
     var body: some View {
-        PatchedGeometryReader { geometry in
-            VStack {
-                Text(rowTitle)
-                    .font(.title2.bold())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 15)
+        VStack {
+            Text(rowTitle)
+                .font(.title2.bold())
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 15)
+        
+            PatchedGeometryReader { geometry in
                 ScrollView([.horizontal]) {
                     LazyHStack {
                         ForEach(items, id: \.id) { item in
