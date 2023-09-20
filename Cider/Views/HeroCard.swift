@@ -98,8 +98,8 @@ struct HeroCard: View {
             
             WebImage(url: URL(string: item.subscriptionHero))
                 .resizable()
+                .aspectRatio(contentMode: .fit)
                 .frame(width: 530 * scale, height: 135 * scale, alignment: .leading)
-                .scaledToFit()
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .shadow(radius: 8)
                 .brightness(isHovering ? -0.1 : 0)
