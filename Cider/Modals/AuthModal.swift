@@ -85,7 +85,7 @@ class AuthModal: ObservableObject {
             }
             
             if json["error"].exists() {
-                fatalError("Error occurred when authenticating AM User: \(json["message"].string ?? "No error description")")
+                parent.logger.error("Error occurred when authenticating AM User: \(json["message"].string ?? "No error description")")
             }
             
             completionHandler()

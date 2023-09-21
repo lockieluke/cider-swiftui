@@ -42,22 +42,26 @@ struct BrowseView: View {
                     .font(.largeTitle.bold())
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                ScrollView(.horizontal) {
-                    LazyHStack {
-                        ForEach(heroCardData, id: \.id) { heroCardDataRow in
-                            ForEach(heroCardDataRow.items, id: \.self) { item in
-                                HeroCard(
-                                    item: item,
-                                    geometryMatching: animationNamespace,
-                                    originalSize: heroCardSize,
-                                    coverKind: coverKindValue
-                                )
+                PatchedGeometryReader { geometry in
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 20) {
+                            ForEach(heroCardData, id: \.id) { heroCardDataRow in
+                                ForEach(heroCardDataRow.items, id: \.self) { item in
+                                    HeroCard(
+                                        item: item,
+                                        geometryMatching: animationNamespace,
+                                        originalSize: heroCardSize,
+                                        coverKind: coverKindValue,
+                                        maxRelative: geometry.maxRelative
+                                    )
+                                }
                             }
                         }
+                        .padding(.horizontal)
                     }
+                    .transparentScrollbars()
+                    .padding(.bottom)
                 }
-                .transparentScrollbars()
-                .padding(.bottom)
                 
                 MediaShowcaseRow(rowTitle: playlistEditorialTitles[safe: 0] ?? "", items: MediaDynamic.fromPlaylists(playlists))
                 MediaShowcaseRow(rowTitle: albumEditorialTitles[safe: 0] ?? "", items: MediaDynamic.fromMediaItems(albums))
@@ -84,16 +88,16 @@ struct BrowseView: View {
     }
     
     private func fetchData() async {
-        allBrowseData = await mkModal.AM_API.fetchBrowse()
+        self.allBrowseData = await mkModal.AM_API.fetchBrowse()
         
-        heroCardData = allBrowseData.filter { $0.kind.rawValue == "316" }
-        playlistBrowseData = allBrowseData.filter { $0.kind.rawValue == "326" }
-        albumBrowseData = allBrowseData.filter { $0.kind.rawValue == "387" }
-        songBrowseData = allBrowseData.filter { $0.kind.rawValue == "327" }
+        self.heroCardData = allBrowseData.filter { $0.kind.rawValue == "316" }
+        self.playlistBrowseData = allBrowseData.filter { $0.kind.rawValue == "326" }
+        self.albumBrowseData = allBrowseData.filter { $0.kind.rawValue == "387" }
+        self.songBrowseData = allBrowseData.filter { $0.kind.rawValue == "327" }
         
-        playlistEditorialTitles = playlistBrowseData.map { $0.editorialTitle }
-        albumEditorialTitles = albumBrowseData.map { $0.editorialTitle }
-        songEditorialTitles = songBrowseData.map { $0.editorialTitle }
+        self.playlistEditorialTitles = playlistBrowseData.map { $0.editorialTitle }
+        self.albumEditorialTitles = albumBrowseData.map { $0.editorialTitle }
+        self.songEditorialTitles = songBrowseData.map { $0.editorialTitle }
         
         await withTaskGroup(of: Void.self) { group in
             for data in playlistBrowseData {
@@ -104,12 +108,12 @@ struct BrowseView: View {
                             case "playlist":
                                 let playlistData = try await mkModal.AM_API.fetchPlaylist(id: item.id)
                                 DispatchQueue.main.async {
-                                    playlists.append(playlistData)
+                                    self.playlists.append(playlistData)
                                 }
                             case "album":
                                 let albumData = try await mkModal.AM_API.fetchAlbum(id: item.id)
                                 DispatchQueue.main.async {
-                                    albums.append(albumData)
+                                    self.albums.append(albumData)
                                 }
                             default:
                                 break
@@ -128,7 +132,7 @@ struct BrowseView: View {
                             if item.kind == "playlist" {
                                 let playlistData = try await mkModal.AM_API.fetchPlaylist(id: item.id)
                                 DispatchQueue.main.async {
-                                    featuredPlaylists.append(playlistData)
+                                    self.featuredPlaylists.append(playlistData)
                                 }
                             }
                         } catch {
@@ -145,7 +149,7 @@ struct BrowseView: View {
                             if item.kind == "song" {
                                 let songData = try await mkModal.AM_API.fetchSong(id: item.id)
                                 DispatchQueue.main.async {
-                                    songs.append(songData)
+                                    self.songs.append(songData)
                                 }
                             }
                         } catch {
