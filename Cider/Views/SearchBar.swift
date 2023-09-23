@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Inject
@@ -36,24 +36,30 @@ struct SearchBar: View {
         
         @EnvironmentObject private var ciderPlayback: CiderPlayback
         @EnvironmentObject private var navigationModal: NavigationModal
+        @EnvironmentObject private var mkModal: MKModal
         
         @State private var isHovering: Bool = false
         @State private var isClicked: Bool = false
         @State private var isArtworkHovering: Bool = false
+        @State private var albumData: MediaItem?
         
         @ObservedObject private var iO = Inject.observer
+        
+        @Namespace private var animationNamespace
         
         private let displayName: String?
         private let description: String?
         private let artwork: MediaArtwork?
         private let track: MediaTrack?
+        private let album: MediaItem?
         private let artist: MediaArtist?
         private let onClick: (() -> Void)?
         
-        init(_ suggestion: SearchSuggestions.SearchSuggestion, onClick: (() -> Void)? = nil) {
+        init(_ suggestion: SearchSuggestions.Suggestion, onClick: (() -> Void)? = nil) {
             var displayName: String?, description: String?
             var artwork: MediaArtwork?
             var track: MediaTrack?
+            var album: MediaItem?
             var artist: MediaArtist?
             if let topResult = suggestion.searchTopResult {
                 if case let .artist(mediaArtist) = topResult {
@@ -65,6 +71,11 @@ struct SearchBar: View {
                     artwork = mediaTrack.artwork
                     description = mediaTrack.artistName
                     track = mediaTrack
+                } else if case let .album(mediaItem) = topResult {
+                    displayName = mediaItem.title
+                    artwork = mediaItem.artwork
+                    description = mediaItem.artistName
+                    album = mediaItem
                 }
             } else {
                 displayName = suggestion.searchTerm?.displayTerm
@@ -75,6 +86,7 @@ struct SearchBar: View {
             self.artwork = artwork
             self.artist = artist
             self.track = track
+            self.album = album
             self.onClick = onClick
         }
         
@@ -95,7 +107,9 @@ struct SearchBar: View {
                                 }
                             }
                             .onHover { isHovering in
-                                self.isArtworkHovering = isHovering
+                                if let track = self.track {
+                                    self.isArtworkHovering = isHovering
+                                }
                             }
                             .onTapGesture {
                                 if let track = self.track {
@@ -132,11 +146,30 @@ struct SearchBar: View {
                 self.isHovering = isHovering
             }
             .onTapGesture {
-                if let artist = self.artist {
-                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(artist: artist))))
+                Task {
+                    if let artist = self.artist {
+                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(artist: artist))))
+                    }
+                    
+                    if let track = self.track {
+                        do {
+                            self.albumData = try await self.mkModal.AM_API.fetchAlbum(id: track.albumId)
+                            if let albumData = self.albumData {
+                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(albumData), geometryMatching: animationNamespace, originalSize: CGSize(width: 550, height: 225), coverKind: "bb"))))
+                            }
+                        } catch {
+                            print("Error fetching album: \(error)")
+                        }
+                    }
+                    
+                    if let album = self.album {
+                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(album), geometryMatching: animationNamespace, originalSize: CGSize(width: 550, height: 225), coverKind: "bb"))))
+                    }
+                    
+                    self.onClick?()
                 }
-                self.onClick?()
             }
+
             .modifier(PressActions(onEvent: { isPressed in
                 self.isClicked = isPressed
             }))
@@ -148,8 +181,8 @@ struct SearchBar: View {
     }
     
     var suggestionsView: some View {
-        VStack(alignment: .center, spacing: 0) {
-            if let searchSuggestions = self.suggestions?.searchSuggestions {
+        if let searchSuggestions = self.suggestions?.suggestions, !searchSuggestions.isEmpty {
+            return AnyView(VStack(alignment: .center, spacing: 0) {
                 ForEach(searchSuggestions, id: \.id) { searchSuggestion in
                     SuggestionView(searchSuggestion, onClick: {
                         self.isFocused = false
@@ -161,9 +194,11 @@ struct SearchBar: View {
                     })
                 }
             }
+                .padding(.vertical, 5)
+                .enableInjection())
+        } else {
+            return AnyView(EmptyView())
         }
-        .padding(.vertical, 5)
-        .enableInjection()
     }
     
     var clearSearchView: some View {
@@ -213,7 +248,7 @@ struct SearchBar: View {
                         }
                 }
                 .focused($isFocused)
-            #if canImport(AppKit)
+#if canImport(AppKit)
                 .onHover { isHovered in
                     if isHovered {
                         NSCursor.iBeam.push()
@@ -221,14 +256,14 @@ struct SearchBar: View {
                         NSCursor.pop()
                     }
                 }
-            #endif
+#endif
                 .onChange(of: isFocused) { newIsFocused in
                     self.searchModal.isFocused = newIsFocused
                 }
                 .onAppear {
-                    #if os(macOS)
+#if os(macOS)
                     self.isFocused = true
-                    #endif
+#endif
                 }
                 .padding(.horizontal, 10)
                 .overlay(
@@ -252,7 +287,7 @@ struct SearchBar: View {
                                 return
                             }
                             Debouncer.debounce(delay: .milliseconds(200), shouldRunImmediately: true) {
-                                self.suggestions?.searchSuggestions = []
+                                self.suggestions?.suggestions = []
                                 self.fetchSuggestionsTask = Task {
                                     if Task.isCancelled {
                                         return

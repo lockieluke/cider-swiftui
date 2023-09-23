@@ -19,11 +19,10 @@ struct SearchSuggestions {
     }
     
     enum SearchTopResult {
-        case track(MediaTrack), artist(MediaArtist)
+        case track(MediaTrack), artist(MediaArtist), album(MediaItem)
     }
     
-    struct SearchSuggestion {
-        
+    struct Suggestion {
         let id: String
         let searchTerm: SearchTerm?
         let searchTopResult: SearchTopResult?
@@ -33,28 +32,35 @@ struct SearchSuggestions {
             self.searchTerm = searchTerm
             self.searchTopResult = searchTopResult
         }
-        
     }
     
-    var searchSuggestions: [SearchSuggestion]
+    var suggestions: [Suggestion]
     
     init(data: JSON) {
-        let suggestions = data["suggestions"]
-        self.searchSuggestions = suggestions.arrayValue.compactMap { suggestion in
-            let suggestionType = suggestion["kind"].string
-            if suggestionType == "terms" {
-                return SearchSuggestion(id: UUID().uuidString, searchTerm: SearchTerm(searchTerm: suggestion["searchTerm"].stringValue, displayTerm: suggestion["displayTerm"].stringValue))
-            } else if suggestionType == "topResults" {
-                let content = suggestion["content"]
-                let type = MediaType(rawValue: content["type"].stringValue)
-                if type == .Artist {
-                    return SearchSuggestion(id: content["id"].stringValue, searchTopResult: .artist(MediaArtist(data: content)))
-                } else if type == .Song {
-                    return SearchSuggestion(id: content["id"].stringValue, searchTopResult: .track(MediaTrack(data: content)))
+        let suggestionsJSON = data["suggestions"]
+        self.suggestions = suggestionsJSON.arrayValue.compactMap { suggestionJSON in
+            guard let suggestionType = suggestionJSON["kind"].string else { return nil }
+            switch suggestionType {
+            case "terms":
+                let searchTerm = SearchTerm(searchTerm: suggestionJSON["searchTerm"].stringValue,
+                                            displayTerm: suggestionJSON["displayTerm"].stringValue)
+                return Suggestion(id: UUID().uuidString, searchTerm: searchTerm)
+            case "topResults":
+                let content = suggestionJSON["content"]
+                guard let type = MediaType(rawValue: content["type"].stringValue) else { return nil }
+                switch type {
+                case .Artist:
+                    return Suggestion(id: content["id"].stringValue, searchTopResult: .artist(MediaArtist(data: content)))
+                case .Song:
+                    return Suggestion(id: content["id"].stringValue, searchTopResult: .track(MediaTrack(data: content)))
+                case .Album:
+                    return Suggestion(id: content["id"].stringValue, searchTopResult: .album(MediaItem(data: content)))
+                default:
+                    return nil
                 }
+            default:
+                return nil
             }
-            
-            return nil
         }
     }
     

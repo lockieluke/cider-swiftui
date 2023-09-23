@@ -278,11 +278,25 @@ class AMAPI {
         case activities, albums, appleCurators = "apple-curators", artists, curators, musicVideos = "music-videos", playlists, recordLabels = "record-labels", songs, stations
     }
     
-    func fetchSearchSuggestions(term: String, kinds: [FetchSearchSuggestionsKinds] = [.terms, .topResults], types: [FetchSearchTypes] = [.artists, .songs, .musicVideos]) async throws -> SearchSuggestions {
+    func fetchSearchSuggestions(term: String, kinds: [FetchSearchSuggestionsKinds] = [.terms, .topResults], types: [FetchSearchTypes] = [.artists, .songs, .musicVideos, .albums]) async throws -> SearchSuggestions {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/search/suggestions", parameters: [
             "kinds": kinds.map { kind in kind.rawValue }.joined(separator: ","),
             "types": types.map { type in type.rawValue }.joined(separator: ","),
-            "term": term
+            "term": term,
+            "relate[editorial-items]": "contents",
+            "include[editorial-items]": "contents",
+            "include[albums]": "artists",
+            "include[artists]": "artists",
+            "include[songs]": "artists,albums",
+            "include[music-videos]": "artists",
+            "extend": "artistUrl",
+            "fields[artists]": "url,name,artwork,hero",
+            "fields[albums]":
+                "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialVideo,name,playParams,releaseDate,url",
+            "with": "serverBubbles,lyricHighlights",
+            "art[url]": "c,f",
+            "omit[resource]": "autos",
+            "platform": "web",
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch search suggestions: \(error)")
