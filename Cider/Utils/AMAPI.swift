@@ -63,7 +63,7 @@ class AMAPI {
         
         var request = URLRequest(url: URL(string: APIEndpoints.CIDER)!)
         request.headers = [
-            "User-Agent": "Cider;?client=swiftui&env=dev&platform=darwin",
+            "User-Agent": "Cider",
             "Referer": "localhost"
         ]
         let (data, _) = try await URLSession.shared.data(for: request)
