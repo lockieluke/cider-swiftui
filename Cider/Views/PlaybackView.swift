@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Sliders
@@ -15,66 +15,48 @@ struct PlaybackView: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
-    var repeatModeIcon: PlaybackButtonIcon {
-        switch self.ciderPlayback.playbackBehaviour.repeatMode {
-            
+    private var repeatModeIcon: (icon: PlaybackButtonIcon, color: Color, nextTooltip: String) {
+        switch ciderPlayback.playbackBehaviour.repeatMode {
         case .None:
-            return .Repeat
-            
-        case .One:
-            return .RepeatOnce
-            
+            return (icon: .Repeat, color: .secondary, nextTooltip: "Repeat")
         case .All:
-            return .RepeatAll
-            
-        }
-    }
-    
-    var nextRepeatModeTooltip: String {
-        switch self.$ciderPlayback.playbackBehaviour.repeatMode.wrappedValue.next() {
-            
-        case .None:
-            return "Don't Repeat"
-            
+            return (icon: .Repeat, color: .pink, nextTooltip: "Repeat Track")
         case .One:
-            return "Repeat Once"
-            
-        case .All:
-            return "Repeat All"
+            return (icon: .RepeatOnce, color: .pink, nextTooltip: "Don't Repeat")
         }
     }
     
     var body: some View {
         ZStack {
-            let playbackBehaviour = self.ciderPlayback.playbackBehaviour
+            let playbackBehaviour = ciderPlayback.playbackBehaviour
             
             VStack {
-                let nowPlayingState = self.ciderPlayback.nowPlayingState
+                let nowPlayingState = ciderPlayback.nowPlayingState
                 
                 PlaybackBar()
                 
                 HStack {
-                    PlaybackButton(icon: .Shuffle, tooltip: playbackBehaviour.shuffle ? "Don't Shuffle" : "Shuffle", highlighted: self.$ciderPlayback.playbackBehaviour.shuffle) {
+                    PlaybackButton(icon: .Shuffle, tooltip: playbackBehaviour.shuffle ? "Don't Shuffle" : "Shuffle", highlighted: $ciderPlayback.playbackBehaviour.shuffle) {
                         Task {
-                            await self.ciderPlayback.setShuffleMode(!playbackBehaviour.shuffle)
+                            await ciderPlayback.setShuffleMode(!playbackBehaviour.shuffle)
                         }
                     }
                     PlaybackButton(icon: .Backward, tooltip: "Previous") {
                         Task {
-                            await self.ciderPlayback.skip(type: .Previous)
+                            await ciderPlayback.skip(type: .Previous)
                         }
                     }
                     PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, tooltip: nowPlayingState.isPlaying ? "Pause" : "Play", size: 23) {
-                        self.ciderPlayback.togglePlaybackSync()
+                        ciderPlayback.togglePlaybackSync()
                     }
                     PlaybackButton(icon: .Forward, tooltip: "Next") {
                         Task {
-                            await self.ciderPlayback.skip(type: .Next)
+                            await ciderPlayback.skip(type: .Next)
                         }
                     }
-                    PlaybackButton(icon: repeatModeIcon, tooltip: nextRepeatModeTooltip) {
+                    PlaybackButton(icon: repeatModeIcon.icon, color: repeatModeIcon.color, tooltip: repeatModeIcon.nextTooltip) {
                         Task {
-                            await self.ciderPlayback.setRepeatMode(playbackBehaviour.repeatMode.next())
+                            await ciderPlayback.setRepeatMode(playbackBehaviour.repeatMode.next())
                         }
                     }
                 }
@@ -86,13 +68,13 @@ struct PlaybackView: View {
                 
                 Spacer()
                 
-                let volume = Binding<Double>(get: { self.ciderPlayback.playbackBehaviour.volume }, set: { newVolume in self.ciderPlayback.playbackBehaviour.volume = newVolume })
+                let volume = Binding<Double>(get: { ciderPlayback.playbackBehaviour.volume }, set: { ciderPlayback.playbackBehaviour.volume = $0 })
                 
                 PatchedGeometryReader { geometry in
-                    VolumeSlider(value: volume, inRange: 0.0...1.0, activeFillColor: .secondary, fillColor: .secondary.opacity(0.5), emptyColor: .secondary.opacity(0.3), height: 8) { started in
+                    VolumeSlider(value: volume, inRange: 0.0...1.0, activeFillColor: .secondary, fillColor: .secondary.opacity(0.5), emptyColor: .secondary.opacity(0.3), height: 8) { _ in
                         Throttler.throttle {
                             Task {
-                                await self.ciderPlayback.setVolume(volume.wrappedValue)
+                                await ciderPlayback.setVolume(volume.wrappedValue)
                             }
                         }
                     }
@@ -105,17 +87,15 @@ struct PlaybackView: View {
     }
 }
 
-enum PlaybackButtonIcon : String {
+enum PlaybackButtonIcon: String {
     
-    case Play = "play.fill";
-    case Pause = "pause.fill";
-    case Backward = "backward.fill";
-    case Forward = "forward.fill";
-    case Repeat = "repeat";
-    case RepeatOnce = "repeat.1";
-    case RepeatAll = "infinity"
-    case Shuffle = "shuffle";
-    
+    case Play = "play.fill"
+    case Pause = "pause.fill"
+    case Backward = "backward.fill"
+    case Forward = "forward.fill"
+    case Repeat = "repeat"
+    case RepeatOnce = "repeat.1"
+    case Shuffle = "shuffle"
 }
 
 struct PlaybackButton: View {
@@ -123,6 +103,7 @@ struct PlaybackButton: View {
     @ObservedObject private var iO = Inject.observer
     
     private var icon: PlaybackButtonIcon
+    private var color: Color?
     private let tooltip: String?
     private var size = CGFloat(18)
     private var onClick: (() -> Void)? = nil
@@ -131,8 +112,9 @@ struct PlaybackButton: View {
     @State private var bouncyFontSize: CGFloat = 18
     @Binding private var highlighted: Bool
     
-    init(icon: PlaybackButtonIcon, tooltip: String? = nil, highlighted: Binding<Bool> = .constant(false), size: CGFloat = 18, onClick: (() -> Void)? = nil) {
+    init(icon: PlaybackButtonIcon, color: Color? = .secondary, tooltip: String? = nil, highlighted: Binding<Bool> = .constant(false), size: CGFloat = 18, onClick: (() -> Void)? = nil) {
         self.icon = icon
+        self.color = color
         self.tooltip = tooltip
         self._highlighted = highlighted
         self.size = size
@@ -142,7 +124,7 @@ struct PlaybackButton: View {
     var body: some View {
         let view = Image(systemName: icon.rawValue)
             .animatableSystemFont(size: bouncyFontSize)
-            .foregroundColor(.secondary.opacity(isHovered ? 0.5 : 1))
+            .foregroundColor(color?.opacity(isHovered ? 0.5 : 1))
             .frame(width: 30, height: 30)
             .padding(.horizontal, 5)
             .contentShape(Rectangle())

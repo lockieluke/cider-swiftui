@@ -37,7 +37,7 @@ struct NowPlayingState {
 }
 
 enum RepeatMode: String, CaseIterable {
-    case None = "none", One = "one", All = "all"
+    case None = "none" , All = "all", One = "one"
 }
 
 struct PlaybackBehaviour {
