@@ -4,14 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/lodash-es": "^4",
-    "esbuild": "^0.17.18",
+    "@types/lodash-es": "^4.17.9",
+    "esbuild": "^0.19.3",
     "generate-license-file": "^2.0.0",
     "musickit-typescript": "^1.2.4"
   },
   "dependencies": {
     "await-to-js": "^3.0.0",
-    "firebase": "^10.2.0",
+    "firebase": "^10.4.0",
     "lodash-es": "^4.17.21"
   },
   "scripts": {

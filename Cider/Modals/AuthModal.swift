@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import Foundation
 import WebKit
@@ -23,6 +23,7 @@ class AuthModal: ObservableObject {
     
     private static let INITIAL_URL = URLRequest(url: URL(string: "https://www.apple.com/legal/privacy/en-ww/cookies/")!)
     private static let IS_PASSING_LOGS: Bool = CommandLine.arguments.contains("-pass-auth-logs")
+    private static let OPEN_INSPECTOR: Bool = CommandLine.arguments.contains("-open-cwa-inspector")
     
     var authenticatingCallback: ((_ userToken: String) -> Void)?
     
@@ -85,7 +86,7 @@ class AuthModal: ObservableObject {
             }
             
             if json["error"].exists() {
-                parent.logger.error("Error occurred when authenticating AM User: \(json["message"].string ?? "No error description")")
+                parent.logger.error("Error occurred when authenticating AM User: \(json["message"].stringValue)")
             }
             
             completionHandler()
@@ -105,9 +106,9 @@ class AuthModal: ObservableObject {
     
     init(mkModal: MKModal, appWindowModal: AppWindowModal, cacheModel: CacheModal) {
         self.wkWebView = WKWebView(frame: .zero).then {
-            #if DEBUG
+#if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-            #endif
+#endif
         }
         
         self.authWindow = NSWindow(contentRect: NSRect(x: .zero, y: .zero, width: 800, height: 600), styleMask: [.closable, .titled], backing: .buffered, defer: false).then {
@@ -121,7 +122,7 @@ class AuthModal: ObservableObject {
         self.cacheModel = cacheModel
         
         self.logger = Logger(label: "AuthModal")
-
+        
         self.wkUIDelegate = AuthModalUIDelegate(parent: self)
         wkWebView?.uiDelegate = wkUIDelegate
         
@@ -136,7 +137,9 @@ class AuthModal: ObservableObject {
                 
                 if let lastAmUserToken = try? self.cacheModel.storage?.object(forKey: "last_am_usertoken"), await self.mkModal.AM_API.validateUserToken(lastAmUserToken) {
                     self.logger.success("Logged in with previously cached user token", displayTick: true)
-                    continuation.resume(returning: lastAmUserToken)
+                    DispatchQueue.main.async {
+                        continuation.resume(returning: lastAmUserToken)
+                    }
                     return
                 }
                 
@@ -152,9 +155,17 @@ class AuthModal: ObservableObject {
                                                   const amToken = \"\(developerToken)\";
                                                   \(script)
                                                   """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-//                    self.wkWebView?.customUserAgent = ua
+                    self.wkWebView?.customUserAgent = ua
                     self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
                     self.wkWebView?.configuration.userContentController.addUserScript(userScript)
+                    
+                    if AuthModal.OPEN_INSPECTOR {
+                        #if DEBUG
+                        if let inspector = self.wkWebView?.value(forKey: "_inspector") as? AnyObject {
+                            _ = inspector.perform(Selector(("showConsole")))
+                        }
+                        #endif
+                    }
                     
                     if self.mkModal.isAuthorised, let userToken = self.mkModal.AM_API.AM_USER_TOKEN {
                         self.logger.success("Logged in with previously fetched user token", displayTick: true)
@@ -167,12 +178,14 @@ class AuthModal: ObservableObject {
                         } catch {
                             self.logger.error("Failed to cache Apple Music user token: \(error)")
                         }
-                        continuation.resume(returning: userToken)
+                        DispatchQueue.main.async {
+                            continuation.resume(returning: userToken)
+                        }
                         self.wkWebView?.load(URLRequest(url: URL(string: "about:blank")!))
                         
                         // hack to dispose wkwebview manually
-            //            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
-            //            self.wkWebView?.perform(disposeSel)
+                        //            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+                        //            self.wkWebView?.perform(disposeSel)
                         
                         self.wkWebView?.removeFromSuperview()
                         self.authWindow.close()
@@ -181,12 +194,12 @@ class AuthModal: ObservableObject {
                     }
                     
                     // loadSimulatedRequest for some reason doesn't not work in sandbox mode
-                    #if !os(macOS)
+#if !os(macOS)
                     // go to /stub so it doesn't load all the images in Apple Music Web's homepage
                     self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
-                    #else
+#else
                     self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: "<p>CiderWebAuth</p>")
-                    #endif
+#endif
                 }
             }
         }

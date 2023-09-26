@@ -51,14 +51,6 @@ window.importMusicKit = () => {
 window.configureMusicKit = () => {
     return new Promise<void>(async (resolve, reject) => {
         try {
-            await MusicKit.configure({
-                developerToken: amToken,
-                app: {
-                    name: "Apple Music",
-                    build: "1978.4.1",
-                    version: "1.0"
-                }
-            });
         } catch (err) {
             reject(err);
         } finally {
@@ -90,11 +82,19 @@ else {
 
 document.addEventListener('musickitloaded', async function () {
     console.log(`MusicKit ${MusicKit.version} loaded`);
-    const [err] = await to(window.configureMusicKit());
-    if (err) {
+    try {
+        await MusicKit.configure({
+            developerToken: amToken,
+            app: {
+                name: "Apple Music",
+                build: "1978.4.1",
+                version: "1.0"
+            }
+        });
+    } catch (err) {
         window.sendNativeMessage({
             error: err,
-            message: "Error initialising MusicKit"
+            message: `Failed to configure MusicKit: ${err.message}`
         });
         return;
     }
@@ -114,7 +114,7 @@ document.addEventListener('musickitloaded', async function () {
     const [aErr, userToken] = await to(mk.authorize());
     if (aErr) {
         window.sendNativeMessage({
-            error: err,
+            error: aErr,
             message: "Failed to authenticate user"
         });
         return;
