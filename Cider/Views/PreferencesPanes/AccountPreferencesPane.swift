@@ -20,7 +20,6 @@ struct AccountPreferencesPane: View {
     @EnvironmentObject private var cacheModal: CacheModal
     @EnvironmentObject private var connectModal: ConnectModal
     
-    @State private var currentNonce: String?
     @State private var showingWebView: Bool = false
     
     func signIn(signInMethod: SignInMethod) {
@@ -95,7 +94,6 @@ struct AccountPreferencesPane: View {
             .frame(width: 800, height: 600)
             .padding()
         }
-
         .enableInjection()
     }
 }

@@ -14,7 +14,7 @@ struct AuthButton: View {
     @ObservedObject private var iO = Inject.observer
     
     enum AuthType {
-        case apple, google, azure
+        case apple, google, azure, appleMusic
         
         var name: String {
             switch self {
@@ -24,6 +24,9 @@ struct AuthButton: View {
                 return "Google"
             case .azure:
                 return "Azure"
+                
+            case .appleMusic:
+                return "Apple Music"
             }
         }
         
@@ -45,6 +48,15 @@ struct AuthButton: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 15, height: 15)
+                    .erasedToAnyView()
+                
+            case .appleMusic:
+                return Image("AppleMusic")
+                    .antialiased(true)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 20, height: 20)
+                    .drawingGroup()
                     .erasedToAnyView()
             }
         }

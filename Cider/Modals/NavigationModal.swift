@@ -116,9 +116,10 @@ struct NavigationStack {
 
 class NavigationModal : ObservableObject {
     
-    // segmented control state
+    // Sidebar Items
     @Published var currentRootStack: RootNavigationType = .Home
     
+    // View Stack in each sidebar item screen
     @Published var viewsStack: [NavigationStack] = [] {
         didSet {
             let presentIndex = viewsStack.firstIndex(where: { viewStack in viewStack.isPresent }) ?? 0
@@ -177,5 +178,7 @@ class NavigationModal : ObservableObject {
     @Published var showQueue: Bool = false
     @Published var showLyrics: Bool = false
     @Published var showSidebar: Bool = false
+    
+    @Published var inOnboardingExperience: Bool = false
     
 }

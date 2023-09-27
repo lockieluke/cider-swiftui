@@ -54,6 +54,12 @@
 		B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AE2A3676AF00DD8BC2 /* Inject */; };
 		B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */; platformFilters = (macos, ); };
 		B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */; platformFilters = (macos, ); };
+		B71D54062ABCBA6D001A62D6 /* OnboardingExperienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */; };
+		B71D54082ABCBADA001A62D6 /* OnboardingExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */; };
+		B71D540A2ABCBC97001A62D6 /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54092ABCBC97001A62D6 /* NSWindow.swift */; };
+		B71D54212ABFA1BD001A62D6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B71D54202ABFA1BD001A62D6 /* Lottie */; };
+		B71D542A2AC04BCD001A62D6 /* Startup.json in Resources */ = {isa = PBXBuildFile; fileRef = B71D54282AC04BCD001A62D6 /* Startup.json */; };
+		B71D542B2AC04BCD001A62D6 /* StartupText.json in Resources */ = {isa = PBXBuildFile; fileRef = B71D54292AC04BCD001A62D6 /* StartupText.json */; };
 		B725013A28C2624300992F57 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* Color.swift */; };
 		B725013E28C2637F00992F57 /* MediaPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013D28C2637F00992F57 /* MediaPresentable.swift */; };
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
@@ -250,6 +256,11 @@
 		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
 		B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiscord_rpc_agent.a; path = DiscordRPCAgent/target/universal/libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCider_CXXNativeUtils.a; path = NativeUtils/build/libCider_CXXNativeUtils.a; sourceTree = "<group>"; };
+		B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperienceView.swift; sourceTree = "<group>"; };
+		B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperience.swift; sourceTree = "<group>"; };
+		B71D54092ABCBC97001A62D6 /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
+		B71D54282AC04BCD001A62D6 /* Startup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Startup.json; sourceTree = "<group>"; };
+		B71D54292AC04BCD001A62D6 /* StartupText.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StartupText.json; sourceTree = "<group>"; };
 		B725013928C2624300992F57 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		B725013D28C2637F00992F57 /* MediaPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresentable.swift; sourceTree = "<group>"; };
 		B7284174290DABA100B7A525 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -387,6 +398,7 @@
 				B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */,
 				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
 				B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */,
+				B71D54212ABFA1BD001A62D6 /* Lottie in Frameworks */,
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
 				B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */,
 				B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */,
@@ -510,6 +522,7 @@
 				B798983929D22A9400A734DC /* Array.swift */,
 				B79230B62A4B834B003F3D99 /* UIApplication.swift */,
 				B79230B82A4B8B46003F3D99 /* URL.swift */,
+				B71D54092ABCBC97001A62D6 /* NSWindow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -517,6 +530,7 @@
 		B700C1A928B955B10069FDF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B71D54042ABCB72A001A62D6 /* OnboardingExperience */,
 				B7CF89592A759274007808A2 /* Playground */,
 				B74EEBCE29D7AE7D00711DB6 /* SidePanes */,
 				B77AACE4293ACC7600F8E1E2 /* ViewModifiers */,
@@ -567,9 +581,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B71D54042ABCB72A001A62D6 /* OnboardingExperience */ = {
+			isa = PBXGroup;
+			children = (
+				B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */,
+				B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */,
+			);
+			path = OnboardingExperience;
+			sourceTree = "<group>";
+		};
 		B740CE152991ACAE0096DF6E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B71D54282AC04BCD001A62D6 /* Startup.json */,
+				B71D54292AC04BCD001A62D6 /* StartupText.json */,
 				B76AE927299C162600A19558 /* MissingArtwork.png */,
 			);
 			path = Resources;
@@ -803,6 +828,7 @@
 				B7107BB62AA2B8D300A83306 /* FirebaseAnalytics */,
 				B7107BB82AA2B8D300A83306 /* FirebaseAuth */,
 				B7718F0A2ABB6EC5009CB966 /* ZippyJSON */,
+				B71D54202ABFA1BD001A62D6 /* Lottie */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -884,6 +910,7 @@
 				B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */,
+				B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -900,10 +927,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71D542A2AC04BCD001A62D6 /* Startup.json in Resources */,
 				B700C18828B920F20069FDF5 /* Preview Assets.xcassets in Resources */,
 				B700C18528B920F20069FDF5 /* Assets.xcassets in Resources */,
 				B77C91AC294DE7E100124B47 /* GoogleService-Info.plist in Resources */,
 				B70D0A132A509D0C00968E7D /* Settings.bundle in Resources */,
+				B71D542B2AC04BCD001A62D6 /* StartupText.json in Resources */,
 				B76AE928299C162600A19558 /* MissingArtwork.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -975,6 +1004,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71D54082ABCBADA001A62D6 /* OnboardingExperience.swift in Sources */,
 				B7663CC72A9223AC009E82DA /* Apple.swift in Sources */,
 				B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */,
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
@@ -1020,6 +1050,7 @@
 				B7AAB70D28BD2640009AABEA /* ListenNowView.swift in Sources */,
 				B7688728294A314400C623C9 /* WSDebugger.swift in Sources */,
 				B7AAB70928BD1174009AABEA /* PlaybackBar.swift in Sources */,
+				B71D54062ABCBA6D001A62D6 /* OnboardingExperienceView.swift in Sources */,
 				B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */,
 				B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */,
 				B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */,
@@ -1062,6 +1093,7 @@
 				B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */,
 				B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */,
 				B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */,
+				B71D540A2ABCBC97001A62D6 /* NSWindow.swift in Sources */,
 				B77D950D2A9CB7D9007ED4BD /* Any.swift in Sources */,
 				B797AFFC297F3E7B00D77282 /* MediaAny.swift in Sources */,
 				B76887142949172300C623C9 /* PreferencesPanes.swift in Sources */,
@@ -1237,7 +1269,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
 				DEVELOPMENT_TEAM = 8R23J2835D;
@@ -1298,7 +1330,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cider/Preview Content\"";
 				DEVELOPMENT_TEAM = 8R23J2835D;
@@ -1587,6 +1619,14 @@
 				minimumVersion = 1.2.3;
 			};
 		};
+		B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.1;
+			};
+		};
 		B728B0572A78453100BAC665 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SFSafeSymbols/SFSafeSymbols.git";
@@ -1736,6 +1776,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */;
 			productName = Inject;
+		};
+		B71D54202ABFA1BD001A62D6 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 		B728B0582A78453100BAC665 /* SFSafeSymbols */ = {
 			isa = XCSwiftPackageProductDependency;

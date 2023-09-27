@@ -1,26 +1,29 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Throttler
 import Inject
+import Defaults
 
 struct ContentView: View {
     
     @ObservedObject private var iO = Inject.observer
+    
+    @Default(.launchedBefore) private var launchedBefore
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
-    #if os(macOS)
+#if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
     @EnvironmentObject private var discordRPCModal: DiscordRPCModal
     @EnvironmentObject private var authModal: AuthModal
     @EnvironmentObject private var cacheModal: CacheModal
-    #endif
+#endif
     
     @StateObject private var searchModal = SearchModal()
     @StateObject private var personalisedData = PersonalisedData()
@@ -28,43 +31,77 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                NavigationContainer()
-                
-                VStack {
-                    AppTitleBar()
+                if navigationModal.inOnboardingExperience {
+                    OnboardingExperienceView()
+                } else {
+                    NavigationContainer()
                     
-                    Spacer()
-                    PlaybackView()
-                        .frame(maxHeight: .infinity, alignment: .bottom)
-                        .frame(height: 100)
+                    VStack {
+                        AppTitleBar()
+                        
+                        Spacer()
+                        PlaybackView()
+                            .frame(maxHeight: .infinity, alignment: .bottom)
+                            .frame(height: 100)
+                    }
                 }
             }
             .onTapGesture {
-                #if canImport(AppKit)
+#if canImport(AppKit)
                 NSApp.keyWindow?.makeFirstResponder(nil)
-                #endif
+#endif
             }
             .onAppear {
-                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
+                if !self.navigationModal.inOnboardingExperience {
+                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
+                }
             }
-            .background(VisualEffectBackground(material: .fullScreenUI).edgesIgnoringSafeArea(.top))
+            .background(VisualEffectBackground(material: .fullScreenUI).edgesIgnoringSafeArea(.top).isHidden(navigationModal.inOnboardingExperience))
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)
-            .enableInjection()
         }
         .environmentObject(searchModal)
         .environmentObject(navigationModal)
         .environmentObject(personalisedData)
+        .onAppear {
+            if !self.launchedBefore {
+                self.navigationModal.inOnboardingExperience = true
+            }
+        }
+        .task {
+            if self.launchedBefore {
+                let timer = ParkBenchTimer()
+                do {
+                    let authTimer = ParkBenchTimer()
+                    let userToken = try await authModal.retrieveUserToken()
+                    self.mkModal.authenticateWithToken(userToken: userToken)
+                    Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
+                    
+                    self.discordRPCModal.agent.start()
+                    self.ciderPlayback.setUserToken(userToken: userToken)
+                } catch {
+                    Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")
+                }
+                self.ciderPlayback.start()
+                
+                await self.mkModal.initStorefront()
+                DispatchQueue.main.async {
+                    self.mkModal.isAuthorised = true
+                }
+                Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
+            }
+        }
+        .enableInjection()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        #if os(macOS)
+#if os(macOS)
         ContentView()
             .environmentObject(AuthModal(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal()), cacheModal: CacheModal()), appWindowModal: AppWindowModal(), cacheModel: CacheModal()))
-        #elseif os(iOS)
+#elseif os(iOS)
         ContentView()
-        #endif
+#endif
     }
 }

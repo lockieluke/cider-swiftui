@@ -20,6 +20,10 @@ extension Defaults.Keys {
     
     static let signInMethod = Key<SignInMethod?>("signInMethod")
     
+    static let shareAnalytics = Key<Bool>("shareAnalytics", default: false)
+    
+    static let launchedBefore = Key<Bool>("launchedBefore", default: false)
+    
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)
     static let debugHideFrequentWSRequests = Key<Bool>("hideFrequentWSRequests", default: true)
