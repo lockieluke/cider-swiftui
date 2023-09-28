@@ -416,39 +416,64 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             (title, artistName, artwork, contentRating, Id) = (mediaPlaylist.title, mediaPlaylist.curatorName, mediaPlaylist.artwork, "", mediaPlaylist.id)
         }
         
-        AF.request("https://api-rpc.cider.sh/", parameters: [
-            "imageUrl": artwork.getUrl(width: 200, height: 200),
-            "albumId": Id,
-            "fileType": "jpg"
-        ]).validate().responseData { response in
-            var artworkURL: URL?
-            switch response.result {
-            case .success(let data):
-                do {
-                    let json = try JSON(data: data)
-                    artworkURL = URL(string: json["url"].string ?? "")
-                } catch {
-                    self.logger.error("JSON Parsing Error: \(error)")
+        var artworkUrl: URL = artwork.getUrl(width: 200, height: 200)
+        
+        if artworkUrl.absoluteString.count > 256 || artworkUrl.absoluteString.contains("blobstore") {
+            AF.request("https://api-rpc.cider.sh/", parameters: [
+                "imageUrl": artworkUrl,
+                "albumId": Id,
+                "fileType": "jpg"
+            ]).validate().responseData { response in
+                switch response.result {
+                case .success(let data):
+                    do {
+                        let json = try JSON(data: data)
+                        if let urlString = json["url"].string, let url = URL(string: urlString) {
+                            artworkUrl = url
+                        }
+                    } catch {
+                        self.logger.error("JSON Parsing Error: \(error)")
+                    }
+                case .failure(let error):
+                    self.logger.error("Failed to fetch artwork: \(error)")
                 }
-            case .failure(let error):
-                self.logger.error("Failed to fetch artwork: \(error)")
+                
+#if os(macOS)
+                DispatchQueue.global(qos: .default).async { [artworkUrl] in
+                    self.discordRPCModal.agent.setActivityAssets(artworkUrl.absoluteString, title, "", "")
+                    self.discordRPCModal.agent.setActivityState("by " + artistName)
+                    self.discordRPCModal.agent.setActivityDetails(title)
+                    self.discordRPCModal.agent.updateActivity()
+                }
+#endif
+                
+                self.nowPlayingState = NowPlayingState(
+                    item: item,
+                    name: title,
+                    artistName: artistName,
+                    contentRating: contentRating,
+                    artworkURL: artworkUrl,
+                    isPlaying: false,
+                    isReady: false
+                )
             }
             
-            #if os(macOS)
-            DispatchQueue.global(qos: .default).async { [artworkURL] in
-                self.discordRPCModal.agent.setActivityAssets(artworkURL?.absoluteString ?? "", title, "", "")
+        } else {
+#if os(macOS)
+            DispatchQueue.global(qos: .default).async { [artworkUrl] in
+                self.discordRPCModal.agent.setActivityAssets(artworkUrl.absoluteString, title, "", "")
                 self.discordRPCModal.agent.setActivityState("by " + artistName)
                 self.discordRPCModal.agent.setActivityDetails(title)
                 self.discordRPCModal.agent.updateActivity()
             }
-            #endif
+#endif
             
             self.nowPlayingState = NowPlayingState(
                 item: item,
                 name: title,
                 artistName: artistName,
                 contentRating: contentRating,
-                artworkURL: artworkURL,
+                artworkURL: artworkUrl,
                 isPlaying: false,
                 isReady: false
             )
