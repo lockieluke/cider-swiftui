@@ -52,7 +52,6 @@
 		B71B82AA2A36764600DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A92A36764600DD8BC2 /* SwiftyJSON */; };
 		B71B82AC2A36766500DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AB2A36766500DD8BC2 /* SwiftyUtils */; };
 		B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AE2A3676AF00DD8BC2 /* Inject */; };
-		B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */; platformFilters = (macos, ); };
 		B71D54062ABCBA6D001A62D6 /* OnboardingExperienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */; };
 		B71D54082ABCBADA001A62D6 /* OnboardingExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */; };
 		B71D540A2ABCBC97001A62D6 /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54092ABCBC97001A62D6 /* NSWindow.swift */; };
@@ -132,8 +131,6 @@
 		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
 		B79EA29F2AC63C2A00E5687F /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B79EA29E2AC63C2A00E5687F /* Subprocess */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
-		B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD22A3A688900C2B489 /* libiconv.tbd */; platformFilters = (macos, ); };
-		B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD42A3A696500C2B489 /* Carbon.framework */; platformFilters = (macos, ); };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
 		B7AAB70128BAD782009AABEA /* AppWindowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70028BAD782009AABEA /* AppWindowModal.swift */; };
@@ -166,12 +163,6 @@
 		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
 		B7CF895B2A759281007808A2 /* CiderPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF895A2A759281007808A2 /* CiderPlayground.swift */; };
 		B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */; };
-		B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */; platformFilters = (macos, ); };
-		B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */; platformFilters = (macos, ); };
-		B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B62A37D45200A8405E /* libwxpng-3.3.a */; platformFilters = (macos, ); };
-		B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */; platformFilters = (macos, ); };
-		B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */; platformFilters = (macos, ); };
-		B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */; platformFilters = (macos, ); };
 		B7D46445293574A0000B1E9A /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D46444293574A0000B1E9A /* DetailedView.swift */; };
 		B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D5B9E1292C2F9900046B7F /* Logging.swift */; };
 		B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */; };
@@ -233,7 +224,6 @@
 		B70D0A122A509D0C00968E7D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B7107BD32AA3840300A83306 /* ciderconnectauth.user.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderconnectauth.user.js; path = CiderWebAuth/dist/ciderconnectauth.user.js; sourceTree = "<group>"; };
 		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
-		B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCider_CXXNativeUtils.a; path = NativeUtils/build/libCider_CXXNativeUtils.a; sourceTree = "<group>"; };
 		B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperienceView.swift; sourceTree = "<group>"; };
 		B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperience.swift; sourceTree = "<group>"; };
 		B71D54092ABCBC97001A62D6 /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
@@ -368,19 +358,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B70524C52A6F15D8001654B3 /* Cache in Frameworks */,
-				B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */,
-				B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */,
-				B7D276BB2A37D74600A8405E /* libwxtiff-3.3.a in Frameworks */,
-				B7D276BC2A37D74600A8405E /* libwxjpeg-3.3.a in Frameworks */,
 				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
 				B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */,
 				B71D54212ABFA1BD001A62D6 /* Lottie in Frameworks */,
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
-				B7D276BD2A37D74600A8405E /* libwxregexu-3.3.a in Frameworks */,
-				B7D276B72A37D45200A8405E /* libwxpng-3.3.a in Frameworks */,
-				B7D276B42A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a in Frameworks */,
-				B7D276B52A37CACE00A8405E /* libwx_baseu-3.3.a in Frameworks */,
-				B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */,
 				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
 				B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */,
 				B79EA29F2AC63C2A00E5687F /* Subprocess in Frameworks */,
@@ -549,7 +530,6 @@
 				B7D276B62A37D45200A8405E /* libwxpng-3.3.a */,
 				B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */,
 				B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */,
-				B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */,
 				B71B82C52A37750900DD8BC2 /* libnative_utils.a */,
 				B76FC6D22A8FB5A000F8F80E /* AuthenticationServices.framework */,
 			);
@@ -1211,7 +1191,6 @@
 		B700C18D28B920F20069FDF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon-Dev";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = "iOS-AppIcon-Dev";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon-Dev";
@@ -1270,7 +1249,6 @@
 		B700C18E28B920F20069FDF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = "iOS-AppIcon";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = "iOS-AppIcon";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = "macOS-AppIcon";

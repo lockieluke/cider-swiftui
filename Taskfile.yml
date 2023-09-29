@@ -29,20 +29,6 @@ tasks:
       - task: build:all-js
       - task: fetch:google-services
 
-  build:cxx-native-utils-lib:
-    desc: "Build CXX NativeUtils"
-    dir: NativeUtils/
-    sources:
-      - cxx/**/*.cpp
-      - cxx/**/*.h
-      - CMakeLists.txt
-    generates:
-      - build/libCider_CXXNativeUtils.a
-    cmds:
-      - mkdir -p build/
-      - (cd build/;cmake .. -G Ninja)
-      - cmake --build build/ --target Cider_CXXNativeUtils -j 8
-
   build:rs-native-utils-lib:
     desc: "Build Rust NativeUtils"
     dir: NativeUtils/
@@ -59,7 +45,6 @@ tasks:
     desc: "Build NativeUtils"
     cmds:
       - task: build:rs-native-utils-lib
-      - task: build:cxx-native-utils-lib
 
   clean:native-utils-lib:
     desc: "Clean NativeUtils's target folder"

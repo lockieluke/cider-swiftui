@@ -138,7 +138,6 @@ class AppMenu {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
                 NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "").then { $0.target = self },
-                NSMenuItem(title: "Open Log Viewer", action: #selector(self.openLogViewer(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Open CiderPlaybackAgent debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self },
                 .separator(),
@@ -225,10 +224,6 @@ class AppMenu {
         WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast) {
             Logger.shared.info("Successfully cleared WebKit cache")
         }
-    }
-    
-    @objc func openLogViewer(_ sender: Any) {
-        showLogViewer()
     }
     
     @objc func openPlaygrounds(_ sender: Any) {

@@ -121,7 +121,6 @@ class AppDelegate : NSObject, ApplicationDelegate {
     
 #if canImport(AppKit)
     func applicationWillTerminate(_ notification: Notification) {
-        terminateCXXNativeUtils()
 #if os(macOS)
         self.discordRPCModal.agent.stop()
         self.appWindow.ciderPlayback.shutdownSync()

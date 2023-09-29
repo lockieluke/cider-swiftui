@@ -12,12 +12,6 @@
 #define extern "C" {
 #endif
 
-int initCXXNativeUtils();
-int initLogViewer();
-void addLogEntry(const char* time, const char* level, const char* message);
-void showLogViewer();
-void terminateCXXNativeUtils();
-
 #ifdef __cplusplus
 #define }
 #endif
