@@ -297,6 +297,7 @@
 		B798983329D0B6DB00A734DC /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		B798983729D0E96900A734DC /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		B798983929D22A9400A734DC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		B79EA2A02AC783B200E5687F /* Pretendard.woff2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pretendard.woff2; sourceTree = "<group>"; };
 		B7A6EB6729C539800041FDD7 /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
 		B7A80AD22A3A688900C2B489 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		B7A80AD42A3A696500C2B489 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -551,6 +552,7 @@
 				B71D54282AC04BCD001A62D6 /* Startup.json */,
 				B71D54292AC04BCD001A62D6 /* StartupText.json */,
 				B76AE927299C162600A19558 /* MissingArtwork.png */,
+				B79EA2A02AC783B200E5687F /* Pretendard.woff2 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

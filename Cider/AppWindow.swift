@@ -7,6 +7,7 @@ import Foundation
 import AppKit
 import SwiftUI
 import SnapKit
+import Defaults
 
 class AppWindow: NSObject, NSWindowDelegate {
     
@@ -48,7 +49,11 @@ class AppWindow: NSObject, NSWindowDelegate {
             .frame(minWidth: 900, maxWidth: .infinity, minHeight: 390, maxHeight: .infinity)
         
         let window = NSWindow(contentRect: .zero, styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView], backing: .buffered, defer: false).then {
-            $0.contentViewController = NSHostingController(rootView: contentView)
+            if Defaults[.usePretendardFont] {
+                $0.contentViewController = NSHostingController(rootView: contentView.environment(\.font, .custom("Pretendard", size: 12)))
+            } else {
+                $0.contentViewController = NSHostingController(rootView: contentView)
+            }
             $0.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
             $0.isOpaque = true
             $0.backgroundColor = .clear

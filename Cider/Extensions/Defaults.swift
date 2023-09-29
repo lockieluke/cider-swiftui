@@ -21,8 +21,8 @@ extension Defaults.Keys {
     static let signInMethod = Key<SignInMethod?>("signInMethod")
     
     static let shareAnalytics = Key<Bool>("shareAnalytics", default: false)
-    
     static let launchedBefore = Key<Bool>("launchedBefore", default: false)
+    static let usePretendardFont = Key<Bool>("usePretendardFont", default: false)
     
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)
