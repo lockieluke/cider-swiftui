@@ -1,4 +1,4 @@
-use discord_rpc_client::{Client, models::Activity, models::ActivityAssets, models::ActivityTimestamps};
+use discord_presence::Client;
 
 pub struct DiscordRPCAgent {
     client: Client,
@@ -28,7 +28,7 @@ impl DiscordRPCAgent {
     }
 
     pub(crate) fn start(&mut self) {
-        self.client.start();
+        _ = self.client.start();
     }
 
     pub(crate) fn stop(&mut self) {
@@ -79,7 +79,7 @@ impl DiscordRPCAgent {
     }
 
     pub(crate) fn update_activity(&mut self) {
-        let mut activity = Activity::new();
+        let mut activity = discord_presence::models::Activity::new();
 
         if !self.state.is_empty() {
             activity = activity.state(self.state.as_str());
@@ -90,11 +90,11 @@ impl DiscordRPCAgent {
 
         if let [Some(start), Some(end)] = [self.start_timestamp, self.end_timestamp] {
             activity = activity.timestamps(|_| {
-                return ActivityTimestamps::new().start(start as u64).end(end as u64);
+                return discord_presence::models::ActivityTimestamps::new().start(start as u64).end(end as u64);
             });
         }
 
-        let mut assets = ActivityAssets::new();
+        let mut assets = discord_presence::models::ActivityAssets::new();
         if !self.large_image.is_empty() {
             assets = assets.large_image(self.large_image.as_str());
         }
