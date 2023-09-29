@@ -513,4 +513,21 @@ class AMAPI {
         
         return []
     }
+    
+    func fetchPlaylists(folder: String = "p.playlistsroot") async -> [MediaPlaylist] {
+        var playlists: [MediaPlaylist] = []
+        
+        let res = await
+            AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/playlist-folders/\(folder)/children/", parameters: [:], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        
+        if let error = res.error {
+            self.logger.error("Failed to fetch playlists in folder \(folder): \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            for playlist in json["data"].array ?? [] {
+                playlists.append(MediaPlaylist(data: playlist))
+            }
+        }
+        
+        return playlists
+    }
 }

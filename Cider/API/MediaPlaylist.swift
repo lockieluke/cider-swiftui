@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-struct MediaPlaylist {
+struct MediaPlaylist: Identifiable {
     
     let id: String
     let title: String

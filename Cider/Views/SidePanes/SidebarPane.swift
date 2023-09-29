@@ -31,7 +31,8 @@ struct SidebarItem: View {
         RecentlyAdded = "clock",
         Songs = "music.note",
         Albums = "square.stack",
-        Artists = "music.mic"
+        Artists = "music.mic",
+        Playlist = "list.bullet"
     }
     
     init(_ title: String, icon: SidebarItemIcon, stackType: RootNavigationType? = nil) {
@@ -103,8 +104,10 @@ struct SidebarPane: View {
     @ObservedObject private var iO = Inject.observer
     
     @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var mkModal: MKModal
     
     @State private var showingAMSection = true
+    @State private var allPlaylistsData: [MediaPlaylist] = []
     
     var body: some View {
         SidePane(direction: .Left, content: {
@@ -130,7 +133,9 @@ struct SidebarPane: View {
                 .foregroundStyle(.white)
                 
                 Section("Playlists") {
-                    
+                    ForEach(allPlaylistsData) { playlist in
+                        SidebarItem(playlist.title, icon: .Playlist)
+                    }
                 }
                 .foregroundStyle(.white)
             }
@@ -141,7 +146,14 @@ struct SidebarPane: View {
         }, headerChildren: {
             
         })
+        .task {
+            await fetchPlaylists()
+        }
         .enableInjection()
+    }
+    
+    private func fetchPlaylists() async {
+        self.allPlaylistsData = await mkModal.AM_API.fetchPlaylists()
     }
 }
 
