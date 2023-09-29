@@ -2,6 +2,10 @@
 
 extern crate port_scanner;
 
+mod discord_rpc;
+
+use discord_rpc::DiscordRPCAgent;
+
 use cli_clipboard::{ClipboardContext, ClipboardProvider};
 use port_scanner::scan_port;
 use serde_json::{json};
@@ -113,5 +117,39 @@ mod ffi {
         fn get_clipboard_string(&mut self) -> String;
 
         fn is_port_open(&mut self, port: u16) -> bool;
+    }
+
+    extern "Rust" {
+        type DiscordRPCAgent;
+
+        #[swift_bridge(init)]
+        fn new() -> DiscordRPCAgent;
+
+        fn start(&mut self);
+        fn stop(&mut self);
+
+        #[swift_bridge(swift_name = "setActivityState")]
+        fn set_activity_state(&mut self, state: &str);
+
+        #[swift_bridge(swift_name = "setActivityDetails")]
+        fn set_activity_details(&mut self, details: &str);
+
+        #[swift_bridge(swift_name = "setActivityTimestamps")]
+        fn set_activity_timestamps(&mut self, start: i64, end: i64);
+
+        #[swift_bridge(swift_name = "clearActivity")]
+        fn clear_activity(&mut self);
+
+        #[swift_bridge(swift_name = "updateActivity")]
+        fn update_activity(&mut self);
+
+        #[swift_bridge(swift_name = "setActivityAssets")]
+        fn set_activity_assets(
+            &mut self,
+            large_image: &str,
+            large_text: &str,
+            small_image: &str,
+            small_text: &str,
+        );
     }
 }

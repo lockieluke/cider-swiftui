@@ -25,27 +25,9 @@ tasks:
     cmds:
       - brew bundle
       - task: install-deps:all-js
-      - task: build:discord-rpc-lib
       - task: build:native-utils-lib
       - task: build:all-js
       - task: fetch:google-services
-
-  build:discord-rpc-lib:
-    desc: "Build DiscordRPCAgent"
-    dir: DiscordRPCAgent/
-    sources:
-      - src/**/*.rs
-    generates:
-      - target/universal/libdiscord_rpc_agent.a
-    cmds:
-      - sh build.sh
-
-  clean:discord-rpc-lib:
-    desc: "Clean DiscordRPCAgent's target folder"
-    prompt: "Cleaning DiscordRPCAgent's target folder, do you want to continue?"
-    dir: DiscordRPCAgent/
-    cmds:
-      - rm -rf target/
 
   build:cxx-native-utils-lib:
     desc: "Build CXX NativeUtils"

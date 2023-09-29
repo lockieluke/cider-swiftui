@@ -52,7 +52,6 @@
 		B71B82AA2A36764600DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A92A36764600DD8BC2 /* SwiftyJSON */; };
 		B71B82AC2A36766500DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AB2A36766500DD8BC2 /* SwiftyUtils */; };
 		B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AE2A3676AF00DD8BC2 /* Inject */; };
-		B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */; platformFilters = (macos, ); };
 		B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */; platformFilters = (macos, ); };
 		B71D54062ABCBA6D001A62D6 /* OnboardingExperienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */; };
 		B71D54082ABCBADA001A62D6 /* OnboardingExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */; };
@@ -118,7 +117,6 @@
 		B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77C91AD294FCCE100124B47 /* CaseIterable.swift */; };
 		B77D950D2A9CB7D9007ED4BD /* Any.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77D950C2A9CB7D9007ED4BD /* Any.swift */; };
 		B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720B29F09A15006EDC69 /* native-utils.swift */; platformFilters = (macos, ); };
-		B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */; platformFilters = (macos, ); };
 		B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */; platformFilters = (macos, ); };
 		B790345E29F091D5001B11AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B790345D29F091D5001B11AE /* Settings.swift */; platformFilters = (macos, ); };
 		B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79230B62A4B834B003F3D99 /* UIApplication.swift */; platformFilter = ios; };
@@ -188,26 +186,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B76FC6E22A8FB5A000F8F80E /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B76FC6F32A8FB5EF00F8F80E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B7C9CDA129088F4F00A67CE4 /* Copy Scripts */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -255,7 +233,6 @@
 		B70D0A122A509D0C00968E7D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B7107BD32AA3840300A83306 /* ciderconnectauth.user.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderconnectauth.user.js; path = CiderWebAuth/dist/ciderconnectauth.user.js; sourceTree = "<group>"; };
 		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
-		B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiscord_rpc_agent.a; path = DiscordRPCAgent/target/universal/libdiscord_rpc_agent.a; sourceTree = "<group>"; };
 		B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCider_CXXNativeUtils.a; path = NativeUtils/build/libCider_CXXNativeUtils.a; sourceTree = "<group>"; };
 		B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperienceView.swift; sourceTree = "<group>"; };
 		B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperience.swift; sourceTree = "<group>"; };
@@ -317,8 +294,6 @@
 		B77D950C2A9CB7D9007ED4BD /* Any.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Any.swift; sourceTree = "<group>"; };
 		B78B720A29F09A15006EDC69 /* native-utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "native-utils.h"; path = "NativeUtils/Generated/native-utils/native-utils.h"; sourceTree = SOURCE_ROOT; };
 		B78B720B29F09A15006EDC69 /* native-utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "native-utils.swift"; path = "NativeUtils/Generated/native-utils/native-utils.swift"; sourceTree = SOURCE_ROOT; };
-		B78B720D29F09A32006EDC69 /* discord-rpc-agent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "discord-rpc-agent.h"; path = "DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.h"; sourceTree = SOURCE_ROOT; };
-		B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "discord-rpc-agent.swift"; path = "DiscordRPCAgent/Generated/discord-rpc-agent/discord-rpc-agent.swift"; sourceTree = SOURCE_ROOT; };
 		B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftBridgeCore.swift; path = NativeUtils/Generated/SwiftBridgeCore.swift; sourceTree = SOURCE_ROOT; };
 		B790345D29F091D5001B11AE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B79230B62A4B834B003F3D99 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
@@ -408,7 +383,6 @@
 				B71B82CB2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a in Frameworks */,
 				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
 				B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */,
-				B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */,
 				B79EA29F2AC63C2A00E5687F /* Subprocess in Frameworks */,
 				B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */,
 				B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */,
@@ -576,7 +550,6 @@
 				B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */,
 				B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */,
 				B71B82CA2A3778DF00DD8BC2 /* libCider_CXXNativeUtils.a */,
-				B71B82C82A37762300DD8BC2 /* libdiscord_rpc_agent.a */,
 				B71B82C52A37750900DD8BC2 /* libnative_utils.a */,
 				B76FC6D22A8FB5A000F8F80E /* AuthenticationServices.framework */,
 			);
@@ -664,8 +637,6 @@
 			children = (
 				B78B720A29F09A15006EDC69 /* native-utils.h */,
 				B78B720B29F09A15006EDC69 /* native-utils.swift */,
-				B78B720D29F09A32006EDC69 /* discord-rpc-agent.h */,
-				B78B720E29F09A32006EDC69 /* discord-rpc-agent.swift */,
 				B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */,
 			);
 			path = RustInterop;
@@ -788,15 +759,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B700C18C28B920F20069FDF5 /* Build configuration list for PBXNativeTarget "Cider" */;
 			buildPhases = (
-				B76E1D5129A01A120087D3E5 /* Build DiscordRPCAgent */,
 				B74EEBD529D8862500711DB6 /* Build NativeUtils */,
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
 				B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */,
 				B7C9CDA129088F4F00A67CE4 /* Copy Scripts */,
-				B76FC6E22A8FB5A000F8F80E /* Embed Foundation Extensions */,
-				B76FC6F32A8FB5EF00F8F80E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -963,25 +931,6 @@
 			shellPath = /bin/zsh;
 			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile NativeUtils\"\n    curl \"localhost:2345/perform-task?task=build:native-utils-lib\"\nfi\n";
 		};
-		B76E1D5129A01A120087D3E5 /* Build DiscordRPCAgent */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Build DiscordRPCAgent";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/zsh;
-			shellScript = "if nc -z localhost 2345 2>/dev/null; then\n    echo \"CiderDevServer is up, attempting to compile DiscordRPCAgent\"\n    curl \"localhost:2345/perform-task?task=build:discord-rpc-lib\"\nfi\n";
-		};
 		B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -1121,7 +1070,6 @@
 				B76FC6FA2A902FB600F8F80E /* AuthButton.swift in Sources */,
 				B725013A28C2624300992F57 /* Color.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
-				B78B720F29F09A32006EDC69 /* discord-rpc-agent.swift in Sources */,
 				B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */,
 				B768872C294A359400C623C9 /* WSModal.swift in Sources */,
 				B790345E29F091D5001B11AE /* Settings.swift in Sources */,
@@ -1294,7 +1242,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/build",
 					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
@@ -1355,7 +1302,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/DiscordRPCAgent/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/build",
 					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
