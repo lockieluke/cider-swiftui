@@ -132,6 +132,7 @@
 		B798983429D0B6DB00A734DC /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983329D0B6DB00A734DC /* List.swift */; };
 		B798983829D0E96900A734DC /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983729D0E96900A734DC /* DraggableView.swift */; };
 		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
+		B79EA29F2AC63C2A00E5687F /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B79EA29E2AC63C2A00E5687F /* Subprocess */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
 		B7A80AD32A3A688900C2B489 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD22A3A688900C2B489 /* libiconv.tbd */; platformFilters = (macos, ); };
 		B7A80AD52A3A696500C2B489 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A80AD42A3A696500C2B489 /* Carbon.framework */; platformFilters = (macos, ); };
@@ -408,6 +409,7 @@
 				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
 				B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */,
 				B71B82C92A37762300DD8BC2 /* libdiscord_rpc_agent.a in Frameworks */,
+				B79EA29F2AC63C2A00E5687F /* Subprocess in Frameworks */,
 				B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */,
 				B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */,
 				B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */,
@@ -829,6 +831,7 @@
 				B7107BB82AA2B8D300A83306 /* FirebaseAuth */,
 				B7718F0A2ABB6EC5009CB966 /* ZippyJSON */,
 				B71D54202ABFA1BD001A62D6 /* Lottie */,
+				B79EA29E2AC63C2A00E5687F /* Subprocess */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -911,6 +914,7 @@
 				B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */,
 				B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				B79EA29D2AC63C2A00E5687F /* XCRemoteSwiftPackageReference "Subprocess" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1651,6 +1655,14 @@
 				minimumVersion = 1.2.10;
 			};
 		};
+		B79EA29D2AC63C2A00E5687F /* XCRemoteSwiftPackageReference "Subprocess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jamf/Subprocess.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
 		B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1806,6 +1818,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */;
 			productName = ZippyJSON;
+		};
+		B79EA29E2AC63C2A00E5687F /* Subprocess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B79EA29D2AC63C2A00E5687F /* XCRemoteSwiftPackageReference "Subprocess" */;
+			productName = Subprocess;
 		};
 		B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;

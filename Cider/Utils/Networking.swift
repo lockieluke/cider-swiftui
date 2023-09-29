@@ -69,7 +69,7 @@ class CiderWSProvider {
     }
     
     func connect() {
-        socket.onEvent = { event in
+        self.socket.onEvent = { event in
             self.isReady = true
             
             switch event {
@@ -352,6 +352,10 @@ class Networking {
         close(socketFD);
         
         return port;
+    }
+    
+    static func isPortOpen(port: in_port_t) -> Bool {
+        return NativeUtilsWrapper.nativeUtilsGlobal.is_port_open(port)
     }
     
 }

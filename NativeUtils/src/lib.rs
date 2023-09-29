@@ -1,6 +1,9 @@
 #![feature(extern_types)]
 
+extern crate port_scanner;
+
 use cli_clipboard::{ClipboardContext, ClipboardProvider};
+use port_scanner::scan_port;
 use serde_json::{json};
 use serde::{Serialize, Deserialize};
 use uuid::Uuid;
@@ -89,6 +92,10 @@ impl NativeUtils {
         return self.clipboard_ctx.get_contents().unwrap();
     }
 
+    pub fn is_port_open(&mut self, port: u16) -> bool {
+        return scan_port(port);
+    }
+
 }
 
 #[swift_bridge::bridge]
@@ -104,5 +111,7 @@ mod ffi {
 
         fn copy_string_to_clipboard(&mut self, string: String);
         fn get_clipboard_string(&mut self) -> String;
+
+        fn is_port_open(&mut self, port: u16) -> bool;
     }
 }

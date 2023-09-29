@@ -237,9 +237,7 @@ class AppDelegate : NSObject, NSApplicationDelegate {
             fatalError("Failed to start CiderPlaybackAgent server")
         }
         
-        do {
-            print("websocketcomm.ready")
-        }
+        print("websocketcomm.ready")
     }
     
 }

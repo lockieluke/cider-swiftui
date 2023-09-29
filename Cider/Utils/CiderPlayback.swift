@@ -9,6 +9,7 @@ import Throttler
 import Defaults
 import SwiftUI
 import Alamofire
+import Subprocess
 
 struct NowPlayingState {
     
@@ -67,7 +68,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     private let appWindowModal: AppWindowModal
 #if os(macOS)
     private let discordRPCModal: DiscordRPCModal!
-    private let proc: Process
+    private var proc: Subprocess
+    private let procUrl: String
+    private let defaultArguments: [String]
+    private var additionalArguments: [String] = []
 #endif
     private let wsCommClient: CiderWSProvider
     private let commClient: NetworkingProvider
@@ -87,7 +91,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = Networking.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
-        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "ws://localhost:\(agentPort)/ws")!, wsTarget: .CiderPlaybackAgent, defaultHeaders:  [
+        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "http://localhost:\(agentPort)/ws")!, wsTarget: .CiderPlaybackAgent, defaultHeaders:  [
             "Agent-Session-ID": agentSessionId,
             "User-Agent": "Cider SwiftUI"
         ])
@@ -96,54 +100,29 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             "User-Agent": "Cider SwiftUI"
         ])
         
-        // hack to access self before everything is initialised
-        weak var weakSelf: CiderPlayback?
-        
 #if os(macOS)
-        let proc = Process()
-        let pipe = Pipe()
-        pipe.fileHandleForReading.readabilityHandler = { fileHandle in
-            let data = fileHandle.availableData
-            if data.isEmpty {
-                fileHandle.readabilityHandler = nil
-            } else {
-                guard let str = String(data: data, encoding: .utf8) else {
-                    fileHandle.readabilityHandler = nil
-                    return
-                }
-                var newStr = str
-                if let last = newStr.last {
-                    if last.isNewline {
-                        newStr.removeLast()
-                    }
-                }
-                
-                if newStr == "websocketcomm.ready" {
-                    weakSelf?.wsCommClient.delegate = weakSelf
-                    weakSelf?.wsCommClient.connect()
-                } else {
-                    logger.info("[CiderPlaybackAgent] \(newStr)")
-                }
-            }
+        let procUrl: String
+        if #available(macOS 13.0, *) {
+            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("SharedSupport").appendingPathComponent("CiderPlaybackAgent").path(percentEncoded: false))
+        } else {
+            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("SharedSupport").appendingPathComponent("CiderPlaybackAgent").path)
         }
-#endif
-        
-        guard let execUrl = Bundle.main.sharedSupportURL?.appendingPathComponent("CiderPlaybackAgent") else { fatalError("Error finding CiderPlaybackAgent") }
         var config = JSON([
             "openWebInspectorAutomatically": false
         ])
+        let proc = Subprocess([procUrl])
+#endif
+        
 #if DEBUG
         config["openWebInspectorAutomatically"].boolValue = Defaults[.debugOpenWebInspectorAutomatically]
 #endif
         
 #if os(macOS)
-        proc.arguments = [
+        self.defaultArguments = [
             "--agent-port", String(agentPort),
             "--agent-session-id", "\"\(agentSessionId)\"",
             "--config", config.rawString(.utf8)!
         ]
-        proc.executableURL = execUrl
-        proc.standardOutput = pipe
 #endif
         
         self.logger = logger
@@ -151,18 +130,18 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         self.agentSessionId = agentSessionId
 #if os(macOS)
         self.proc = proc
+        self.procUrl = procUrl
         self.discordRPCModal = discordRPCModal
 #endif
         self.agentPort = agentPort
         self.isRunning = false
-        
-        weakSelf = self
     }
     
     func setDeveloperToken(developerToken: String, mkModal: MKModal) {
         if !self.isRunning {
 #if os(macOS)
-            self.proc.arguments?.append(contentsOf: ["--am-token", developerToken])
+            self.additionalArguments += ["--am-token", developerToken]
+            self.proc = Subprocess([self.procUrl] + self.defaultArguments + self.additionalArguments)
 #endif
         }
         self.mkModal = mkModal
@@ -171,7 +150,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     func setUserToken(userToken: String) {
         if !self.isRunning {
 #if os(macOS)
-            self.proc.arguments?.append(contentsOf: ["--am-user-token", userToken])
+            self.additionalArguments += ["--am-user-token", userToken]
+            self.proc = Subprocess([self.procUrl] + self.defaultArguments + self.additionalArguments)
 #endif
         }
     }
@@ -390,8 +370,47 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
         
 #if os(macOS)
+        let connectWS = {
+            self.wsCommClient.delegate = self
+            self.logger.info("Attempting to connect to CiderPlaybackAgent WebSockets")
+            self.wsCommClient.connect()
+        }
+        
+        #if !DEBUG
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+            if Networking.isPortOpen(port: self.agentPort) {
+                connectWS()
+                timer.invalidate()
+            }
+        }
+        #endif
+        
         do {
-            try proc.run()
+            try self.proc.launch(outputHandler: { data in
+                if !data.isEmpty {
+                    guard let str = String(data: data, encoding: .utf8) else {
+                        return
+                    }
+                    var newStr = str
+                    if let last = newStr.last, last.isNewline {
+                        newStr.removeLast()
+                    }
+                    
+                    if newStr == "websocketcomm.ready" {
+                        connectWS()
+                    } else {
+                        self.logger.info("[CiderPlaybackAgent] \(newStr)")
+                    }
+                }
+            }, errorHandler: { data in
+                guard let str = String(data: data, encoding: .utf8) else {
+                    return
+                }
+                
+                self.logger.error("CiderPlaybackAgent threw an error: \(str)")
+            }, terminationHandler: { process in
+                self.logger.error("CiderPlaybackAgent exited \(self.proc.terminationReason): \(self.proc.exitCode)")
+            })
             self.isRunning = true
             self.logger.info("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
         } catch {
@@ -478,6 +497,24 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 isReady: false
             )
         }
+        let artworkURL = artwork.getUrl(width: 200, height: 200)
+#if os(macOS)
+        DispatchQueue.global(qos: .default).async {
+            self.discordRPCModal.agent.setActivityAssets(artworkURL.absoluteString, title, "", "")
+            self.discordRPCModal.agent.setActivityState("by " + artistName)
+            self.discordRPCModal.agent.setActivityDetails(title)
+            self.discordRPCModal.agent.updateActivity()
+        }
+#endif
+        self.nowPlayingState = NowPlayingState(
+            item: item,
+            name: title,
+            artistName: artistName,
+            contentRating: contentRating,
+            artworkURL: artworkURL,
+            isPlaying: false,
+            isReady: false
+        )
     }
     
     func shutdown() async {
@@ -505,9 +542,17 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             self.logger.success("Connected to CiderPlaybackAgent", displayTick: true)
             break
             
+        case .disconnected(let reason, let code):
+            self.logger.error("CiderPlaybackAgent is disconnected with code \(code): \(reason)")
+            break
+            
+        case .peerClosed:
+            self.logger.error("WebSockets peer closed")
+            
         case .error(let error):
-            guard let error = error else { return }
-            self.logger.error("WebSockets error: \(error)")
+            if let error = error {
+                self.logger.error("WebSockets error: \(error.localizedDescription)")
+            }
             break
             
         case .text(let message):
