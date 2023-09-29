@@ -130,6 +130,36 @@ extension MediaDynamic: Identifiable, Hashable {
         }
     }
     
+    var artistName: String {
+        switch self {
+            
+        case .mediaItem(let mediaItem):
+            return mediaItem.artistName
+            
+        case .mediaTrack(let mediaTrack):
+            return mediaTrack.artistName
+            
+        case .mediaPlaylist(let mediaPlaylist):
+            return mediaPlaylist.curatorName
+
+        }
+    }
+    
+    var playParams: PlayParams? {
+        switch self {
+            
+        case .mediaItem(let mediaItem):
+            return mediaItem.playParams
+            
+        case .mediaTrack(let mediaTrack):
+            return mediaTrack.playParams
+            
+        case .mediaPlaylist(let mediaPlaylist):
+            return mediaPlaylist.playParams
+
+        }
+    }
+    
     
     public func hash(into hasher: inout Hasher) {
         return hasher.combine(id)
