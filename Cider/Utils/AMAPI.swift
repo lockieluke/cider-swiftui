@@ -221,7 +221,11 @@ class AMAPI {
     }
     
     func fetchPlaylist(id: String) async throws -> MediaPlaylist {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/playlists/\(id)", encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/playlists/\(id)", parameters: [
+            "art[url]": "f",
+            "fields[albums]": "artwork,curatorName,description,isChart,lastModifiedDate,name,playlistType,playParams,url,trackTypes",
+            "platform": "web",
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch playlist: \(error)")
             throw error

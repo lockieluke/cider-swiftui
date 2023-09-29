@@ -33,14 +33,20 @@ struct MediaItemRepresentable: View {
                 .frame(width: 30, height: 30)
                 .cornerRadius(5, antialiased: true)
                 .brightness(isHovering ? -0.5 : 0)
-                .overlay {
-                    if isHovering {
-                        Image(systemSymbol: .playFill)
+                .overlay(Image(systemSymbol: .playFill).opacity(isHovering ? 1 : 0))
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(item.title)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                    if item.contentRating == "explicit" {
+                        Image(systemSymbol: .eSquareFill)
                     }
                 }
-            Text(item.title)
-            if item.contentRating == "explicit" {
-                Image(systemSymbol: .eSquareFill)
+                
+                if !item.artistName.isEmpty {
+                    ArtistNamesInteractiveText(item: item)
+                }
             }
             Spacer()
         }
@@ -92,7 +98,7 @@ struct MediaTableRepresentable: View {
     }
     
     var body: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: columnSpacing))], alignment: .center, spacing: 10) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: columnSpacing))], alignment: .leading) {
             ForEach(items, id: \.id) { item in
                 MediaItemRepresentable(item: item)
             }

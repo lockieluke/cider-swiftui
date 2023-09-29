@@ -17,24 +17,10 @@ struct ArtistNamesInteractiveText: View {
     @EnvironmentObject private var mkModal: MKModal
     
     @State private var showArtistPicker = false
-    @State private var item: MediaDynamic
-    
-    private let artistName: String
-    
-    init(item: MediaDynamic) {
-        if case let .mediaTrack(mediaTrack) = item {
-            self.artistName = mediaTrack.artistName
-        } else if case let .mediaItem(mediaItem) = item {
-            self.artistName = mediaItem.artistName
-        } else {
-            self.artistName = ""
-        }
-        
-        self._item = State(initialValue: item)
-    }
+    @State var item: MediaDynamic
     
     var body: some View {
-        InteractiveText("\(artistName)")
+        InteractiveText("\(item.artistName)")
             .font(.system(.caption))
             .opacity(0.8)
             .onTapGesture {
@@ -53,7 +39,7 @@ struct ArtistNamesInteractiveText: View {
             }
             .popover(isPresented: $showArtistPicker, attachmentAnchor: .point(.center), arrowEdge: .bottom) {
                 VStack {
-                    let artistNames = self.artistName.components(separatedBy: " & ")
+                    let artistNames = item.artistName.components(separatedBy: " & ")
                     ForEach(0..<artistNames.count, id: \.self) { index in
                         InteractiveText(artistNames[index])
                             .onTapGesture {

@@ -13,6 +13,7 @@ struct MediaTrack {
     let contentRating: String
     let duration: TimeInterval
     var artistsData: [MediaAny] = []
+    let playParams: PlayParams
     
     init(data: JSON) {
         self.id = data["id"].stringValue
@@ -21,6 +22,7 @@ struct MediaTrack {
         let attributes = data["attributes"]
         self.title = attributes["name"].stringValue
         self.artistName = attributes["artistName"].stringValue
+        self.playParams = PlayParams(data: attributes["playParams"])
         self.albumId = data["relationships"]["albums"]["data"][0]["id"].stringValue
         self.artwork = MediaArtwork(data: attributes["artwork"])
         self.contentRating = attributes["contentRating"].stringValue

@@ -12,9 +12,11 @@ import SwiftyJSON
 struct PlayParams {
     let kind: String
     let id: String
+    let versionHash: String?
 
     init(data: JSON) {
         self.kind = data["kind"].stringValue
         self.id = data["id"].stringValue
+        self.versionHash = data["versionHash"].stringValue
     }
 }

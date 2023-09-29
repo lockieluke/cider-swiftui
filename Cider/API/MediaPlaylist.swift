@@ -17,6 +17,7 @@ struct MediaPlaylist: Identifiable {
     let playlistType: PlaylistType?
     let description: MediaDescription
     let artwork: MediaArtwork
+    let playParams: PlayParams
     
     init(data: JSON) {
         self.id = data["id"].stringValue
@@ -27,6 +28,7 @@ struct MediaPlaylist: Identifiable {
         self.playlistType = PlaylistType(rawValue: attributes["playlistType"].stringValue)
         self.description = MediaDescription(data: attributes["description"])
         self.artwork = MediaArtwork(data: attributes["artwork"])
+        self.playParams = PlayParams(data: attributes["playParams"])
     }
     
 }

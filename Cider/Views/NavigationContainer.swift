@@ -19,20 +19,8 @@ struct NavigationContainer: View {
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
 #endif
     
-    @State private var showProgressBar = false
-    
-    private let progressBarAnimation = Animation.spring()
-    
     var body: some View {
         ZStack {
-            PatchedGeometryReader { geometry in
-                ProgressView()
-                    .progressViewStyle(.linear)
-                    .tint(.primary)
-                    .frame(width: geometry.maxRelative * 0.2)
-            }
-            .opacity(showProgressBar ? 1 : 0)
-            
             if self.mkModal.isAuthorised {
                 ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
                     let isPresent = viewStack.isPresent
@@ -44,11 +32,7 @@ struct NavigationContainer: View {
                         
                     case .rootViewParams:
                         Group {
-                            HomeView(onDataLoaded: {
-                                withAnimation(progressBarAnimation) {
-                                    self.showProgressBar = false
-                                }
-                            })
+                            HomeView()
                                 .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
                                 .hideWithoutDestroying(currentRootStack != .Home || !isPresent)
                             
@@ -110,11 +94,6 @@ struct NavigationContainer: View {
         }
         .padding(.top, 40)
         .padding(.bottom, 100)
-        .onAppear {
-            withAnimation(progressBarAnimation) {
-                self.showProgressBar = true
-            }
-        }
         .enableInjection()
     }
 }
