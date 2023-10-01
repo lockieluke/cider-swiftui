@@ -43,6 +43,7 @@ class CiderWSProvider {
     private let socket: WebSocket
     private var callbacksPool: [WebSocketCallbackEvent] = []
     private var isReady = false
+    private let callbacksQueue = DispatchQueue(label: "com.cidercollective.callbacksQueue")
     
     var delegate: WebSocketDelegate? {
         didSet {
@@ -102,7 +103,6 @@ class CiderWSProvider {
     }
     
     func request(_ route: String, body: [String: Any]? = nil) async throws -> JSON {
-        let lock = NSLock()
         return try await withUnsafeThrowingContinuation { continuation in
             if !self.isReady {
                 continuation.resume(throwing: CiderWSError.wsNotConnected("WebSockets connection is not ready"))
@@ -120,17 +120,17 @@ class CiderWSProvider {
                 try? requestBody.merge(with: defaultBody)
             }
             
-            self.callbacksPool.append(WebSocketCallbackEvent(onEvent: { responseBody in
-                defer {
+            callbacksQueue.sync {
+                self.callbacksPool.append(WebSocketCallbackEvent(onEvent: { [weak self] responseBody in
+                    guard let self = self else { return }
+                    
                     self.callbacksPool.removeAll(where: { callback in callback.id == requestId })
-                    lock.unlock()
-                }
-                lock.lock()
-                
-                DispatchQueue.main.async {
-                    continuation.resume(returning: responseBody)
-                }
-            }, id: requestId))
+                    
+                    DispatchQueue.main.async {
+                        continuation.resume(returning: responseBody)
+                    }
+                }, id: requestId))
+            }
             guard let requestBodyString = requestBody.rawString(.utf8) else {
                 self.logger.error("Failed to create string of WS request body", displayCross: true)
                 continuation.resume(throwing: CiderWSError.failedToCreateJSON)
