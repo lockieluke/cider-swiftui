@@ -1,1 +1,0 @@
-/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/libdiscord_rpc_agent.a: /Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/build.rs /Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/src/lib.rs
