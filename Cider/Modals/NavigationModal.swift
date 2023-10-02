@@ -170,6 +170,13 @@ class NavigationModal : ObservableObject {
         self.viewsStack.append(modifyingViewStack)
     }
     
+    func resetToRoot() {
+        let temp = self.viewsStack[0]
+        self.viewsStack.removeAll()
+        self.viewsStack.append(temp)
+        self.viewsStack[0].isPresent = true
+    }
+    
     @Published var currentlyPresentViewStack: NavigationStack?
     @Published var currentlyPresentViewStackIndex: Int?
     @Published var currentlyPresentViewType: NavigationStackType?

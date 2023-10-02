@@ -108,12 +108,17 @@ class AMAPI {
     }
     
     func getMediaLocation(id: String) -> MediaLocation {
-        switch id.split(separator: ".")[0] {
-        case "p":
-            return .library
-        case "p1":
-            return .catalog
-        default:
+        if id.contains(".") {
+            switch id.split(separator: ".").first {
+            case "p", "i":
+                return .library
+            case "pl":
+                return .catalog
+            default:
+                print("Couldn't find location of: " + id)
+                return .catalog
+            }
+        } else {
             return .catalog
         }
     }
@@ -195,7 +200,16 @@ class AMAPI {
     }
     
     func fetchSong(id: String) async throws -> MediaTrack {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/songs/\(id)", parameters: [
+        let location = self.getMediaLocation(id: id)
+        
+        var fetchURL: String
+        if location == .catalog {
+            fetchURL = "\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/songs/\(id)"
+        } else {
+            fetchURL = "\(APIEndpoints.AMAPI)/me/library/songs/\(id)"
+        }
+        
+        let res = await AMAPI.amSession.request(fetchURL, parameters: [
             "art[url]": "f",
             "extend": "artistUrl,editorialArtwork,plainEditorialNotes",
             "fields[albums]": "artistName,artistUrl,artwork,contentRating,editorialArtwork,plainEditorialNotes,name,playParams,releaseDate,url,trackCount,genreNames,isComplete,isSingle,recordLabel,audioVariants,copyright,isCompilation,isMasteredForItunes,upc",
@@ -205,7 +219,8 @@ class AMAPI {
         if let error = res.error {
             self.logger.error("Failed to fetch song: \(error)")
             throw error
-        } else if let data = res.data, let json = try? JSON(data: data), let trackData = json["data"].array?.first {
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            let trackData = json["data"].array?.first ?? JSON()
             return MediaTrack(data: trackData)
         }
         

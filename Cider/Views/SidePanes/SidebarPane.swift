@@ -70,6 +70,7 @@ struct SidebarItem: View {
             }
             if playlistID == nil {
                 self.navigationModal.currentRootStack = self.stackType
+                self.navigationModal.resetToRoot()
             } else {
                 Task {
                     var playlist: MediaPlaylist?
@@ -78,6 +79,8 @@ struct SidebarItem: View {
                     } catch {}
                     
                     if playlist != nil {
+                        self.navigationModal.showSidebar = false
+                        self.navigationModal.currentRootStack = .AnyView
                         self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(playlist!), geometryMatching: nil, originalSize: CGSize(width: 1, height: 1), coverKind: "bb"))))
                     }
                 }
