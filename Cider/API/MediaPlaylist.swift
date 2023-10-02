@@ -11,6 +11,7 @@ import SwiftyJSON
 
 struct MediaPlaylist: Identifiable {
     
+    let data: JSON
     let id: String
     let title: String
     let curatorName: String
@@ -29,6 +30,8 @@ struct MediaPlaylist: Identifiable {
         self.description = MediaDescription(data: attributes["description"])
         self.artwork = MediaArtwork(data: attributes["artwork"])
         self.playParams = PlayParams(data: attributes["playParams"])
+        
+        self.data = data
     }
     
 }

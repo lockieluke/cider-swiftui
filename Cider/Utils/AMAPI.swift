@@ -103,6 +103,21 @@ class AMAPI {
         return false
     }
     
+    enum MediaLocation: String {
+        case library, catalog
+    }
+    
+    func getMediaLocation(id: String) -> MediaLocation {
+        switch id.split(separator: ".")[0] {
+        case "p":
+            return .library
+        case "p1":
+            return .catalog
+        default:
+            return .catalog
+        }
+    }
+    
     func fetchRecommendations() async -> MediaRecommendationSections {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recommendations").validate().serializingData().response
         if let error = res.error {
@@ -157,12 +172,23 @@ class AMAPI {
     }
     
     func fetchTracks(id: String, type: MediaType) async throws -> [MediaTrack] {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/\(type.rawValue)/\(id)").validate().serializingData().response
+        let location = getMediaLocation(id: id)
+        var fetchURL: String
+        if location == .catalog {
+            fetchURL = "\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/\(type.rawValue)/\(id)"
+        } else {
+            fetchURL = "\(APIEndpoints.AMAPI)/me/library/\(type.rawValue)/\(id)/tracks"
+        }
+        let res = await AMAPI.amSession.request(fetchURL).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch tracks: \(error)")
             throw error
-        } else if let data = res.data, let json = try? JSON(data: data), let tracks = json["data"].array?.first?["relationships"]["tracks"]["data"].arrayValue.map({ MediaTrack(data: $0) }) {
-            return tracks
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            if location == .catalog {
+                return json["data"].array?.first?["relationships"]["tracks"]["data"].arrayValue.map({ MediaTrack(data: $0) }) ?? []
+            } else {
+                return json["data"].arrayValue.map({ MediaTrack(data: $0) })
+            }
         }
         
         return []
@@ -220,24 +246,9 @@ class AMAPI {
         return MediaArtist(data: [])
     }
     
-    enum PlaylistType: String {
-        case library, catalog
-    }
-    
     func fetchPlaylist(id: String) async throws -> MediaPlaylist {
-        var playlistType: PlaylistType
-        switch id.split(separator: ".")[0] {
-        case "p":
-            playlistType = .library
-        case "p1":
-            playlistType = .catalog
-        default:
-            playlistType = .catalog
-        }
-        
         var fetchURL: String
-        
-        switch playlistType {
+        switch self.getMediaLocation(id: id) {
         case .library:
             fetchURL = "\(APIEndpoints.AMAPI)/me/library/playlists/\(id)"
         case .catalog:
