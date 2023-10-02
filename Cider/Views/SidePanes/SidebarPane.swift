@@ -18,10 +18,12 @@ struct SidebarItem: View {
     @State private var isClicking = false
     
     @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var mkModal: MKModal
     
     private let title: String
     private let icon: SidebarItemIcon
     private let stackType: RootNavigationType
+    private let playlistID: String?
     
     enum SidebarItemIcon: String {
         case Home = "house",
@@ -35,10 +37,11 @@ struct SidebarItem: View {
         Playlist = "list.bullet"
     }
     
-    init(_ title: String, icon: SidebarItemIcon, stackType: RootNavigationType? = nil) {
+    init(_ title: String, icon: SidebarItemIcon, stackType: RootNavigationType? = nil, playlistID: String? = nil) {
         self.title = title
         self.icon = icon
         self.stackType = stackType ?? .AnyView
+        self.playlistID = playlistID
     }
     
     var body: some View {
@@ -65,7 +68,20 @@ struct SidebarItem: View {
             withAnimation(.spring()) {
                 self.navigationModal.showSidebar = false
             }
-            self.navigationModal.currentRootStack = self.stackType
+            if playlistID == nil {
+                self.navigationModal.currentRootStack = self.stackType
+            } else {
+                Task {
+                    var playlist: MediaPlaylist?
+                    do {
+                        playlist = try await self.mkModal.AM_API.fetchPlaylist(id: playlistID ?? "")
+                    } catch {}
+                    
+                    if playlist != nil {
+                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(playlist!), geometryMatching: nil, originalSize: CGSize(width: 1, height: 1), coverKind: "bb"))))
+                    }
+                }
+            }
         }
         .modifier(PressActions(onEvent: { isClicking in
             self.isClicking = isClicking
@@ -134,7 +150,7 @@ struct SidebarPane: View {
                 
                 Section("Playlists") {
                     ForEach(allPlaylistsData) { playlist in
-                        SidebarItem(playlist.title, icon: .Playlist)
+                        SidebarItem(playlist.title, icon: .Playlist, playlistID: playlist.id)
                     }
                 }
                 .foregroundStyle(.white)

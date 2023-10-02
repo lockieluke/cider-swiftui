@@ -1,0 +1,10 @@
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/librand_isaac-3c14812fb54d66f6.rmeta: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac64.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac_array.rs
+
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/librand_isaac-3c14812fb54d66f6.rlib: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac64.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac_array.rs
+
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/rand_isaac-3c14812fb54d66f6.d: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac64.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac_array.rs
+
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/lib.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac64.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_isaac-0.1.1/src/isaac_array.rs:

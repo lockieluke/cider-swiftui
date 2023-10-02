@@ -220,8 +220,31 @@ class AMAPI {
         return MediaArtist(data: [])
     }
     
+    enum PlaylistType: String {
+        case library, catalog
+    }
+    
     func fetchPlaylist(id: String) async throws -> MediaPlaylist {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/playlists/\(id)", parameters: [
+        var playlistType: PlaylistType
+        switch id.split(separator: ".")[0] {
+        case "p":
+            playlistType = .library
+        case "p1":
+            playlistType = .catalog
+        default:
+            playlistType = .catalog
+        }
+        
+        var fetchURL: String
+        
+        switch playlistType {
+        case .library:
+            fetchURL = "\(APIEndpoints.AMAPI)/me/library/playlists/\(id)"
+        case .catalog:
+            fetchURL = "\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/playlists/\(id)"
+        }
+        
+        let res = await AMAPI.amSession.request(fetchURL, parameters: [
             "art[url]": "f",
             "fields[albums]": "artwork,curatorName,description,isChart,lastModifiedDate,name,playlistType,playParams,url,trackTypes",
             "platform": "web",

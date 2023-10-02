@@ -1,0 +1,10 @@
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/librand_jitter-06942a5f6cc07b1c.rmeta: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/dummy_log.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/platform.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/error.rs
+
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/librand_jitter-06942a5f6cc07b1c.rlib: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/dummy_log.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/platform.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/error.rs
+
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/rand_jitter-06942a5f6cc07b1c.d: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/dummy_log.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/platform.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/error.rs
+
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/lib.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/dummy_log.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/platform.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_jitter-0.1.4/src/error.rs:

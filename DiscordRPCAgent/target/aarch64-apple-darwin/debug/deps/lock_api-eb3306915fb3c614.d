@@ -1,0 +1,10 @@
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/liblock_api-eb3306915fb3c614.rmeta: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/mutex.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/remutex.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/rwlock.rs
+
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/liblock_api-eb3306915fb3c614.rlib: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/mutex.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/remutex.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/rwlock.rs
+
+/Users/elliotjarnit/Documents/project2-swiftui/DiscordRPCAgent/target/aarch64-apple-darwin/debug/deps/lock_api-eb3306915fb3c614.d: /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/lib.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/mutex.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/remutex.rs /Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/rwlock.rs
+
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/lib.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/mutex.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/remutex.rs:
+/Users/elliotjarnit/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lock_api-0.1.5/src/rwlock.rs:
