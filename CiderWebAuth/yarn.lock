@@ -933,7 +933,7 @@ __metadata:
     firebase: "npm:^10.4.0"
     generate-license-file: "npm:^2.0.0"
     lodash-es: "npm:^4.17.21"
-    musickit-typescript: "npm:^1.2.4"
+    musickit-typescript: "github:ciderapp/musickit-types"
   languageName: unknown
   linkType: soft
 
@@ -1465,10 +1465,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"musickit-typescript@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "musickit-typescript@npm:1.2.4"
-  checksum: b6f5ddb205a28da6446cb92c81582591ee9942a035ba35f5701919c78b98d4d1fad721b85e5031955584d5b4ad9821920386c849dd687a7119340555dc35b55b
+"musickit-typescript@github:ciderapp/musickit-types":
+  version: 1.0.0
+  resolution: "musickit-typescript@https://github.com/ciderapp/musickit-types.git#commit=76d13b087add38a65e616f0cce641911b477f4a5"
+  checksum: 11d672efe015754a010350f2e6176303f6e63290203e5b861fcd17023c0b7e5872043773e7b9337b6d552351b30702309eb1655745fddb74a196b8040ba0b15a
   languageName: node
   linkType: hard
 

@@ -371,9 +371,11 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         
 #if os(macOS)
         let connectWS = {
-            self.wsCommClient.delegate = self
-            self.logger.info("Attempting to connect to CiderPlaybackAgent WebSockets")
-            self.wsCommClient.connect()
+            if !self.isReady {
+                self.wsCommClient.delegate = self
+                self.logger.info("Attempting to connect to CiderPlaybackAgent WebSockets")
+                self.wsCommClient.connect()
+            }
         }
         
         #if !DEBUG

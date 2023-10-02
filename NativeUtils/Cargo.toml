@@ -15,7 +15,7 @@ serde = { version = "1.0.188", features = ["derive"] }
 uuid = { version = "1.4.1", features = ["v4"] }
 cli-clipboard = "0.4.0"
 port_scanner = "0.1.5"
-discord-presence = "0.5.18"
+discord-presence = { git = "https://github.com/jewlexx/discord-presence.git" }
 
 [build-dependencies]
 swift-bridge-build = "0.1.52"
