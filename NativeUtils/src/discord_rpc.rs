@@ -115,8 +115,12 @@ impl DiscordRPCAgent {
             println!("Updating activity: {:?}", activity);
         }
 
-        self.client.set_activity(|_| {
-            return activity;
-        }).expect("Unable to set activity");
+        if Client::is_ready() {
+            if let Err(why) = self.client.set_activity(|_| {
+                return activity;
+            }) {
+                println!("Failed to update activity: {:?}", why);
+            }
+        }
     }
 }
