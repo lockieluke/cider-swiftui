@@ -44,6 +44,22 @@ struct SidebarItem: View {
         self.playlistID = playlistID
     }
     
+    func shouldHighlight() -> Bool {
+        if self.isHovering {
+            return true
+        }
+        
+        if self.stackType != .AnyView {
+            return navigationModal.currentRootStack == self.stackType
+        }
+        
+        if self.playlistID != nil {
+            return navigationModal.viewsStack.last?.params?.value == self.playlistID
+        }
+        
+        return false
+    }
+    
     var body: some View {
         HStack {
             Image(systemName: icon.rawValue)
@@ -58,7 +74,7 @@ struct SidebarItem: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background {
             RoundedRectangle(cornerRadius: 10)
-                .fill(navigationModal.currentRootStack == stackType ? Color.secondary.opacity(0.5) : isHovering ? Color.secondary.opacity(isClicking ? 0.5 : 0.3) : Color.clear)
+                .fill(shouldHighlight() ?  Color.secondary.opacity(0.5) : Color.clear)
                 .animation(.easeInOut, value: isClicking)
         }
         .onHover { isHovering in
