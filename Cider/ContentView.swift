@@ -12,6 +12,7 @@ struct ContentView: View {
     @ObservedObject private var iO = Inject.observer
     
     @Default(.launchedBefore) private var launchedBefore
+    @Default(.lastLaunchDate) private var lastLaunchDate
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
@@ -60,13 +61,24 @@ struct ContentView: View {
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)
         }
+        .sheet(isPresented: $navigationModal.isDonateViewPresent) {
+            DonateView()
+        }
         .environmentObject(searchModal)
         .environmentObject(navigationModal)
         .environmentObject(personalisedData)
         .onAppear {
             if !self.launchedBefore {
                 self.navigationModal.inOnboardingExperience = true
+                return
             }
+            
+            // Ask for donation once a day
+            if !CommandLine.arguments.contains("-disable-donate-view") && !Calendar.current.isDateInToday(self.lastLaunchDate) {
+                self.navigationModal.isDonateViewPresent = true
+            }
+            
+            self.lastLaunchDate = .now
         }
         .task {
             if self.launchedBefore {

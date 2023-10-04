@@ -22,6 +22,7 @@ extension Defaults.Keys {
     
     static let shareAnalytics = Key<Bool>("shareAnalytics", default: false)
     static let launchedBefore = Key<Bool>("launchedBefore", default: false)
+    static let lastLaunchDate = Key<Date>("lastLaunchDate", default: .now)
     static let usePretendardFont = Key<Bool>("usePretendardFont", default: false)
     
     #if DEBUG
