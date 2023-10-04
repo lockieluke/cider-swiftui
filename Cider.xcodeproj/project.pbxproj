@@ -896,18 +896,19 @@
 /* Begin PBXShellScriptBuildPhase section */
 		B74EEBD529D8862500711DB6 /* Build NativeUtils */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/NativeUtils/src",
 			);
 			name = "Build NativeUtils";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(SRCROOT)/NativeUtils/target/universal/libnative_utils.a",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
@@ -922,11 +923,17 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/CiderWebAuth/src",
+				"$(SRCROOT)/CiderPlaybackAgent/Web Scripts/src",
 			);
 			name = "Build JS Scripts";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(SRCROOT)/CiderWebAuth/dist/ciderconnectauth.js",
+				"$(SRCROOT)/CiderWebAuth/dist/ciderconnectauth.user.js",
+				"$(SRCROOT)/CiderWebAuth/dist/ciderwebauth.js",
+				"$(SRCROOT)/CiderPlaybackAgent/Web Scripts/dist/ciderplaybackagent.js",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
