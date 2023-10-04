@@ -2,10 +2,12 @@
 //  Copyright © 2022 Cider Collective. All rights reserved.
 //
 
+import AlertToast
 import SwiftUI
 import Throttler
 import Inject
 import Defaults
+import SFSafeSymbols
 
 struct ContentView: View {
     
@@ -28,6 +30,8 @@ struct ContentView: View {
     
     @StateObject private var searchModal = SearchModal()
     @StateObject private var personalisedData = PersonalisedData()
+    
+    @State private var displayAskDonationAgainToast: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -61,8 +65,13 @@ struct ContentView: View {
             .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
             .edgesIgnoringSafeArea(.top)
         }
+        .toast(isPresenting: $displayAskDonationAgainToast, duration: 5) {
+            AlertToast(displayMode: .hud, type: .systemImage(SFSymbol.clockArrowCirclepath.rawValue, .yellow), title: "We'll remind you tomorrow")
+        }
         .sheet(isPresented: $navigationModal.isDonateViewPresent) {
-            DonateView()
+            DonateView() {
+                self.displayAskDonationAgainToast = true
+            }
         }
         .environmentObject(searchModal)
         .environmentObject(navigationModal)

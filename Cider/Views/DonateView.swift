@@ -27,11 +27,16 @@ struct DonateView: View {
         let donationLink: URL
         var isHovering: Bool = false
     }
-    
     @State private var donationDatas: [DonationData] = [
         DonationData(name: "lockieluke", avatarUrl: URL(string: "https://avatars.githubusercontent.com/u/25424409")!, donationLink: URL(string: "https://www.buymeacoffee.com/lockieluke3389")!),
         DonationData(name: "Mono", avatarUrl: URL(string: "https://avatars.githubusercontent.com/u/79590499")!, donationLink: URL(string: "https://www.buymeacoffee.com")!)
     ]
+    
+    private let onNotToday: (() -> Void)?
+    
+    init(onNotToday: (() -> Void)? = nil) {
+        self.onNotToday = onNotToday
+    }
     
     var body: some View {
         VStack {
@@ -73,12 +78,14 @@ struct DonateView: View {
                     }
                     .onTapGesture {
                         donationData.donationLink.open()
+                        self.dismiss()
                     }
                 }
             }
             .padding(.vertical)
             
             Button("Not today") {
+                self.onNotToday?()
                 self.dismiss()
             }
             .buttonStyle(.borderless)

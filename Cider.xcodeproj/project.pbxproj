@@ -141,6 +141,7 @@
 		B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70A28BD24B4009AABEA /* MKModal.swift */; };
 		B7AAB70D28BD2640009AABEA /* ListenNowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB70C28BD2640009AABEA /* ListenNowView.swift */; };
 		B7AAF7762ACE096600A9346C /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAF7752ACE096600A9346C /* DonateView.swift */; };
+		B7AAF7792ACE175900A9346C /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = B7AAF7782ACE175900A9346C /* AlertToast */; };
 		B7B02F57295629030065FCDD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02F56295629030065FCDD /* Double.swift */; };
 		B7B3D8C029B005100014F63D /* ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B3D8BF29B005100014F63D /* ContextMenu.swift */; };
 		B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C06F832932E1C5000C1192 /* NavigationContainer.swift */; };
@@ -363,6 +364,7 @@
 				B70524C52A6F15D8001654B3 /* Cache in Frameworks */,
 				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
 				B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */,
+				B7AAF7792ACE175900A9346C /* AlertToast in Frameworks */,
 				B71D54212ABFA1BD001A62D6 /* Lottie in Frameworks */,
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
 				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
@@ -785,6 +787,7 @@
 				B7718F0A2ABB6EC5009CB966 /* ZippyJSON */,
 				B71D54202ABFA1BD001A62D6 /* Lottie */,
 				B79EA29E2AC63C2A00E5687F /* Subprocess */,
+				B7AAF7782ACE175900A9346C /* AlertToast */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -868,6 +871,7 @@
 				B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */,
 				B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				B79EA29D2AC63C2A00E5687F /* XCRemoteSwiftPackageReference "Subprocess" */,
+				B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1598,6 +1602,14 @@
 				minimumVersion = 2.1.0;
 			};
 		};
+		B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 		B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1758,6 +1770,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B79EA29D2AC63C2A00E5687F /* XCRemoteSwiftPackageReference "Subprocess" */;
 			productName = Subprocess;
+		};
+		B7AAF7782ACE175900A9346C /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 		B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;
