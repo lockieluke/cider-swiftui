@@ -139,6 +139,7 @@ class AppMenu {
             $0.submenu?.items = [
                 NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Open CiderPlaybackAgent debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
+                NSMenuItem(title: "Show Donation View", action: #selector(self.showDonationView(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self },
                 .separator(),
                 NSMenuItem(title: "Clear WebKit cache", action: #selector(self.clearWebViewCache(_:)), keyEquivalent: "").then { $0.target = self }
@@ -208,6 +209,10 @@ class AppMenu {
         withAnimation(.interactiveSpring()) {
             self.navigationModal.showSidebar.toggle()
         }
+    }
+    
+    @objc func showDonationView(_ sender: Any) {
+        self.navigationModal.isDonateViewPresent = true
     }
     
 #if DEBUG
