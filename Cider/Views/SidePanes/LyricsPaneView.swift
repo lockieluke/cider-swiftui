@@ -10,29 +10,38 @@ import SwiftUI
 import Inject
 import SwiftyJSON
 import WrappingHStack
+import Throttler
+import Foundation
 
-struct LyricLineData {
-    let id: String
-    let line: String
-    let startTime: Float
-    let endTime: Float
+struct LyricData: Codable {
+    let leadingSilence: Double
+    let lyrics: [Lyric]
+    let songwriters: [String]
+    
 }
 
-struct LyricsData {
-    let id: String
-    let lyrics: [LyricLineData]
-    let leadingSilence: Float
-    let songwriters: [String]
+struct Lyric: Codable {
+    let endTime: Double
+    let id: UUID
+    let line: String
+    let startTime: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case endTime = "end_time"
+        case id
+        case line
+        case startTime = "start_time"
+    }
 }
 
 struct LyricLine: View {
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
-    private let lyric: LyricLineData
+    private let lyric: Lyric
     private let active: Bool
     
-    init(_ lyric: LyricLineData, active: Bool) {
+    init(_ lyric: Lyric, active: Bool) {
         self.lyric = lyric
         self.active = active
     }
@@ -42,8 +51,13 @@ struct LyricLine: View {
             .fontWeight(.bold)
             .foregroundColor(active ? .primary : .secondary)
             .font(.title)
-            .blur(radius: active ? .zero : 3)
+            .blur(radius: active ? .zero : 2)
             .animation(.spring(), value: active)
+            .onTapGesture {
+                Task {
+                    await ciderPlayback.seekToTime(seconds: Int(lyric.startTime))
+                }
+            }
     }
     
 }
@@ -52,35 +66,26 @@ struct LyricsPaneView: View {
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
-    #if os(macOS)
+#if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
-    #endif
+#endif
     
     @ObservedObject private var iO = Inject.observer
     
-    @State private var lyricsData: LyricsData?
-    @State private var lastSyncedId: String?
+    @State private var lyricsData: LyricData?
     
     var body: some View {
         SidePane(content: {
-            if let lyricsData = self.lyricsData {
+            if let lyricData = self.lyricsData {
                 GeometryReader { geometry in
                     VStack {
-                        if !lyricsData.songwriters.isEmpty {
-                            WrappingHStack(["Songwriters: "] + lyricsData.songwriters, id: \.self) { songwriter in
-                                Text(songwriter)
-                                    .italic()
-                            }
-                            .padding(.horizontal)
-                        }
-                        
                         ScrollViewReader { proxy in
                             ScrollView(.vertical, showsIndicators: false) {
                                 let seconds = Float(ciderPlayback.nowPlayingState.currentTime ?? 0.0)
                                 
                                 VStack(alignment: .leading, spacing: 20) {
-                                    ForEach(Array(lyricsData.lyrics.enumerated()), id: \.offset) { i, lyric in
-                                        let isActive = lyric.startTime...lyric.endTime ~= seconds
+                                    ForEach(Array(lyricData.lyrics.enumerated()), id: \.offset) {i, lyric in
+                                        let isActive = lyric.startTime...lyric.endTime ~= Double(seconds)
                                         
                                         LyricLine(lyric, active: isActive)
                                             .id(i)
@@ -94,40 +99,56 @@ struct LyricsPaneView: View {
                                                 }
                                             }
                                     }
+                                    
+                                    if !lyricData.songwriters.isEmpty {
+                                        WrappingHStack(["Songwriters: "] + lyricData.songwriters, id: \.self) { songwriter in
+                                            Text(songwriter)
+                                                .italic()
+                                        }
+                                        .padding(.horizontal)
+                                    }
                                 }
-                                .padding()
                             }
-                            .padding(.vertical, 2)
-                            .mask {
-                                LinearGradient(
-                                    stops: [
-                                        Gradient.Stop(color: .clear, location: .zero),
-                                        Gradient.Stop(color: .black, location: 0.01),
-                                        Gradient.Stop(color: .black, location: 0.1),
-                                        Gradient.Stop(color: .clear, location: 1.0)
-                                    ],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            }
+                            .frame(width: geometry.size.width, height: geometry.size.height)
                         }
-                        
                     }
-                    .padding(.vertical)
+                    .padding([.top, .leading, .trailing], 10)
                 }
             }
         })
-        .task {
-            #if os(macOS)
-            if let item = self.ciderPlayback.nowPlayingState.item, item.id != self.lyricsData?.id, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
-                let lyricsJson = JSON(parseJSON: self.nativeUtilsWrapper.nativeUtils.parse_lyrics_xml(lyricsXml).toString())
-                self.lyricsData = LyricsData(id: item.id, lyrics: lyricsJson["lyrics"].arrayValue.compactMap { line in
-                    return LyricLineData(id: line["id"].stringValue, line: line["line"].stringValue, startTime: line["start_time"].floatValue, endTime: line["end_time"].floatValue)
-                }, leadingSilence: lyricsJson["leadingSilence"].floatValue, songwriters: lyricsJson["songwriters"].arrayObject as? [String] ?? [])
+        .onChange(of: ciderPlayback.nowPlayingState.item?.id) { _ in
+            Debouncer.debounce {
+                if let songId = ciderPlayback.nowPlayingState.item?.id {
+                    fetchLyrics(for: songId)
+                }
             }
-            #endif
+        }
+        .task {
+            fetchLyrics(for: ciderPlayback.nowPlayingState.item?.id)
         }
         .enableInjection()
+    }
+    
+    func fetchLyrics(for songId: String?) {
+#if os(macOS)
+        guard let songId = songId else { return }
+        
+        Task {
+            if let monoLyrics = await mkModal.AM_API.fetchLyrics(id: songId) {
+                let monoLyricsJson = JSON(nativeUtilsWrapper.nativeUtils.parse_lyrics_xml(monoLyrics).toString())
+                do {
+                    if let jsonString = monoLyricsJson.rawString() {
+                        if let jsonData = jsonString.data(using: .utf8) {
+                            let decoder = JSONDecoder()
+                            self.lyricsData = try decoder.decode(LyricData.self, from: jsonData)
+                        }
+                    }
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+        }
+#endif
     }
 }
 

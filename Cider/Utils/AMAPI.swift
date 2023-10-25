@@ -477,17 +477,6 @@ class AMAPI {
         return .mediaItem(MediaItem(data: []))
     }
     
-    func fetchLyricsXml(item: MediaDynamic) async -> String? {
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/gb/\(item.type)/\(item.id)/syllable-lyrics").validate().serializingData().response
-        if let error = res.error {
-            self.logger.error("Failed to fetch lyrics \(item.id): \(error)")
-        } else if let data = res.data, let json = try? JSON(data: data), let ttml = json["data"].array?.first?["attributes"]["ttml"].string {
-            return ttml
-        }
-        
-        return nil
-    }
-    
     struct SocialProfile {
         let handle, name, url: String
         let isPrivate, isVerified: Bool
@@ -582,5 +571,17 @@ class AMAPI {
         }
         
         return playlists
+    }
+    
+    func fetchLyrics(id: String) async -> String? {
+        let res = await
+        AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/songs/\(id)/syllable-lyrics", encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        
+        if let error = res.error {
+            self.logger.error("Failed to fetch lyrics for \(id): \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data) {
+            return json["data"].array?.first?["attributes"]["ttml"].string
+        }
+        return nil
     }
 }
