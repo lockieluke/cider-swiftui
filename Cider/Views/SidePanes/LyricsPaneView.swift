@@ -134,10 +134,10 @@ struct LyricsPaneView: View {
         guard let songId = songId else { return }
         
         Task {
-            if let monoLyrics = await mkModal.AM_API.fetchLyrics(id: songId) {
-                let monoLyricsJson = JSON(nativeUtilsWrapper.nativeUtils.parse_lyrics_xml(monoLyrics).toString())
+            if let lyrics = await mkModal.AM_API.fetchLyrics(id: songId) {
+                let lyricsJson = JSON(nativeUtilsWrapper.nativeUtils.parse_lyrics_xml(lyrics).toString())
                 do {
-                    if let jsonString = monoLyricsJson.rawString() {
+                    if let jsonString = lyricsJson.rawString() {
                         if let jsonData = jsonString.data(using: .utf8) {
                             let decoder = JSONDecoder()
                             self.lyricsData = try decoder.decode(LyricData.self, from: jsonData)
