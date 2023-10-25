@@ -82,11 +82,11 @@ struct AppTitleBar: View {
                     ] : [],  { id in
                         Task {
                             #if os(macOS)
-                            if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item) {
+                            if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyrics(id: item.id) {
                                 self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXml)
                             }
                             
-                            if id == "copy-prettified-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyricsXml(item: item), let lyricsXML = try? XMLDocument(xmlString: lyricsXml) {
+                            if id == "copy-prettified-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyrics(id: item.id), let lyricsXML = try? XMLDocument(xmlString: lyricsXml) {
                                 self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXML.xmlString(options: .nodePrettyPrint))
                             }
                             #endif
