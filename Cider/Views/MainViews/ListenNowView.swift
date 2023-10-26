@@ -16,7 +16,7 @@ struct ListenNowView: View {
     
     var body: some View {
         ScrollView(.vertical) {
-            VStack(spacing: 0) {
+            LazyVStack(spacing: 0) {
                 Text("Listen Now")
                     .font(.largeTitle.bold())
                     .frame(maxWidth: .infinity, alignment: .leading)
