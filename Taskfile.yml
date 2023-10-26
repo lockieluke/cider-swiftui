@@ -35,6 +35,7 @@ tasks:
     sources:
       - src/**/*.rs
       - Cargo.toml
+      - Cargo.lock
       - build.rs
     generates:
       - target/universal/libnative_utils.a
