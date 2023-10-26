@@ -34,8 +34,11 @@ struct CiderPlayground: View {
     
     var sheetView: some View {
         VStack {
-            Text(results.debugDescription)
-            Spacer()
+            ScrollView(.vertical) {
+                Text(results.debugDescription)
+                    .textSelection(.enabled)
+                Spacer()
+            }
             HStack {
                 Spacer()
                 Button("Done") {

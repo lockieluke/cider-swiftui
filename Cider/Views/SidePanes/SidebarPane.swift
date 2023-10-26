@@ -151,7 +151,7 @@ struct SidebarPane: View {
                     SidebarItem("Home", icon: .Home, stackType: .Home)
                     SidebarItem("Listen Now", icon: .ListenNow, stackType: .ListenNow)
                     SidebarItem("Browse", icon: .Browse, stackType: .Browse)
-                    SidebarItem("Radio", icon: .Radio)
+                    SidebarItem("Radio", icon: .Radio, stackType: .Radio)
                 }
                 
                 Section("Library") {

@@ -567,6 +567,27 @@ class AMAPI {
         return []
     }
     
+    func fetchRadio() async -> [MediaRadioData] {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/editorial/\(self.STOREFRONT_ID!)/groupings", parameters: [
+            "name": "radio",
+            "omit[resource:artists]": "relationships",
+            "include[albums]": "artists",
+            "include[songs]": "artists",
+            "include[music-videos]": "artists",
+            "extend": "editorialArtwork,artistUrl",
+            "fields[artists]": "name,url,artwork,editorialArtwork,genreNames,editorialNotes",
+            "art[url]": "f",
+            "platform": "web"
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch radio: \(error)")
+        } else if let data = res.data, let json = try? JSON(data: data), let tabsChildren = json["data"].array?.first?["relationships"]["tabs"]["data"].array?.first?["relationships"]["children"]["data"].array {
+            return tabsChildren.map { MediaRadioData(data: $0) }
+        }
+        
+        return []
+    }
+    
     func fetchPlaylists(folder: String = "p.playlistsroot") async -> [MediaPlaylist] {
         var playlists: [MediaPlaylist] = []
         

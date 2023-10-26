@@ -18,6 +18,7 @@ struct MediaPresentable: View {
     private let maxRelative: CGFloat
     private let geometryMatched: Bool
     private let coverKind: String
+    private let isHostOrArtist: Bool
     
     private var id, title: String!
     private var artwork: MediaArtwork!
@@ -27,24 +28,20 @@ struct MediaPresentable: View {
     
     @Namespace private var cardAnimation
     
-    init(item: MediaDynamic, maxRelative: CGFloat, coverKind: String = "bb", geometryMatched: Bool = false) {
-        if case .mediaItem(let mediaItem) = item {
-            self.id = mediaItem.id
-            self.title = mediaItem.title
-            self.artwork = mediaItem.artwork
-        } else if case .mediaPlaylist(let mediaPlaylist) = item {
-            self.id = mediaPlaylist.id
-            self.title = mediaPlaylist.title
-            self.artwork = mediaPlaylist.artwork
-        } else if case .mediaTrack(let mediaTrack) = item {
-            self.id = mediaTrack.id
-            self.title = mediaTrack.title
-            self.artwork = mediaTrack.artwork
-        }
+    init(item: MediaDynamic, 
+         maxRelative: CGFloat,
+         coverKind: String = "bb",
+         geometryMatched: Bool = false,
+         isHostOrArtist: Bool = false
+    ) {
+        self.id = item.id
+        self.title = item.title
+        self.artwork = item.artwork
         
         self.item = item
         self.maxRelative = maxRelative
         self.geometryMatched = geometryMatched
+        self.isHostOrArtist = isHostOrArtist
         self.coverKind = coverKind
     }
     
@@ -55,7 +52,7 @@ struct MediaPresentable: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
-                    .cornerRadius(5)
+                    .cornerRadius(isHostOrArtist ? .infinity : 5)
                     .brightness(isHovering ? -0.1 : 0)
                     .animation(.easeIn(duration: 0.15), value: isHovering)
                     .allowsHitTesting(false)

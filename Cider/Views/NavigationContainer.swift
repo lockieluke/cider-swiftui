@@ -41,6 +41,9 @@ struct NavigationContainer: View {
                             
                             BrowseView()
                                 .hideWithoutDestroying(currentRootStack != .Browse || !isPresent)
+                            
+                            RadioView()
+                                .hideWithoutDestroying(currentRootStack != .Radio || !isPresent)
                         }
                         
                     case .detailedViewParams(let detailedViewParams):

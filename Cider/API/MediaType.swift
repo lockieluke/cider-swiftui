@@ -13,12 +13,14 @@ enum MediaType: String {
          AnyMedia = "any",
          Song = "songs",
          Artist = "artists",
-         Catalog = "catalog"
+         Catalog = "catalog",
+         Station = "stations",
+         AppleCurator = "apple-curators"
     
 }
 
 enum MediaDynamic {
-    case mediaTrack(MediaTrack), mediaItem(MediaItem), mediaPlaylist(MediaPlaylist)
+    case mediaTrack(MediaTrack), mediaItem(MediaItem), mediaPlaylist(MediaPlaylist), mediaStation(MediaStation), mediaAppleCurator(MediaAppleCurator)
     
     static func fromPlaylists(_ playlists: [MediaPlaylist]) -> [MediaDynamic] {
         return playlists.map { MediaDynamic.mediaPlaylist($0) }
@@ -49,6 +51,12 @@ extension MediaDynamic: Identifiable, Hashable {
         case .mediaPlaylist(let mediaPlaylist):
             return mediaPlaylist.id
             
+        case .mediaStation(let mediaStation):
+            return mediaStation.id
+            
+        case .mediaAppleCurator(let mediaAppleCurator):
+            return mediaAppleCurator.id
+            
         }
     }
     
@@ -64,6 +72,12 @@ extension MediaDynamic: Identifiable, Hashable {
             
         case .mediaPlaylist( _):
             return "playlists"
+            
+        case .mediaStation(_):
+            return "stations"
+            
+        case .mediaAppleCurator(_):
+            return "apple-curators"
             
         }
         
@@ -81,6 +95,12 @@ extension MediaDynamic: Identifiable, Hashable {
         case .mediaPlaylist(let mediaPlaylist):
             return mediaPlaylist.title
             
+        case .mediaStation(let mediaStation):
+            return mediaStation.title
+            
+        case .mediaAppleCurator(let mediaAppleCurator):
+            return mediaAppleCurator.title
+            
         }
     }
     
@@ -97,12 +117,18 @@ extension MediaDynamic: Identifiable, Hashable {
         case .mediaPlaylist(_):
             return ""
             
+        case .mediaStation(_):
+            return ""
+            
+        case .mediaAppleCurator(_):
+            return ""
+            
         }
     }
     
     var albumId: String? {
         switch self {
-                        
+            
         case .mediaItem(let mediaItem):
             return mediaItem.id
             
@@ -110,6 +136,12 @@ extension MediaDynamic: Identifiable, Hashable {
             return mediaTrack.albumId
             
         case .mediaPlaylist(_):
+            return nil
+            
+        case .mediaStation(_):
+            return nil
+            
+        case .mediaAppleCurator(let mediaAppleCurator):
             return nil
             
         }
@@ -127,6 +159,12 @@ extension MediaDynamic: Identifiable, Hashable {
         case .mediaPlaylist(let mediaPlaylist):
             return mediaPlaylist.artwork
             
+        case .mediaStation(let mediaStation):
+            return mediaStation.artwork
+            
+        case .mediaAppleCurator(let mediaAppleCurator):
+            return mediaAppleCurator.artwork
+            
         }
     }
     
@@ -141,7 +179,13 @@ extension MediaDynamic: Identifiable, Hashable {
             
         case .mediaPlaylist(let mediaPlaylist):
             return mediaPlaylist.curatorName
-
+            
+        case .mediaStation(_):
+            return ""
+            
+        case .mediaAppleCurator(let mediaAppleCurator):
+            return mediaAppleCurator.hostName
+            
         }
     }
     
@@ -156,7 +200,13 @@ extension MediaDynamic: Identifiable, Hashable {
             
         case .mediaPlaylist(let mediaPlaylist):
             return mediaPlaylist.playParams
-
+            
+        case .mediaStation(let mediaStation):
+            return mediaStation.playParams
+            
+        case .mediaAppleCurator(_):
+            return nil
+            
         }
     }
     

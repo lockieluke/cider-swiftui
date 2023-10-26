@@ -248,6 +248,13 @@ class AppMenu {
                 
                 return nil
             }),
+            TestAction(name: "Fetch Radio Data", description: "Fetch radio storefront data and pars JSON", action: {
+                if (self.mkModal.isAuthorised) {
+                    return await self.mkModal.AM_API.fetchRadio()
+                }
+                
+                return nil
+            }),
             TestAction(name: "Fetch latest User Agent", description: "Fetch latest User Agent for WKWebView", action: {
                 return await Networking.findLatestWebViewUA()
             }),

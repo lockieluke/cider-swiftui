@@ -158,24 +158,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     @MainActor
     func setQueue(item: MediaDynamic) async {
-        let type, id: String
-        switch item {
-            
-        case .mediaItem(let mediaItem):
-            type = mediaItem.type.rawValue
-            id = mediaItem.id
-            
-        case .mediaTrack(let mediaTrack):
-            type = "songs"
-            id = mediaTrack.id
-            
-        case .mediaPlaylist(let mediaPlaylist):
-            type = "playlists"
-            id = mediaPlaylist.id
-            
-        }
-        
-        await self.setQueue(requestBody: ["\(type)-id": id])
+        await self.setQueue(requestBody: ["\(item.type)-id": item.id])
     }
     
     @MainActor
@@ -427,15 +410,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             return
         }
         
-        let (title, artistName, artwork, contentRating, Id): (String, String, MediaArtwork, String, String)
-        switch item {
-        case .mediaTrack(let mediaTrack):
-            (title, artistName, artwork, contentRating, Id) = (mediaTrack.title, mediaTrack.artistName, mediaTrack.artwork, mediaTrack.contentRating, mediaTrack.id)
-        case .mediaItem(let musicItem):
-            (title, artistName, artwork, contentRating, Id) = (musicItem.title, musicItem.artistName, musicItem.artwork, musicItem.contentRating, musicItem.id)
-        case .mediaPlaylist(let mediaPlaylist):
-            (title, artistName, artwork, contentRating, Id) = (mediaPlaylist.title, mediaPlaylist.curatorName, mediaPlaylist.artwork, "", mediaPlaylist.id)
-        }
+        let (title, artistName, artwork, contentRating, Id): (String, String, MediaArtwork, String, String) = (item.title, item.artistName, item.artwork, item.contentRating, item.id)
         
         var artworkUrl: URL = artwork.getUrl(width: 200, height: 200)
         

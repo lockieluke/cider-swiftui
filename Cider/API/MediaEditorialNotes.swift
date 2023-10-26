@@ -7,3 +7,18 @@
 //
 
 import Foundation
+import SwiftyJSON
+
+struct MediaEditorialNotes {
+    
+    let name: String
+    let short: String
+    let tagline: String
+    
+    init(data: JSON) {
+        self.name = data["name"].stringValue
+        self.short = data["short"].stringValue
+        self.tagline = data["tagline"].stringValue
+    }
+    
+}

@@ -7,7 +7,7 @@ import SwiftUI
 
 enum RootNavigationType {
     
-    case Home, ListenNow, Browse, Library, AnyView
+    case Home, ListenNow, Browse, Radio, Library, AnyView
     
 }
 

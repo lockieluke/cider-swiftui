@@ -17,7 +17,7 @@ struct MediaShowcaseRow: View {
     var items: [MediaDynamic]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Text(rowTitle)
                 .font(.title2.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -36,6 +36,7 @@ struct MediaShowcaseRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
+        .padding(.vertical)
         .enableInjection()
     }
 }
