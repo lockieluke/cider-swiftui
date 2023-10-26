@@ -25,7 +25,7 @@ struct PlaybackBar: View {
             HStack {
                 let nowPlayingState = ciderPlayback.nowPlayingState
                 let overlayBarWidth = currentTimeValue / nowPlayingState.duration
-                let playbackBarWidth = currentTimeValue == 0 ? 0 : playbackBarWidth * overlayBarWidth.f + 1
+                let playbackBarWidth = currentTimeValue == 0 ? 0 : self.playbackBarWidth * overlayBarWidth.f + 1
                 Text("\(isEditingTrack ? currentTimeValue.minuteSecond : (nowPlayingState.currentTime?.minuteSecond ?? "0:00"))").isHidden(!nowPlayingState.hasItemToPlay)
                 
                 ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...nowPlayingState.duration, step: 1, onEditingChanged: { isEditing in
