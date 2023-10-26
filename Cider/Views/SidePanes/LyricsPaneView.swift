@@ -38,6 +38,8 @@ struct LyricLine: View {
     
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
+    @State private var isHovering: Bool = false
+    
     private let lyric: Lyric
     private let active: Bool
     
@@ -53,6 +55,12 @@ struct LyricLine: View {
             .font(.title)
             .blur(radius: active ? .zero : 2)
             .animation(.spring(), value: active)
+            .background(RoundedRectangle(cornerRadius: 10).fill(.gray.opacity(isHovering ? 0.2 : 0)))
+            .onHover { isHovering in
+                withAnimation(.interactiveSpring) {
+                    self.isHovering = isHovering
+                }
+            }
             .onTapGesture {
                 Task {
                     await ciderPlayback.seekToTime(seconds: Int(lyric.startTime))
@@ -78,41 +86,39 @@ struct LyricsPaneView: View {
         SidePane(content: {
             if let lyricData = self.lyricsData {
                 GeometryReader { geometry in
-                    VStack {
-                        ScrollViewReader { proxy in
-                            ScrollView(.vertical, showsIndicators: false) {
-                                let seconds = Float(ciderPlayback.nowPlayingState.currentTime ?? 0.0)
-                                
-                                VStack(alignment: .leading, spacing: 20) {
-                                    ForEach(Array(lyricData.lyrics.enumerated()), id: \.offset) {i, lyric in
-                                        let isActive = lyric.startTime...lyric.endTime ~= Double(seconds)
-                                        
-                                        LyricLine(lyric, active: isActive)
-                                            .id(i)
-                                            .onChange(of: isActive) { newIsActive in
-                                                if newIsActive {
-                                                    DispatchQueue.main.async {
-                                                        withAnimation(.linear) {
-                                                            proxy.scrollTo(i, anchor: .top)
-                                                        }
+                    ScrollViewReader { proxy in
+                        ScrollView(.vertical, showsIndicators: false) {
+                            let seconds = Float(ciderPlayback.nowPlayingState.currentTime ?? 0.0)
+                            
+                            VStack(alignment: .leading, spacing: 20) {
+                                ForEach(Array(lyricData.lyrics.enumerated()), id: \.offset) {i, lyric in
+                                    let isActive = lyric.startTime...lyric.endTime ~= Double(seconds)
+                                    
+                                    LyricLine(lyric, active: isActive)
+                                        .id(i)
+                                        .onChange(of: isActive) { newIsActive in
+                                            if newIsActive {
+                                                DispatchQueue.main.async {
+                                                    withAnimation(.linear) {
+                                                        proxy.scrollTo(i, anchor: .top)
                                                     }
                                                 }
                                             }
-                                    }
-                                    
-                                    if !lyricData.songwriters.isEmpty {
-                                        WrappingHStack(["Songwriters: "] + lyricData.songwriters, id: \.self) { songwriter in
-                                            Text(songwriter)
-                                                .italic()
                                         }
-                                        .padding(.horizontal)
+                                }
+                                
+                                if !lyricData.songwriters.isEmpty {
+                                    WrappingHStack(["Songwriters: "] + lyricData.songwriters, id: \.self) { songwriter in
+                                        Text(songwriter)
+                                            .italic()
                                     }
                                 }
                             }
-                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .padding()
                         }
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .padding(.vertical)
                     }
-                    .padding([.top, .leading, .trailing], 10)
                 }
             }
         })
@@ -124,7 +130,7 @@ struct LyricsPaneView: View {
             }
         }
         .task {
-            fetchLyrics(for: ciderPlayback.nowPlayingState.item?.id)
+            self.fetchLyrics(for: ciderPlayback.nowPlayingState.item?.id)
         }
         .enableInjection()
     }
