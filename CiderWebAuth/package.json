@@ -19,5 +19,6 @@
     "build:connectauth": "esbuild src/cider-connect/index.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/ciderconnectauth.js",
     "build:connectauth-userscript": "esbuild src/cider-connect/user.ts --bundle --minify --target=safari15 --tree-shaking=true --outfile=dist/ciderconnectauth.user.js",
     "clean": "rm -rf dist/"
-  }
+  },
+  "packageManager": "yarn@4.0.0"
 }

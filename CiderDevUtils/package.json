@@ -1,7 +1,7 @@
 {
   "name": "cider-dev-utils",
   "type": "module",
-  "packageManager": "yarn@3.4.1",
+  "packageManager": "yarn@4.0.0",
   "scripts": {
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
