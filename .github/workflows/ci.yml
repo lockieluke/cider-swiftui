@@ -3,6 +3,7 @@ name: 🏗️ Build on CI
 on:
   push:
     branches: ['master']
+  workflow_dispatch:
 
 jobs:
   build-mac:
