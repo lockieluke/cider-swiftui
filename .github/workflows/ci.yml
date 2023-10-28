@@ -25,12 +25,36 @@ jobs:
       - name: Install Homebrew dependencies
         run: brew bundle
 
-      - name: Install P12 Key
-        uses: apple-actions/import-codesign-certs@v2
-        with: 
-          keychain: ${{ env.KEYCHAIN }}
-          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
-          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+      # - name: Install P12 Key
+      #   uses: apple-actions/import-codesign-certs@v2
+      #   with: 
+      #     keychain: ${{ env.KEYCHAIN }}
+      #     p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+      #     p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
+      - name: Install certificate
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.CERTIFICATES_P12 }}
+          P12_PASSWORD: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
 
       - name: Install provisioning profile
         env:
@@ -134,7 +158,8 @@ jobs:
       - name: Delete keychain
         if: always() # Always run this step to ensure the keychain is properly disposed of
         run: |
-          security delete-keychain "${{ env.KEYCHAIN }}".keychain
+          # security delete-keychain "${{ env.KEYCHAIN }}".keychain
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
 
       - uses: sarisia/actions-status-discord@v1
         if: always()
