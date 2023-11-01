@@ -32,37 +32,37 @@ jobs:
       #     p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
       #     p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
 
-      - name: Install certificate
-        env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.CERTIFICATES_P12 }}
-          P12_PASSWORD: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+      # - name: Install certificate
+      #   env:
+      #     BUILD_CERTIFICATE_BASE64: ${{ secrets.CERTIFICATES_P12 }}
+      #     P12_PASSWORD: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+      #     KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      #   run: |
+      #     # create variables
+      #     CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+      #     PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+      #     KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+      #
+      #     # import certificate and provisioning profile from secrets
+      #     echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+      #     echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+      #
+      #     # create temporary keychain
+      #     security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+      #     security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+      #     security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+      #
+      #     # import certificate to keychain
+      #     security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+      #     security list-keychain -d user -s $KEYCHAIN_PATH
 
-          # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
-
-          # create temporary keychain
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-
-      - name: Install provisioning profile
-        env:
-          MACOS_PROVISIONING_PROFILE_UUID: ${{ secrets.MACOS_PROVISIONING_PROFILE_UUID }}
-          MACOS_PROVISIONING_PROFILE_B64: ${{ secrets.MACOS_PROVISIONING_PROFILE_B64 }}
-        run: |
-          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
-          echo -n $MACOS_PROVISIONING_PROFILE_B64 | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/$MACOS_PROVISIONING_PROFILE_UUID.provisionprofile"
+      # - name: Install provisioning profile
+      #   env:
+      #     MACOS_PROVISIONING_PROFILE_UUID: ${{ secrets.MACOS_PROVISIONING_PROFILE_UUID }}
+      #     MACOS_PROVISIONING_PROFILE_B64: ${{ secrets.MACOS_PROVISIONING_PROFILE_B64 }}
+      #   run: |
+      #     mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+      #     echo -n $MACOS_PROVISIONING_PROFILE_B64 | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/$MACOS_PROVISIONING_PROFILE_UUID.provisionprofile"
 
       - name: Update SPM Packages
         uses: GetSidetrack/action-xcodeproj-spm-update@main
@@ -130,7 +130,8 @@ jobs:
 
       - name: Build XCArchive
         run: |
-          task archive:xc XC_ARCHIVE="$XC_ARCHIVE"
+          # task archive:xc XC_ARCHIVE="$XC_ARCHIVE"
+          set -o pipefail && xcodebuild -project Cider.xcodeproj -scheme "Cider - Release" archive -allowProvisioningUpdates -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath "$XC_ARCHIVE"
 
       - name: Build DMG
         run: |
@@ -155,11 +156,11 @@ jobs:
           path: ${{ runner.temp }}/dest/Cider.dmg
           retention-days: 1
 
-      - name: Delete keychain
-        if: always() # Always run this step to ensure the keychain is properly disposed of
-        run: |
-          # security delete-keychain "${{ env.KEYCHAIN }}".keychain
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+      # - name: Delete keychain
+      #   if: always() # Always run this step to ensure the keychain is properly disposed of
+      #   run: |
+      #     # security delete-keychain "${{ env.KEYCHAIN }}".keychain
+      #     security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
 
       - uses: sarisia/actions-status-discord@v1
         if: always()
