@@ -103,9 +103,9 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
 #if os(macOS)
         let procUrl: String
         if #available(macOS 13.0, *) {
-            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("SharedSupport").appendingPathComponent("CiderPlaybackAgent").path(percentEncoded: false))
+            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("MacOS").appendingPathComponent("CiderPlaybackAgent").path(percentEncoded: false))
         } else {
-            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("SharedSupport").appendingPathComponent("CiderPlaybackAgent").path)
+            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("MacOS").appendingPathComponent("CiderPlaybackAgent").path)
         }
         var config = JSON([
             "openWebInspectorAutomatically": false

@@ -25,6 +25,9 @@ jobs:
       - name: Install Homebrew dependencies
         run: brew bundle
 
+      - name: Unlock Keychain
+        run: security unlock-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }}
+
       # - name: Install P12 Key
       #   uses: apple-actions/import-codesign-certs@v2
       #   with: 
@@ -130,8 +133,8 @@ jobs:
 
       - name: Build XCArchive
         run: |
-          # task archive:xc XC_ARCHIVE="$XC_ARCHIVE"
-          set -o pipefail && xcodebuild -project Cider.xcodeproj -scheme "Cider - Release" archive -allowProvisioningUpdates -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath "$XC_ARCHIVE"
+          task archive:xc XC_ARCHIVE="$XC_ARCHIVE"
+          # set -o pipefail && xcodebuild -project Cider.xcodeproj -scheme "Cider - Release" archive -allowProvisioningUpdates -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath "$XC_ARCHIVE"
 
       - name: Build DMG
         run: |

@@ -73,6 +73,7 @@
 		B736F2752A634F1D008A0458 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B736F2742A634F1D008A0458 /* DateUtils.swift */; };
 		B736F2792A648BFA008A0458 /* MediaItemRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B736F2782A648BFA008A0458 /* MediaItemRepresentable.swift */; };
 		B73E8D5F2A5077AF006E3C27 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C52A37750900DD8BC2 /* libnative_utils.a */; platformFilters = (macos, ); };
+		B7489F552AF4658300BCBD60 /* CiderPlaybackAgent in Copy Helpers */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B74EEBD229D7AEAB00711DB6 /* LyricsPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD129D7AEAB00711DB6 /* LyricsPaneView.swift */; };
 		B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBD329D86EEF00711DB6 /* SidePane.swift */; };
 		B74EEBDE29D88B7200711DB6 /* NativeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */; platformFilters = (macos, ); };
@@ -162,7 +163,6 @@
 		B7C9CD932908797C00A67CE4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD922908797C00A67CE4 /* Dictionary.swift */; };
 		B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD94290879F500A67CE4 /* Validation.swift */; };
 		B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CD9629087DCA00A67CE4 /* MusicKitWorker.swift */; };
-		B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy Scripts */ = {isa = PBXBuildFile; fileRef = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B7C9CDA429088FD400A67CE4 /* CiderPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C9CDA329088FD400A67CE4 /* CiderPlayback.swift */; };
 		B7CF3767299A942000922CDA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3766299A942000922CDA /* SearchView.swift */; };
 		B7CF3769299AC10B00922CDA /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF3768299AC10B00922CDA /* SearchResults.swift */; };
@@ -184,6 +184,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		B7489F542AF4657100BCBD60 /* Copy Helpers */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				B7489F552AF4658300BCBD60 /* CiderPlaybackAgent in Copy Helpers */,
+			);
+			name = "Copy Helpers";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7C9CDA129088F4F00A67CE4 /* Copy Scripts */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -192,7 +203,6 @@
 			files = (
 				B7107BD42AA3840300A83306 /* ciderconnectauth.user.js in Copy Scripts */,
 				B7332B0C2A96C0870019221D /* ciderconnectauth.js in Copy Scripts */,
-				B7C9CDA229088F5C00A67CE4 /* CiderPlaybackAgent in Copy Scripts */,
 				B7D62BF22A365FD000E26C84 /* ciderplaybackagent.js in Copy Scripts */,
 				B7D62BF02A365FC600E26C84 /* ciderwebauth.js in Copy Scripts */,
 			);
@@ -767,6 +777,7 @@
 				B700C17B28B920F10069FDF5 /* Resources */,
 				B7C5C5E129CFA95C00EF4D11 /* Build JS Scripts */,
 				B7C9CDA129088F4F00A67CE4 /* Copy Scripts */,
+				B7489F542AF4657100BCBD60 /* Copy Helpers */,
 			);
 			buildRules = (
 			);
@@ -1346,6 +1357,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgent.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1355,6 +1367,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
 				MARKETING_VERSION = 0.0.1;
+				OTHER_CODE_SIGN_FLAGS = "\"$(inherited)\" \"-i $(PRODUCT_BUNDLE_IDENTIFIER)\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.ciderplaybackagent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1370,6 +1383,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CiderPlaybackAgent/CiderPlaybackAgentRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1379,6 +1393,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/CiderPlaybackAgent/Info.plist";
 				MARKETING_VERSION = 0.0.1;
+				OTHER_CODE_SIGN_FLAGS = "\"$(inherited)\" \"-i $(PRODUCT_BUNDLE_IDENTIFIER)\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cidercollective.ciderplaybackagent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
