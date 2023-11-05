@@ -1270,7 +1270,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/build",
-					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
 				);
 				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
@@ -1328,7 +1327,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NativeUtils/target/universal",
 					"$(PROJECT_DIR)/NativeUtils/build",
-					"$(PROJECT_DIR)/NativeUtils/build/build/_deps/wxwidgets-src/lib",
 				);
 				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
