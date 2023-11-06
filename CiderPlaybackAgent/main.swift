@@ -17,6 +17,10 @@ class AppDelegate : NSObject, NSApplicationDelegate {
     private var musicKitWorker: MusicKitWorker?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        if let currentAppleEvent = NSAppleEventManager.shared().currentAppleEvent, let parentPid = currentAppleEvent.attributeDescriptor(forKeyword: keySenderPIDAttr)?.int32Value {
+            suicide_if_we_become_a_zombie(parentPid)
+        }
+        
         let argParser = ArgumentParser(usage: "<options>", overview: "\(Bundle.main.procName)")
         
         let agentPortOption = argParser.add(option: "--agent-port", kind: Int.self)
