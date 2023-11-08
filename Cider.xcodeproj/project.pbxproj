@@ -48,7 +48,6 @@
 		B71B828D2A36713B00DD8BC2 /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = B71B828C2A36713B00DD8BC2 /* Throttler */; };
 		B71B82902A36717400DD8BC2 /* AttributedText in Frameworks */ = {isa = PBXBuildFile; productRef = B71B828F2A36717400DD8BC2 /* AttributedText */; };
 		B71B82932A36718800DD8BC2 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82922A36718800DD8BC2 /* Defaults */; };
-		B71B82A62A36760600DD8BC2 /* ArgumentParserKit in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A52A36760600DD8BC2 /* ArgumentParserKit */; };
 		B71B82A82A36763700DD8BC2 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A72A36763700DD8BC2 /* Swifter */; };
 		B71B82AA2A36764600DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82A92A36764600DD8BC2 /* SwiftyJSON */; };
 		B71B82AC2A36766500DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82AB2A36766500DD8BC2 /* SwiftyUtils */; };
@@ -135,6 +134,7 @@
 		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
 		B79EA29F2AC63C2A00E5687F /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B79EA29E2AC63C2A00E5687F /* Subprocess */; };
 		B7A24EC82AF9A97B00B97E07 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A24EC72AF9A97B00B97E07 /* Helper.m */; };
+		B7A24ECD2AFAF89200B97E07 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = B7A24ECC2AFAF89200B97E07 /* ArgumentParser */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
@@ -423,8 +423,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71B82AA2A36764600DD8BC2 /* SwiftyJSON in Frameworks */,
-				B71B82A62A36760600DD8BC2 /* ArgumentParserKit in Frameworks */,
 				B71B82AC2A36766500DD8BC2 /* SwiftyUtils in Frameworks */,
+				B7A24ECD2AFAF89200B97E07 /* ArgumentParser in Frameworks */,
 				B71B82A82A36763700DD8BC2 /* Swifter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -839,10 +839,10 @@
 			);
 			name = CiderPlaybackAgent;
 			packageProductDependencies = (
-				B71B82A52A36760600DD8BC2 /* ArgumentParserKit */,
 				B71B82A72A36763700DD8BC2 /* Swifter */,
 				B71B82A92A36764600DD8BC2 /* SwiftyJSON */,
 				B71B82AB2A36766500DD8BC2 /* SwiftyUtils */,
+				B7A24ECC2AFAF89200B97E07 /* ArgumentParser */,
 			);
 			productName = CiderPlaybackAgent;
 			productReference = B7C9CD872908467A00A67CE4 /* CiderPlaybackAgent */;
@@ -894,7 +894,6 @@
 				B71B828E2A36717400DD8BC2 /* XCRemoteSwiftPackageReference "AttributedText" */,
 				B71B82912A36718800DD8BC2 /* XCRemoteSwiftPackageReference "Defaults" */,
 				B71B82A12A3673D500DD8BC2 /* XCRemoteSwiftPackageReference "swifter" */,
-				B71B82A42A36760600DD8BC2 /* XCRemoteSwiftPackageReference "ArgumentParserKit" */,
 				B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */,
 				B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */,
@@ -906,6 +905,7 @@
 				B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				B79EA29D2AC63C2A00E5687F /* XCRemoteSwiftPackageReference "Subprocess" */,
 				B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */,
+				B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1591,14 +1591,6 @@
 				kind = branch;
 			};
 		};
-		B71B82A42A36760600DD8BC2 /* XCRemoteSwiftPackageReference "ArgumentParserKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/crelies/ArgumentParserKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
-			};
-		};
 		B71B82AD2A3676AF00DD8BC2 /* XCRemoteSwiftPackageReference "Inject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/krzysztofzablocki/Inject.git";
@@ -1645,6 +1637,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.1.0;
+			};
+		};
+		B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
 			};
 		};
 		B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */ = {
@@ -1756,11 +1756,6 @@
 			package = B71B82912A36718800DD8BC2 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
 		};
-		B71B82A52A36760600DD8BC2 /* ArgumentParserKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B71B82A42A36760600DD8BC2 /* XCRemoteSwiftPackageReference "ArgumentParserKit" */;
-			productName = ArgumentParserKit;
-		};
 		B71B82A72A36763700DD8BC2 /* Swifter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82A12A3673D500DD8BC2 /* XCRemoteSwiftPackageReference "swifter" */;
@@ -1815,6 +1810,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B79EA29D2AC63C2A00E5687F /* XCRemoteSwiftPackageReference "Subprocess" */;
 			productName = Subprocess;
+		};
+		B7A24ECC2AFAF89200B97E07 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
 		};
 		B7AAF7782ACE175900A9346C /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;

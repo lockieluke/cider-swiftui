@@ -520,6 +520,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             break
             
         case .disconnected(let reason, let code):
+            self.isReady = false
             self.logger.error("CiderPlaybackAgent is disconnected with code \(code): \(reason)")
             break
             
