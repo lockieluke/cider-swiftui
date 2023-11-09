@@ -51,11 +51,6 @@ struct DonateView: View {
                 .multilineTextAlignment(.center)
                 .padding(.vertical, 3)
             
-            Text("We aim to release the app as a public beta by Christmas time 2023 but we need your help.")
-                .font(.system(size: 12))
-                .foregroundStyle(.yellow)
-                .multilineTextAlignment(.center)
-            
             HStack(spacing: 80) {
                 ForEach(donationDatas) { donationData in
                     VStack {
