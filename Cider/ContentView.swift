@@ -15,6 +15,7 @@ struct ContentView: View {
     
     @Default(.launchedBefore) private var launchedBefore
     @Default(.lastLaunchDate) private var lastLaunchDate
+    @Default(.neverShowDonationPopup) private var neverShowDonationPopup
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
@@ -83,7 +84,7 @@ struct ContentView: View {
             }
             
             // Ask for donation once a day
-            if !CommandLine.arguments.contains("-disable-donate-view") && !Calendar.current.isDateInToday(self.lastLaunchDate) {
+            if !CommandLine.arguments.contains("-disable-donate-view") && !Calendar.current.isDateInToday(self.lastLaunchDate) && !self.neverShowDonationPopup {
                 self.navigationModal.isDonateViewPresent = true
             }
             

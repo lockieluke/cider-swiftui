@@ -17,6 +17,8 @@ struct DonateView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @Default(.neverShowDonationPopup) private var neverShowDonationPopup
+    
     struct DonationData: Identifiable {
         var id: String {
             return self.name
@@ -84,12 +86,21 @@ struct DonateView: View {
             }
             .padding(.vertical)
             
-            Button("Not today") {
-                self.onNotToday?()
-                self.dismiss()
+            HStack(spacing: 50) {
+                Button("Not today") {
+                    self.onNotToday?()
+                    self.dismiss()
+                }
+                .buttonStyle(.borderless)
+                .tint(.pink)
+                
+                Button("Don't ask again") {
+                    self.dismiss()
+                    self.neverShowDonationPopup = true
+                }
+                .buttonStyle(.borderless)
+                .tint(.gray)
             }
-            .buttonStyle(.borderless)
-            .tint(.pink)
             .padding(.vertical)
         }
         .frame(width: 600, height: 430)

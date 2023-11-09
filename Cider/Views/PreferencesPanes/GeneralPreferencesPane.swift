@@ -14,11 +14,14 @@ struct GeneralPreferencesPane: View {
     @EnvironmentObject private var cacheModal: CacheModal
     
     @Default(.usePretendardFont) private var usePretendardFont
+    @Default(.neverShowDonationPopup) private var neverShowDonationPopup
     
     var body: some View {
         Settings.Container(contentWidth: 450.0) {
             Settings.Section(title: "") {
                 Group {
+                    PrefSectionText("General")
+                    Toggle("Never show donation popup", isOn: $neverShowDonationPopup)
                     PrefSectionText("Appearance")
                     Toggle("Use Pretendard font (Beta)", isOn: $usePretendardFont)
                     Text("Restart is required for changes to take effect")
