@@ -200,7 +200,12 @@ tasks:
     dir: 'CiderDevUtils/'
     desc: "Start Dev Server for compiling JS in Xcode build scripts"
     cmds:
-      - yarn start
+      - |
+        if which bun >/dev/null; then
+          bun run src/index.ts
+        else
+          yarn start
+        fi
 
   generate:js-licences:
     desc: "Generate licences from JavaScript dependencies"

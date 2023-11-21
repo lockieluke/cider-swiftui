@@ -13,7 +13,7 @@ declare global {
 
 const app = fastify();
 const cwd = process.env.CWD ?? process.cwd();
-const taskBin = await shelljs.which('task');
+const taskBin = shelljs.which('task');
 
 app.all<{
     Querystring: {
