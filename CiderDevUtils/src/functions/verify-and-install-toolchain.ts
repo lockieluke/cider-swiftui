@@ -36,9 +36,9 @@ if (task.code !== 0) {
     process.exit(1);
 }
 
-const yarn3 = shelljs.exec("yarn --version", { silent: true });
-if (yarn3.code !== 0 || !yarn3.stdout.startsWith("3")) {
-    spinner.fail("Yarn 3 is not installed");
+const yarn4 = shelljs.exec("yarn --version", { silent: true });
+if (yarn4.code !== 0 || !yarn4.stdout.startsWith("4")) {
+    spinner.fail("Yarn 4 is not installed");
     process.exit(1);
 }
 
