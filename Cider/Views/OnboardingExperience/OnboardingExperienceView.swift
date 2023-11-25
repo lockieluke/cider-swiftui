@@ -99,7 +99,6 @@ struct OnboardingExperienceView: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var authModal: AuthModal
     @EnvironmentObject private var mkModal: MKModal
-    @EnvironmentObject private var discordRPCModal: DiscordRPCModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     @State private var currentSetupStep = -1
@@ -266,7 +265,6 @@ struct OnboardingExperienceView: View {
                                 self.mkModal.authenticateWithToken(userToken: userToken)
                                 Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
                                 
-                                self.discordRPCModal.agent.start()
                                 self.ciderPlayback.setUserToken(userToken: userToken)
                             } catch {
                                 Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")

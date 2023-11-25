@@ -28,7 +28,6 @@ class AppDelegate : NSObject, ApplicationDelegate {
     
 #if os(macOS)
     private var appWindow: AppWindow!
-    private var discordRPCModal: DiscordRPCModal!
     private var nativeUtilsWrapper: NativeUtilsWrapper!
 #endif
     
@@ -46,9 +45,8 @@ class AppDelegate : NSObject, ApplicationDelegate {
         
         Networking.initialise()
         
-        let discordRPCModal = DiscordRPCModal()
         let nativeUtilsWrapper = NativeUtilsWrapper()
-        let appWindow = AppWindow(discordRPCModal: discordRPCModal, nativeUtilsWrapper: nativeUtilsWrapper)
+        let appWindow = AppWindow(nativeUtilsWrapper: nativeUtilsWrapper)
         
         // might be useful for cleaning up child processes when process gets killed
         let terminatedCallback = { exitCode in
@@ -59,7 +57,8 @@ class AppDelegate : NSObject, ApplicationDelegate {
         signal(SIGKILL, terminatedCallback)
         signal(SIGSTOP, terminatedCallback)
         
-        self.discordRPCModal = discordRPCModal
+        ElevationHelper.shared.start()
+        
         self.nativeUtilsWrapper = nativeUtilsWrapper
         appWindow.show()
         
@@ -122,7 +121,7 @@ class AppDelegate : NSObject, ApplicationDelegate {
 #if canImport(AppKit)
     func applicationWillTerminate(_ notification: Notification) {
 #if os(macOS)
-        self.discordRPCModal.agent.stop()
+        ElevationHelper.shared.terminate()
         self.appWindow.ciderPlayback.shutdownSync()
 #endif
     }

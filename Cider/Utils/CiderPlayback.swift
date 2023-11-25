@@ -67,7 +67,6 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     private let logger: Logger
     private let appWindowModal: AppWindowModal
 #if os(macOS)
-    private let discordRPCModal: DiscordRPCModal!
     private var proc: Subprocess
     private let procUrl: String
     private let defaultArguments: [String]
@@ -81,13 +80,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     var queue: [MediaTrack] = []
     
-#if os(macOS)
-    typealias DiscordRPCModalOrNil = DiscordRPCModal
-#else
-    typealias DiscordRPCModalOrNil = NSObject
-#endif
-    
-    init(appWindowModal: AppWindowModal, discordRPCModal: DiscordRPCModalOrNil? = nil) {
+    init(appWindowModal: AppWindowModal) {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = Networking.findFreeLocalPort()
         let agentSessionId = UUID().uuidString
@@ -131,7 +124,6 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
 #if os(macOS)
         self.proc = proc
         self.procUrl = procUrl
-        self.discordRPCModal = discordRPCModal
 #endif
         self.agentPort = agentPort
         self.isRunning = false
@@ -436,10 +428,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 
 #if os(macOS)
                 DispatchQueue.global(qos: .default).async { [artworkUrl] in
-                    self.discordRPCModal.agent.setActivityAssets(artworkUrl.absoluteString, title, "", "")
-                    self.discordRPCModal.agent.setActivityState("by " + artistName)
-                    self.discordRPCModal.agent.setActivityDetails(title)
-                    self.discordRPCModal.agent.updateActivity()
+                    ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+                    ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
+                    ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
+                    ElevationHelper.shared.xpc.rpcUpdateActivity()
                 }
 #endif
                 
@@ -457,10 +449,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         } else {
 #if os(macOS)
             DispatchQueue.global(qos: .default).async { [artworkUrl] in
-                self.discordRPCModal.agent.setActivityAssets(artworkUrl.absoluteString, title, "", "")
-                self.discordRPCModal.agent.setActivityState("by " + artistName)
-                self.discordRPCModal.agent.setActivityDetails(title)
-                self.discordRPCModal.agent.updateActivity()
+                ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+                ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
+                ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
+                ElevationHelper.shared.xpc.rpcUpdateActivity()
             }
 #endif
             
@@ -477,10 +469,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         let artworkURL = artwork.getUrl(width: 200, height: 200)
 #if os(macOS)
         DispatchQueue.global(qos: .default).async {
-            self.discordRPCModal.agent.setActivityAssets(artworkURL.absoluteString, title, "", "")
-            self.discordRPCModal.agent.setActivityState("by " + artistName)
-            self.discordRPCModal.agent.setActivityDetails(title)
-            self.discordRPCModal.agent.updateActivity()
+            ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+            ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
+            ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
+            ElevationHelper.shared.xpc.rpcUpdateActivity()
         }
 #endif
         self.nowPlayingState = NowPlayingState(
@@ -596,8 +588,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     self.nowPlayingState.isPlaying = false
 #if os(macOS)
                     DispatchQueue.global(qos: .default).async {
-                        self.discordRPCModal.agent.setActivityTimestamps(0, 0)
-                        self.discordRPCModal.agent.updateActivity()
+                        ElevationHelper.shared.xpc.rpcSetActivityTimestamps(start: 0, end: 0)
+                        ElevationHelper.shared.xpc.rpcUpdateActivity()
                     }
 #endif
                     break
@@ -606,7 +598,7 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                     self.nowPlayingState.reset()
 #if os(macOS)
                     DispatchQueue.global(qos: .default).async {
-                        self.discordRPCModal.agent.clearActivity()
+                        ElevationHelper.shared.xpc.rpcClearActivity()
                     }
 #endif
                     break

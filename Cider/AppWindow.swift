@@ -14,7 +14,6 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let mainWindow: NSWindow
     private let appWindowModal = AppWindowModal()
     private let mkModal: MKModal
-    private let discordRPCModal: DiscordRPCModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
     private let cacheModal: CacheModal
     private let connectModal: ConnectModal
@@ -25,13 +24,12 @@ class AppWindow: NSObject, NSWindowDelegate {
     
     let ciderPlayback: CiderPlayback
     
-    init(discordRPCModal: DiscordRPCModal, nativeUtilsWrapper: NativeUtilsWrapper) {
+    init(nativeUtilsWrapper: NativeUtilsWrapper) {
         let activeScreen = NSScreen.activeScreen
         
-        let discordRPCModal = DiscordRPCModal()
         let cacheModal = CacheModal()
         let connectModal = ConnectModal()
-        let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, discordRPCModal: discordRPCModal)
+        let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal)
         let mkModal = MKModal(ciderPlayback: ciderPlayback, cacheModal: cacheModal)
         let authModal = AuthModal(mkModal: mkModal, appWindowModal: self.appWindowModal, cacheModel: cacheModal)
         let navigationModal = NavigationModal()
@@ -41,7 +39,6 @@ class AppWindow: NSObject, NSWindowDelegate {
             .environmentObject(self.appWindowModal)
             .environmentObject(mkModal)
             .environmentObject(ciderPlayback)
-            .environmentObject(discordRPCModal)
             .environmentObject(nativeUtilsWrapper)
             .environmentObject(cacheModal)
             .environmentObject(connectModal)
@@ -97,7 +94,6 @@ class AppWindow: NSObject, NSWindowDelegate {
         self.mainWindow = window
         self.appWindowModal.nsWindow = window
         self.authModal = authModal
-        self.discordRPCModal = discordRPCModal
         self.nativeUtilsWrapper = nativeUtilsWrapper
         self.cacheModal = cacheModal
         self.connectModal = connectModal

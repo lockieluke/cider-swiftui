@@ -1,5 +1,4 @@
 mod lib;
-use lib::*;
 
 fn main() {
     let result = NativeUtils::new();

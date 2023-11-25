@@ -24,7 +24,6 @@ struct ContentView: View {
     
 #if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
-    @EnvironmentObject private var discordRPCModal: DiscordRPCModal
     @EnvironmentObject private var authModal: AuthModal
     @EnvironmentObject private var cacheModal: CacheModal
 #endif
@@ -99,7 +98,6 @@ struct ContentView: View {
                     self.mkModal.authenticateWithToken(userToken: userToken)
                     Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
                     
-                    self.discordRPCModal.agent.start()
                     self.ciderPlayback.setUserToken(userToken: userToken)
                 } catch {
                     Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")
@@ -121,7 +119,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
 #if os(macOS)
         ContentView()
-            .environmentObject(AuthModal(mkModal: MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal()), cacheModal: CacheModal()), appWindowModal: AppWindowModal(), cacheModel: CacheModal()))
 #elseif os(iOS)
         ContentView()
 #endif

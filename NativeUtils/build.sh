@@ -20,3 +20,5 @@ else
     cargo +nightly lipo --targets $TARGETS
     ln -f target/universal/debug/libnative_utils.a target/universal/
 fi
+
+ln -f target/universal/libnative_utils.a target/universal/libnative_utils_elevated.a

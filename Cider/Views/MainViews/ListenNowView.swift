@@ -43,7 +43,7 @@ struct ListenNowView_Previews: PreviewProvider {
         ListenNowView()
             .environmentObject(AppWindowModal())
 #if os(macOS)
-            .environmentObject(MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal(), discordRPCModal: DiscordRPCModal()), cacheModal: CacheModal()))
+            .environmentObject(MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal()), cacheModal: CacheModal()))
 #else
             .environmentObject(MKModal(ciderPlayback: CiderPlayback(appWindowModal: AppWindowModal())))
 #endif

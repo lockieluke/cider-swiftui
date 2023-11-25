@@ -9,13 +9,13 @@ build = "build.rs"
 
 [dependencies]
 swift-bridge = "0.1.52"
-roxmltree = "0.18.0"
+roxmltree = "0.19.0"
 serde_json = "1.0.107"
 serde = { version = "1.0.188", features = ["derive"] }
 uuid = { version = "1.4.1", features = ["v4"] }
 cli-clipboard = "0.4.0"
 port_scanner = "0.1.5"
-discord-presence = { git = "https://github.com/jewlexx/discord-presence.git" }
+discord-presence = "0.5.18"
 
 [build-dependencies]
 swift-bridge-build = "0.1.52"
