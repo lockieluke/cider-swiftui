@@ -333,7 +333,6 @@
 		B76AE927299C162600A19558 /* MissingArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingArtwork.png; sourceTree = "<group>"; };
 		B76AE929299E993500A19558 /* Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comparable.swift; sourceTree = "<group>"; };
 		B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectModal.swift; sourceTree = "<group>"; };
-		B76FC6D22A8FB5A000F8F80E /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		B76FC6F92A902FB600F8F80E /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		B770D8CE29A0390A00E0A655 /* Cider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cider-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreferencesPane.swift; sourceTree = "<group>"; };
@@ -378,8 +377,6 @@
 		B7A24EC42AF9A8D100B97E07 /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		B7A24EC72AF9A97B00B97E07 /* Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		B7A6EB6729C539800041FDD7 /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
-		B7A80AD22A3A688900C2B489 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
-		B7A80AD42A3A696500C2B489 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		B7AAB6F928BABE83009AABEA /* SearchModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModal.swift; sourceTree = "<group>"; };
 		B7AAB6FB28BABF64009AABEA /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		B7AAB70028BAD782009AABEA /* AppWindowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowModal.swift; sourceTree = "<group>"; };
@@ -415,12 +412,6 @@
 		B7CF6B192B12171300A7DEEE /* libnative_utils_elevated.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils_elevated.a; path = NativeUtils/target/universal/libnative_utils_elevated.a; sourceTree = "<group>"; };
 		B7CF895A2A759281007808A2 /* CiderPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderPlayground.swift; sourceTree = "<group>"; };
 		B7D1671C28D3C0C300D5B5E8 /* NSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApp.swift; sourceTree = "<group>"; };
-		B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwx_osx_cocoau_core-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwx_osx_cocoau_core-3.3.a"; sourceTree = "<group>"; };
-		B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwx_baseu-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwx_baseu-3.3.a"; sourceTree = "<group>"; };
-		B7D276B62A37D45200A8405E /* libwxpng-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxpng-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxpng-3.3.a"; sourceTree = "<group>"; };
-		B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxtiff-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxtiff-3.3.a"; sourceTree = "<group>"; };
-		B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxjpeg-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxjpeg-3.3.a"; sourceTree = "<group>"; };
-		B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libwxregexu-3.3.a"; path = "NativeUtils/build/build/_deps/wxwidgets-src/lib/libwxregexu-3.3.a"; sourceTree = "<group>"; };
 		B7D46444293574A0000B1E9A /* DetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedView.swift; sourceTree = "<group>"; };
 		B7D5B9E1292C2F9900046B7F /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		B7D62BEF2A365FC600E26C84 /* ciderwebauth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ciderwebauth.js; path = CiderWebAuth/dist/ciderwebauth.js; sourceTree = "<group>"; };
@@ -621,16 +612,7 @@
 				B7CF6B192B12171300A7DEEE /* libnative_utils_elevated.a */,
 				B7CF6B182B12170D00A7DEEE /* universal */,
 				B790504F2B11573D00CED9B6 /* libnative_utils.a */,
-				B7A80AD42A3A696500C2B489 /* Carbon.framework */,
-				B7A80AD22A3A688900C2B489 /* libiconv.tbd */,
-				B7D276B92A37D74600A8405E /* libwxjpeg-3.3.a */,
-				B7D276BA2A37D74600A8405E /* libwxregexu-3.3.a */,
-				B7D276B82A37D74600A8405E /* libwxtiff-3.3.a */,
-				B7D276B62A37D45200A8405E /* libwxpng-3.3.a */,
-				B7D276B32A37CACE00A8405E /* libwx_baseu-3.3.a */,
-				B7D276B22A37CACE00A8405E /* libwx_osx_cocoau_core-3.3.a */,
 				B71B82C52A37750900DD8BC2 /* libnative_utils.a */,
-				B76FC6D22A8FB5A000F8F80E /* AuthenticationServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
