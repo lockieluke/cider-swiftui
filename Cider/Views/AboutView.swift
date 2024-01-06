@@ -39,6 +39,7 @@ struct AboutView: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
             .frame(maxHeight: .infinity, alignment: .topTrailing)
             .padding()
+            .isHidden(updaterState == .Downloading || updaterState == .Installing)
             
             VStack {
                 if let icon = NSApplication.shared.icon {
