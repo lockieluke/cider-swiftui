@@ -80,6 +80,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
     
     var queue: [MediaTrack] = []
     
+    static var stores: [CiderPlayback] = []
+    
     init(appWindowModal: AppWindowModal) {
         let logger = Logger(label: "CiderPlayback")
         let agentPort = Networking.findFreeLocalPort()
@@ -127,6 +129,8 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
 #endif
         self.agentPort = agentPort
         self.isRunning = false
+        
+        CiderPlayback.stores.append(self)
     }
     
     func setDeveloperToken(developerToken: String, mkModal: MKModal) {
@@ -657,6 +661,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             break
             
         }
+    }
+    
+    static func shutdownAll() {
+        CiderPlayback.stores.forEach { $0.shutdownSync() }
     }
     
 }

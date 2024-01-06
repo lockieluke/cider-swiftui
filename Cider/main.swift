@@ -49,15 +49,20 @@ class AppDelegate : NSObject, ApplicationDelegate {
         let appWindow = AppWindow(nativeUtilsWrapper: nativeUtilsWrapper)
         
         // might be useful for cleaning up child processes when process gets killed
-        let terminatedCallback = { exitCode in
+        let terminatedCallback: sig_t = { exitCode in
             Logger.shared.info("Cider is exiting")
-        } as (@convention(c) (Int32) -> Void)?
+            ElevationHelper.shared.terminate()
+            UpdateHelper.shared.terminate()
+            CiderPlayback.shutdownAll()
+            exit(exitCode)
+        }
         signal(SIGTERM, terminatedCallback)
         signal(SIGINT, terminatedCallback)
         signal(SIGKILL, terminatedCallback)
         signal(SIGSTOP, terminatedCallback)
         
         ElevationHelper.shared.start()
+        UpdateHelper.shared.start()
         
         self.nativeUtilsWrapper = nativeUtilsWrapper
         appWindow.show()
@@ -122,6 +127,7 @@ class AppDelegate : NSObject, ApplicationDelegate {
     func applicationWillTerminate(_ notification: Notification) {
 #if os(macOS)
         ElevationHelper.shared.terminate()
+        UpdateHelper.shared.terminate()
         self.appWindow.ciderPlayback.shutdownSync()
 #endif
     }

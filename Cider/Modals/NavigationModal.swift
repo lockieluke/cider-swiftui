@@ -188,5 +188,6 @@ class NavigationModal : ObservableObject {
     
     @Published var inOnboardingExperience: Bool = false
     @Published var isDonateViewPresent: Bool = false
+    @Published var isAboutViewPresent: Bool = false
     
 }

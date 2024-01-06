@@ -5,7 +5,6 @@
 
 #ifndef TARGET_OS_IPHONE
 #include "../NativeUtils/Generated/SwiftBridgeCore.h"
-
 #include "../NativeUtils/Generated/native-utils/native-utils.h"
 
 #ifdef __cplusplus

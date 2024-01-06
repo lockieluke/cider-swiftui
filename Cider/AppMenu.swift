@@ -91,7 +91,7 @@ class AppMenu {
         hideOthersMenu.keyEquivalentModifierMask = [.command, .option]
         
         appNameMenu.submenu?.items = [
-            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("About %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: ""),
+            NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("About %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(self.showAboutDialog(_:)), keyEquivalent: "").then { $0.target = self },
             .separator(),
             preferencesMenu,
             .separator(),
@@ -191,6 +191,10 @@ class AppMenu {
                 }
             }
         }
+    }
+    
+    @objc func showAboutDialog(_ sender: Any) {
+        self.navigationModal.isAboutViewPresent = true
     }
     
     @objc func showPreferences(_ sender: Any) {

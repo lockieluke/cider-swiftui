@@ -73,6 +73,9 @@ struct ContentView: View {
                 self.displayAskDonationAgainToast = true
             }
         }
+        .sheet(isPresented: $navigationModal.isAboutViewPresent) {
+            AboutView()
+        }
         .environmentObject(searchModal)
         .environmentObject(navigationModal)
         .environmentObject(personalisedData)
