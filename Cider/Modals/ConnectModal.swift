@@ -121,7 +121,7 @@ class ConnectModal: ObservableObject {
                 }
                 
                 if host.isNotNilNotEmpty, whitelist.contains(host!) {
-                    guard let userJsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderconnectauth.user.js"),
+                    guard let userJsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("handle-googleauth-unsafe-dialog.js"),
                           let userJsScript = try? String(contentsOfFile: userJsPath.path, encoding: .utf8) else {
                         fatalError("Unable to load CiderConnectAuth user script")
                     }
@@ -140,7 +140,7 @@ class ConnectModal: ObservableObject {
     }
     
     init() {
-        guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderconnectauth.js"),
+        guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("cider-connect.js"),
               let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
             fatalError("Unable to load CiderConnectAuth Scripts")
         }

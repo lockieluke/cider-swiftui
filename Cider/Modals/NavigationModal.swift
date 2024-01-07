@@ -189,5 +189,6 @@ class NavigationModal : ObservableObject {
     @Published var inOnboardingExperience: Bool = false
     @Published var isDonateViewPresent: Bool = false
     @Published var isAboutViewPresent: Bool = false
+    @Published var isChangelogsViewPresent: Bool = ProcessInfo.processInfo.arguments.contains("-show-changelogs")
     
 }

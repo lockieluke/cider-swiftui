@@ -143,7 +143,7 @@ class AuthModal: ObservableObject {
                     return
                 }
                 
-                guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("ciderwebauth.js"),
+                guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("am-auth.js"),
                       let script = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
                     fatalError("Unable to load CiderWebAuth Scripts")
                 }
@@ -198,6 +198,9 @@ class AuthModal: ObservableObject {
                     // go to /stub so it doesn't load all the images in Apple Music Web's homepage
                     self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
 #else
+                    guard let htmlPath = Bundle.main.executableURL?.deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("SharedSupport").appendingPathComponent("am-auth.html"), let htmlScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
+                        fatalError("Unable to load AMAuth UI")
+                    }
                     self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: "<p>CiderWebAuth</p>")
 #endif
                 }

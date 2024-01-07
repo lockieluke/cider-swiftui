@@ -80,18 +80,10 @@ jobs:
       - name: Prepare Yarn
         run: export YARN_ENABLE_IMMUTABLE_INSTALLS=false
 
-      - name: Install CiderWebAuth's dependencies with Yarn
+      - name: Install CiderWebUI dependencies with Yarn
         uses: ./.github/actions/yarn-nm-install
         with:
-          cwd: 'CiderWebAuth/'
-          enable-corepack: true
-          cache-node-modules: true
-          cache-install-state: true
-
-      - name: Install CiderPlaybackAgent's dependencies with Yarn
-        uses: ./.github/actions/yarn-nm-install
-        with:
-          cwd: 'CiderPlaybackAgent/Web Scripts/'
+          cwd: 'CiderWebUI/'
           enable-corepack: true
           cache-node-modules: true
           cache-install-state: true

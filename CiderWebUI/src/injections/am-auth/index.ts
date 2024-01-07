@@ -7,7 +7,7 @@ declare global {
         unauthoriseAM: () => void;
         importMusicKit: () => void;
         configureMusicKit: () => Promise<void>;
-        sendNativeMessage: (message) => void;
+        sendNativeMessage: (message: any) => void;
     }
 }
 
@@ -18,8 +18,9 @@ enum AuthorisationWindowType {
 
 function waitForDom(selector: string): Promise<Element> {
     return new Promise(resolve => {
-        if (document.querySelector(selector))
-            resolve(document.querySelector(selector));
+        const elem = document.querySelector(selector)
+        if (elem)
+            resolve(elem);
 
         const observer = new MutationObserver(() => {
             const dom = document.querySelector(selector);
@@ -43,8 +44,8 @@ window.sendNativeMessage = message => {
 window.importMusicKit = () => {
     const mkScript = document.createElement('script');
     mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/musickit.js";
-    mkScript.setAttribute('data-web-component', undefined);
-    mkScript.setAttribute('async', undefined);
+    mkScript.toggleAttribute('data-web-component');
+    mkScript.toggleAttribute('async');
     document.head.appendChild(mkScript);
 }
 
@@ -92,9 +93,10 @@ document.addEventListener('musickitloaded', async function () {
             }
         });
     } catch (err) {
+        const error = err as Error;
         window.sendNativeMessage({
             error: err,
-            message: `Failed to configure MusicKit: ${err.message}`
+            message: `Failed to configure MusicKit: ${error.message}`
         });
         return;
     }

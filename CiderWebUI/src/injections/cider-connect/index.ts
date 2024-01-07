@@ -30,7 +30,7 @@ enum SignInMethod {
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
+    const auth = getAuth(app);
     auth.useDeviceLanguage();
 
     if (window.location.pathname === '/sign-out') {
@@ -91,8 +91,8 @@ enum SignInMethod {
 
     // Apple credential
     const credential = OAuthProvider.credentialFromResult(result);
-    const accessToken = credential.accessToken;
-    const idToken = credential.idToken;
+    const accessToken = credential?.accessToken;
+    const idToken = credential?.idToken;
 
     window.sendNativeMessage({
         action: 'auth-success',

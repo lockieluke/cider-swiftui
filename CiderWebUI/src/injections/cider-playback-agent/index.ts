@@ -1,4 +1,3 @@
-import MusicKitInstance = MusicKit.MusicKitInstance;
 import to from "await-to-js";
 import store from "store2";
 import * as _ from "lodash-es";
@@ -29,7 +28,7 @@ declare global {
     }
 }
 
-type CiderMusicKitInstance = MusicKitInstance & {
+type CiderMusicKitInstance = MusicKit.MusicKitInstance & {
     _services: {
         apiManager: {
             store: {
@@ -57,8 +56,8 @@ type CiderMusicKitInstance = MusicKitInstance & {
 
 const mkScript = document.createElement('script');
 mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/amp/musickit.js";
-mkScript.setAttribute('data-web-component', undefined);
-mkScript.setAttribute('async', undefined);
+mkScript.toggleAttribute('data-web-component');
+mkScript.toggleAttribute('async');
 document.head.appendChild(mkScript);
 
 document.addEventListener('musickitloaded', async function () {
@@ -70,20 +69,19 @@ document.addEventListener('musickitloaded', async function () {
         store.set('musickit.version-history', `${_.isNil(versionHistory) ? "" : `${versionHistory}&`}${MusicKit.version}-${new Date().toUTCString()}`)
     }
 
-    let mk: CiderMusicKitInstance;
-    try {
-        mk = await MusicKit.configure({
-            developerToken: AM_TOKEN,
-            app: {
-                name: "Apple Music",
-                build: "1978.4.1",
-                version: "1.0"
-            }
-        }) as CiderMusicKitInstance;
-    } catch (e) {
-        console.error(e);
-    }
+    let [err, _mk] = await to<CiderMusicKitInstance>(MusicKit.configure({
+        developerToken: AM_TOKEN,
+        app: {
+            name: "Apple Music",
+            build: "1978.4.1",
+            version: "1.0"
+        }
+    }) as Promise<CiderMusicKitInstance>);
+    if (err || !_mk)
+        return console.error(`Failed to configure MusicKit ${err}`);
     console.log(`MusicKit ${MusicKit.version} configured`);
+
+    const mk = _mk as CiderMusicKitInstance;
 
     const storekit = mk._services.apiManager.store.storekit;
     storekit.userToken = AM_USER_TOKEN;
@@ -152,7 +150,7 @@ document.addEventListener('musickitloaded', async function () {
         });
     })
 
-    mk.addEventListener('mediaPlaybackError', event => {
+    mk.addEventListener('mediaPlaybackError', (event: MusicKit.Events) => {
         console.error(`Error playing media: ${event}`);
     })
 
@@ -190,7 +188,7 @@ document.addEventListener('musickitloaded', async function () {
             const items = mk.queue._queueItems;
             const item = items[from];
 
-            const newItems: any[] = _.filter(items, (_, index) => _.toNumber(index) !== from) as [];
+            const newItems: [] = _.filter(items, (__, index) => _.toNumber(index) !== from) as [];
             newItems.splice(to, 0, item);
 
             mk.queue._queueItems = newItems;

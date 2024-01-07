@@ -55,15 +55,9 @@ tasks:
       - rm -rf target/
       - rm -rf build/
 
-  install-deps:cpa-js:
-    dir: 'CiderPlaybackAgent/Web Scripts/'
-    desc: "Install CiderPlaybackAgent's dependencies with Yarn"
-    cmds:
-      - yarn
-
-  install-deps:cwa-js:
-    dir: 'CiderWebAuth/'
-    desc: "Install CiderWebAuth's dependencies with Yarn"
+  install-deps:cider-web-ui-js:
+    dir: 'CiderWebUI/'
+    desc: "Install CiderWebUI's dependencies with Yarn"
     cmds:
       - yarn
 
@@ -76,38 +70,24 @@ tasks:
   install-deps:all-js:
     desc: "Install all JS dependencies"
     cmds:
-      - task: install-deps:cwa-js
-      - task: install-deps:cpa-js
+      - task: install-deps:cider-web-ui-js
       - task: install-deps:dev-utils-js
 
-  build:cwa-js:
-    dir: 'CiderWebAuth/'
-    desc: "Build CiderWebAuth - Connect and WebAuth"
+  build:cider-web-ui-js:
+    dir: 'CiderWebUI/'
+    desc: "Build CiderWebUI"
     sources:
-      - src/**/*.ts
+      - src/**/*
+      - entries/**/*
+      - public/**/*
     generates:
-      - dist/ciderwebauth.js
-      - dist/ciderconnectauth.js
-      - dist/ciderconnectauth.user.js
-    cmds:
-      - yarn build:webauth
-      - yarn build:connectauth
-      - yarn build:connectauth-userscript
-
-  build:cpa-js:
-    dir: 'CiderPlaybackAgent/Web Scripts/'
-    desc: "Build CiderPlaybackAgent's Scripts"
-    sources:
-      - src/**/*.ts
-    generates:
-      - dist/ciderplaybackagent.js
+      - dist/**/*
     cmds:
       - yarn build
 
   build:all-js:
     cmds:
-      - task: build:cwa-js
-      - task: build:cpa-js
+      - task: build:cider-web-ui-js
 
   build:xc:
     desc: "Build all targets including Cider and CiderPlaybackAgent"
@@ -206,12 +186,6 @@ tasks:
         else
           yarn start
         fi
-
-  generate:js-licences:
-    desc: "Generate licences from JavaScript dependencies"
-    cmds:
-      - task: generate:cpa-licences
-      - task: generate:cwa-licences
 
   fetch:google-services:
     desc: "Fetch GoogleServices-Info.plist"

@@ -257,25 +257,25 @@ class Networking {
     }
     
     static func findLatestWebViewUA() async -> String {
-        if let cachedLatestUA = try? self.storage?.object(forKey: "latest-ua") {
-            return cachedLatestUA
-        }
-        
-        let res = await AF.request("https://jnrbsn.github.io/user-agents/user-agents.json", headers: [
-            "Accept": "application/json"
-        ]).validate().serializingData().response
-        
-        if res.error.isNil, let data = res.data, let json = try? JSON(data: data), let uaArray = json.array {
-            let ua = uaArray[19].stringValue
-            
-            do {
-                try self.storage?.setObject(ua, forKey: "latest-ua", expiry: .date(Date().addingTimeInterval(7 * 60 * 60)))
-            } catch {
-                self.logger.error("Failed to cache latest UAs: \(error)")
-            }
-            
-            return ua
-        }
+//        if let cachedLatestUA = try? self.storage?.object(forKey: "latest-ua") {
+//            return cachedLatestUA
+//        }
+//        
+//        let res = await AF.request("https://jnrbsn.github.io/user-agents/user-agents.json", headers: [
+//            "Accept": "application/json"
+//        ]).validate().serializingData().response
+//        
+//        if res.error.isNil, let data = res.data, let json = try? JSON(data: data), let uaArray = json.array {
+//            let ua = uaArray[19].stringValue
+//            
+//            do {
+//                try self.storage?.setObject(ua, forKey: "latest-ua", expiry: .date(Date().addingTimeInterval(7 * 60 * 60)))
+//            } catch {
+//                self.logger.error("Failed to cache latest UAs: \(error)")
+//            }
+//            
+//            return ua
+//        }
         
         return self.DEFAULT_UA
     }
