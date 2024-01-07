@@ -1,3 +1,4 @@
+/// <reference types="musickit-typescript" />
 import to from "await-to-js";
 
 declare const amToken: string, initialURL: string;

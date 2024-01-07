@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsx build.ts --build-injections",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "postcss": "^8.4.33",
     "sass": "^1.69.7",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.8",
     "vite-plugin-minify": "^1.5.2",

@@ -77,20 +77,14 @@ jobs:
         with:
           node-version: 'latest'
 
-      # - name: Install CiderWebUI dependencies with Yarn
-      #   uses: ./.github/actions/yarn-nm-install
-      #   with:
-      #     cwd: 'CiderWebUI/'
-      #     enable-corepack: true
-      #     cache-node-modules: true
-      #     cache-install-state: true
-      
       - name: Install CiderWebUI dependencies with Yarn
-        uses: borales/actions-yarn@v4
+        uses: ./.github/actions/yarn-nm-install
         with:
-          cmd: install
-          dir: 'CiderWebUI/'
-
+          cwd: 'CiderWebUI/'
+          enable-corepack: true
+          cache-node-modules: true
+          cache-install-state: true
+      
       - name: Install CiderDevUtils's dependencies with Yarn
         uses: ./.github/actions/yarn-nm-install
         with:

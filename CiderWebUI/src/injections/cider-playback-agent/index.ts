@@ -1,3 +1,4 @@
+/// <reference types="musickit-typescript" />
 import to from "await-to-js";
 import store from "store2";
 import * as _ from "lodash-es";
