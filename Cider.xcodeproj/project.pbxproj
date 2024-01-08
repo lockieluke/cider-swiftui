@@ -23,8 +23,6 @@
 		B70189442AAFA55500A7EAA0 /* HeroCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70189432AAFA55500A7EAA0 /* HeroCard.swift */; };
 		B70189472AB241CD00A7EAA0 /* PlayParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70189452AB241CD00A7EAA0 /* PlayParams.swift */; };
 		B70294182B48C0F700664181 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B70294172B48C0F700664181 /* SwiftyUtils */; };
-		B702941B2B48C5AD00664181 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B702941A2B48C5AD00664181 /* Subprocess */; };
-		B702941D2B48C5B500664181 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B702941C2B48C5B500664181 /* Subprocess */; };
 		B70294212B48D47000664181 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70294202B48D47000664181 /* HTTPURLResponse.swift */; };
 		B70294232B49B9ED00664181 /* ChangelogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70294222B49B9ED00664181 /* ChangelogsView.swift */; };
 		B70294272B4B581100664181 /* am-auth.js in Copy CiderWebUI Resources */ = {isa = PBXBuildFile; fileRef = B70294242B4B581100664181 /* am-auth.js */; platformFilters = (macos, ); };
@@ -111,6 +109,8 @@
 		B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B76FC6F52A8FE14900F8F80E /* GoogleSignIn */; };
 		B76FC6F82A8FE14900F8F80E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B76FC6F72A8FE14900F8F80E /* GoogleSignInSwift */; };
 		B76FC6FA2A902FB600F8F80E /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76FC6F92A902FB600F8F80E /* AuthButton.swift */; };
+		B77065F42B4CBC7600551769 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B77065F32B4CBC7600551769 /* Subprocess */; };
+		B77065F62B4CBC8000551769 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B77065F52B4CBC8000551769 /* Subprocess */; };
 		B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B7718F0A2ABB6EC5009CB966 /* ZippyJSON */; };
 		B776851F2B2A6A3B002B5C97 /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = B776851E2B2A6A3B002B5C97 /* Files */; };
 		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; platformFilters = (macos, ); };
@@ -495,7 +495,7 @@
 				B71B828A2A36713300DD8BC2 /* Sliders in Frameworks */,
 				B71B82932A36718800DD8BC2 /* Defaults in Frameworks */,
 				B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */,
-				B702941B2B48C5AD00664181 /* Subprocess in Frameworks */,
+				B77065F42B4CBC7600551769 /* Subprocess in Frameworks */,
 				B7332B102A97D7C60019221D /* Swifter in Frameworks */,
 				B76FC6F82A8FE14900F8F80E /* GoogleSignInSwift in Frameworks */,
 				B7107BB72AA2B8D300A83306 /* FirebaseAnalytics in Frameworks */,
@@ -538,7 +538,7 @@
 				B79529192B1E73BF00D98653 /* FirebaseFirestoreSwift in Frameworks */,
 				B70294182B48C0F700664181 /* SwiftyUtils in Frameworks */,
 				B7DDCCD82B27B09C006E1429 /* FirebaseStorage in Frameworks */,
-				B702941D2B48C5B500664181 /* Subprocess in Frameworks */,
+				B77065F62B4CBC8000551769 /* Subprocess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,7 +971,7 @@
 				B71D54202ABFA1BD001A62D6 /* Lottie */,
 				B7AAF7782ACE175900A9346C /* AlertToast */,
 				B7DDCCF02B2A5872006E1429 /* Files */,
-				B702941A2B48C5AD00664181 /* Subprocess */,
+				B77065F32B4CBC7600551769 /* Subprocess */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1038,7 +1038,7 @@
 				B7DDCCD72B27B09C006E1429 /* FirebaseStorage */,
 				B776851E2B2A6A3B002B5C97 /* Files */,
 				B70294172B48C0F700664181 /* SwiftyUtils */,
-				B702941C2B48C5B500664181 /* Subprocess */,
+				B77065F52B4CBC8000551769 /* Subprocess */,
 			);
 			productName = CiderUpdater;
 			productReference = B7CF6B222B12C81900A7DEEE /* CiderUpdateService.xpc */;
@@ -1110,7 +1110,7 @@
 				B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */,
 				B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 				B7DDCCEF2B2A5872006E1429 /* XCRemoteSwiftPackageReference "Files" */,
-				B70294192B48C5AD00664181 /* XCRemoteSwiftPackageReference "Subprocess" */,
+				B77065F22B4CBC7600551769 /* XCRemoteSwiftPackageReference "Subprocess" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1907,14 +1907,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B70294192B48C5AD00664181 /* XCRemoteSwiftPackageReference "Subprocess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/jamf/Subprocess.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.1;
-			};
-		};
 		B70524B92A6C96C1001654B3 /* XCRemoteSwiftPackageReference "SwiftUIBackports" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/shaps80/SwiftUIBackports.git";
@@ -2091,6 +2083,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		B77065F22B4CBC7600551769 /* XCRemoteSwiftPackageReference "Subprocess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jamf/Subprocess.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.1;
+			};
+		};
 		B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/michaeleisel/ZippyJSON.git";
@@ -2138,16 +2138,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */;
 			productName = SwiftyUtils;
-		};
-		B702941A2B48C5AD00664181 /* Subprocess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B70294192B48C5AD00664181 /* XCRemoteSwiftPackageReference "Subprocess" */;
-			productName = Subprocess;
-		};
-		B702941C2B48C5B500664181 /* Subprocess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B70294192B48C5AD00664181 /* XCRemoteSwiftPackageReference "Subprocess" */;
-			productName = Subprocess;
 		};
 		B70524BA2A6C96C2001654B3 /* SwiftUIBackports */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2283,6 +2273,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		B77065F32B4CBC7600551769 /* Subprocess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B77065F22B4CBC7600551769 /* XCRemoteSwiftPackageReference "Subprocess" */;
+			productName = Subprocess;
+		};
+		B77065F52B4CBC8000551769 /* Subprocess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B77065F22B4CBC7600551769 /* XCRemoteSwiftPackageReference "Subprocess" */;
+			productName = Subprocess;
 		};
 		B7718F0A2ABB6EC5009CB966 /* ZippyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
