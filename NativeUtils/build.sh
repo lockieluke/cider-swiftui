@@ -22,3 +22,6 @@ else
 fi
 
 ln -f target/universal/libnative_utils.a target/universal/libnative_utils_elevated.a
+
+# Generate xcfilelist for source files
+find src -name "*.rs" -type f -exec readlink -f {} + > source-files.xcfilelist

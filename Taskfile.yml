@@ -61,17 +61,10 @@ tasks:
     cmds:
       - yarn
 
-  install-deps:dev-utils-js:
-    dir: 'CiderDevUtils/'
-    desc: "Install CiderDevUtils' dependencies with Yarn"
-    cmds:
-      - yarn
-
   install-deps:all-js:
     desc: "Install all JS dependencies"
     cmds:
       - task: install-deps:cider-web-ui-js
-      - task: install-deps:dev-utils-js
 
   build:cider-web-ui-js:
     dir: 'CiderWebUI/'
@@ -176,30 +169,13 @@ tasks:
       - test -d /Volumes/Cider && diskutil eject /Volumes/Cider || true
       - create-dmg --volname "{{.DMG_TITLE}}" --volicon assets/icon.icns --background assets/bg.tiff --window-pos 200 120 --window-size 540 380 --icon-size 100 --icon "Cider.app" 120 210 --hide-extension "Cider.app" --app-drop-link 410 210 "{{.DEST_DMG_PATH}}" "{{.DEST_PATH}}/dmg"
 
-  start:dev-server:
-    dir: 'CiderDevUtils/'
-    desc: "Start Dev Server for compiling JS in Xcode build scripts"
+  fetch:google-services:
+    desc: "Fetch GoogleServices entitlements"
     cmds:
       - |
-        if which bun >/dev/null; then
-          bun run src/index.ts
-        else
-          yarn start
-        fi
-
-  fetch:google-services:
-    desc: "Fetch GoogleServices-Info.plist"
-    dir: "CiderDevUtils/"
-    env:
-      CWD: "../"
-    cmds:
-      - yarn run fns/fetch-google-service
-
-  verify:toolchain:
-    desc: "Verify build toolchain"
-    dir: "CiderDevUtils/"
-    cmds:
-      - yarn run fns/verify-and-install-toolchain
+        source .env
+        wget -O "./Cider/GoogleService-Info.plist" "$CIDER_GOOGLE_SERVICES_URL"
+        wget -O "./CiderUpdateService/GoogleService-Info.plist" "$CIDER_UPDATE_SERVICE_GOOGLE_SERVICES_URL"
 
   scan:unused-code:
     desc: "Scan for unused code"

@@ -44,6 +44,7 @@ async function buildInjections() {
             absolute: true
         });
         fs.writeFile(path.join(__dirname, 'files.xcfilelist'), outputFiles.join(os.EOL));
+        fs.writeFile(path.join(__dirname, 'source-files.xcfilelist'), injectionScripts.map(script => path.join(__dirname, script)).join(os.EOL));
     });
 }
 

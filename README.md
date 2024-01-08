@@ -24,17 +24,15 @@ cd Cider-macOS
 
 ### (Summary Command - All the quick start stuff)
 
+Before you run the quickstart command, you might have to open Xcode to have it refresh all the SPM packages
+
+:warning: Dev Server is no longer needed as *User Script Sandboxing* has been disabled
+
 ```shell
 task quickstart
 ```
 
-### Install build tools ⬇️
-
-Install build dependencies with Homebrew
-
-```shell
-brew bundle
-```
+<sub>Setup a `.env` file with `CIDER_GOOGLE_SERVICE_URL` and `CIDER_UPDATE_SERVICE_GOOGLE_SERVICE_URL` so the script can automatically fetch all the `GoogleService-Info, ask me on Discord if you are unsure, you should have these values if you're a Cider employee</sub>
 
 ### Install JS Dependencies 📚
 
@@ -44,19 +42,9 @@ Yarn dependencies have to be installed before proceeding as Cider for macOS uses
 task install-deps:all-js
 ```
 
-### Start Dev Server 🧭
-
-The dev server handles all sorts of code compilation and it should be up at all times
-
-```shell
-task start:dev-server
-```
-
-<sub>Tip: Keep this open in a separate terminal tab</sub>
-
 ### Services and APIs ⚙️
 
-You will need **GoogleService-Info.plist** in `Cider/` for it to work, this is mainly for Firebase and Google Analytics
+You will need **GoogleService-Info.plist** in `Cider/` and `CiderUpdateService/` for it to work, this is mainly for Firebase and Google Analytics
 
 ## Building Cider 🔨
 

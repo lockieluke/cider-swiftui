@@ -7,3 +7,6 @@ src/main.rs
 
 # IDE Specific
 .idea/
+
+# Xcode
+source-files.xcfilelist
