@@ -18,6 +18,8 @@ jobs:
         run: |
           XC_ARCHIVE=${RUNNER_TEMP}/Cider.xcarchive
           echo "XC_ARCHIVE=${XC_ARCHIVE}" >> $GITHUB_ENV
+          touch .env
+          echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Setup Homebrew
         uses: Homebrew/actions/setup-homebrew@master
@@ -77,10 +79,10 @@ jobs:
         with:
           node-version: 'latest'
 
-      - name: Install CiderWebUI dependencies with Yarn
+      - name: Install CiderWebModules dependencies with Yarn
         uses: ./.github/actions/yarn-nm-install
         with:
-          cwd: 'CiderWebUI/'
+          cwd: 'CiderWebModules/'
           enable-corepack: true
           cache-node-modules: true
           cache-install-state: true

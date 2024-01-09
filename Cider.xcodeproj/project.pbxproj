@@ -25,11 +25,6 @@
 		B70294182B48C0F700664181 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B70294172B48C0F700664181 /* SwiftyUtils */; };
 		B70294212B48D47000664181 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70294202B48D47000664181 /* HTTPURLResponse.swift */; };
 		B70294232B49B9ED00664181 /* ChangelogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70294222B49B9ED00664181 /* ChangelogsView.swift */; };
-		B70294272B4B581100664181 /* am-auth.js in Copy CiderWebUI Resources */ = {isa = PBXBuildFile; fileRef = B70294242B4B581100664181 /* am-auth.js */; platformFilters = (macos, ); };
-		B70294282B4B581100664181 /* cider-connect.js in Copy CiderWebUI Resources */ = {isa = PBXBuildFile; fileRef = B70294252B4B581100664181 /* cider-connect.js */; platformFilters = (macos, ); };
-		B70294292B4B581100664181 /* handle-googleauth-unsafe-dialog.js in Copy CiderWebUI Resources */ = {isa = PBXBuildFile; fileRef = B70294262B4B581100664181 /* handle-googleauth-unsafe-dialog.js */; platformFilters = (macos, ); };
-		B702942B2B4B5BBA00664181 /* am-auth.html in Copy CiderWebUI Resources */ = {isa = PBXBuildFile; fileRef = B702942A2B4B5BBA00664181 /* am-auth.html */; };
-		B702942D2B4B5E5400664181 /* cider-playback-agent.js in Copy CiderWebUI Resources */ = {isa = PBXBuildFile; fileRef = B702942C2B4B5E5400664181 /* cider-playback-agent.js */; };
 		B703BBCF28CC05FA00228324 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703BBCE28CC05FA00228324 /* Alert.swift */; };
 		B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */ = {isa = PBXBuildFile; productRef = B70524BA2A6C96C2001654B3 /* SwiftUIBackports */; };
 		B70524C22A6D2E39001654B3 /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */; };
@@ -111,6 +106,11 @@
 		B76FC6FA2A902FB600F8F80E /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76FC6F92A902FB600F8F80E /* AuthButton.swift */; };
 		B77065F42B4CBC7600551769 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B77065F32B4CBC7600551769 /* Subprocess */; };
 		B77065F62B4CBC8000551769 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B77065F52B4CBC8000551769 /* Subprocess */; };
+		B77065FB2B4CC22F00551769 /* cider-connect.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065F72B4CC22F00551769 /* cider-connect.js */; platformFilters = (macos, ); };
+		B77065FC2B4CC22F00551769 /* am-auth.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065F82B4CC22F00551769 /* am-auth.js */; platformFilters = (macos, ); };
+		B77065FD2B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065F92B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js */; platformFilters = (macos, ); };
+		B77065FE2B4CC22F00551769 /* cider-playback-agent.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065FA2B4CC22F00551769 /* cider-playback-agent.js */; platformFilters = (macos, ); };
+		B77066002B4CC23B00551769 /* am-auth.html in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065FF2B4CC23B00551769 /* am-auth.html */; platformFilters = (macos, ); };
 		B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B7718F0A2ABB6EC5009CB966 /* ZippyJSON */; };
 		B776851F2B2A6A3B002B5C97 /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = B776851E2B2A6A3B002B5C97 /* Files */; };
 		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; platformFilters = (macos, ); };
@@ -270,19 +270,19 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B7C9CDA129088F4F00A67CE4 /* Copy CiderWebUI Resources */ = {
+		B7C9CDA129088F4F00A67CE4 /* Copy CiderWebModules Resources */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 12;
 			files = (
-				B702942D2B4B5E5400664181 /* cider-playback-agent.js in Copy CiderWebUI Resources */,
-				B702942B2B4B5BBA00664181 /* am-auth.html in Copy CiderWebUI Resources */,
-				B70294272B4B581100664181 /* am-auth.js in Copy CiderWebUI Resources */,
-				B70294282B4B581100664181 /* cider-connect.js in Copy CiderWebUI Resources */,
-				B70294292B4B581100664181 /* handle-googleauth-unsafe-dialog.js in Copy CiderWebUI Resources */,
+				B77066002B4CC23B00551769 /* am-auth.html in Copy CiderWebModules Resources */,
+				B77065FB2B4CC22F00551769 /* cider-connect.js in Copy CiderWebModules Resources */,
+				B77065FC2B4CC22F00551769 /* am-auth.js in Copy CiderWebModules Resources */,
+				B77065FD2B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js in Copy CiderWebModules Resources */,
+				B77065FE2B4CC22F00551769 /* cider-playback-agent.js in Copy CiderWebModules Resources */,
 			);
-			name = "Copy CiderWebUI Resources";
+			name = "Copy CiderWebModules Resources";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -311,11 +311,6 @@
 		B70294152B4899C000664181 /* libnative_utils_update_service.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils_update_service.a; path = NativeUtils/target/universal/libnative_utils_update_service.a; sourceTree = "<group>"; };
 		B70294202B48D47000664181 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		B70294222B49B9ED00664181 /* ChangelogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangelogsView.swift; sourceTree = "<group>"; };
-		B70294242B4B581100664181 /* am-auth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "am-auth.js"; path = "CiderWebUI/dist/am-auth.js"; sourceTree = "<group>"; };
-		B70294252B4B581100664181 /* cider-connect.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cider-connect.js"; path = "CiderWebUI/dist/cider-connect.js"; sourceTree = "<group>"; };
-		B70294262B4B581100664181 /* handle-googleauth-unsafe-dialog.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "handle-googleauth-unsafe-dialog.js"; path = "CiderWebUI/dist/handle-googleauth-unsafe-dialog.js"; sourceTree = "<group>"; };
-		B702942A2B4B5BBA00664181 /* am-auth.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = "am-auth.html"; path = "CiderWebUI/dist/entries/am-auth.html"; sourceTree = "<group>"; };
-		B702942C2B4B5E5400664181 /* cider-playback-agent.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cider-playback-agent.js"; path = "CiderWebUI/dist/cider-playback-agent.js"; sourceTree = "<group>"; };
 		B703BBCE28CC05FA00228324 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkBenchTimer.swift; sourceTree = "<group>"; };
 		B70524C62A6F2931001654B3 /* CacheModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModal.swift; sourceTree = "<group>"; };
@@ -369,6 +364,11 @@
 		B76AE929299E993500A19558 /* Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comparable.swift; sourceTree = "<group>"; };
 		B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectModal.swift; sourceTree = "<group>"; };
 		B76FC6F92A902FB600F8F80E /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		B77065F72B4CC22F00551769 /* cider-connect.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cider-connect.js"; path = "CiderWebModules/dist/cider-connect.js"; sourceTree = "<group>"; };
+		B77065F82B4CC22F00551769 /* am-auth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "am-auth.js"; path = "CiderWebModules/dist/am-auth.js"; sourceTree = "<group>"; };
+		B77065F92B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "handle-googleauth-unsafe-dialog.js"; path = "CiderWebModules/dist/handle-googleauth-unsafe-dialog.js"; sourceTree = "<group>"; };
+		B77065FA2B4CC22F00551769 /* cider-playback-agent.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cider-playback-agent.js"; path = "CiderWebModules/dist/cider-playback-agent.js"; sourceTree = "<group>"; };
+		B77065FF2B4CC23B00551769 /* am-auth.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = "am-auth.html"; path = "CiderWebModules/dist/entries/am-auth.html"; sourceTree = "<group>"; };
 		B770D8CE29A0390A00E0A655 /* Cider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cider-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreferencesPane.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
@@ -548,11 +548,11 @@
 		B700C17428B920F10069FDF5 = {
 			isa = PBXGroup;
 			children = (
-				B702942C2B4B5E5400664181 /* cider-playback-agent.js */,
-				B702942A2B4B5BBA00664181 /* am-auth.html */,
-				B70294242B4B581100664181 /* am-auth.js */,
-				B70294252B4B581100664181 /* cider-connect.js */,
-				B70294262B4B581100664181 /* handle-googleauth-unsafe-dialog.js */,
+				B77065FF2B4CC23B00551769 /* am-auth.html */,
+				B77065F82B4CC22F00551769 /* am-auth.js */,
+				B77065F72B4CC22F00551769 /* cider-connect.js */,
+				B77065FA2B4CC22F00551769 /* cider-playback-agent.js */,
+				B77065F92B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js */,
 				B700C17F28B920F10069FDF5 /* Cider */,
 				B7C9CD882908467A00A67CE4 /* CiderPlaybackAgent */,
 				B79050312B0E949600CED9B6 /* CiderElevationHelper */,
@@ -927,8 +927,8 @@
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
-				B7C5C5E129CFA95C00EF4D11 /* Build CiderWebUI Resources */,
-				B7C9CDA129088F4F00A67CE4 /* Copy CiderWebUI Resources */,
+				B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */,
+				B7C9CDA129088F4F00A67CE4 /* Copy CiderWebModules Resources */,
 				B7489F542AF4657100BCBD60 /* Copy Helpers */,
 				B790503D2B0E949600CED9B6 /* Embed XPC Services */,
 				B79050612B1157A400CED9B6 /* Embed Frameworks */,
@@ -1178,7 +1178,7 @@
 			shellPath = /bin/zsh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\ntask build:native-utils-lib\n";
 		};
-		B7C5C5E129CFA95C00EF4D11 /* Build CiderWebUI Resources */ = {
+		B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1186,11 +1186,11 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/CiderWebUI/source-files.xcfilelist",
+				"$(SRCROOT)/CiderWebModules/source-files.xcfilelist",
 			);
-			name = "Build CiderWebUI Resources";
+			name = "Build CiderWebModules Resources";
 			outputFileListPaths = (
-				"$(SRCROOT)/CiderWebUI/files.xcfilelist",
+				"$(SRCROOT)/CiderWebModules/files.xcfilelist",
 			);
 			outputPaths = (
 			);

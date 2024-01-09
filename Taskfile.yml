@@ -55,20 +55,20 @@ tasks:
       - rm -rf target/
       - rm -rf build/
 
-  install-deps:cider-web-ui-js:
-    dir: 'CiderWebUI/'
-    desc: "Install CiderWebUI's dependencies with Yarn"
+  install-deps:cider-web-modules-js:
+    dir: 'CiderWebModules/'
+    desc: "Install CiderWebModules' dependencies with Yarn"
     cmds:
       - yarn
 
   install-deps:all-js:
     desc: "Install all JS dependencies"
     cmds:
-      - task: install-deps:cider-web-ui-js
+      - task: install-deps:cider-web-modules-js
 
-  build:cider-web-ui-js:
-    dir: 'CiderWebUI/'
-    desc: "Build CiderWebUI"
+  build:cider-web-modules-js:
+    dir: 'CiderWebModules/'
+    desc: "Build CiderWebModules"
     sources:
       - src/**/*
       - entries/**/*
@@ -80,7 +80,7 @@ tasks:
 
   build:all-js:
     cmds:
-      - task: build:cider-web-ui-js
+      - task: build:cider-web-modules-js
 
   build:xc:
     desc: "Build all targets including Cider and CiderPlaybackAgent"
