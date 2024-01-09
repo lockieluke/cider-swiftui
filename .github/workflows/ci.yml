@@ -18,8 +18,12 @@ jobs:
         run: |
           XC_ARCHIVE=${RUNNER_TEMP}/Cider.xcarchive
           echo "XC_ARCHIVE=${XC_ARCHIVE}" >> $GITHUB_ENV
-          touch .env
-          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Configure .env
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_CIDER_GOOGLE_SERVICES_URL: ${{ secrets.CIDER_GOOGLE_SERVICES_URL }}
+          envkey_CIDER_UPDATE_SERVICE_GOOGLE_SERVICES_URL: ${{ secrets.CIDER_UPDATE_SERVICE_GOOGLE_SERVICES_URL }}
 
       - name: Setup Homebrew
         uses: Homebrew/actions/setup-homebrew@master
