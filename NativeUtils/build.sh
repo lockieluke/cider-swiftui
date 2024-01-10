@@ -25,3 +25,5 @@ ln -f target/universal/libnative_utils.a target/universal/libnative_utils_elevat
 
 # Generate xcfilelist for source files
 find src -name "*.rs" -type f -exec readlink -f {} + > source-files.xcfilelist
+
+echo "$(readlink -f Cargo.toml)\n$(readlink -f Cargo.lock)\n$(readlink -f build.rs)\n$(readlink -f build.sh)" >> source-files.xcfilelist

@@ -38,6 +38,7 @@ tasks:
       - Cargo.toml
       - Cargo.lock
       - build.rs
+      - build.sh
     generates:
       - target/universal/libnative_utils.a
     cmds:
