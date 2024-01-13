@@ -1,10 +1,11 @@
-import {defineConfig} from 'vite'
-import solid from 'vite-plugin-solid'
+import {defineConfig} from "vite";
+import solid from "vite-plugin-solid";
 import {viteSingleFile} from "vite-plugin-singlefile";
 import {ViteMinifyPlugin} from "vite-plugin-minify";
-import * as path from 'path';
+import * as path from "path";
 import {fileURLToPath} from "url";
 import {injectionScripts} from "./build";
+import eslintPlugin from "vite-plugin-eslint";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,16 +15,19 @@ export default defineConfig(() => ({
     rollupOptions: {
       input: {
         'am-auth': path.join(__dirname, 'entries', 'am-auth.html')
+        "am-auth": path.join(__dirname, "entries", "am-auth.html"),
       },
       external: injectionScripts
     },
-    outDir: 'dist'
+    outDir: "dist"
   },
-  base: './',
+  base: "./",
   resolve: {
     alias: {
-      '@src': path.join(__dirname, 'src')
+      "@src": path.join(__dirname, "src")
     }
   },
-  plugins: [solid(), viteSingleFile(), ViteMinifyPlugin()]
+  plugins: [solid(), eslintPlugin({
+    include: ["src/**/*.ts", "src/**/*.tsx"]
+  }), viteSingleFile(), ViteMinifyPlugin()]
 }));

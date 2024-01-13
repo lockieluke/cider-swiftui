@@ -55,22 +55,22 @@ type CiderMusicKitInstance = MusicKit.MusicKitInstance & {
     autoplayEnabled: boolean
 };
 
-const mkScript = document.createElement('script');
+const mkScript = document.createElement("script");
 mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/amp/musickit.js";
-mkScript.toggleAttribute('data-web-component');
-mkScript.toggleAttribute('async');
+mkScript.toggleAttribute("data-web-component");
+mkScript.toggleAttribute("async");
 document.head.appendChild(mkScript);
 
-document.addEventListener('musickitloaded', async function () {
+document.addEventListener("musickitloaded", async function () {
     console.log(`MusicKit ${MusicKit.version} loaded`);
 
-    const oldVersions = _.split(store.get('musickit.version-history'), '&');
-    if (!store.has('musickit.version-history') || _.isNil(oldVersions.find(v => v.includes(MusicKit.version))) || oldVersions.findIndex(v => v.includes(MusicKit.version)) !== oldVersions.length - 1) {
-        const versionHistory = store.get('musickit.version-history');
-        store.set('musickit.version-history', `${_.isNil(versionHistory) ? "" : `${versionHistory}&`}${MusicKit.version}-${new Date().toUTCString()}`)
+    const oldVersions = _.split(store.get("musickit.version-history"), "&");
+    if (!store.has("musickit.version-history") || _.isNil(oldVersions.find(v => v.includes(MusicKit.version))) || oldVersions.findIndex(v => v.includes(MusicKit.version)) !== oldVersions.length - 1) {
+        const versionHistory = store.get("musickit.version-history");
+        store.set("musickit.version-history", `${_.isNil(versionHistory) ? "" : `${versionHistory}&`}${MusicKit.version}-${new Date().toUTCString()}`);
     }
 
-    let [err, _mk] = await to<CiderMusicKitInstance>(MusicKit.configure({
+    const [err, _mk] = await to<CiderMusicKitInstance>(MusicKit.configure({
         developerToken: AM_TOKEN,
         app: {
             name: "Apple Music",
@@ -101,12 +101,12 @@ document.addEventListener('musickitloaded', async function () {
                 artworkURL: nowPlayingItem.attributes.artwork.url
             });
         }
-    }
+    };
 
     let lastSyncedQueue: MusicKit.MediaItem[] = [];
     const syncQueue = (force: boolean = false) => {
-        const ids = _.map(mk.queue.items, 'id');
-        const lastSyncedIds = _.map(lastSyncedQueue, 'id');
+        const ids = _.map(mk.queue.items, "id");
+        const lastSyncedIds = _.map(lastSyncedQueue, "id");
         if (_.isEqual(ids, lastSyncedIds) && !force)
             return;
 
@@ -115,56 +115,54 @@ document.addEventListener('musickitloaded', async function () {
             event: "queueItemsDidChange",
             items: _.slice(lastSyncedQueue, mk.queue.position)
         });
-    }
+    };
 
-    // @ts-ignore
-    mk.addEventListener('nowPlayingItemDidChange', () => {
+    mk.addEventListener("nowPlayingItemDidChange", () => {
         updateNowPlayingInfo();
         syncQueue(true);
-    })
+    });
 
-    mk.addEventListener('metadataDidChange', () => {
+    mk.addEventListener("metadataDidChange", () => {
         updateNowPlayingInfo();
-    })
+    });
 
-    mk.addEventListener('playbackStateDidChange', () => {
+    mk.addEventListener("playbackStateDidChange", () => {
         const state = MusicKit.PlaybackStates[mk.playbackState];
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "playbackStateDidChange",
             playbackState: state
         });
         syncQueue();
-    })
+    });
 
-    mk.addEventListener('playbackDurationDidChange', (event: { duration: number }) => {
+    mk.addEventListener("playbackDurationDidChange", (event: { duration: number }) => {
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "playbackDurationDidChange",
             duration: event.duration
         });
-    })
+    });
 
-    mk.addEventListener('playbackTimeDidChange', () => {
+    mk.addEventListener("playbackTimeDidChange", () => {
         window.webkit.messageHandlers.ciderkit.postMessage({
             event: "playbackTimeDidChange",
             currentTime: mk.currentPlaybackTime,
             remainingTime: mk.currentPlaybackTimeRemaining
         });
-    })
+    });
 
-    mk.addEventListener('mediaPlaybackError', (event: MusicKit.Events) => {
+    mk.addEventListener("mediaPlaybackError", (event: MusicKit.Events) => {
         console.error(`Error playing media: ${event}`);
-    })
+    });
 
-    mk.addEventListener('queueItemsDidChange', () => {
+    mk.addEventListener("queueItemsDidChange", () => {
         syncQueue(true);
-    })
-    mk.addEventListener('queuePositionDidChange', () => {
+    });
+    mk.addEventListener("queuePositionDidChange", () => {
         syncQueue();
-    })
-    // @ts-ignore
-    mk.addEventListener('autoplayEnabledDidChange', () => {
+    });
+    mk.addEventListener("autoplayEnabledDidChange", () => {
         syncQueue();
-    })
+    });
 
     window.ciderInterop = {
         mk,
@@ -208,16 +206,16 @@ document.addEventListener('musickitloaded', async function () {
             mk.changeToMediaAtIndex(mk.queue.position + index);
         },
         isAirPlayAvailable: () => {
-            // @ts-ignore
+            // @ts-expect-error "webkitShowPlaybackTargetPicker" doesn't exist on type "HTMLAudioElement"
             const audioElement = mk._mediaItemPlayback._currentPlayer.audio;
             return !_.isNil(audioElement) && !_.isNil(audioElement.webkitShowPlaybackTargetPicker);
         },
         openAirPlayPicker: () => {
             if (window.ciderInterop.isAirPlayAvailable())
-                // @ts-ignore
+                // @ts-expect-error "webkitShowPlaybackTargetPicker" doesn't exist on type "HTMLAudioElement"
                 mk._mediaItemPlayback._currentPlayer.audio.webkitShowPlaybackTargetPicker();
         }
     };
-})
+});
 
 export {};

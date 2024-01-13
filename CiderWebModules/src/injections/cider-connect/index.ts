@@ -1,20 +1,20 @@
-import * as _ from 'lodash-es';
-import to from 'await-to-js';
+import * as _ from "lodash-es";
+import to from "await-to-js";
 import {initializeApp} from "firebase/app";
-import {signOut, getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup} from 'firebase/auth';
+import {signOut, getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup} from "firebase/auth";
 
 window.sendNativeMessage = message => {
     alert(JSON.stringify(message));
-}
+};
 
 enum SignInMethod {
-    Apple = '/apple-auth',
-    Google = '/google-auth',
-    Azure = '/azure-auth'
+    Apple = "/apple-auth",
+    Google = "/google-auth",
+    Azure = "/azure-auth"
 }
 
 (async () => {
-    if (window.location.href === 'about:blank')
+    if (window.location.href === "about:blank")
         return;
 
     const signInMethod = window.location.pathname as SignInMethod;
@@ -33,17 +33,17 @@ enum SignInMethod {
     const auth = getAuth(app);
     auth.useDeviceLanguage();
 
-    if (window.location.pathname === '/sign-out') {
+    if (window.location.pathname === "/sign-out") {
         const [err] = await to(signOut(auth));
         if (err) {
             window.sendNativeMessage({
-                action: 'error',
+                action: "error",
                 message: err.message
-            })
+            });
         } else {
-            window.localStorage.removeItem('user');
+            window.localStorage.removeItem("user");
             window.sendNativeMessage({
-                action: 'sign-out-success'
+                action: "sign-out-success"
             });
         }
         return;
@@ -53,34 +53,34 @@ enum SignInMethod {
 
     switch (signInMethod) {
         case SignInMethod.Apple:
-            provider = new OAuthProvider('apple.com');
-            provider.addScope('email');
-            provider.addScope('name');
+            provider = new OAuthProvider("apple.com");
+            provider.addScope("email");
+            provider.addScope("name");
             break;
 
         case SignInMethod.Google:
             provider = new GoogleAuthProvider();
-            provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+            provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
             provider.setCustomParameters({
-                prompt: 'consent',
-                access_type: 'offline'
+                prompt: "consent",
+                access_type: "offline"
             });
             break;
 
         case SignInMethod.Azure:
-            provider = new OAuthProvider('microsoft.com');
-            provider.addScope('openid');
+            provider = new OAuthProvider("microsoft.com");
+            provider.addScope("openid");
             provider.setCustomParameters({
-                prompt: 'consent',
-                tenant: '358016f2-b726-4594-ae51-783a77899b42'
+                prompt: "consent",
+                tenant: "358016f2-b726-4594-ae51-783a77899b42"
             });
             break;
     }
 
-    const [err, result] = await to(signInWithPopup(auth, provider))
+    const [err, result] = await to(signInWithPopup(auth, provider));
     if (err) {
         window.sendNativeMessage({
-            action: 'error',
+            action: "error",
             message: err.message
         });
         return;
@@ -95,7 +95,7 @@ enum SignInMethod {
     const idToken = credential?.idToken;
 
     window.sendNativeMessage({
-        action: 'auth-success',
+        action: "auth-success",
         user: JSON.parse(JSON.stringify(user)),
         credential: JSON.parse(JSON.stringify(credential)),
         accessToken,

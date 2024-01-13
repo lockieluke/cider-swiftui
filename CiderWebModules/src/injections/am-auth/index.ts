@@ -8,18 +8,18 @@ declare global {
         unauthoriseAM: () => void;
         importMusicKit: () => void;
         configureMusicKit: () => Promise<void>;
-        sendNativeMessage: (message: any) => void;
+        sendNativeMessage: (message: unknown) => void;
     }
 }
 
 enum AuthorisationWindowType {
-    Continue = 'https://authorize.music.apple.com/?liteSessionId=',
-    AppleIDSignIn = 'https://authorize.music.apple.com/woa'
+    Continue = "https://authorize.music.apple.com/?liteSessionId=",
+    AppleIDSignIn = "https://authorize.music.apple.com/woa"
 }
 
 function waitForDom(selector: string): Promise<Element> {
     return new Promise(resolve => {
-        const elem = document.querySelector(selector)
+        const elem = document.querySelector(selector);
         if (elem)
             resolve(elem);
 
@@ -29,37 +29,26 @@ function waitForDom(selector: string): Promise<Element> {
                 resolve(dom);
                 observer.disconnect();
             }
-        })
+        });
 
         observer.observe(document.body, {
             childList: true,
             subtree: true
         });
-    })
+    });
 }
 
 window.sendNativeMessage = message => {
     alert(JSON.stringify(message));
-}
+};
 
 window.importMusicKit = () => {
-    const mkScript = document.createElement('script');
+    const mkScript = document.createElement("script");
     mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/musickit.js";
-    mkScript.toggleAttribute('data-web-component');
-    mkScript.toggleAttribute('async');
+    mkScript.toggleAttribute("data-web-component");
+    mkScript.toggleAttribute("async");
     document.head.appendChild(mkScript);
-}
-
-window.configureMusicKit = () => {
-    return new Promise<void>(async (resolve, reject) => {
-        try {
-        } catch (err) {
-            reject(err);
-        } finally {
-            resolve();
-        }
-    })
-}
+};
 
 const currentURL = window.location.toString();
 if (currentURL.includes(initialURL))
@@ -67,22 +56,22 @@ if (currentURL.includes(initialURL))
 else {
     if (currentURL.includes(AuthorisationWindowType.AppleIDSignIn)) {
         window.sendNativeMessage({
-            action: 'authenticating-apple-id'
+            action: "authenticating-apple-id"
         });
     } else if (currentURL.includes(AuthorisationWindowType.Continue)) {
         window.sendNativeMessage({
-            action: 'authenticating-am'
+            action: "authenticating-am"
         });
 
         (async () => {
-            const continueButton = await waitForDom('#app > div > div > section > div.base-content-wrapper__button-container > button') as HTMLButtonElement;
+            const continueButton = await waitForDom("#app > div > div > section > div.base-content-wrapper__button-container > button") as HTMLButtonElement;
             continueButton.click();
         })();
     }
 
 }
 
-document.addEventListener('musickitloaded', async function () {
+document.addEventListener("musickitloaded", async function () {
     console.log(`MusicKit ${MusicKit.version} loaded`);
     try {
         await MusicKit.configure({
@@ -108,7 +97,7 @@ document.addEventListener('musickitloaded', async function () {
     if (mk.isAuthorized) {
         console.log("User was previously authorised");
         window.sendNativeMessage({
-            action: 'authenticated',
+            action: "authenticated",
             token: mk.musicUserToken
         });
         return;
@@ -125,10 +114,10 @@ document.addEventListener('musickitloaded', async function () {
 
     if (userToken) {
         window.sendNativeMessage({
-            action: 'authenticated',
+            action: "authenticated",
             token: userToken
         });
     }
-})
+});
 
 export {};

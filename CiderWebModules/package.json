@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsx build.ts --build-injections",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --ext .ts,.tsx src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx src"
   },
   "dependencies": {
     "await-to-js": "^3.0.0",
@@ -18,11 +20,15 @@
     "store2": "^2.14.2"
   },
   "devDependencies": {
+    "@types/eslint": "^8",
     "@types/fs-extra": "^11",
     "@types/lodash-es": "^4",
     "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
     "autoprefixer": "^10.4.16",
     "esbuild": "^0.19.11",
+    "eslint": "^8.56.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
     "musickit-typescript": "github:ciderapp/musickit-types",
@@ -33,6 +39,7 @@
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.8",
+    "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-minify": "^1.5.2",
     "vite-plugin-singlefile": "^0.13.5",
     "vite-plugin-solid": "^2.8.0"
