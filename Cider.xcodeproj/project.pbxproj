@@ -106,11 +106,8 @@
 		B76FC6FA2A902FB600F8F80E /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76FC6F92A902FB600F8F80E /* AuthButton.swift */; };
 		B77065F42B4CBC7600551769 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B77065F32B4CBC7600551769 /* Subprocess */; };
 		B77065F62B4CBC8000551769 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B77065F52B4CBC8000551769 /* Subprocess */; };
-		B77065FB2B4CC22F00551769 /* cider-connect.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065F72B4CC22F00551769 /* cider-connect.js */; platformFilters = (macos, ); };
-		B77065FC2B4CC22F00551769 /* am-auth.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065F82B4CC22F00551769 /* am-auth.js */; platformFilters = (macos, ); };
-		B77065FD2B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065F92B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js */; platformFilters = (macos, ); };
-		B77065FE2B4CC22F00551769 /* cider-playback-agent.js in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065FA2B4CC22F00551769 /* cider-playback-agent.js */; platformFilters = (macos, ); };
-		B77066002B4CC23B00551769 /* am-auth.html in Copy CiderWebModules Resources */ = {isa = PBXBuildFile; fileRef = B77065FF2B4CC23B00551769 /* am-auth.html */; platformFilters = (macos, ); };
+		B77066022B51F01000551769 /* Precompiled.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77066012B51F01000551769 /* Precompiled.swift */; };
+		B77066042B52ACB200551769 /* Precompiled.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77066012B51F01000551769 /* Precompiled.swift */; };
 		B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B7718F0A2ABB6EC5009CB966 /* ZippyJSON */; };
 		B776851F2B2A6A3B002B5C97 /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = B776851E2B2A6A3B002B5C97 /* Files */; };
 		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; platformFilters = (macos, ); };
@@ -270,21 +267,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B7C9CDA129088F4F00A67CE4 /* Copy CiderWebModules Resources */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "";
-			dstSubfolderSpec = 12;
-			files = (
-				B77066002B4CC23B00551769 /* am-auth.html in Copy CiderWebModules Resources */,
-				B77065FB2B4CC22F00551769 /* cider-connect.js in Copy CiderWebModules Resources */,
-				B77065FC2B4CC22F00551769 /* am-auth.js in Copy CiderWebModules Resources */,
-				B77065FD2B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js in Copy CiderWebModules Resources */,
-				B77065FE2B4CC22F00551769 /* cider-playback-agent.js in Copy CiderWebModules Resources */,
-			);
-			name = "Copy CiderWebModules Resources";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -368,7 +350,7 @@
 		B77065F82B4CC22F00551769 /* am-auth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "am-auth.js"; path = "CiderWebModules/dist/am-auth.js"; sourceTree = "<group>"; };
 		B77065F92B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "handle-googleauth-unsafe-dialog.js"; path = "CiderWebModules/dist/handle-googleauth-unsafe-dialog.js"; sourceTree = "<group>"; };
 		B77065FA2B4CC22F00551769 /* cider-playback-agent.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cider-playback-agent.js"; path = "CiderWebModules/dist/cider-playback-agent.js"; sourceTree = "<group>"; };
-		B77065FF2B4CC23B00551769 /* am-auth.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = "am-auth.html"; path = "CiderWebModules/dist/entries/am-auth.html"; sourceTree = "<group>"; };
+		B77066012B51F01000551769 /* Precompiled.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Precompiled.swift; sourceTree = "<group>"; };
 		B770D8CE29A0390A00E0A655 /* Cider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cider-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreferencesPane.swift; sourceTree = "<group>"; };
 		B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHoverModifier.swift; sourceTree = "<group>"; };
@@ -548,7 +530,7 @@
 		B700C17428B920F10069FDF5 = {
 			isa = PBXGroup;
 			children = (
-				B77065FF2B4CC23B00551769 /* am-auth.html */,
+				B77066012B51F01000551769 /* Precompiled.swift */,
 				B77065F82B4CC22F00551769 /* am-auth.js */,
 				B77065F72B4CC22F00551769 /* cider-connect.js */,
 				B77065FA2B4CC22F00551769 /* cider-playback-agent.js */,
@@ -924,11 +906,11 @@
 			buildConfigurationList = B700C18C28B920F20069FDF5 /* Build configuration list for PBXNativeTarget "Cider" */;
 			buildPhases = (
 				B74EEBD529D8862500711DB6 /* Build NativeUtils */,
+				B77066032B51F03100551769 /* Precompile Sources */,
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
 				B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */,
-				B7C9CDA129088F4F00A67CE4 /* Copy CiderWebModules Resources */,
 				B7489F542AF4657100BCBD60 /* Copy Helpers */,
 				B790503D2B0E949600CED9B6 /* Embed XPC Services */,
 				B79050612B1157A400CED9B6 /* Embed Frameworks */,
@@ -1178,6 +1160,25 @@
 			shellPath = /bin/zsh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\ntask build:native-utils-lib\n";
 		};
+		B77066032B51F03100551769 /* Precompile Sources */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Precompile Sources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\ntask precompile:swift -- --xcode-script-renderer\n";
+		};
 		B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1245,6 +1246,7 @@
 				B7AAB70728BCF89E009AABEA /* View.swift in Sources */,
 				B74EEBD429D86EEF00711DB6 /* SidePane.swift in Sources */,
 				B7688725294A076300C623C9 /* Process.swift in Sources */,
+				B77066022B51F01000551769 /* Precompiled.swift in Sources */,
 				B7C5C5DC29CE765C00EF4D11 /* ArtistNamesInteractiveText.swift in Sources */,
 				B7C364E42A60A87500D4711A /* Menu.swift in Sources */,
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
@@ -1373,6 +1375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B77066042B52ACB200551769 /* Precompiled.swift in Sources */,
 				B7C9CD8A2908467A00A67CE4 /* main.swift in Sources */,
 				B7C9CD95290879F500A67CE4 /* Validation.swift in Sources */,
 				B7C9CD9729087DCA00A67CE4 /* MusicKitWorker.swift in Sources */,

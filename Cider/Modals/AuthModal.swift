@@ -143,17 +143,12 @@ class AuthModal: ObservableObject {
                     return
                 }
                 
-                guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("am-auth.js"),
-                      let script = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
-                    fatalError("Unable to load CiderWebAuth Scripts")
-                }
-                
                 let ua = await Networking.findLatestWebViewUA()
                 DispatchQueue.main.async {
                     let userScript = WKUserScript(source: """
                                                   const initialURL = \"\(AuthModal.INITIAL_URL)\";
                                                   const amToken = \"\(developerToken)\";
-                                                  \(script)
+                                                  \(precompileIncludeStr("@/CiderWebModules/dist/am-auth.js"))
                                                   """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
                     self.wkWebView?.customUserAgent = ua
                     self.wkWebView?.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
@@ -198,10 +193,7 @@ class AuthModal: ObservableObject {
                     // go to /stub so it doesn't load all the images in Apple Music Web's homepage
                     self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
 #else
-                    guard let htmlPath = Bundle.main.executableURL?.deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("SharedSupport").appendingPathComponent("am-auth.html"), let htmlScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
-                        fatalError("Unable to load AMAuth UI")
-                    }
-                    self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: "<p>CiderWebAuth</p>")
+                    self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: precompileIncludeStr("@/CiderWebModules/dist/entries/am-auth.html"))
 #endif
                 }
             }

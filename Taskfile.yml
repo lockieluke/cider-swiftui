@@ -30,6 +30,7 @@ tasks:
       - task: build:native-utils-lib
       - task: build:all-js
       - task: fetch:google-services
+      - task: precompile:swift
 
   build:rs-native-utils-lib:
     desc: "Build Rust NativeUtils"
@@ -84,6 +85,18 @@ tasks:
   build:all-js:
     cmds:
       - task: build:cider-web-modules-js
+
+  precompile:swift:
+    desc: "Precompile Swift source files with swift-precompiler"
+    preconditions:
+      - test -f "`which swift-precompiler`"
+    sources:
+      - Cider/**/*.swift
+      - CiderPlaybackAgent/**/*.swift
+    generates:
+      - Precompiled.swift
+    cmds:
+      - swift-precompiler precompile "Cider/:CiderPlaybackAgent/" {{.CLI_ARGS}}
 
   build:xc:
     desc: "Build all targets including Cider and CiderPlaybackAgent"

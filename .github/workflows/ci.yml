@@ -117,6 +117,11 @@ jobs:
         with:
           crate: cargo-lipo
 
+      - name: Install swift-precompiler from crates.io
+        uses: baptiste0928/cargo-install@v2
+        with:
+          crate: swift-precompiler
+
       - name: Build JS modules
         run: task build:all-js
 
@@ -125,6 +130,9 @@ jobs:
 
       - name: Build NativeUtils module
         run: task build:native-utils-lib
+
+      - name: Precompile Swift sources
+        run: task precompile:swift
 
       - name: Build XCArchive
         run: |

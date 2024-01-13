@@ -26,10 +26,7 @@ class MusicKitWorker : NSObject, WKScriptMessageHandler, WKNavigationDelegate, N
     
     init(userToken: String, developerToken: String, config: JSON) {
         let userContentController = WKUserContentController().then {
-            guard let jsPath = Bundle.main.executableURL?.deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("SharedSupport").appendingPathComponent("cider-playback-agent.js"), let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
-                fatalError("Unable to load CiderPlaybackAgent scripts")
-            }
-            let userScript = WKUserScript(source: "const AM_TOKEN=\"\(developerToken)\";const AM_USER_TOKEN=\"\(userToken)\";\(jsScript)", injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+            let userScript = WKUserScript(source: "const AM_TOKEN=\"\(developerToken)\";const AM_USER_TOKEN=\"\(userToken)\";\(precompileIncludeStr("@/CiderWebModules/dist/cider-playback-agent.js"))", injectionTime: .atDocumentEnd, forMainFrameOnly: true)
             
             $0.addUserScript(userScript)
         }

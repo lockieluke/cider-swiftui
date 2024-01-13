@@ -3,6 +3,9 @@
 .task/
 xcuserdata/
 
+# Precompiler
+Precompiled.swift
+
 # Distribution
 dest/
 

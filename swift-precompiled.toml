@@ -1,0 +1,4 @@
+dirs = ["Cider/", "CiderPlaybackAgent/"]
+
+[path_aliases]
+"@" = "./"

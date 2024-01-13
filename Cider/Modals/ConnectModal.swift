@@ -121,14 +121,9 @@ class ConnectModal: ObservableObject {
                 }
                 
                 if host.isNotNilNotEmpty, whitelist.contains(host!) {
-                    guard let userJsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("handle-googleauth-unsafe-dialog.js"),
-                          let userJsScript = try? String(contentsOfFile: userJsPath.path, encoding: .utf8) else {
-                        fatalError("Unable to load CiderConnectAuth user script")
-                    }
-                    
                     let newWebView = WKWebView(frame: webView.frame, configuration: configuration).then {
                         $0.customUserAgent = self.parent.userAgent
-                        $0.configuration.userContentController.addUserScript(WKUserScript(source: userJsScript, injectionTime: .atDocumentStart, forMainFrameOnly: true))
+                        $0.configuration.userContentController.addUserScript(WKUserScript(source: precompileIncludeStr("@/CiderWebModules/dist/handle-googleauth-unsafe-dialog.js"), injectionTime: .atDocumentStart, forMainFrameOnly: true))
                     }
                     self.parent.view.addSubview(newWebView)
                     return newWebView
@@ -140,17 +135,12 @@ class ConnectModal: ObservableObject {
     }
     
     init() {
-        guard let jsPath = Bundle.main.sharedSupportURL?.appendingPathComponent("cider-connect.js"),
-              let jsScript = try? String(contentsOfFile: jsPath.path, encoding: .utf8) else {
-            fatalError("Unable to load CiderConnectAuth Scripts")
-        }
-        
         let server = HttpServer()
         let serve = scopes {
             html {
                 body {
                     script {
-                        inner = jsScript
+                        inner = precompileIncludeStr("@/CiderWebModules/dist/cider-connect.js")
                     }
                 }
             }
