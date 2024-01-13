@@ -58,7 +58,7 @@ struct AboutView: View {
                         }
                         
                         if updaterState == .Checking {
-                            LottieView(animation: .named("CiderSpinner"))
+                            LottieView(animation: try! .from(data: precompileIncludeData("@/Cider/Resources/CiderSpinner.json")))
                                 .playing(loopMode: .loop)
                                 .clipShape(Rectangle())
                                 .frame(width: 15, height: 15)

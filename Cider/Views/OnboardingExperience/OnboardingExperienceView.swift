@@ -150,13 +150,13 @@ struct OnboardingExperienceView: View {
     
     var body: some View {
         ZStack {
-            LottieView(animation: .named("Startup"))
-                .play(animationPlaybackMode)
+            LottieView(animation: try! .from(data: precompileIncludeData("@/Cider/Resources/Startup.json")))
+                .playbackMode(animationPlaybackMode)
                 .blur(radius: 30)
                 .opacity(lottieOpacity)
             
-            LottieView(animation: .named("StartupText"))
-                .play(animationPlaybackMode)
+            LottieView(animation: try! .from(data: precompileIncludeData("@/Cider/Resources/StartupText.json")))
+                .playbackMode(animationPlaybackMode)
                 .animationDidFinish { finished in
                     if finished {
                         self.dismissAnimation()
