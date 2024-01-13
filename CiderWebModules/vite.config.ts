@@ -6,6 +6,7 @@ import * as path from "path";
 import {fileURLToPath} from "url";
 import {injectionScripts} from "./build";
 import eslintPlugin from "vite-plugin-eslint";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +15,6 @@ export default defineConfig(() => ({
   build: {
     rollupOptions: {
       input: {
-        'am-auth': path.join(__dirname, 'entries', 'am-auth.html')
         "am-auth": path.join(__dirname, "entries", "am-auth.html"),
       },
       external: injectionScripts
@@ -27,7 +27,7 @@ export default defineConfig(() => ({
       "@src": path.join(__dirname, "src")
     }
   },
-  plugins: [solid(), eslintPlugin({
+  plugins: [solid(), topLevelAwait(), eslintPlugin({
     include: ["src/**/*.ts", "src/**/*.tsx"]
   }), viteSingleFile(), ViteMinifyPlugin()]
 }));

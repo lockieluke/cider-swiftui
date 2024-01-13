@@ -42,6 +42,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-minify": "^1.5.2",
     "vite-plugin-singlefile": "^0.13.5",
-    "vite-plugin-solid": "^2.8.0"
+    "vite-plugin-solid": "^2.8.0",
+    "vite-plugin-top-level-await": "^1.4.1"
   }
 }
