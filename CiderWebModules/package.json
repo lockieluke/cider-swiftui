@@ -20,6 +20,7 @@
     "store2": "^2.14.2"
   },
   "devDependencies": {
+    "@nabla/vite-plugin-eslint": "^2.0.2",
     "@types/eslint": "^8",
     "@types/fs-extra": "^11",
     "@types/lodash-es": "^4",
@@ -39,7 +40,6 @@
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.8",
-    "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-minify": "^1.5.2",
     "vite-plugin-singlefile": "^0.13.5",
     "vite-plugin-solid": "^2.8.0",

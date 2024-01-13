@@ -5,7 +5,7 @@ import {ViteMinifyPlugin} from "vite-plugin-minify";
 import * as path from "path";
 import {fileURLToPath} from "url";
 import {injectionScripts} from "./build";
-import eslintPlugin from "vite-plugin-eslint";
+import eslintPlugin from "@nabla/vite-plugin-eslint";
 import topLevelAwait from "vite-plugin-top-level-await";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +28,6 @@ export default defineConfig(() => ({
     }
   },
   plugins: [solid(), topLevelAwait(), eslintPlugin({
-    include: ["src/**/*.ts", "src/**/*.tsx"]
+    shouldLint: path => (path.endsWith(".ts") || path.endsWith(".tsx")) && path.includes("src")
   }), viteSingleFile(), ViteMinifyPlugin()]
 }));
