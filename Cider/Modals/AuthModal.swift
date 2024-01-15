@@ -193,7 +193,7 @@ class AuthModal: ObservableObject {
                     // go to /stub so it doesn't load all the images in Apple Music Web's homepage
                     self.wkWebView?.load(URLRequest(url: URL(string: "https://music.apple.com/stub")!))
 #else
-                    self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: precompileIncludeStr("@/CiderWebModules/dist/entries/am-auth.html"))
+                    self.wkWebView?.loadSimulatedRequest(AuthModal.INITIAL_URL, responseHTML: precompileIncludeStr("@/CiderWebModules/dist/am-auth.html"))
 #endif
                 }
             }

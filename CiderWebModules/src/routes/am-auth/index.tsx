@@ -1,8 +1,10 @@
 import {Spinner, SpinnerType} from "solid-spinner";
 import {createEffect} from "solid-js";
+import {render} from "solid-js/web";
 
-export default function () {
+const App = () => {
     createEffect(() => {
+        document.title = "Authenticating with Apple Music";
     }, []);
 
     return (
@@ -11,4 +13,6 @@ export default function () {
             <h1>Authenticating with Apple Music</h1>
         </div>
     );
-}
+};
+
+render(App, document.getElementById("app")!);

@@ -75,8 +75,8 @@ tasks:
     desc: "Build CiderWebModules"
     sources:
       - src/**/*
-      - entries/**/*
-      - public/**/*
+      - package.json
+      - yarn.lock
     generates:
       - dist/**/*
     cmds:
