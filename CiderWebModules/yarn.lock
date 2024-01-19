@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 8
+  version: 6
   cacheKey: 10c0
 
 "@aashutoshrathi/word-wrap@npm:^1.2.3":
@@ -2275,41 +2275,41 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cider-web-ui@workspace:."
   dependencies:
-    "@nabla/vite-plugin-eslint": "npm:^2.0.2"
-    "@types/async-exit-hook": "npm:^2"
-    "@types/eslint": "npm:^8"
-    "@types/fs-extra": "npm:^11"
-    "@types/lodash-es": "npm:^4"
-    "@types/node": "npm:^20.10.6"
-    "@typescript-eslint/eslint-plugin": "npm:^6.18.1"
-    "@typescript-eslint/parser": "npm:^6.18.1"
-    async-exit-hook: "npm:^2.0.1"
-    autoprefixer: "npm:^10.4.16"
-    await-to-js: "npm:^3.0.0"
-    cheerio: "npm:^1.0.0-rc.12"
-    esbuild: "npm:^0.19.11"
-    eslint: "npm:^8.56.0"
-    firebase: "npm:^10.7.1"
-    fs-extra: "npm:^11.2.0"
-    glob: "npm:^10.3.10"
-    lodash-es: "npm:^4.17.21"
-    modern-async: "npm:^2.0.0"
+    "@nabla/vite-plugin-eslint": ^2.0.2
+    "@types/async-exit-hook": ^2
+    "@types/eslint": ^8
+    "@types/fs-extra": ^11
+    "@types/lodash-es": ^4
+    "@types/node": ^20.10.6
+    "@typescript-eslint/eslint-plugin": ^6.18.1
+    "@typescript-eslint/parser": ^6.18.1
+    async-exit-hook: ^2.0.1
+    autoprefixer: ^10.4.16
+    await-to-js: ^3.0.0
+    cheerio: ^1.0.0-rc.12
+    esbuild: ^0.19.11
+    eslint: ^8.56.0
+    firebase: ^10.7.1
+    fs-extra: ^11.2.0
+    glob: ^10.3.10
+    lodash-es: ^4.17.21
+    modern-async: ^2.0.0
     musickit-typescript: "github:ciderapp/musickit-types"
-    ora: "npm:^8.0.1"
-    postcss: "npm:^8.4.33"
-    sass: "npm:^1.69.7"
-    solid-js: "npm:^1.8.7"
-    solid-spinner: "npm:^0.2.0"
-    store2: "npm:^2.14.2"
-    tailwindcss: "npm:^3.4.1"
-    tmp-promise: "npm:^3.0.3"
-    tsx: "npm:^4.7.0"
-    typescript: "npm:^5.3.3"
-    vite: "npm:^5.0.8"
-    vite-plugin-minify: "npm:^1.5.2"
-    vite-plugin-singlefile: "npm:^0.13.5"
-    vite-plugin-solid: "npm:^2.8.0"
-    vite-plugin-top-level-await: "npm:^1.4.1"
+    ora: ^8.0.1
+    postcss: ^8.4.33
+    sass: ^1.69.7
+    solid-js: ^1.8.7
+    solid-spinner: ^0.2.0
+    store2: ^2.14.2
+    tailwindcss: ^3.4.1
+    tmp-promise: ^3.0.3
+    tsx: ^4.7.0
+    typescript: ^5.3.3
+    vite: ^5.0.12
+    vite-plugin-minify: ^1.5.2
+    vite-plugin-singlefile: ^0.13.5
+    vite-plugin-solid: ^2.8.0
+    vite-plugin-top-level-await: ^1.4.1
   languageName: unknown
   linkType: soft
 
@@ -3052,9 +3052,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.3#optional!builtin<compat/fsevents>":
+"fsevents@patch:fsevents@npm%3A~2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.3#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.3#~builtin<compat/fsevents>":
   version: 2.3.3
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.3#optional!builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.3#~builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
@@ -4401,16 +4401,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^1.1.7#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.2#optional!builtin<compat/resolve>":
+"resolve@patch:resolve@npm%3A^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.2#~builtin<compat/resolve>":
   version: 1.22.8
-  resolution: "resolve@patch:resolve@npm%3A1.22.8#optional!builtin<compat/resolve>::version=1.22.8&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.22.8#~builtin<compat/resolve>::version=1.22.8&hash=c3c19d"
   dependencies:
     is-core-module: "npm:^2.13.0"
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
     resolve: bin/resolve
-  checksum: 0446f024439cd2e50c6c8fa8ba77eaa8370b4180f401a96abf3d1ebc770ac51c1955e12764cde449fde3fff480a61f84388e3505ecdbab778f4bef5f8212c729
+  checksum: 8/5479b7d431cacd5185f8db64bfcb7286ae5e31eb299f4c4f404ad8aa6098b77599563ac4257cb2c37a42f59dfc06a1bec2bcf283bb448f319e37f0feb9a09847
   languageName: node
   linkType: hard
 
@@ -4996,13 +4996,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@^5.3.3#~builtin<compat/typescript>":
   version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
+  resolution: "typescript@patch:typescript@npm%3A5.3.3#~builtin<compat/typescript>::version=5.3.3&hash=e012d7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1d0a5f4ce496c42caa9a30e659c467c5686eae15d54b027ee7866744952547f1be1262f2d40de911618c242b510029d51d43ff605dba8fb740ec85ca2d3f9500
+  checksum: 8/4e604a9e107ce0c23b16a2f8d79d0531d4d8fe9ebbb7a8c395c66998c39892f0e0a071ef0b0d4e66420a8ec2b8d6cfd9cdb29ba24f25b37cba072e9282376df9
   languageName: node
   linkType: hard
 
@@ -5147,14 +5147,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.8":
-  version: 5.0.11
-  resolution: "vite@npm:5.0.11"
+"vite@npm:^5.0.12":
+  version: 5.0.12
+  resolution: "vite@npm:5.0.12"
   dependencies:
-    esbuild: "npm:^0.19.3"
-    fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.32"
-    rollup: "npm:^4.2.0"
+    esbuild: ^0.19.3
+    fsevents: ~2.3.3
+    postcss: ^8.4.32
+    rollup: ^4.2.0
   peerDependencies:
     "@types/node": ^18.0.0 || >=20.0.0
     less: "*"
@@ -5183,7 +5183,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 74a3ddc6d43cf19cb6f827a53d77c481a07517a72b7d82a178df082012ad81ab5231a287a6dcc5471c0b2a5c8dd7e6ea8e1d62d268803057d0315729f09c5e33
+  checksum: 8/b97b6f1c204d9091d0973626827a6e9d8e8b1959ebd0877b6f76e7068e1e7adf9ecd3b1cc382cbab9d421e3eeca5e1a95f27f9c1734439b229f5a58ef2052fa4
   languageName: node
   linkType: hard
 
