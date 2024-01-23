@@ -30,6 +30,7 @@ struct ContentView: View {
     
     @StateObject private var searchModal = SearchModal()
     @StateObject private var personalisedData = PersonalisedData()
+    @StateObject private var toastModal = ToastModal()
     
     @State private var displayAskDonationAgainToast: Bool = false
     
@@ -68,6 +69,10 @@ struct ContentView: View {
         .toast(isPresenting: $displayAskDonationAgainToast, duration: 5) {
             AlertToast(displayMode: .hud, type: .systemImage(SFSymbol.clockArrowCirclepath.rawValue, .yellow), title: "We'll remind you tomorrow")
         }
+        .toast(isPresenting: $toastModal.showingErrorToast, duration: toastModal.errorToast?.duration ?? 0.0) {
+            let errorToast = toastModal.errorToast ?? ToastModal.ErrorToast(title: "", subtitle: "")
+            return AlertToast(displayMode: .hud, type: .error(.red), title: errorToast.title, subTitle: errorToast.subtitle)
+        }
         .sheet(isPresented: $navigationModal.isDonateViewPresent) {
             DonateView() {
                 self.displayAskDonationAgainToast = true
@@ -76,9 +81,13 @@ struct ContentView: View {
         .sheet(isPresented: $navigationModal.isAboutViewPresent) {
             AboutView()
         }
+        .sheet(isPresented: $navigationModal.isChangelogsViewPresent) {
+            ChangeLogsView()
+        }
         .environmentObject(searchModal)
         .environmentObject(navigationModal)
         .environmentObject(personalisedData)
+        .environmentObject(toastModal)
         .onAppear {
             if !self.launchedBefore {
                 self.navigationModal.inOnboardingExperience = true

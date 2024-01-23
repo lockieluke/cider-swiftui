@@ -123,6 +123,7 @@
 		B77D950D2A9CB7D9007ED4BD /* Any.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77D950C2A9CB7D9007ED4BD /* Any.swift */; };
 		B78B720C29F09A15006EDC69 /* native-utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B720B29F09A15006EDC69 /* native-utils.swift */; platformFilters = (macos, ); };
 		B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */; platformFilters = (macos, ); };
+		B78C2BD42B5C91B20047DDFC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B78C2BD32B5C91B20047DDFC /* FirebaseStorage */; };
 		B790345E29F091D5001B11AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B790345D29F091D5001B11AE /* Settings.swift */; platformFilters = (macos, ); };
 		B79050332B0E949600CED9B6 /* CiderElevationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050322B0E949600CED9B6 /* CiderElevationHelper.swift */; };
 		B79050352B0E949600CED9B6 /* CiderElevationHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050342B0E949600CED9B6 /* CiderElevationHelperProtocol.swift */; };
@@ -146,6 +147,7 @@
 		B798983429D0B6DB00A734DC /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983329D0B6DB00A734DC /* List.swift */; };
 		B798983829D0E96900A734DC /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983729D0E96900A734DC /* DraggableView.swift */; };
 		B798983A29D22A9400A734DC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798983929D22A9400A734DC /* Array.swift */; };
+		B79F0B752B588BAC006A46AC /* ToastModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79F0B742B588BAC006A46AC /* ToastModal.swift */; };
 		B7A24EC82AF9A97B00B97E07 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A24EC72AF9A97B00B97E07 /* Helper.m */; };
 		B7A24ECD2AFAF89200B97E07 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = B7A24ECC2AFAF89200B97E07 /* ArgumentParser */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
@@ -388,6 +390,7 @@
 		B798983729D0E96900A734DC /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		B798983929D22A9400A734DC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		B79EA2A02AC783B200E5687F /* Pretendard.woff2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pretendard.woff2; sourceTree = "<group>"; };
+		B79F0B742B588BAC006A46AC /* ToastModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastModal.swift; sourceTree = "<group>"; };
 		B7A24EC32AF9A8D000B97E07 /* CiderPlaybackAgent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CiderPlaybackAgent-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7A24EC42AF9A8D100B97E07 /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		B7A24EC72AF9A97B00B97E07 /* Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
@@ -460,6 +463,7 @@
 				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
 				B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */,
 				B7AAF7792ACE175900A9346C /* AlertToast in Frameworks */,
+				B78C2BD42B5C91B20047DDFC /* FirebaseStorage in Frameworks */,
 				B71D54212ABFA1BD001A62D6 /* Lottie in Frameworks */,
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
 				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
@@ -802,6 +806,7 @@
 				B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */,
 				B70524C62A6F2931001654B3 /* CacheModal.swift */,
 				B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */,
+				B79F0B742B588BAC006A46AC /* ToastModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -951,6 +956,7 @@
 				B7AAF7782ACE175900A9346C /* AlertToast */,
 				B7DDCCF02B2A5872006E1429 /* Files */,
 				B77065F32B4CBC7600551769 /* Subprocess */,
+				B78C2BD32B5C91B20047DDFC /* FirebaseStorage */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1322,6 +1328,7 @@
 				B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */,
 				B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */,
 				B71D540A2ABCBC97001A62D6 /* NSWindow.swift in Sources */,
+				B79F0B752B588BAC006A46AC /* ToastModal.swift in Sources */,
 				B700F0E12AEA64F7009E3D40 /* MediaAppleCurator.swift in Sources */,
 				B77D950D2A9CB7D9007ED4BD /* Any.swift in Sources */,
 				B797AFFC297F3E7B00D77282 /* MediaAny.swift in Sources */,
@@ -2293,6 +2300,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7DDCCEF2B2A5872006E1429 /* XCRemoteSwiftPackageReference "Files" */;
 			productName = Files;
+		};
+		B78C2BD32B5C91B20047DDFC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		B79529182B1E73BF00D98653 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;

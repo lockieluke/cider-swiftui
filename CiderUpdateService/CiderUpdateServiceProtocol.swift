@@ -37,6 +37,7 @@ class CiderUpdateManifest: NSObject, Codable {
 @objc protocol CiderUpdateServiceProtocol {
     
     func fetchPresentVersion() async throws -> Data
+    func fetchCurrentChangelogs(version: String, build: Int) async throws -> Data
     func removeQuarantineFlag(path: String, reply onReply: @escaping (_ error: Error) -> Void)
     func applyUpdate(manifestData: Data, dmgPath: String, parentPid: Int32, appPath: String) async throws
     

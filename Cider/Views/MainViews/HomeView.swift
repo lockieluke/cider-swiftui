@@ -13,6 +13,7 @@ struct HomeView: View {
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     enum LoadingState {
         case loading
@@ -57,7 +58,7 @@ struct HomeView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading) {
-                HStack {
+                HStack(spacing: 20) {
                     switch socialProfileState {
                     case .loaded:
                         Text("Good \(DateUtils.timeOfDayInWords.lowercased()), \(homeViewData.personalSocialProfile?.name ?? "")")
@@ -71,9 +72,16 @@ struct HomeView: View {
                     }
                     Spacer()
                     Button {
-                        let newIssueUrl = URL(string: "https://github.com/ciderapp/Cider-2/issues/new?assignees=&labels=\("🕓+Pending+Implementation,🐛+Bug".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&template=bug_report.yaml&title=\("[Bug] [macOS SwiftUI]:".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")
-                        
-                        newIssueUrl?.open()
+                        self.navigationModal.isChangelogsViewPresent = true
+                    } label: {
+                        HStack {
+                            Image(systemSymbol: .sparkles)
+                            Text("What's New")
+                        }
+                    }
+                    .buttonStyle(.borderless)
+                    Button {
+                        URL(string: "https://github.com/ciderapp/Cider-2/issues/new?assignees=&labels=\("🕓+Pending+Implementation,🐛+Bug".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&template=bug_report.yaml&title=\("[Bug] [macOS SwiftUI]:".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")?.open()
                     } label: {
                         HStack {
                             Image(systemSymbol: .ladybug)

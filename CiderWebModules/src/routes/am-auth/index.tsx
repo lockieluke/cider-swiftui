@@ -1,6 +1,7 @@
 import {Spinner, SpinnerType} from "solid-spinner";
 import {createEffect} from "solid-js";
 import {render} from "solid-js/web";
+import "@src/index.scss";
 
 const App = () => {
     createEffect(() => {

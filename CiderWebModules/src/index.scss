@@ -4,6 +4,10 @@
 
 html {
   body {
-    @apply select-none text-zinc-800 dark:text-white bg-white dark:bg-black;
+    @apply select-none text-zinc-800 dark:text-white bg-transparent;
+
+    *:is(p, span, a, h1, h2, h3, h4, h5, h6, strong, em, b, i, u, s, small, mark, del, ins, sub, sup, code, pre, q, blockquote) {
+      @apply cursor-default;
+    }
   }
 }

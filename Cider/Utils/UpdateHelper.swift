@@ -13,6 +13,8 @@ import Files
 import CryptoKit
 import System
 import Subprocess
+import FirebaseCore
+import FirebaseStorage
 
 extension File {
     
@@ -71,6 +73,21 @@ class UpdateHelper {
             return try ZippyJSONDecoder().decode(CiderUpdateManifest.self, from: data)
         } catch {
             self.logger.error("Failed to fetch present version from update server: \(error.localizedDescription)")
+        }
+        
+        return nil
+    }
+    
+    func fetchCurrentChangelogs() async -> String? {
+        do {
+            // Fetch using CiderUpdateService - slower but independent
+//            let data = try await self.xpc.fetchCurrentChangelogs(version: Bundle.main.appVersion, build: Int(Bundle.main.appBuild) ?? 0)
+            
+            let data = try await FirebaseStorage.Storage.storage().reference(withPath: "changelogs/macos-native").child("Cider-\(Bundle.main.appVersion)-b\(Bundle.main.appBuild).md").data(maxSize: .max)
+            
+            return String(data: data, encoding: .utf8)
+        } catch {
+            self.logger.error("Failed to fetch current changelog: \(error.localizedDescription)")
         }
         
         return nil

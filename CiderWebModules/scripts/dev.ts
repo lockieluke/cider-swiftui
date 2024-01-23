@@ -32,8 +32,8 @@ const server = await createServer(mergeConfig<UserConfig, InlineConfig>(baseConf
             const url = new URL(`http://localhost:5173${originalUrl}`);
             const $ = cheerio.load(html);
 
-            $("<script></script>").attr("type", "module").text("import './src/index.scss';").appendTo("head");
             if (url.pathname === "/") {
+                $("<script></script>").attr("type", "module").text("import './src/index.scss';").appendTo("head");
                 $("<title></title>").text("CiderWebModules").appendTo("head");
 
                 const list = $("<ul></ul>");

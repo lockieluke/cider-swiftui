@@ -81,6 +81,10 @@ class CiderUpdateService: NSObject, CiderUpdateServiceProtocol {
         ))
     }
     
+    func fetchCurrentChangelogs(version: String, build: Int) async throws -> Data {
+        return try await self.storage.reference(withPath: "changelogs/macos-native").child("Cider-\(version)-b\(build).md").data(maxSize: .max)
+    }
+    
     func removeQuarantineFlag(path: String, reply onReply: @escaping (_ error: Error) -> Void) {
         do {
             if (try URL(filePath: path).listExtendedAttributes().contains("com.apple.quarantine")) {
