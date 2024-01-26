@@ -186,7 +186,14 @@ struct SidebarPane: View {
         }
         .frame(minWidth: 250, maxWidth: 400)
         // restoring sidebar width here
-        .frame(width: loadedSavedWidth ? nil : CGFloat(Defaults[.sidebarWidth]))
+        .frame(width: loadedSavedWidth ? nil : Defaults[.sidebarWidth])
+        .if(!navigationModal.showSidebar) { view in
+            view
+                .frame(width: .zero)
+                .onAppear {
+                    self.loadedSavedWidth = false
+                }
+        }
         .onChange(of: navigationModal.showSidebar) { showSidebar in
             // hacky way to restore sidebar width but still allow adjusting
             if showSidebar {
@@ -194,11 +201,6 @@ struct SidebarPane: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                     self.loadedSavedWidth = true
                 }
-            }
-        }
-        .onAppear {
-            if Defaults[.sidebarWidth] == 0 {
-                Defaults[.sidebarWidth] = 250
             }
         }
         .listStyle(.sidebar)

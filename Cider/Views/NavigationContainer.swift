@@ -34,11 +34,11 @@ struct NavigationContainer: View {
                                 // Save sidebar width here
                                 let newWidth = newSize.width
                                 if newWidth != .zero && newWidth != 0 {
-                                    self.isAdjustingSidebar = true
+//                                    self.isAdjustingSidebar = true
                                     Defaults[.sidebarWidth] = Double(newWidth)
                                     // TODO: Disable animation when sidebar is being adjusted
                                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-                                        self.isAdjustingSidebar = false
+//                                        self.isAdjustingSidebar = false
                                     }
                                 }
                             }
