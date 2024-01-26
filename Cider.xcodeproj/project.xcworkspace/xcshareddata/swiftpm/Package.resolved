@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "atlantis",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ProxymanApp/atlantis.git",
+      "state" : {
+        "revision" : "131d757cf8e6e368ad338728379174f7cfff9326",
+        "version" : "1.23.0"
+      }
+    },
+    {
       "identity" : "attributedtext",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Iaenhaall/AttributedText.git",

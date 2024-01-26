@@ -24,6 +24,11 @@ public typealias Application = UIApplication
 public typealias PlatformColor = UIColor
 #endif
 
+#if DEBUG
+import Atlantis
+import Defaults
+#endif
+
 class AppDelegate : NSObject, ApplicationDelegate {
     
 #if os(macOS)
@@ -32,6 +37,12 @@ class AppDelegate : NSObject, ApplicationDelegate {
 #endif
     
     private func commonEntryPoint() {
+#if DEBUG
+        if Defaults[.enableAtlantis] {
+            Atlantis.start()
+        }
+#endif
+        
         FirebaseConfiguration.shared.setLoggerLevel(.min)
 #if DEBUG
         Analytics.setAnalyticsCollectionEnabled(false)

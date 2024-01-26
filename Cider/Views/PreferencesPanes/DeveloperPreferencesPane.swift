@@ -7,6 +7,10 @@ import Settings
 import Inject
 import Defaults
 
+#if DEBUG
+import Atlantis
+#endif
+
 struct DeveloperPreferencesPane: View {
     
     @ObservedObject private var iO = Inject.observer
@@ -16,6 +20,7 @@ struct DeveloperPreferencesPane: View {
     
     #if DEBUG
     @Default(.debugOpenWebInspectorAutomatically) var openWebInspectorAutomatically
+    @Default(.enableAtlantis) var enableAtlantis
     #else
     @State private var openWebInspectorAutomatically = false
     #endif
@@ -71,6 +76,13 @@ struct DeveloperPreferencesPane: View {
                         }
                         
                         Group {
+                            PrefSectionText("Debugging Settings - Networking")
+                            Toggle("Enable [Atlantis](https://github.com/ProxymanApp/atlantis) for easy HTTP requet interception", isOn: $enableAtlantis)
+                            Text("This setting will apply next time \(Bundle.main.displayName) is launched")
+                                .settingDescription()
+                        }
+                        
+                        Group {
                             PrefSectionText("Diagnostic Information")
                             
                             Text("""
@@ -88,6 +100,13 @@ struct DeveloperPreferencesPane: View {
                 .transparentScrollbars()
             }
         }
+        #if DEBUG
+        .onChange(of: enableAtlantis) { enableAtlantis in
+            if !enableAtlantis {
+                Atlantis.stop()
+            }
+        }
+        #endif
         .frame(height: 600)
         .enableInjection()
     }

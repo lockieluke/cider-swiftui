@@ -32,6 +32,7 @@ extension Defaults.Keys {
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)
     static let debugHideFrequentWSRequests = Key<Bool>("hideFrequentWSRequests", default: true)
+    static let enableAtlantis = Key<Bool>("enableAtlantis", default: false)
     #endif
     
 }
