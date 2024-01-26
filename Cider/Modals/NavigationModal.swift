@@ -4,6 +4,7 @@
 
 import Foundation
 import SwiftUI
+import Defaults
 
 enum RootNavigationType {
     
@@ -184,7 +185,11 @@ class NavigationModal : ObservableObject {
     
     @Published var showQueue: Bool = false
     @Published var showLyrics: Bool = false
-    @Published var showSidebar: Bool = false
+    @Published var showSidebar: Bool = false {
+        didSet {
+            Defaults[.showSidebarAtLaunch] = self.showSidebar
+        }
+    }
     
     @Published var inOnboardingExperience: Bool = false
     @Published var isDonateViewPresent: Bool = false

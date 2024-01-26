@@ -100,6 +100,8 @@ struct ContentView: View {
             }
             
             self.lastLaunchDate = .now
+            
+            self.navigationModal.showSidebar = Defaults[.showSidebarAtLaunch]
         }
         .task {
             if self.launchedBefore {
