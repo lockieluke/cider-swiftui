@@ -326,6 +326,14 @@ extension View {
         return modifier(DraggableView(onDrag: onDrag, allowDragging: allowDragging))
     }
     
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+    
 }
 
 struct PressActions: ViewModifier {

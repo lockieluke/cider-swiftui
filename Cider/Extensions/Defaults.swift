@@ -26,6 +26,8 @@ extension Defaults.Keys {
     static let neverShowDonationPopup = Key<Bool>("neverShowDonationPopup", default: false)
     static let usePretendardFont = Key<Bool>("usePretendardFont", default: false)
     
+    static let sidebarWidth = Key<Double>("sidebarWidth", default: 250.0)
+    
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)
     static let debugHideFrequentWSRequests = Key<Bool>("hideFrequentWSRequests", default: true)

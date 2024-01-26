@@ -4,6 +4,7 @@
 
 import SwiftUI
 import Inject
+import Defaults
 
 struct NavigationContainer: View {
     
@@ -20,80 +21,92 @@ struct NavigationContainer: View {
 #endif
     
     var body: some View {
-        ZStack {
-            if self.mkModal.isAuthorised {
-                ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
-                    let isPresent = viewStack.isPresent
-                    let currentRootStack = navigationModal.currentRootStack
-                    let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
-                    let shouldUpperStackShow = isPresent && currentRootStack == viewStackOrigin
-                    
-                    switch viewStack.params {
+        HSplitView {
+            SidebarPane()
+                .overlay {
+                    GeometryReader { geometry in
+                        Color.clear
+                            .onChange(of: geometry.size) { newSize in
+                                // Save sidebar width here
+                                let newWidth = newSize.width
+                                if newWidth != .zero && newWidth != 0 {
+                                    print(newWidth)
+                                    Defaults[.sidebarWidth] = Double(newWidth)
+                                }
+                            }
+                    }
+                }
+            
+            ZStack {
+                if self.mkModal.isAuthorised {
+                    ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
+                        let isPresent = viewStack.isPresent
+                        let currentRootStack = navigationModal.currentRootStack
+                        let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
+                        let shouldUpperStackShow = isPresent && currentRootStack == viewStackOrigin
                         
-                    case .rootViewParams:
-                        Group {
-                            HomeView()
-                                .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
-                                .hideWithoutDestroying(currentRootStack != .Home || !isPresent)
+                        switch viewStack.params {
                             
-                            ListenNowView()
-                                .hideWithoutDestroying(currentRootStack != .ListenNow || !isPresent)
+                        case .rootViewParams:
+                            Group {
+                                HomeView()
+                                    .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
+                                    .hideWithoutDestroying(currentRootStack != .Home || !isPresent)
+                                
+                                ListenNowView()
+                                    .hideWithoutDestroying(currentRootStack != .ListenNow || !isPresent)
+                                
+                                BrowseView()
+                                    .hideWithoutDestroying(currentRootStack != .Browse || !isPresent)
+                                
+                                RadioView()
+                                    .hideWithoutDestroying(currentRootStack != .Radio || !isPresent)
+                            }
                             
-                            BrowseView()
-                                .hideWithoutDestroying(currentRootStack != .Browse || !isPresent)
+                        case .detailedViewParams(let detailedViewParams):
+                            DetailedView(detailedViewParams: detailedViewParams)
+                                .opacity(shouldUpperStackShow ? 1 : 0)
+                                .allowsHitTesting(shouldUpperStackShow)
                             
-                            RadioView()
-                                .hideWithoutDestroying(currentRootStack != .Radio || !isPresent)
+                        case .artistViewParams(let artistViewParams):
+                            ArtistView(params: artistViewParams)
+                                .hideWithoutDestroying(!shouldUpperStackShow)
+                                .allowsHitTesting(shouldUpperStackShow)
+                            
+                        default:
+                            Color.clear
                         }
                         
-                    case .detailedViewParams(let detailedViewParams):
-                        DetailedView(detailedViewParams: detailedViewParams)
-                            .opacity(shouldUpperStackShow ? 1 : 0)
-                            .allowsHitTesting(shouldUpperStackShow)
-                        
-                    case .artistViewParams(let artistViewParams):
-                        ArtistView(params: artistViewParams)
-                            .hideWithoutDestroying(!shouldUpperStackShow)
-                            .allowsHitTesting(shouldUpperStackShow)
-                        
-                    default:
-                        Color.clear
+                    }
+                    .hideWithoutDestroying(searchModal.shouldDisplaySearchPage)
+                    .zIndex(0)
+                    
+                    if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
+                        SearchView()
+                            .transition(.opacity.animation(.spring().speed(2)))
+                            .zIndex(1)
+                            .onChange(of: self.navigationModal.currentlyPresentViewStackIndex) { _ in
+                                self.searchModal.shouldDisplaySearchPage = false
+                            }
+                            .onDisappear {
+                                self.searchModal.searchResults = nil
+                            }
                     }
                     
-                }
-                .hideWithoutDestroying(searchModal.shouldDisplaySearchPage)
-                .zIndex(0)
-                
-                if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
-                    SearchView()
-                        .transition(.opacity.animation(.spring().speed(2)))
-                        .zIndex(1)
-                        .onChange(of: self.navigationModal.currentlyPresentViewStackIndex) { _ in
-                            self.searchModal.shouldDisplaySearchPage = false
-                        }
-                        .onDisappear {
-                            self.searchModal.searchResults = nil
-                        }
-                }
-                
-                if navigationModal.showQueue {
-                    QueueView()
-                        .transition(.move(edge: .trailing))
-                        .zIndex(1)
-                }
-                
-                if navigationModal.showLyrics {
-                    LyricsPaneView()
-                        .transition(.move(edge: .trailing))
-                        .zIndex(1)
-                }
-                
-                if navigationModal.showSidebar {
-                    SidebarPane()
-                        .transition(.move(edge: .leading))
-                        .zIndex(1)
+                    if navigationModal.showQueue {
+                        QueueView()
+                            .transition(.move(edge: .trailing))
+                            .zIndex(1)
+                    }
+                    
+                    if navigationModal.showLyrics {
+                        LyricsPaneView()
+                            .transition(.move(edge: .trailing))
+                            .zIndex(1)
+                    }
                 }
             }
+            .layoutPriority(1)
         }
         .padding(.top, 40)
         .padding(.bottom, 100)

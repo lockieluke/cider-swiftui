@@ -9,6 +9,7 @@
 import SwiftUI
 import Introspect
 import Inject
+import Defaults
 
 struct SidebarItem: View {
     
@@ -143,47 +144,73 @@ struct SidebarPane: View {
     
     @State private var showingAMSection = true
     @State private var allPlaylistsData: [MediaPlaylist] = []
+    @State private var loadedSavedWidth = false
+    @State private var sidebarWidth: CGFloat = 250.0
     
     var body: some View {
-        SidePane(direction: .Left, content: {
-            List {
-                SidebarSection("Apple Music") {
-                    SidebarItem("Home", icon: .Home, stackType: .Home)
-                    SidebarItem("Listen Now", icon: .ListenNow, stackType: .ListenNow)
-                    SidebarItem("Browse", icon: .Browse, stackType: .Browse)
-                    SidebarItem("Radio", icon: .Radio, stackType: .Radio)
-                }
-                
-                Section("Library") {
-                    SidebarItem("Recently Added", icon: .RecentlyAdded)
-                    SidebarItem("Songs", icon: .Songs)
-                    SidebarItem("Albums", icon: .Albums)
-                    SidebarItem("Artists", icon: .Artists)
-                }
-                .foregroundStyle(.white)
-                
-                Section("Apple Music Playlists") {
-                    
-                }
-                .foregroundStyle(.white)
-                
-                Section("Playlists") {
-                    ForEach(allPlaylistsData) { playlist in
-                        SidebarItem(playlist.title, icon: .Playlist, playlistID: playlist.id)
+        List {
+            if mkModal.isAuthorised {
+                Group {
+                    SidebarSection("Apple Music") {
+                        SidebarItem("Home", icon: .Home, stackType: .Home)
+                        SidebarItem("Listen Now", icon: .ListenNow, stackType: .ListenNow)
+                        SidebarItem("Browse", icon: .Browse, stackType: .Browse)
+                        SidebarItem("Radio", icon: .Radio, stackType: .Radio)
                     }
+                    
+                    Section("Library") {
+                        SidebarItem("Recently Added", icon: .RecentlyAdded)
+                        SidebarItem("Songs", icon: .Songs)
+                        SidebarItem("Albums", icon: .Albums)
+                        SidebarItem("Artists", icon: .Artists)
+                    }
+                    .foregroundStyle(.white)
+                    
+                    Section("Apple Music Playlists") {
+                        
+                    }
+                    .foregroundStyle(.white)
+                    
+                    Section("Playlists") {
+                        ForEach(allPlaylistsData) { playlist in
+                            SidebarItem(playlist.title, icon: .Playlist, playlistID: playlist.id)
+                        }
+                    }
+                    .foregroundStyle(.white)
                 }
-                .foregroundStyle(.white)
+                .task {
+                    await fetchPlaylists()
+                }
             }
-            .introspect(.list, on: .macOS(.v10_15, .v11, .v12, .v13, .v14)) { list in
-                list.backgroundColor = .clear
-            }
-            .listStyle(.sidebar)
-        }, headerChildren: {
-            
-        })
-        .task {
-            await fetchPlaylists()
         }
+        .introspect(.list, on: .macOS(.v10_15, .v11, .v12, .v13, .v14)) { list in
+            list.backgroundColor = .clear
+        }
+        .frame(minWidth: 250, maxWidth: 400)
+        // restoring sidebar width here
+        .frame(width: loadedSavedWidth ? nil : Defaults[.sidebarWidth])
+        .if(!navigationModal.showSidebar) { view in
+            view
+                .frame(width: .zero)
+                .onAppear {
+                    self.loadedSavedWidth = false
+                }
+        }
+        .onChange(of: navigationModal.showSidebar) { showSidebar in
+            // hacky way to restore sidebar width but still allow adjusting
+            if showSidebar {
+                self.loadedSavedWidth = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+                    self.loadedSavedWidth = true
+                }
+            }
+        }
+        .onAppear {
+            if Defaults[.sidebarWidth] == 0 {
+                Defaults[.sidebarWidth] = 250
+            }
+        }
+        .listStyle(.sidebar)
         .enableInjection()
     }
     
