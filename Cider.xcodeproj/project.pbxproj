@@ -65,6 +65,7 @@
 		B7284175290DABA100B7A525 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7284174290DABA100B7A525 /* Bundle.swift */; };
 		B728B0562A75CAA200BAC665 /* MediaBrowseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B728B0552A75CAA200BAC665 /* MediaBrowseData.swift */; };
 		B728B0592A78453100BAC665 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = B728B0582A78453100BAC665 /* SFSafeSymbols */; };
+		B72ECF392B64632800944694 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B72ECF382B64632800944694 /* FirebaseFirestore */; };
 		B7332B0E2A96C4A50019221D /* NativeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7332B0D2A96C4A50019221D /* NativeComponent.swift */; };
 		B7332B102A97D7C60019221D /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = B7332B0F2A97D7C60019221D /* Swifter */; };
 		B736F2732A634DFF008A0458 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B736F2722A634DFF008A0458 /* HomeView.swift */; };
@@ -478,6 +479,7 @@
 				B71B828A2A36713300DD8BC2 /* Sliders in Frameworks */,
 				B71B82932A36718800DD8BC2 /* Defaults in Frameworks */,
 				B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */,
+				B72ECF392B64632800944694 /* FirebaseFirestore in Frameworks */,
 				B77065F42B4CBC7600551769 /* Subprocess in Frameworks */,
 				B7332B102A97D7C60019221D /* Swifter in Frameworks */,
 				B76FC6F82A8FE14900F8F80E /* GoogleSignInSwift in Frameworks */,
@@ -957,6 +959,7 @@
 				B7DDCCF02B2A5872006E1429 /* Files */,
 				B77065F32B4CBC7600551769 /* Subprocess */,
 				B78C2BD32B5C91B20047DDFC /* FirebaseStorage */,
+				B72ECF382B64632800944694 /* FirebaseFirestore */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -2265,6 +2268,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B728B0572A78453100BAC665 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
 			productName = SFSafeSymbols;
+		};
+		B72ECF382B64632800944694 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		B7332B0F2A97D7C60019221D /* Swifter */ = {
 			isa = XCSwiftPackageProductDependency;

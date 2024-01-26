@@ -15,6 +15,7 @@ import System
 import Subprocess
 import FirebaseCore
 import FirebaseStorage
+import FirebaseFirestore
 
 extension File {
     
@@ -29,7 +30,7 @@ extension File {
     
 }
 
-class UpdateHelper {
+class UpdateHelper: ObservableObject {
     
     static let shared = UpdateHelper()
     
@@ -39,7 +40,12 @@ class UpdateHelper {
     private var downloadObservation: NSKeyValueObservation?
     private var extractionObservation: NSKeyValueObservation?
     private let helperId: String = "com.cidercollective.UpdaterService"
+    private var storage: FirebaseStorage.Storage?
+    private var firestore: Firestore?
+    
     let logger: Logger
+    var updateManifest: CiderUpdateManifest?
+    @Published var updateNeeded: Bool = false
     
     init() {
         let logger = Logger(label: "UpdateHelper")
@@ -60,6 +66,33 @@ class UpdateHelper {
     func start() {
         self.connection.resume()
         self.logger.success("Started")
+        
+        // Defer firebase initialisation
+        self.storage = FirebaseStorage.Storage.storage()
+        self.firestore = Firestore.firestore().then {
+            $0.settings = FirestoreSettings().then {
+                $0.cacheSettings = MemoryCacheSettings(garbageCollectorSettings: MemoryLRUGCSettings())
+            }
+        }
+        
+        self.firestore?.collection("app").document("releases").collection("macos-native").document("present").addSnapshotListener { snapshot, error in
+            if let error = error {
+                self.logger.error("Failed to pull update information: \(error.localizedDescription)")
+                return
+            }
+            
+            if !snapshot.isNil {
+                Task {
+                    self.logger.info("New version just dropped, fetching update manifest")
+                    if let updateManifest = await UpdateHelper.shared.fetchPresentVersion() {
+                        DispatchQueue.main.async {
+                            self.updateManifest = updateManifest
+                            self.updateNeeded = self.isAppVersionOutdated(manifest: updateManifest)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func terminate() {
@@ -83,9 +116,9 @@ class UpdateHelper {
             // Fetch using CiderUpdateService - slower but independent
 //            let data = try await self.xpc.fetchCurrentChangelogs(version: Bundle.main.appVersion, build: Int(Bundle.main.appBuild) ?? 0)
             
-            let data = try await FirebaseStorage.Storage.storage().reference(withPath: "changelogs/macos-native").child("Cider-\(Bundle.main.appVersion)-b\(Bundle.main.appBuild).md").data(maxSize: .max)
-            
-            return String(data: data, encoding: .utf8)
+            if let data = try await self.storage?.reference(withPath: "changelogs/macos-native").child("Cider-\(Bundle.main.appVersion)-b\(Bundle.main.appBuild).md").data(maxSize: .max) {
+                return String(data: data, encoding: .utf8)
+            }
         } catch {
             self.logger.error("Failed to fetch current changelog: \(error.localizedDescription)")
         }

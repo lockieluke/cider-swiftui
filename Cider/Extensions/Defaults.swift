@@ -26,7 +26,7 @@ extension Defaults.Keys {
     static let neverShowDonationPopup = Key<Bool>("neverShowDonationPopup", default: false)
     static let usePretendardFont = Key<Bool>("usePretendardFont", default: false)
     
-    static let sidebarWidth = Key<Double>("sidebarWidth", default: 250.0)
+    static let sidebarWidth = Key<Double>("sidebarWidth", default: 275.0)
     static let showSidebarAtLaunch = Key<Bool>("showSidebarAtLaunch", default: true)
     
     #if DEBUG

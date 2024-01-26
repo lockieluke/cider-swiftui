@@ -11,7 +11,36 @@ import Introspect
 import Inject
 import Defaults
 
-struct SidebarItem: View {
+fileprivate struct UpdateNowButton: View {
+    
+    @ObservedObject private var iO = Inject.observer
+    
+    @State private var isHovering: Bool = false
+    
+    var body: some View {
+        HStack(spacing: 20) {
+            Image(systemSymbol: .arrowDownAppFill)
+                .font(.system(size: 20))
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Ready to update")
+                    .bold()
+                Text("New update available")
+                    .font(.system(size: 10))
+            }
+        }
+        .padding()
+        .background(Color("PrimaryColour").brightness(isHovering ? 0 : 0.05))
+        .animation(.easeOut, value: isHovering)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 10)
+        .onHover { isHovering in
+            self.isHovering = isHovering
+        }
+        .enableInjection()
+    }
+}
+
+fileprivate struct SidebarItem: View {
     
     @ObservedObject private var iO = Inject.observer
     
@@ -109,7 +138,7 @@ struct SidebarItem: View {
     
 }
 
-struct SidebarSection<Content: View>: View {
+fileprivate struct SidebarSection<Content: View>: View {
     
     @ViewBuilder var content: () -> Content
     
@@ -143,10 +172,21 @@ struct SidebarPane: View {
     @State private var showingAMSection = true
     @State private var allPlaylistsData: [MediaPlaylist] = []
     @State private var loadedSavedWidth = false
-    @State private var sidebarWidth: CGFloat = 250.0
+    
+    @StateObject private var updateHelper = UpdateHelper.shared
+    
+    @Default(.sidebarWidth) private var sidebarWidth
     
     var body: some View {
         List {
+            if updateHelper.updateNeeded {
+                HStack {
+                    Spacer()
+                    UpdateNowButton()
+                    Spacer()
+                }
+            }
+            
             if mkModal.isAuthorised {
                 Group {
                     SidebarSection("Apple Music") {
@@ -179,6 +219,7 @@ struct SidebarPane: View {
                 .task {
                     await fetchPlaylists()
                 }
+                .animation(.none)
             }
         }
         .introspect(.list, on: .macOS(.v10_15, .v11, .v12, .v13, .v14)) { list in

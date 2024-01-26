@@ -63,7 +63,11 @@ class CiderUpdateService: NSObject, CiderUpdateServiceProtocol {
 #endif
         FirebaseApp.configure()
         
-        self.firestore = Firestore.firestore()
+        self.firestore = Firestore.firestore().then {
+            $0.settings = FirestoreSettings().then {
+                $0.cacheSettings = MemoryCacheSettings(garbageCollectorSettings: MemoryLRUGCSettings())
+            }
+        }
         self.storage = Storage.storage()
     }
     
