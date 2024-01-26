@@ -82,9 +82,7 @@ struct SidebarItem: View {
             self.isHovering = isHovering
         }
         .onTapGesture {
-            withAnimation(.spring()) {
-                self.navigationModal.showSidebar = false
-            }
+            self.navigationModal.showSidebar = false
             if playlistID == nil {
                 self.navigationModal.currentRootStack = self.stackType
                 self.navigationModal.resetToRoot()
@@ -188,14 +186,7 @@ struct SidebarPane: View {
         }
         .frame(minWidth: 250, maxWidth: 400)
         // restoring sidebar width here
-        .frame(width: loadedSavedWidth ? nil : Defaults[.sidebarWidth])
-        .if(!navigationModal.showSidebar) { view in
-            view
-                .frame(width: .zero)
-                .onAppear {
-                    self.loadedSavedWidth = false
-                }
-        }
+        .frame(width: loadedSavedWidth ? nil : CGFloat(Defaults[.sidebarWidth]))
         .onChange(of: navigationModal.showSidebar) { showSidebar in
             // hacky way to restore sidebar width but still allow adjusting
             if showSidebar {

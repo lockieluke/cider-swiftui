@@ -211,9 +211,7 @@ class AppMenu {
     }
     
     @objc func toggleSidebar(_ sender: Any) {
-        withAnimation(.interactiveSpring()) {
-            self.navigationModal.showSidebar.toggle()
-        }
+        self.navigationModal.showSidebar.toggle()
     }
     
     @objc func showDonationView(_ sender: Any) {

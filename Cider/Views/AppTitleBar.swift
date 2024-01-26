@@ -41,9 +41,7 @@ struct AppTitleBar: View {
                 }
                 
                 ActionButton(actionType: .Library) {
-                    withAnimation(.interactiveSpring()) {
-                        self.navigationModal.showSidebar.toggle()
-                    }
+                    self.navigationModal.showSidebar.toggle()
                 }
                 Spacer()
                 #if os(macOS)

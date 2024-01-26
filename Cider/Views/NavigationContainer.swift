@@ -20,9 +20,13 @@ struct NavigationContainer: View {
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
 #endif
     
+    @State private var isAdjustingSidebar: Bool = false
+    
     var body: some View {
         HSplitView {
             SidebarPane()
+                .frame(width: navigationModal.showSidebar ? nil : .zero)
+                .animation(.interactiveSpring)
                 .overlay {
                     GeometryReader { geometry in
                         Color.clear
@@ -30,8 +34,12 @@ struct NavigationContainer: View {
                                 // Save sidebar width here
                                 let newWidth = newSize.width
                                 if newWidth != .zero && newWidth != 0 {
-                                    print(newWidth)
+                                    self.isAdjustingSidebar = true
                                     Defaults[.sidebarWidth] = Double(newWidth)
+                                    // TODO: Disable animation when sidebar is being adjusted
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+                                        self.isAdjustingSidebar = false
+                                    }
                                 }
                             }
                     }
@@ -107,6 +115,7 @@ struct NavigationContainer: View {
                 }
             }
             .layoutPriority(1)
+            .animation(.none, value: navigationModal.showSidebar)
         }
         .padding(.top, 40)
         .padding(.bottom, 100)
