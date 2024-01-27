@@ -132,7 +132,9 @@ class CiderUpdateService: NSObject, CiderUpdateServiceProtocol {
         try File(path: dmgPath).delete()
         try updateBundle.delete()
         
-        NSWorkspace.shared.open(appPath.url)
+        try await NSWorkspace.shared.openApplication(at: appPath.url, configuration: NSWorkspace.OpenConfiguration().then {
+            $0.arguments = ["-show-changelogs"]
+        })
         exit(0)
     }
     
