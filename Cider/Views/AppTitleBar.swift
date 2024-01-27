@@ -1,6 +1,6 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Inject
@@ -14,9 +14,9 @@ struct AppTitleBar: View {
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
-    #if os(macOS)
+#if os(macOS)
     @EnvironmentObject private var nativeUtilsWrapper: NativeUtilsWrapper
-    #endif
+#endif
     
     private var titleBarHeight: CGFloat = 50
     
@@ -44,7 +44,7 @@ struct AppTitleBar: View {
                     self.navigationModal.showSidebar.toggle()
                 }
                 Spacer()
-                #if os(macOS)
+#if os(macOS)
                 if ciderPlayback.nowPlayingState.playbackPipelineInitialised {
                     ActionButton(actionType: .AirPlay) {
                         Task {
@@ -56,7 +56,7 @@ struct AppTitleBar: View {
                     }
                     .transition(.fade)
                 }
-                #endif
+#endif
                 ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
                     withAnimation(.interactiveSpring()) {
                         if !self.navigationModal.showQueue {
@@ -79,7 +79,7 @@ struct AppTitleBar: View {
                         ContextMenuArg("Copy Prettified Lyrics XML")
                     ] : [],  { id in
                         Task {
-                            #if os(macOS)
+#if os(macOS)
                             if id == "copy-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyrics(id: item.id) {
                                 self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXml)
                             }
@@ -87,7 +87,7 @@ struct AppTitleBar: View {
                             if id == "copy-prettified-lyrics-xml", let item = self.ciderPlayback.nowPlayingState.item, let lyricsXml = await self.mkModal.AM_API.fetchLyrics(id: item.id), let lyricsXML = try? XMLDocument(xmlString: lyricsXml) {
                                 self.nativeUtilsWrapper.nativeUtils.copy_string_to_clipboard(lyricsXML.xmlString(options: .nodePrettyPrint))
                             }
-                            #endif
+#endif
                         }
                     })
                     .transition(.fade)
@@ -95,6 +95,10 @@ struct AppTitleBar: View {
                 Spacer()
                     .frame(width: 10)
             }
+            .contentShape(Rectangle())
+            .gesture(TapGesture(count: 2).onEnded {
+                self.appWindowModal.nsWindow?.zoom(nil)
+            })
         }
         .frame(height: titleBarHeight)
         .enableInjection()
