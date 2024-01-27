@@ -1,5 +1,8 @@
 version: '3'
 
+env:
+  BKT_TTL: "5m"
+
 vars:
   XC_PROJ: Cider.xcodeproj
   XC_ARCHIVE:
@@ -10,10 +13,12 @@ vars:
     sh: echo ${RUNNER_TEMP:-`pwd`}/dest
   CIDER_DEST_APP:
     sh: echo ${RUNNER_TEMP:-`pwd`}/dest/Cider.app
+  XC_PROJECT_HASH:
+    sh: $(command -v bkt >/dev/null 2>&1 && echo "bkt --ttl=5m --cwd --") echo "$HOME/Library/Developer/Xcode/DerivedData/Cider-"`echo "$(echo '{{ .BUILD_DIR_DETERMINE_SCRIPT }}' | base64 --decode)" > main.m; clang++ -framework Foundation main.m -o main &> /dev/null; ./main "$(pwd)/{{.XC_PROJ}}"""`
   DEBUG_BUILD_DIR:
-    sh: $(command -v bkt >/dev/null 2>&1 && echo "bkt --cwd --") echo "$HOME/Library/Developer/Xcode/DerivedData/Cider-"`echo "$(echo '{{ .BUILD_DIR_DETERMINE_SCRIPT }}' | base64 --decode)" > main.m; clang++ -framework Foundation main.m -o main &> /dev/null; ./main "$(pwd)/{{.XC_PROJ}}"""`"/Build/Products/Debug"`rm main.m main`
+    sh: echo "{{.XC_PROJECT_HASH}}/Build/Products/Debug"`rm main.m main 2> /dev/null`
   RELEASE_BUILD_DIR:
-    sh: $(command -v bkt >/dev/null 2>&1 && echo "bkt --cwd --") echo "$HOME/Library/Developer/Xcode/DerivedData/Cider-"`echo "$(echo '{{ .BUILD_DIR_DETERMINE_SCRIPT }}' | base64 --decode)" > main.m; clang++ -framework Foundation main.m -o main &> /dev/null> /dev/null; ./main "$(pwd)/{{.XC_PROJ}}"""`"/Build/Products/Release"`rm main.m main`
+    sh: echo "{{.XC_PROJECT_HASH}}/Build/Products/Release"`rm main.m main 2> /dev/null`
 
 tasks:
   default:
