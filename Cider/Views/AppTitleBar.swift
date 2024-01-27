@@ -22,8 +22,6 @@ struct AppTitleBar: View {
     
     var body: some View {
         ZStack {
-            SearchBar()
-            
             HStack {
                 Spacer()
                     .frame(width: appWindowModal.isFullscreen ? 2 : 85)
@@ -99,6 +97,8 @@ struct AppTitleBar: View {
             .gesture(TapGesture(count: 2).onEnded {
                 self.appWindowModal.nsWindow?.zoom(nil)
             })
+            
+            SearchBar()
         }
         .frame(height: titleBarHeight)
         .enableInjection()
