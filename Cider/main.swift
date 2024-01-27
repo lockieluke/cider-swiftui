@@ -54,6 +54,14 @@ class AppDelegate : NSObject, ApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.commonEntryPoint()
         
+        let appleEventManager = NSAppleEventManager.shared()
+        appleEventManager.setEventHandler(
+            self,
+            andSelector: "handleGetURLEvent:replyEvent:",
+            forEventClass: AEEventClass(kInternetEventClass),
+            andEventID: AEEventID(kAEGetURL)
+        )
+        
         Networking.initialise()
         
         let nativeUtilsWrapper = NativeUtilsWrapper()
@@ -149,20 +157,18 @@ class AppDelegate : NSObject, ApplicationDelegate {
 #endif
     
     
-    #if os(macOS)
+#if os(macOS)
     func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
         let menu = NSMenu()
-//        menu.addItem(Menu.wrapMenuItem(NSMenuItem(title: "Search", action: nil, keyEquivalent: "")))
+        //        menu.addItem(Menu.wrapMenuItem(NSMenuItem(title: "Search", action: nil, keyEquivalent: "")))
         
         return menu
     }
     
     func application(_ application: NSApplication, open urls: [URL]) {
-        if let firstUrl = urls.first {
-            GIDSignIn.sharedInstance.handle(firstUrl)
-        }
+        
     }
-    #endif
+#endif
     
     func applicationShouldHandleReopen(_ sender: Application, hasVisibleWindows flag: Bool) -> Bool {
 #if os(macOS)
@@ -174,12 +180,19 @@ class AppDelegate : NSObject, ApplicationDelegate {
         return true
     }
     
+    func handleGetURLEvent(event: NSAppleEventDescriptor?, replyEvent: NSAppleEventDescriptor?) {
+        if let urlString =
+            event?.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue, let url = URL(string: urlString) {
+            GIDSignIn.sharedInstance.handle(url)
+        }
+    }
+    
 }
 
 autoreleasepool {
-    #if DEBUG
+#if DEBUG
     NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.johnholdsworth.InjectionIII")?.open()
-    #endif
+#endif
     let delegate = AppDelegate()
 #if canImport(AppKit)
     Application.shared.delegate = delegate
