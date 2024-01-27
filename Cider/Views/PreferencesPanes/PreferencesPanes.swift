@@ -81,6 +81,7 @@ struct PreferencesPanes {
         return Settings.PaneHostingController(pane: paneView)
     }
     
+    #if DEBUG
     static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ ciderPlayback: CiderPlayback) -> SettingsPane = { mkModal, ciderPlayback in
         let paneView = Settings.Pane(
             identifier: .developer,
@@ -94,6 +95,7 @@ struct PreferencesPanes {
         
         return Settings.PaneHostingController(pane: paneView)
     }
+    #endif
     
     static let AudioPreferencesViewController: (_ ciderPlayback: CiderPlayback) -> SettingsPane = { ciderPlayback in
         let paneView = Settings.Pane(

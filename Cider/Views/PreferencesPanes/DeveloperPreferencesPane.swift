@@ -2,14 +2,12 @@
 //  Copyright © 2022 Cider Collective. All rights reserved.
 //  
 
+#if DEBUG
 import SwiftUI
 import Settings
 import Inject
 import Defaults
-
-#if DEBUG
 import Atlantis
-#endif
 
 struct DeveloperPreferencesPane: View {
     
@@ -18,12 +16,8 @@ struct DeveloperPreferencesPane: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
-    #if DEBUG
     @Default(.debugOpenWebInspectorAutomatically) var openWebInspectorAutomatically
     @Default(.enableAtlantis) var enableAtlantis
-    #else
-    @State private var openWebInspectorAutomatically = false
-    #endif
     
     var body: some View {
         Settings.Container(contentWidth: 450.0) {
@@ -100,13 +94,11 @@ struct DeveloperPreferencesPane: View {
                 .transparentScrollbars()
             }
         }
-        #if DEBUG
         .onChange(of: enableAtlantis) { enableAtlantis in
             if !enableAtlantis {
                 Atlantis.stop()
             }
         }
-        #endif
         .frame(height: 600)
         .enableInjection()
     }
@@ -118,3 +110,5 @@ struct DeveloperPreferencesPane_Previews: PreviewProvider {
         DeveloperPreferencesPane()
     }
 }
+
+#endif
