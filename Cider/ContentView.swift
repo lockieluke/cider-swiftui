@@ -16,6 +16,7 @@ struct ContentView: View {
     @Default(.launchedBefore) private var launchedBefore
     @Default(.lastLaunchDate) private var lastLaunchDate
     @Default(.neverShowDonationPopup) private var neverShowDonationPopup
+    @Default(.lastShownChangelogs) private var lastShownChangelogs
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
@@ -31,10 +32,18 @@ struct ContentView: View {
     @StateObject private var searchModal = SearchModal()
     @StateObject private var personalisedData = PersonalisedData()
     @StateObject private var toastModal = ToastModal()
+    @StateObject private var updateHelper = UpdateHelper.shared
     
     @State private var displayAskDonationAgainToast: Bool = false
     
+    private func displayChangelogsIfNeeded() {
+        if lastShownChangelogs.isNil || lastShownChangelogs != "\(Bundle.main.appVersion)-\(Bundle.main.appBuild)" {
+            self.navigationModal.isChangelogsViewPresent = true
+        }
+    }
+    
     var body: some View {
+        let shouldPresentUpdateToast = Binding(get: { !self.navigationModal.showSidebar && self.updateHelper.updateNeeded }, set: { _ in })
         GeometryReader { geometry in
             ZStack {
                 if navigationModal.inOnboardingExperience {
@@ -69,11 +78,24 @@ struct ContentView: View {
         .toast(isPresenting: $displayAskDonationAgainToast, duration: 5) {
             AlertToast(displayMode: .hud, type: .systemImage(SFSymbol.clockArrowCirclepath.rawValue, .yellow), title: "We'll remind you tomorrow")
         }
+        .toast(isPresenting: shouldPresentUpdateToast, tapToDismiss: true, alert: {
+            AlertToast(
+                displayMode: .hud,
+                type: .systemImage(SFSymbol.arrowDownAppFill.rawValue, .green),
+                title: "Ready to update",
+                subTitle: "New update available"
+            )
+        }, onTap: {
+            self.updateHelper.updateInitiaited = true
+            self.navigationModal.isAboutViewPresent = true
+        })
         .toast(isPresenting: $toastModal.showingErrorToast, duration: toastModal.errorToast?.duration ?? 0.0) {
             let errorToast = toastModal.errorToast ?? ToastModal.ErrorToast(title: "", subtitle: "")
             return AlertToast(displayMode: .hud, type: .error(.red), title: errorToast.title, subTitle: errorToast.subtitle)
         }
-        .sheet(isPresented: $navigationModal.isDonateViewPresent) {
+        .sheet(isPresented: $navigationModal.isDonateViewPresent, onDismiss: {
+            self.displayChangelogsIfNeeded()
+        }) {
             DonateView() {
                 self.displayAskDonationAgainToast = true
             }
@@ -97,6 +119,10 @@ struct ContentView: View {
             // Ask for donation once a day
             if !CommandLine.arguments.contains("-disable-donate-view") && !Calendar.current.isDateInToday(self.lastLaunchDate) && !self.neverShowDonationPopup {
                 self.navigationModal.isDonateViewPresent = true
+            }
+            
+            if !self.navigationModal.isDonateViewPresent {
+                self.displayChangelogsIfNeeded()
             }
             
             self.lastLaunchDate = .now

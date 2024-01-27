@@ -15,7 +15,10 @@ fileprivate struct UpdateNowButton: View {
     
     @ObservedObject private var iO = Inject.observer
     
+    @EnvironmentObject private var navigationModal: NavigationModal
+    
     @State private var isHovering: Bool = false
+    @State private var isClicking: Bool = false
     
     var body: some View {
         HStack(spacing: 20) {
@@ -29,13 +32,22 @@ fileprivate struct UpdateNowButton: View {
             }
         }
         .padding()
-        .background(Color("PrimaryColour").brightness(isHovering ? 0 : 0.05))
-        .animation(.easeOut, value: isHovering)
+        .background(Color("PrimaryColour").brightness(isHovering ? (isClicking ? -0.1 : 0) : 0.1))
+        .animation(.none, value: isHovering)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 10)
         .onHover { isHovering in
             self.isHovering = isHovering
         }
+        .onTapGesture {
+            UpdateHelper.shared.updateInitiaited = true
+            self.navigationModal.isAboutViewPresent = true
+        }
+        .gesture(DragGesture(minimumDistance: 0).onChanged { _ in
+            self.isClicking = true
+        }.onEnded { _ in
+            self.isClicking = false
+        })
         .enableInjection()
     }
 }
@@ -50,6 +62,8 @@ fileprivate struct SidebarItem: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var mkModal: MKModal
     
+    @Environment(\.colorScheme) var colorScheme
+    
     private let title: String
     private let icon: SidebarItemIcon
     private let stackType: RootNavigationType
@@ -57,14 +71,14 @@ fileprivate struct SidebarItem: View {
     
     enum SidebarItemIcon: String {
         case Home = "house",
-        ListenNow = "play.circle",
-        Browse = "rectangle.grid.2x2",
-        Radio = "dot.radiowaves.left.and.right",
-        RecentlyAdded = "clock",
-        Songs = "music.note",
-        Albums = "square.stack",
-        Artists = "music.mic",
-        Playlist = "list.bullet"
+             ListenNow = "play.circle",
+             Browse = "rectangle.grid.2x2",
+             Radio = "dot.radiowaves.left.and.right",
+             RecentlyAdded = "clock",
+             Songs = "music.note",
+             Albums = "square.stack",
+             Artists = "music.mic",
+             Playlist = "list.bullet"
     }
     
     init(_ title: String, icon: SidebarItemIcon, stackType: RootNavigationType? = nil, playlistID: String? = nil) {
@@ -99,6 +113,7 @@ fileprivate struct SidebarItem: View {
                 .foregroundStyle(.pink)
             
             Text(title)
+                .foregroundStyle(colorScheme == .dark ? .white : .black)
         }
         .padding([.horizontal, .vertical], 7)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -144,6 +159,8 @@ fileprivate struct SidebarSection<Content: View>: View {
     
     @ObservedObject private var iO = Inject.observer
     
+    @Environment(\.colorScheme) var colorScheme
+    
     private let title: String
     
     init(_ title: String, @ViewBuilder content: @escaping () -> Content) {
@@ -157,7 +174,7 @@ fileprivate struct SidebarSection<Content: View>: View {
                 content()
             }
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(.gray)
     }
     
 }

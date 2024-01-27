@@ -9,6 +9,7 @@
 import SwiftUI
 import Inject
 import WebKit
+import Defaults
 
 struct ChangeLogsView: View {
     
@@ -89,6 +90,9 @@ struct ChangeLogsView: View {
                 .padding(.top, 30)
         }
         .frame(width: (size?.width ?? .zero) * 0.85, height: (size?.height ?? .zero) * 0.85)
+        .onAppear {
+            Defaults[.lastShownChangelogs] = "\(Bundle.main.appVersion)-\(Bundle.main.appBuild)"
+        }
         .enableInjection()
     }
 }

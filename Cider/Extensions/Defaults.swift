@@ -29,6 +29,8 @@ extension Defaults.Keys {
     static let sidebarWidth = Key<Double>("sidebarWidth", default: 275.0)
     static let showSidebarAtLaunch = Key<Bool>("showSidebarAtLaunch", default: true)
     
+    static let lastShownChangelogs = Key<String?>("lastShownChangelogs")
+    
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)
     static let debugHideFrequentWSRequests = Key<Bool>("hideFrequentWSRequests", default: true)

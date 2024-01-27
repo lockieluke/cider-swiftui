@@ -27,6 +27,29 @@ struct AboutView: View {
     
     @EnvironmentObject private var appWindowModal: AppWindowModal
     
+    private func installUpdate() {
+        let logger = Logger(label: "CiderUpdater")
+        
+        if let updateManifest = self.newUpdateManifest {
+            self.updaterState = .Downloading
+            UpdateHelper.shared.downloadUpdate(manifest: updateManifest, { progress in
+                self.downloadProgress = progress
+            }, { error in
+                if let nsWindow = self.appWindowModal.nsWindow {
+                    Alert.showModal(on: nsWindow, message: "Failed to download update: \(error)", icon: .critical)
+                }
+                logger.error("Error downloading update: \(error)")
+            }, {
+                logger.success("Download complete to \(Folder.temporary.path)")
+                self.updaterState = .Installing
+                
+                Task {
+                    await UpdateHelper.shared.applyUpdate(manifest: updateManifest)
+                }
+            })
+        }
+    }
+    
     var body: some View {
         ZStack {
             Button() {
@@ -74,26 +97,7 @@ struct AboutView: View {
                 
                 if updaterState == .Needed {
                     Button {
-                        let logger = Logger(label: "CiderUpdater")
-                        
-                        if let updateManifest = self.newUpdateManifest {
-                            self.updaterState = .Downloading
-                            UpdateHelper.shared.downloadUpdate(manifest: updateManifest, { progress in
-                                self.downloadProgress = progress
-                            }, { error in
-                                if let nsWindow = self.appWindowModal.nsWindow {
-                                    Alert.showModal(on: nsWindow, message: "Failed to download update: \(error)", icon: .critical)
-                                }
-                                logger.error("Error downloading update: \(error)")
-                            }, {
-                                logger.success("Download complete to \(Folder.temporary.path)")
-                                self.updaterState = .Installing
-                                
-                                Task {
-                                    await UpdateHelper.shared.applyUpdate(manifest: updateManifest)
-                                }
-                            })
-                        }
+                        self.installUpdate()
                     } label: {
                         Text("Update")
                     }
@@ -131,12 +135,20 @@ struct AboutView: View {
             }
         }
         .task {
+            if !UpdateHelper.shared.updateManifest.isNil && UpdateHelper.shared.updateNeeded && UpdateHelper.shared.updateInitiaited {
+                self.newUpdateManifest = UpdateHelper.shared.updateManifest
+                self.updaterState = .Needed
+                self.installUpdate()
+                return
+            }
+            
             if let updateManifest = await UpdateHelper.shared.fetchPresentVersion() {
                 self.newUpdateManifest = updateManifest
                 self.updaterState = UpdateHelper.shared.isAppVersionOutdated(manifest: updateManifest) ? .Needed : .NotNeeded
             }
         }
         .frame(width: 480, height: 360)
+        .interactiveDismissDisabled(updaterState == .Downloading || updaterState == .Installing)
         .enableInjection()
     }
 }

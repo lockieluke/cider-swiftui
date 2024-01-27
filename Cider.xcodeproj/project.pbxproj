@@ -314,6 +314,7 @@
 		B725013D28C2637F00992F57 /* MediaPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresentable.swift; sourceTree = "<group>"; };
 		B7284174290DABA100B7A525 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B728B0552A75CAA200BAC665 /* MediaBrowseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaBrowseData.swift; sourceTree = "<group>"; };
+		B72ECF5F2B651D4A00944694 /* FirebaseFirestoreInternal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseFirestoreInternal.framework; path = "../../../Library/Developer/Xcode/DerivedData/Cider-adcslkbzgzobidgzqdkdbbdwbcul/SourcePackages/artifacts/firebase-ios-sdk/FirebaseFirestoreInternal/FirebaseFirestoreInternal.xcframework/macos-arm64_x86_64/FirebaseFirestoreInternal.framework"; sourceTree = "<group>"; };
 		B7332B0D2A96C4A50019221D /* NativeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeComponent.swift; sourceTree = "<group>"; };
 		B736F2722A634DFF008A0458 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B736F2742A634F1D008A0458 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
@@ -661,6 +662,7 @@
 		B71B82C42A37750900DD8BC2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B72ECF5F2B651D4A00944694 /* FirebaseFirestoreInternal.framework */,
 				B70294152B4899C000664181 /* libnative_utils_update_service.a */,
 				B7CF6B192B12171300A7DEEE /* libnative_utils_elevated.a */,
 				B7CF6B182B12170D00A7DEEE /* universal */,

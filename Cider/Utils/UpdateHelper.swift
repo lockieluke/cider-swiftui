@@ -9,13 +9,20 @@
 import Foundation
 import ZippyJSON
 import SwiftyJSON
+import SwiftUI
 import Files
 import CryptoKit
 import System
 import Subprocess
 import FirebaseCore
 import FirebaseStorage
+// hacky way to get around "no such module: FirebaseFirestoreInternalWrapper" when hot reload is enabled
+#if canImport(FirebaseFirestoreInternalWrapper) && DEBUG
+import FirebaseFirestoreInternalWrapper
 import FirebaseFirestore
+#elseif !DEBUG
+import FirebaseFirestore
+#endif
 
 extension File {
     
@@ -30,7 +37,7 @@ extension File {
     
 }
 
-class UpdateHelper: ObservableObject {
+final class UpdateHelper: ObservableObject {
     
     static let shared = UpdateHelper()
     
@@ -41,11 +48,14 @@ class UpdateHelper: ObservableObject {
     private var extractionObservation: NSKeyValueObservation?
     private let helperId: String = "com.cidercollective.UpdaterService"
     private var storage: FirebaseStorage.Storage?
-    private var firestore: Firestore?
+    #if canImport(FirebaseFirestoreInternalWrapper)
+    private final var firestore: Firestore?
+    #endif
     
     let logger: Logger
     var updateManifest: CiderUpdateManifest?
     @Published var updateNeeded: Bool = false
+    @Published var updateInitiaited: Bool = false
     
     init() {
         let logger = Logger(label: "UpdateHelper")
@@ -63,11 +73,17 @@ class UpdateHelper: ObservableObject {
         } as! CiderUpdateServiceProtocol
     }
     
-    func start() {
+    struct MinimumUpdateManifest: Decodable {
+        let build: Int
+        let hash: String
+        let version: String
+    }
+    final func start() {
         self.connection.resume()
         self.logger.success("Started")
         
         // Defer firebase initialisation
+        #if canImport(FirebaseFirestoreInternalWrapper)
         self.storage = FirebaseStorage.Storage.storage()
         self.firestore = Firestore.firestore().then {
             $0.settings = FirestoreSettings().then {
@@ -75,24 +91,37 @@ class UpdateHelper: ObservableObject {
             }
         }
         
-        self.firestore?.collection("app").document("releases").collection("macos-native").document("present").addSnapshotListener { snapshot, error in
+        self.firestore?.collection("app").document("releases").collection("macos-native").document("present").addSnapshotListener { querysnapshot, error in
+            self.updateManifest = nil
             if let error = error {
                 self.logger.error("Failed to pull update information: \(error.localizedDescription)")
                 return
             }
             
-            if !snapshot.isNil {
-                Task {
-                    self.logger.info("New version just dropped, fetching update manifest")
-                    if let updateManifest = await UpdateHelper.shared.fetchPresentVersion() {
-                        DispatchQueue.main.async {
-                            self.updateManifest = updateManifest
-                            self.updateNeeded = self.isAppVersionOutdated(manifest: updateManifest)
+            do {
+                if let snapshot = querysnapshot {
+                    let minimumManifest = try snapshot.data(as: MinimumUpdateManifest.self)
+                    DispatchQueue.main.async {
+                        withAnimation(.interactiveSpring) {
+                            self.updateNeeded = self.isAppVersionOutdated(minimumManifest: minimumManifest)
+                        }
+                        return
+                    }
+                    
+                    Task {
+                        self.logger.info("New version just dropped, fetching update manifest")
+                        if let updateManifest = await UpdateHelper.shared.fetchPresentVersion() {
+                            DispatchQueue.main.async {
+                                self.updateManifest = updateManifest
+                            }
                         }
                     }
                 }
+            } catch {
+                self.logger.error("Failed to fetch new update manifest: \(error.localizedDescription)")
             }
         }
+        #endif
     }
     
     func terminate() {
@@ -196,6 +225,10 @@ class UpdateHelper: ObservableObject {
     
     func isAppVersionOutdated(manifest: CiderUpdateManifest) -> Bool {
         return manifest.version != Bundle.main.appVersion || manifest.build != (Int(Bundle.main.appBuild) ?? 0)
+    }
+    
+    func isAppVersionOutdated(minimumManifest: MinimumUpdateManifest) -> Bool {
+        return minimumManifest.version != Bundle.main.appVersion || minimumManifest.build != (Int(Bundle.main.appBuild) ?? 0)
     }
     
 }
