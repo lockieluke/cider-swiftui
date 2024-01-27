@@ -51,7 +51,7 @@ class AppWindow: NSObject, NSWindowDelegate {
             } else {
                 $0.contentViewController = NSHostingController(rootView: contentView)
             }
-            $0.setFrame(NSRect(x: .zero, y: .zero, width: 1024, height: 600), display: true)
+            $0.setFrame(NSRect(x: .zero, y: .zero, width: 1280, height: 720), display: true)
             $0.isOpaque = true
             $0.backgroundColor = .clear
             $0.titlebarAppearsTransparent = true
