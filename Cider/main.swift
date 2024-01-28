@@ -54,13 +54,8 @@ class AppDelegate : NSObject, ApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.commonEntryPoint()
         
-        let appleEventManager = NSAppleEventManager.shared()
-        appleEventManager.setEventHandler(
-            self,
-            andSelector: "handleGetURLEvent:replyEvent:",
-            forEventClass: AEEventClass(kInternetEventClass),
-            andEventID: AEEventID(kAEGetURL)
-        )
+        let appleEventManager: NSAppleEventManager = NSAppleEventManager.shared()
+        appleEventManager.setEventHandler(self, andSelector: #selector(handleGetURLEvent(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         
         Networking.initialise()
         
@@ -180,10 +175,22 @@ class AppDelegate : NSObject, ApplicationDelegate {
         return true
     }
     
-    func handleGetURLEvent(event: NSAppleEventDescriptor?, replyEvent: NSAppleEventDescriptor?) {
-        if let urlString =
-            event?.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue, let url = URL(string: urlString) {
-            GIDSignIn.sharedInstance.handle(url)
+    @objc func handleGetURLEvent(_ event: NSAppleEventDescriptor, withReplyEvent: NSAppleEventDescriptor) {
+        if let urlString = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue, let url = URL(string: urlString) {
+            //            GIDSignIn.sharedInstance.handle(url)
+            
+            if let scheme = url.scheme, scheme.caseInsensitiveCompare("cider-swiftui") == .orderedSame {
+                if let host = url.host {
+                    switch host {
+                    case "analytics-learn-more":
+                        self.appWindow.navigationModal.isAnalyticsPersuationPresent = true
+                        break
+                        
+                    default:
+                        break
+                    }
+                }
+            }
         }
     }
     

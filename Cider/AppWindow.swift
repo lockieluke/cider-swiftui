@@ -20,7 +20,8 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let wsModal = WSModal.shared
     private let authModal: AuthModal
     private let appMenu: AppMenu
-    private let navigationModal: NavigationModal
+    
+    let navigationModal: NavigationModal
     
     let ciderPlayback: CiderPlayback
     

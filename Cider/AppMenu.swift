@@ -44,7 +44,7 @@ class AppMenu {
         
         self.settingsWindowController = SettingsWindowController(
             panes: [
-                PreferencesPanes.GeneralPreferenceViewController(cacheModal),
+                PreferencesPanes.GeneralPreferenceViewController(cacheModal, navigationModal),
                 PreferencesPanes.AccountPreferencesViewController(connectModal),
                 PreferencesPanes.AudioPreferencesViewController(
                     ciderPlayback

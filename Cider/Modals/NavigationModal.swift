@@ -195,5 +195,7 @@ class NavigationModal : ObservableObject {
     @Published var isDonateViewPresent: Bool = false
     @Published var isAboutViewPresent: Bool = false
     @Published var isChangelogsViewPresent: Bool = ProcessInfo.processInfo.arguments.contains("-show-changelogs")
+    @Published var isAnalyticsPersuationPresent: Bool = false
+    @Published var displayDisableButtonInAnalyticsPersuation: Bool = false
     
 }
