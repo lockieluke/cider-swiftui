@@ -111,7 +111,7 @@ struct ContentView: View {
         .environmentObject(personalisedData)
         .environmentObject(toastModal)
         .onAppear {
-            if !self.launchedBefore {
+            if !self.launchedBefore || CommandLine.arguments.contains("-show-onboarding-ex") {
                 self.navigationModal.inOnboardingExperience = true
                 return
             }

@@ -65,7 +65,7 @@ struct GeneralPreferencesPane: View {
                     Text("Consult our [Privacy Policy](https://cider.sh/legal/privacy) to learn more about what types of data we collect.  Since this version of Cider is still in Alpha, there are [additional types of data](cider-swiftui://analytics-learn-more) that we collect for investigating crashes and improving the overall experience")
                         .settingDescription()
                     
-                    Defaults.Toggle("Send Crash Reports and Perormance Metrics", key: .shareCrashReports)
+                    Defaults.Toggle("Send Crash Reports and Performance Metrics", key: .shareCrashReports)
                         .onChange { shareCrashReports in
                             if shareCrashReports {
                                 Analytics.shared.startSentry()

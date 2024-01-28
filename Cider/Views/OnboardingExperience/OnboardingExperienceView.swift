@@ -108,7 +108,6 @@ struct OnboardingExperienceView: View {
     @State private var showingWebView: Bool = false
     @State private var escapeKeyMonitor: Any?
     
-    @Default(.shareAnalytics) private var shareAnalytics
     @Default(.launchedBefore) private var launchedBefore
     
     private func dismissAnimation() {
@@ -250,7 +249,10 @@ struct OnboardingExperienceView: View {
                     VStack {
                         Text("Analytics")
                             .bold()
-                        Toggle("Share analytics with Team Cider", isOn: $shareAnalytics)
+                        Defaults.Toggle("Share analytics with developers", key: .shareAnalytics)
+                            .toggleStyle(.switch)
+                            .controlSize(.small)
+                        Defaults.Toggle("Send Crash Reports and Performance Metrics", key: .shareCrashReports)
                             .toggleStyle(.switch)
                             .controlSize(.small)
                     }
