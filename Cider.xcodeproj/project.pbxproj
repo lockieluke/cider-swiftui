@@ -36,6 +36,9 @@
 		B70D0A132A509D0C00968E7D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B70D0A122A509D0C00968E7D /* Settings.bundle */; platformFilter = ios; };
 		B7107BB72AA2B8D300A83306 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B7107BB62AA2B8D300A83306 /* FirebaseAnalytics */; };
 		B7107BB92AA2B8D300A83306 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B7107BB82AA2B8D300A83306 /* FirebaseAuth */; };
+		B71530362B65DED600A81935 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B71530352B65DED600A81935 /* Sentry */; };
+		B71530382B65DED600A81935 /* SentrySwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B71530372B65DED600A81935 /* SentrySwiftUI */; };
+		B715303A2B66FB0D00A81935 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71530392B66FB0D00A81935 /* Analytics.swift */; };
 		B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82682A366F3B00DD8BC2 /* SwiftyUtils */; };
 		B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826B2A366FC400DD8BC2 /* SwiftyJSON */; };
 		B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826E2A36700300DD8BC2 /* Introspect */; };
@@ -302,6 +305,7 @@
 		B706051028BFA181002AD76C /* MediaShowcaseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaShowcaseRow.swift; sourceTree = "<group>"; };
 		B709E8712A8848E7004B7D98 /* AccountPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPreferencesPane.swift; sourceTree = "<group>"; };
 		B70D0A122A509D0C00968E7D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B71530392B66FB0D00A81935 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B71B82C52A37750900DD8BC2 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/libnative_utils.a; sourceTree = "<group>"; };
 		B71D54052ABCBA6D001A62D6 /* OnboardingExperienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperienceView.swift; sourceTree = "<group>"; };
 		B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingExperience.swift; sourceTree = "<group>"; };
@@ -462,10 +466,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B79050AA2B11693500CED9B6 /* libnative_utils.a in Frameworks */,
+				B71530382B65DED600A81935 /* SentrySwiftUI in Frameworks */,
 				B70524C52A6F15D8001654B3 /* Cache in Frameworks */,
 				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
 				B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */,
 				B7AAF7792ACE175900A9346C /* AlertToast in Frameworks */,
+				B71530362B65DED600A81935 /* Sentry in Frameworks */,
 				B78C2BD42B5C91B20047DDFC /* FirebaseStorage in Frameworks */,
 				B71D54212ABFA1BD001A62D6 /* Lottie in Frameworks */,
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
@@ -795,6 +801,7 @@
 				B77D950C2A9CB7D9007ED4BD /* Any.swift */,
 				B79050AB2B11695000CED9B6 /* ElevationHelper.swift */,
 				B79529152B1E72C100D98653 /* UpdateHelper.swift */,
+				B71530392B66FB0D00A81935 /* Analytics.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -965,6 +972,8 @@
 				B78C2BD32B5C91B20047DDFC /* FirebaseStorage */,
 				B72ECF382B64632800944694 /* FirebaseFirestore */,
 				B72ECF5D2B647A7A00944694 /* Atlantis */,
+				B71530352B65DED600A81935 /* Sentry */,
+				B71530372B65DED600A81935 /* SentrySwiftUI */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1105,6 +1114,7 @@
 				B7DDCCEF2B2A5872006E1429 /* XCRemoteSwiftPackageReference "Files" */,
 				B77065F22B4CBC7600551769 /* XCRemoteSwiftPackageReference "Subprocess" */,
 				B72ECF5C2B647A7A00944694 /* XCRemoteSwiftPackageReference "atlantis" */,
+				B71530342B65DED500A81935 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1261,6 +1271,7 @@
 				B700C1B028B969F70069FDF5 /* VisualEffectBackground.swift in Sources */,
 				B7AAB70528BAE3DC009AABEA /* PlaybackCardView.swift in Sources */,
 				B7DDCCD42B26772C006E1429 /* AboutView.swift in Sources */,
+				B715303A2B66FB0D00A81935 /* Analytics.swift in Sources */,
 				B700C19528B92A4C0069FDF5 /* main.swift in Sources */,
 				B77AACEC293AD90100F8E1E2 /* DisableScrollingModifier.swift in Sources */,
 				B797AFFA297F3E2000D77282 /* MediaArtist.swift in Sources */,
@@ -1947,6 +1958,14 @@
 				minimumVersion = 10.14.0;
 			};
 		};
+		B71530342B65DED500A81935 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.19.0;
+			};
+		};
 		B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tbaranes/SwiftyUtils.git";
@@ -2182,6 +2201,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		B71530352B65DED600A81935 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71530342B65DED500A81935 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		B71530372B65DED600A81935 /* SentrySwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71530342B65DED500A81935 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = SentrySwiftUI;
 		};
 		B71B82682A366F3B00DD8BC2 /* SwiftyUtils */ = {
 			isa = XCSwiftPackageProductDependency;

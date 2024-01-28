@@ -253,6 +253,15 @@
       }
     },
     {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa.git",
+      "state" : {
+        "revision" : "5c8abdeabf8d0dc5055879a657e31bac49bc1624",
+        "version" : "8.19.0"
+      }
+    },
+    {
       "identity" : "settings",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/Settings.git",

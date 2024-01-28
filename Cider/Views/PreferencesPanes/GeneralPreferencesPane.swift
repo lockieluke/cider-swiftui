@@ -15,8 +15,6 @@ struct GeneralPreferencesPane: View {
     @EnvironmentObject private var cacheModal: CacheModal
     @EnvironmentObject private var navigationModal: NavigationModal
     
-    @Default(.usePretendardFont) private var usePretendardFont
-    @Default(.neverShowDonationPopup) private var neverShowDonationPopup
     @Default(.shareAnalytics) private var shareAnalytics
     
     struct DataShareTypeView: View {
@@ -43,19 +41,19 @@ struct GeneralPreferencesPane: View {
             Settings.Section(title: "") {
                 Group {
                     PrefSectionText("General")
-                    Toggle("Never show donation popup", isOn: $neverShowDonationPopup)
+                    Defaults.Toggle("Never show donation popup", key: .neverShowDonationPopup)
                         .toggleStyle(.switch)
                         .controlSize(.small)
                     PrefSectionText("Appearance")
-                    Toggle("Use Pretendard font (Beta)", isOn: $usePretendardFont)
+                    Defaults.Toggle("Use Pretendard font (Beta)", key: .usePretendardFont)
                         .toggleStyle(.switch)
                         .controlSize(.small)
                     Text("Restart is required for changes to take effect")
                         .settingDescription()
                     
                     PrefSectionText("Analytics")
-                    Toggle("Share usage data and device configuration with developers", isOn: $shareAnalytics)
-                        .onChange(of: shareAnalytics) { shareAnalytics in
+                    Toggle("Share usage data and device configuration", isOn: $shareAnalytics)
+                        .onChange(of: self.shareAnalytics) { shareAnalytics in
                             if !shareAnalytics && !self.navigationModal.isAnalyticsPersuationPresent && !self.navigationModal.displayDisableButtonInAnalyticsPersuation {
                                 self.shareAnalytics = true
                                 self.navigationModal.displayDisableButtonInAnalyticsPersuation = true
@@ -65,6 +63,19 @@ struct GeneralPreferencesPane: View {
                         .toggleStyle(.switch)
                         .controlSize(.small)
                     Text("Consult our [Privacy Policy](https://cider.sh/legal/privacy) to learn more about what types of data we collect.  Since this version of Cider is still in Alpha, there are [additional types of data](cider-swiftui://analytics-learn-more) that we collect for investigating crashes and improving the overall experience")
+                        .settingDescription()
+                    
+                    Defaults.Toggle("Send Crash Reports and Perormance Metrics", key: .shareCrashReports)
+                        .onChange { shareCrashReports in
+                            if shareCrashReports {
+                                Analytics.shared.startSentry()
+                            } else {
+                                Analytics.shared.stopSentry()
+                            }
+                        }
+                        .toggleStyle(.switch)
+                        .controlSize(.small)
+                    Text("Performance monitoring and error tracking are powered by [Sentry](https://sentry.io/)")
                         .settingDescription()
                     
                     PrefSectionText("Cache")

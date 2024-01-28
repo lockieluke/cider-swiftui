@@ -45,13 +45,15 @@ class AppDelegate : NSObject, ApplicationDelegate {
         
         FirebaseConfiguration.shared.setLoggerLevel(.min)
 #if DEBUG
-        Analytics.setAnalyticsCollectionEnabled(false)
+        FirebaseAnalytics.Analytics.setAnalyticsCollectionEnabled(false)
 #endif
         FirebaseApp.configure()
     }
     
 #if canImport(AppKit)
     func applicationDidFinishLaunching(_ notification: Notification) {
+        Analytics.shared.startSentry()
+        
         self.commonEntryPoint()
         
         let appleEventManager: NSAppleEventManager = NSAppleEventManager.shared()

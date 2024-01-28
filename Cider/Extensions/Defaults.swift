@@ -20,7 +20,8 @@ extension Defaults.Keys {
     
     static let signInMethod = Key<SignInMethod?>("signInMethod")
     
-    static let shareAnalytics = Key<Bool>("shareAnalytics", default: false)
+    static let shareCrashReports = Key<Bool>("shareCrashReports", default: true)
+    static let shareAnalytics = Key<Bool>("shareAnalytics", default: true)
     static let launchedBefore = Key<Bool>("launchedBefore", default: false)
     static let lastLaunchDate = Key<Date>("lastLaunchDate", default: .now)
     static let neverShowDonationPopup = Key<Bool>("neverShowDonationPopup", default: false)
