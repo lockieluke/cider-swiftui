@@ -17,6 +17,8 @@ class Analytics {
     
     static let shared = Analytics()
     
+    private let logger = Logger(label: "Analytics")
+    
     func startSentry() {
         self.configureSentryScope()
         
@@ -41,6 +43,7 @@ class Analytics {
             options.enabled = Defaults[.shareCrashReports]
         }
         #endif
+        self.logger.success("Started Sentry", displayTick: true)
     }
     
     func configureSentryScope() {
@@ -55,6 +58,7 @@ class Analytics {
         #if canImport(Sentry)
         SentrySDK.close()
         #endif
+        self.logger.success("Stopped Sentry")
     }
     
 }
