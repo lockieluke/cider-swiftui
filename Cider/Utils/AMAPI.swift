@@ -94,7 +94,7 @@ class AMAPI {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/storefront").validate().serializingData().response
         
         if let error = res.error {
-            self.logger.error("Failed to fetch storefront: \(error)")
+            self.logger.error("Failed to fetch storefront: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data) {
             self.STOREFRONT_ID = json["data"].array?.first?["id"].stringValue
             return true
@@ -129,7 +129,7 @@ class AMAPI {
     func fetchRecommendations() async -> MediaRecommendationSections {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recommendations").validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch recommendations: \(error)")
+            self.logger.error("Failed to fetch recommendations: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data) {
             return MediaRecommendationSections(datas: json)
         }
@@ -163,7 +163,7 @@ class AMAPI {
             "platform": "web"
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch personal recommendations: \(error)")
+            self.logger.error("Failed to fetch personal recommendations: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data), let sections = json["data"].array {
             // https://github.com/ciderapp/project2/blob/main/src/components/applemusic/pageContent/AMHome.vue#L130
             let section = sections.first { section in
@@ -189,7 +189,7 @@ class AMAPI {
         }
         let res = await AMAPI.amSession.request(fetchURL).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch tracks: \(error)")
+            self.logger.error("Failed to fetch tracks: \(error.failureReason)")
             throw error
         } else if let data = res.data, let json = try? JSON(data: data) {
             if location == .catalog {
@@ -220,7 +220,7 @@ class AMAPI {
             "platform": "web",
         ]).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch song: \(error)")
+            self.logger.error("Failed to fetch song: \(error.failureReason)")
             throw error
         } else if let data = res.data, let json = try? JSON(data: data) {
             let trackData = json["data"].array?.first ?? JSON()
@@ -255,7 +255,7 @@ class AMAPI {
             "extend": extendParams.map { param in param.rawValue }.joined(separator: ",")
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch artist: \(error)")
+            self.logger.error("Failed to fetch artist: \(error.failureReason)")
             throw error
         } else if let data = res.data, let json = try? JSON(data: data), let artistData = json["data"].array?.first {
             return MediaArtist(data: artistData)
@@ -279,7 +279,7 @@ class AMAPI {
             "platform": "web",
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch playlist: \(error)")
+            self.logger.error("Failed to fetch playlist: \(error.failureReason)")
             throw error
         } else if let data = res.data, let json = try? JSON(data: data), let playlistData = json["data"].array?.first {
             return MediaPlaylist(data: playlistData)
@@ -297,7 +297,7 @@ class AMAPI {
             "platform": "web",
         ],  encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch album: \(error)")
+            self.logger.error("Failed to fetch album: \(error.failureReason)")
             throw error
         } else if let data = res.data, let json = try? JSON(data: data), let albumData = json["data"].array?.first {
             return MediaItem(data: albumData)
@@ -335,7 +335,7 @@ class AMAPI {
             "platform": "web",
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch search suggestions: \(error)")
+            self.logger.error("Failed to fetch search suggestions: \(error.failureReason)")
             throw error
         } else if let data = res.data, let json = try? JSON(data: data) {
             return SearchSuggestions(data: json["results"])
@@ -370,7 +370,7 @@ class AMAPI {
             let rawRatings = json["data"].array?.first?["attributes"]["value"].int
         else {
             if let error = res.error {
-                self.logger.error("Failed to fetch ratings: \(error)")
+                self.logger.error("Failed to fetch ratings: \(error.failureReason)")
             }
             return .Neutral
         }
@@ -393,7 +393,7 @@ class AMAPI {
             let rawRatings = json["data"].array?.first?["attributes"]["value"].int
         else {
             if let error = res.error {
-                self.logger.error("Error occurred when setting rating to \(rating): \(error)")
+                self.logger.error("Error occurred when setting rating to \(rating): \(error.failureReason)")
             }
             return rating
         }
@@ -408,7 +408,7 @@ class AMAPI {
             "fields": "inLibrary"
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to check if \(item.id) is in library: \(error)")
+            self.logger.error("Failed to check if \(item.id) is in library: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data), let data = json["data"].array?.first { return data["attributes"]["inLibrary"].bool
             
         }
@@ -455,7 +455,7 @@ class AMAPI {
                     if let statusCode = response.response?.statusCode, (200..<300).contains(statusCode) {
                         continuation.resume(returning: true)
                     } else {
-                        self.logger.error("Failed to \(add ? "add" : "remove") \(item.id) from library due to error: \(error.localizedDescription)")
+                        self.logger.error("Failed to \(add ? "add" : "remove") \(item.id) from library due to error: \(error.failureReason)")
                         continuation.resume(returning: false)
                     }
                 }
@@ -472,7 +472,7 @@ class AMAPI {
             "platform": "web",
         ],  encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch library \(item.type): \(error)")
+            self.logger.error("Failed to fetch library \(item.type): \(error.failureReason)")
             throw error
         } else if let data = res.data, let json = try? JSON(data: data), let albumData = json["data"].array?.first {
             return .mediaItem(MediaItem(data: albumData))
@@ -496,7 +496,7 @@ class AMAPI {
     func fetchPersonalSocialProfile() async -> SocialProfile? {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/social-profile").validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch personal social profile: \(error)")
+            self.logger.error("Failed to fetch personal social profile: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data), let attributes = json["data"].array?.first?["attributes"] {
             return SocialProfile(attributes: attributes)
         }
@@ -512,7 +512,7 @@ class AMAPI {
         
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: parameters, encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch personal social profile: \(error)")
+            self.logger.error("Failed to fetch personal social profile: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
             return items.compactMap { item in
                 switch MediaType(rawValue: item["type"].stringValue) {
@@ -551,7 +551,7 @@ class AMAPI {
             "tabs": "subscriber"
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch browse: \(error)")
+            self.logger.error("Failed to fetch browse: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data), let tabsChildren = json["data"].array?.first?["relationships"]["tabs"]["data"].array?.first?["relationships"]["children"]["data"].array {
             return tabsChildren.compactMap { MediaBrowseData(data: $0) }
         }
@@ -572,7 +572,7 @@ class AMAPI {
             "platform": "web"
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
-            self.logger.error("Failed to fetch radio: \(error)")
+            self.logger.error("Failed to fetch radio: \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data), let tabsChildren = json["data"].array?.first?["relationships"]["tabs"]["data"].array?.first?["relationships"]["children"]["data"].array {
             return tabsChildren.map { MediaRadioData(data: $0) }
         }
@@ -587,7 +587,7 @@ class AMAPI {
             AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/playlist-folders/\(folder)/children/", parameters: [:], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         
         if let error = res.error {
-            self.logger.error("Failed to fetch playlists in folder \(folder): \(error)")
+            self.logger.error("Failed to fetch playlists in folder \(folder): \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data) {
             for playlist in json["data"].array ?? [] {
                 playlists.append(MediaPlaylist(data: playlist))
@@ -602,7 +602,7 @@ class AMAPI {
         AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(self.STOREFRONT_ID!)/songs/\(id)/syllable-lyrics", encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         
         if let error = res.error {
-            self.logger.error("Failed to fetch lyrics for \(id): \(error)")
+            self.logger.error("Failed to fetch lyrics for \(id): \(error.failureReason)")
         } else if let data = res.data, let json = try? JSON(data: data) {
             return json["data"].array?.first?["attributes"]["ttml"].string
         }
