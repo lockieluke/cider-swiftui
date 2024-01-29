@@ -100,6 +100,9 @@ class AMAPI {
             return true
         }
         
+        if let defaultRegionCode = Locale.current.regionCode?.lowercased() {
+            self.STOREFRONT_ID = defaultRegionCode
+        }
         return false
     }
     
