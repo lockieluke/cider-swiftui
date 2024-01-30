@@ -43,7 +43,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        let shouldPresentUpdateToast = Binding(get: { !self.navigationModal.showSidebar && self.updateHelper.updateNeeded }, set: { _ in })
+        let shouldPresentUpdateToast = Binding(get: { !self.navigationModal.showSidebar && self.updateHelper.updateNeeded && !ProcessInfo.processInfo.arguments.contains("-disable-update-checks") }, set: { _ in })
         GeometryReader { geometry in
             ZStack {
                 if navigationModal.inOnboardingExperience {

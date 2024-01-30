@@ -196,7 +196,7 @@ struct SidebarPane: View {
     
     var body: some View {
         List {
-            if updateHelper.updateNeeded {
+            if updateHelper.updateNeeded && !ProcessInfo.processInfo.arguments.contains("-disable-update-checks") {
                 HStack {
                     Spacer()
                     UpdateNowButton()
