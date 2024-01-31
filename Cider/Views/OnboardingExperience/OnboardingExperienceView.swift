@@ -255,6 +255,10 @@ struct OnboardingExperienceView: View {
                         Defaults.Toggle("Send Crash Reports and Performance Metrics", key: .shareCrashReports)
                             .toggleStyle(.switch)
                             .controlSize(.small)
+                        Text("Learn more about what types of data we collect in **Cider > Settings...**")
+                            .font(.system(size: 10))
+                            .foregroundStyle(.gray)
+                            .padding(.vertical, 2)
                     }
                     .padding(.bottom)
                     
