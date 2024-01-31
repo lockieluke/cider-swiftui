@@ -98,6 +98,7 @@ tasks:
     sources:
       - Cider/**/*.swift
       - CiderPlaybackAgent/**/*.swift
+      - CiderWebModules/dist/**/*
     generates:
       - Precompiled.swift
     cmds:
