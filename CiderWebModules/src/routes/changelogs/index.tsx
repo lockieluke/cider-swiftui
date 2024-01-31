@@ -24,7 +24,8 @@ declare global {
 
 type ChangelogsMetadata = {
     title: string;
-    heroVideo: string;
+    heroVideo?: string;
+    heroImage?: string;
 }
 
 const App = () => {
@@ -62,16 +63,18 @@ const App = () => {
 
     createEffect(async () => {
         if (_.isNil(metadata())) return;
+        const {heroVideo} = metadata()!;
 
-        const response = await fetch(metadata()!.heroVideo);
-        if (!response.ok) {
-            console.error("Failed to fetch video data", response);
-            return;
+        if (heroVideo) {
+            const response = await fetch(heroVideo);
+            if (!response.ok) {
+                console.error("Failed to fetch video data", response);
+                return;
+            }
+
+            const blob = await response.blob();
+            setVideoData(URL.createObjectURL(blob));
         }
-
-        const blob = await response.blob();
-
-        setVideoData(URL.createObjectURL(blob));
     }, [metadata]);
 
     return (
@@ -91,15 +94,22 @@ const App = () => {
                     <>
                         <h1 class={"self-start text-left text-3xl font-bold mx-2"}>{metadata()?.title}</h1>
                         <p class={"self-start text-left text-sm text-zinc-500 my-1 mx-2"}>Version {window.BUILD_INFO.version} (build {window.BUILD_INFO.build})</p>
-                        <video class={clsx("py-2 aspect-video object-center w-max h-[65dvh]", {
-                            "hidden": _.isNil(videoData()),
-                            "rounded-sm": !_.isNil(videoData())
-                        })} loop={true} autoplay={true} src={videoData()} contextMenu={"return false"} />
-                        <div class={clsx("flex items-center justify-center py-2 aspect-video h-[65dvh]", {
-                            "hidden": !_.isNil(videoData())
-                        })}>
-                            <Spinner type={SpinnerType.tailSpin}/>
-                        </div>
+                        <Show when={!_.isNil(metadata()?.heroVideo)}>
+                            <video class={clsx("py-2 aspect-video object-center w-max h-[65dvh]", {
+                                "hidden": _.isNil(videoData()),
+                                "rounded-sm": !_.isNil(videoData())
+                            })} loop={true} autoplay={true} src={videoData()} contextMenu={"return false"} />
+                        </Show>
+                        <Show when={!_.isNil(metadata()?.heroImage)}>
+                            <img class={"py-2 aspect-auto object-contain w-max h-[65dvh] rounded-sm"} draggable={false} src={metadata()?.heroImage} alt={"Image of Changelogs"}/>
+                        </Show>
+                        <Show when={!_.isNil(metadata()?.heroVideo)}>
+                            <div class={clsx("flex items-center justify-center py-2 aspect-video h-[65dvh]", {
+                                "hidden": !_.isNil(videoData())
+                            })}>
+                                <Spinner type={SpinnerType.tailSpin}/>
+                            </div>
+                        </Show>
                         <div class={"[&>ul]:list-disc self-start mx-7"} innerHTML={markdownInHtml()}/>
                     </>
                 </Show>
