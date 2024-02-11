@@ -79,11 +79,11 @@ tasks:
     dir: 'CiderWebModules/'
     desc: "Build CiderWebModules"
     sources:
-      - src/**/*
+      - src/**/*.{ts,tsx}
       - package.json
       - yarn.lock
     generates:
-      - dist/**/*
+      - dist/**/*.js
     cmds:
       - yarn build
 

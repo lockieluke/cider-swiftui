@@ -921,11 +921,11 @@
 			buildConfigurationList = B700C18C28B920F20069FDF5 /* Build configuration list for PBXNativeTarget "Cider" */;
 			buildPhases = (
 				B74EEBD529D8862500711DB6 /* Build NativeUtils */,
+				B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */,
 				B77066032B51F03100551769 /* Precompile Sources */,
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
 				B700C17B28B920F10069FDF5 /* Resources */,
-				B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */,
 				B7489F542AF4657100BCBD60 /* Copy Helpers */,
 				B790503D2B0E949600CED9B6 /* Embed XPC Services */,
 				B79050612B1157A400CED9B6 /* Embed Frameworks */,
