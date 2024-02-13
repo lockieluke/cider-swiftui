@@ -5,6 +5,7 @@
 import SwiftUI
 import Inject
 import Defaults
+import KeychainAccess
 
 struct NavigationContainer: View {
     
@@ -114,8 +115,10 @@ struct NavigationContainer: View {
                             .zIndex(1)
                     }
                 } else {
-                    NativeComponent(authModal.webview)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    if (try? Keychain().get("mk-token")).isNil {
+                        NativeComponent(authModal.webview)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 }
             }
             .layoutPriority(1)
