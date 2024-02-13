@@ -10,6 +10,7 @@ struct NavigationContainer: View {
     
     @ObservedObject private var iO = Inject.observer
     
+    @EnvironmentObject private var authModal: AuthModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var personalisedData: PersonalisedData
@@ -112,12 +113,15 @@ struct NavigationContainer: View {
                             .transition(.move(edge: .trailing))
                             .zIndex(1)
                     }
+                } else {
+                    NativeComponent(authModal.webview)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
             .layoutPriority(1)
             .animation(.none, value: navigationModal.showSidebar)
         }
-        .padding(.top, 40)
+        .padding(.top, 45)
         .padding(.bottom, 100)
         .enableInjection()
     }

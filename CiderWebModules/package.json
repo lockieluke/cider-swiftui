@@ -10,6 +10,7 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx src"
   },
   "dependencies": {
+    "@solidjs/meta": "^0.29.3",
     "await-to-js": "^3.0.0",
     "clsx": "^2.1.0",
     "dompurify": "^3.0.8",
@@ -21,7 +22,8 @@
     "solid-js": "^1.8.7",
     "solid-spinner": "^0.2.0",
     "solid-transition-group": "^0.2.3",
-    "store2": "^2.14.2"
+    "store2": "^2.14.2",
+    "wait-for-the-element": "^4.0.1"
   },
   "devDependencies": {
     "@nabla/vite-plugin-eslint": "^2.0.2",
@@ -37,6 +39,7 @@
     "autoprefixer": "^10.4.16",
     "cheerio": "^1.0.0-rc.12",
     "esbuild": "^0.19.11",
+    "esbuild-sass-plugin": "^3.0.0",
     "eslint": "^8.56.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
@@ -50,6 +53,7 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-plugin-minify": "^1.5.2",
+    "vite-plugin-mkcert": "^1.17.3",
     "vite-plugin-node-polyfills": "^0.19.0",
     "vite-plugin-singlefile": "^0.13.5",
     "vite-plugin-solid": "^2.8.0",

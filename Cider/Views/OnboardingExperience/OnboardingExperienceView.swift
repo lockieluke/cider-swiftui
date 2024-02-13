@@ -11,6 +11,7 @@ import Inject
 import Lottie
 import SFSafeSymbols
 import Defaults
+import KeychainAccess
 
 struct AudioQualityOptions: View {
     
@@ -106,6 +107,7 @@ struct OnboardingExperienceView: View {
     @State private var backgroundOpacity: CGFloat = .zero
     @State private var lottieOpacity: CGFloat = 1
     @State private var showingWebView: Bool = false
+    @State private var showingAuthWebView: Bool = false
     @State private var escapeKeyMonitor: Any?
     
     @Default(.launchedBefore) private var launchedBefore
@@ -216,11 +218,7 @@ struct OnboardingExperienceView: View {
                         .padding(.vertical, 3)
                     
                     AuthButton(.appleMusic) {
-                        Task {
-                            let userToken = try await self.authModal.retrieveUserToken()
-                            self.mkModal.authenticateWithToken(userToken: userToken)
-                            self.currentSetupStep = 3
-                        }
+                        self.showingAuthWebView = true
                     }
                     .padding(.vertical)
                     
@@ -264,27 +262,24 @@ struct OnboardingExperienceView: View {
                     
                     Button("Done") {
                         Task {
-                            let timer = ParkBenchTimer()
-                            do {
+                            if let userToken = Keychain()["mk-token"] {
+                                let timer = ParkBenchTimer()
                                 let authTimer = ParkBenchTimer()
-                                let userToken = try await authModal.retrieveUserToken()
                                 self.mkModal.authenticateWithToken(userToken: userToken)
                                 Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
                                 
                                 self.ciderPlayback.setUserToken(userToken: userToken)
-                            } catch {
-                                Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")
+                                self.ciderPlayback.start()
+                                
+                                await self.mkModal.initStorefront()
+                                DispatchQueue.main.async {
+                                    self.mkModal.isAuthorised = true
+                                    self.navigationModal.inOnboardingExperience = false
+                                    self.launchedBefore = true
+                                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
+                                }
+                                Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
                             }
-                            self.ciderPlayback.start()
-                            
-                            await self.mkModal.initStorefront()
-                            DispatchQueue.main.async {
-                                self.mkModal.isAuthorised = true
-                                self.navigationModal.inOnboardingExperience = false
-                                self.launchedBefore = true
-                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
-                            }
-                            Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
                         }
                     }
                     .buttonStyle(.borderedProminent)
@@ -336,6 +331,35 @@ struct OnboardingExperienceView: View {
                 NativeComponent(self.connectModal.view)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .frame(width: 800, height: 600)
+            .padding()
+        }
+        .sheet(isPresented: $showingAuthWebView) {
+            VStack {
+                Button() {
+                    self.showingAuthWebView = false
+                } label: {
+                    Image(systemSymbol: .xmarkCircleFill)
+                        .font(.title2)
+                }
+                .buttonStyle(.borderless)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.vertical, 2)
+                
+                NativeComponent(self.authModal.webview)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onChange(of: mkModal.isAuthorised) { _ in
+                        self.showingAuthWebView = false
+                        self.currentSetupStep += 1
+                    }
+                    .onAppear {
+                        if self.mkModal.isAuthorised {
+                            self.showingAuthWebView = false
+                            self.currentSetupStep += 1
+                        }
+                    }
             }
             .frame(width: 800, height: 600)
             .padding()

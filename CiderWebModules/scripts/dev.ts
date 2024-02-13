@@ -4,6 +4,7 @@ import {createServer, InlineConfig, mergeConfig, UserConfig} from "vite";
 import buildConfig from "../vite.config";
 import * as cheerio from "cheerio";
 import solidPlugin from "vite-plugin-solid";
+import mkcert from "vite-plugin-mkcert";
 import {glob} from "glob";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -56,7 +57,7 @@ const server = await createServer(mergeConfig<UserConfig, InlineConfig>(baseConf
 
             return $.html();
         }
-    }]
+    }, mkcert()]
 }));
 
 await server.listen();

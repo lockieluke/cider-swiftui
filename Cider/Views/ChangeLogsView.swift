@@ -48,9 +48,9 @@ struct ChangeLogsView: View {
             $0.configuration.userContentController.addUserScript(WKUserScript(source: "window.BUILD_INFO = { version: \"\(Bundle.main.appVersion)\", build: \(Bundle.main.appBuild) };", injectionTime: .atDocumentStart, forMainFrameOnly: true, in: .page))
             #if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-            $0.load(URLRequest(url: URL(string: "http://localhost:5173/changelogs")!))
+            $0.load(URLRequest(url: URL(string: "https://localhost:5173/changelogs")!))
             #else
-            $0.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/changelogs.html"), baseURL: URL(string: "http://localhost")!)
+            $0.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/changelogs.html"), baseURL: URL(string: "https://localhost")!)
             #endif
         }
         self.wkNavigationDelegate = wkNavigationDelegate
@@ -62,7 +62,7 @@ struct ChangeLogsView: View {
             HStack {
                 #if DEBUG
                 Button {
-                    self.wkWebView.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/changelogs.html"), baseURL: URL(string: "http://localhost")!)
+                    self.wkWebView.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/changelogs.html"), baseURL: URL(string: "https://localhost")!)
                 } label: {
                     Text("Load static build")
                 }

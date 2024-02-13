@@ -1,123 +1,63 @@
 /// <reference types="musickit-typescript" />
-import to from "await-to-js";
 
-declare const amToken: string, initialURL: string;
+import authStyles from "./auth-styles.scss?inline";
+import {waitForTheElement} from "wait-for-the-element";
 
 declare global {
     interface Window {
+        webkit: {
+            messageHandlers: {
+                ciderkit: {
+                    postMessage: (message: object) => void
+                }
+            }
+        },
         unauthoriseAM: () => void;
-        importMusicKit: () => void;
         configureMusicKit: () => Promise<void>;
-        sendNativeMessage: (message: unknown) => void;
     }
 }
 
-enum AuthorisationWindowType {
-    Continue = "https://authorize.music.apple.com/?liteSessionId=",
-    AppleIDSignIn = "https://authorize.music.apple.com/woa"
-}
+const entry = async () => {
+    if (window.location.hostname === "idmsa.apple.com") {
+        // inject auth styles
+        const stylesheet = document.createElement("style");
+        stylesheet.id = "auth-stylesheet";
+        stylesheet.textContent = authStyles;
+        document.head.appendChild(stylesheet);
 
-function waitForDom(selector: string): Promise<Element> {
-    return new Promise(resolve => {
-        const elem = document.querySelector(selector);
-        if (elem)
-            resolve(elem);
+        const iframe = await waitForTheElement("#aid-auth-widget-iFrame") as HTMLIFrameElement | null;
+        (await waitForTheElement("#ac-globalfooter"))?.remove();
 
-        const observer = new MutationObserver(() => {
-            const dom = document.querySelector(selector);
-            if (dom) {
-                resolve(dom);
-                observer.disconnect();
-            }
-        });
+        // suppress crazy onresize errors
+        document.body.onresize = null;
 
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+        console.log("Auth Script injected");
+        if (iframe) {
+            console.log("Auth iFrame found");
+        }
+    }
+
+    if (location.hostname === "authorize.music.apple.com") {
+        (await waitForTheElement("#app > div > div > footer"))?.remove();
+        const continueButton = await waitForTheElement("#app > div > div > section > div.base-content-wrapper__button-container > button");
+        if (continueButton) (<HTMLButtonElement>continueButton).click();
+    }
+
+    if (location.hostname === "localhost") {
+        console.log("Running on localhost");
+    }
+};
+
+if (location.hostname === "authorize.music.apple.com") {
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "complete" || document.readyState === "interactive")
+            document.body.style.backgroundColor = "transparent";
     });
 }
 
-window.sendNativeMessage = message => {
-    alert(JSON.stringify(message));
-};
-
-window.importMusicKit = () => {
-    const mkScript = document.createElement("script");
-    mkScript.src = "https://js-cdn.music.apple.com/musickit/v3/musickit.js";
-    mkScript.toggleAttribute("data-web-component");
-    mkScript.toggleAttribute("async");
-    document.head.appendChild(mkScript);
-};
-
-const currentURL = window.location.toString();
-if (currentURL.includes(initialURL))
-    window.importMusicKit();
-else {
-    if (currentURL.includes(AuthorisationWindowType.AppleIDSignIn)) {
-        window.sendNativeMessage({
-            action: "authenticating-apple-id"
-        });
-    } else if (currentURL.includes(AuthorisationWindowType.Continue)) {
-        window.sendNativeMessage({
-            action: "authenticating-am"
-        });
-
-        (async () => {
-            const continueButton = await waitForDom("#app > div > div > section > div.base-content-wrapper__button-container > button") as HTMLButtonElement;
-            continueButton.click();
-        })();
-    }
-
-}
-
-document.addEventListener("musickitloaded", async function () {
-    console.log(`MusicKit ${MusicKit.version} loaded`);
-    try {
-        await MusicKit.configure({
-            developerToken: amToken,
-            app: {
-                name: "Apple Music",
-                build: "1978.4.1",
-                version: "1.0"
-            }
-        });
-    } catch (err) {
-        const error = err as Error;
-        window.sendNativeMessage({
-            error: err,
-            message: `Failed to configure MusicKit: ${error.message}`
-        });
-        return;
-    }
-    console.log(`MusicKit ${MusicKit.version} configured`);
-
-    const mk = MusicKit.getInstance();
-
-    if (mk.isAuthorized) {
-        console.log("User was previously authorised");
-        window.sendNativeMessage({
-            action: "authenticated",
-            token: mk.musicUserToken
-        });
-        return;
-    }
-
-    const [aErr, userToken] = await to(mk.authorize());
-    if (aErr) {
-        window.sendNativeMessage({
-            error: aErr,
-            message: "Failed to authenticate user"
-        });
-        return;
-    }
-
-    if (userToken) {
-        window.sendNativeMessage({
-            action: "authenticated",
-            token: userToken
-        });
-    }
-});
+if (document.readyState === "complete" || document.readyState === "interactive")
+    entry();
+else
+    window.addEventListener("load", entry);
 
 export {};

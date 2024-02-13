@@ -168,6 +168,7 @@
 		B7AAF7762ACE096600A9346C /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAF7752ACE096600A9346C /* DonateView.swift */; };
 		B7AAF7792ACE175900A9346C /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = B7AAF7782ACE175900A9346C /* AlertToast */; };
 		B7B02F57295629030065FCDD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02F56295629030065FCDD /* Double.swift */; };
+		B7B128D82B7AA65000AEF9CD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = B7B128D72B7AA65000AEF9CD /* KeychainAccess */; };
 		B7B3D8C029B005100014F63D /* ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B3D8BF29B005100014F63D /* ContextMenu.swift */; };
 		B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C06F832932E1C5000C1192 /* NavigationContainer.swift */; };
 		B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */; };
@@ -495,6 +496,7 @@
 				B7DDCCF12B2A5872006E1429 /* Files in Frameworks */,
 				B71B82902A36717400DD8BC2 /* AttributedText in Frameworks */,
 				B71B82AF2A3676AF00DD8BC2 /* Inject in Frameworks */,
+				B7B128D82B7AA65000AEF9CD /* KeychainAccess in Frameworks */,
 				B7107BB92AA2B8D300A83306 /* FirebaseAuth in Frameworks */,
 				B71B827B2A36708000DD8BC2 /* Rainbow in Frameworks */,
 				B71B828D2A36713B00DD8BC2 /* Throttler in Frameworks */,
@@ -974,6 +976,7 @@
 				B72ECF5D2B647A7A00944694 /* Atlantis */,
 				B71530352B65DED600A81935 /* Sentry */,
 				B71530372B65DED600A81935 /* SentrySwiftUI */,
+				B7B128D72B7AA65000AEF9CD /* KeychainAccess */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1115,6 +1118,7 @@
 				B77065F22B4CBC7600551769 /* XCRemoteSwiftPackageReference "Subprocess" */,
 				B72ECF5C2B647A7A00944694 /* XCRemoteSwiftPackageReference "atlantis" */,
 				B71530342B65DED500A81935 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				B7B128D62B7AA64F00AEF9CD /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1161,6 +1165,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		B74EEBD529D8862500711DB6 /* Build NativeUtils */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1200,6 +1205,7 @@
 		};
 		B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2158,6 +2164,14 @@
 				minimumVersion = 1.3.9;
 			};
 		};
+		B7B128D62B7AA64F00AEF9CD /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -2381,6 +2395,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
+		};
+		B7B128D72B7AA65000AEF9CD /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7B128D62B7AA64F00AEF9CD /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 		B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;

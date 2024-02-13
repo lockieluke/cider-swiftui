@@ -8,6 +8,7 @@ import Throttler
 import Inject
 import Defaults
 import SFSafeSymbols
+import KeychainAccess
 
 struct ContentView: View {
     
@@ -130,18 +131,13 @@ struct ContentView: View {
             self.navigationModal.showSidebar = Defaults[.showSidebarAtLaunch]
         }
         .task {
-            if self.launchedBefore {
+            if self.launchedBefore, let userToken = Keychain()["mk-token"] {
                 let timer = ParkBenchTimer()
-                do {
-                    let authTimer = ParkBenchTimer()
-                    let userToken = try await authModal.retrieveUserToken()
-                    self.mkModal.authenticateWithToken(userToken: userToken)
-                    Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
-                    
-                    self.ciderPlayback.setUserToken(userToken: userToken)
-                } catch {
-                    Logger.sharedLoggers[.Authentication]?.error("Failed to authenticate user: \(error)")
-                }
+                let authTimer = ParkBenchTimer()
+                self.mkModal.authenticateWithToken(userToken: userToken)
+                Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
+                
+                self.ciderPlayback.setUserToken(userToken: userToken)
                 self.ciderPlayback.start()
                 
                 await self.mkModal.initStorefront()
@@ -149,6 +145,8 @@ struct ContentView: View {
                     self.mkModal.isAuthorised = true
                 }
                 Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
+            } else {
+                self.mkModal.isAuthorised = false
             }
         }
         .enableInjection()

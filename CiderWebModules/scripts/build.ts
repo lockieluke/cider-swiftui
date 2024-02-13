@@ -2,6 +2,7 @@ import {glob} from "glob";
 import ora from "ora";
 import * as path from "path";
 import * as esbuild from "esbuild";
+import {sassPlugin} from "esbuild-sass-plugin";
 import * as async from "modern-async";
 import fs from "fs-extra";
 import os from "os";
@@ -87,7 +88,11 @@ await async.asyncForEach(targets, async target => {
         bundle: true,
         outfile: path.resolve(__dirname, "dist", `${target}.js`),
         platform: "browser",
-        target: "safari16"
+        target: "safari16",
+        plugins: [sassPlugin({
+            type: "css-text",
+            style: "compressed"
+        })]
     });
     if (errors.length > 0) {
         spinner.fail(`Failed to build ${target}`);

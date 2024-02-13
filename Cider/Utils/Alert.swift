@@ -12,6 +12,7 @@ import UIKit
 class Alert {
     
 #if canImport(AppKit)
+    @MainActor
     static func showModal(on window: NSWindow, message: String, icon: NSAlert.Style = .informational, completion: (() -> Void)? = nil) {
         let alert = NSAlert().then {
             $0.messageText = message
@@ -22,6 +23,7 @@ class Alert {
         }
     }
 #elseif canImport(UIKit)
+    @MainActor
     static func showModal(message: String, style: UIAlertController.Style = .alert, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: style)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
