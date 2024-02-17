@@ -47,9 +47,13 @@ final class UpdateHelper: ObservableObject {
     private var downloadObservation: NSKeyValueObservation?
     private var extractionObservation: NSKeyValueObservation?
     private let helperId: String = "com.cidercollective.UpdaterService"
-    private var storage: FirebaseStorage.Storage?
+    private lazy var storage = FirebaseStorage.Storage.storage()
     #if canImport(FirebaseFirestoreInternalWrapper)
-    private final var firestore: Firestore?
+    private lazy var firestore = Firestore.firestore().then {
+        $0.settings = FirestoreSettings().then {
+            $0.cacheSettings = MemoryCacheSettings(garbageCollectorSettings: MemoryLRUGCSettings())
+        }
+    }
     #endif
     
     let logger: Logger
@@ -82,16 +86,7 @@ final class UpdateHelper: ObservableObject {
         self.connection.resume()
         self.logger.success("Started")
         
-        // Defer firebase initialisation
-        #if canImport(FirebaseFirestoreInternalWrapper)
-        self.storage = FirebaseStorage.Storage.storage()
-        self.firestore = Firestore.firestore().then {
-            $0.settings = FirestoreSettings().then {
-                $0.cacheSettings = MemoryCacheSettings(garbageCollectorSettings: MemoryLRUGCSettings())
-            }
-        }
-        
-        self.firestore?.collection("app").document("releases").collection("macos-native").document("present").addSnapshotListener { querysnapshot, error in
+        self.firestore.collection("app").document("releases").collection("macos-native").document("present").addSnapshotListener { querysnapshot, error in
             self.updateManifest = nil
             if let error = error {
                 self.logger.error("Failed to pull update information: \(error.localizedDescription)")
@@ -121,20 +116,28 @@ final class UpdateHelper: ObservableObject {
                 self.logger.error("Failed to fetch new update manifest: \(error.localizedDescription)")
             }
         }
-        #endif
     }
     
     func terminate() {
+        self.xpc.cleanup()
         self.connection.invalidate()
     }
     
     func fetchPresentVersion() async -> CiderUpdateManifest? {
         do {
-            let data = try await self.xpc.fetchPresentVersion()
+            let document = try await self.firestore.collection("app").document("releases").collection("macos-native").document("present").getDocument()
+            let version = document["version"] as! String
+            let build = document["build"] as! Int
+            let downloadLink = try await self.storage.reference(withPath: "releases/macos-native").child("Cider-\(version)-b\(build).dmg").downloadURL()
             
-            return try ZippyJSONDecoder().decode(CiderUpdateManifest.self, from: data)
+            return CiderUpdateManifest(
+                version: version,
+                build: build,
+                downloadLink: downloadLink,
+                downloadHash: document["hash"] as! String
+            )
         } catch {
-            self.logger.error("Failed to fetch present version from update server: \(error.localizedDescription)")
+            self.logger.error("Failed to fetch present version: \(error.localizedDescription)")
         }
         
         return nil
@@ -145,9 +148,7 @@ final class UpdateHelper: ObservableObject {
             // Fetch using CiderUpdateService - slower but independent
 //            let data = try await self.xpc.fetchCurrentChangelogs(version: Bundle.main.appVersion, build: Int(Bundle.main.appBuild) ?? 0)
             
-            if let data = try await self.storage?.reference(withPath: "changelogs/macos-native").child("Cider-\(Bundle.main.appVersion)-b\(Bundle.main.appBuild).md").data(maxSize: .max) {
-                return String(data: data, encoding: .utf8)
-            }
+            return String(data: try await self.storage.reference(withPath: "changelogs/macos-native").child("Cider-\(Bundle.main.appVersion)-b\(Bundle.main.appBuild).md").data(maxSize: .max), encoding: .utf8)
         } catch {
             self.logger.error("Failed to fetch current changelog: \(error.localizedDescription)")
         }

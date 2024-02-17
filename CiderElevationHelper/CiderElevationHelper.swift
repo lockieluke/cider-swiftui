@@ -13,9 +13,14 @@ class CiderElevationHelper: NSObject, CiderElevationHelperProtocol {
     
     private let discordRpc = DiscordRPCAgent()
     
+    override init() {
+        ProcessInfo.processInfo.disableAutomaticTermination("DiscordRPCHelper")
+    }
+    
     @MainActor
     @objc func cleanup() {
         self.discordRpc.stop()
+        exit(0)
     }
     
     @MainActor

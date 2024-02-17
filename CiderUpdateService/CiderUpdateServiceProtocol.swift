@@ -36,10 +36,9 @@ class CiderUpdateManifest: NSObject, Codable {
 /// The protocol that this service will vend as its API. This protocol will also need to be visible to the process hosting the service.
 @objc protocol CiderUpdateServiceProtocol {
     
-    func fetchPresentVersion() async throws -> Data
-    func fetchCurrentChangelogs(version: String, build: Int) async throws -> Data
     func removeQuarantineFlag(path: String, reply onReply: @escaping (_ error: Error) -> Void)
     func applyUpdate(manifestData: Data, dmgPath: String, parentPid: Int32, appPath: String) async throws
+    func cleanup()
     
 }
 

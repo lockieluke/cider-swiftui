@@ -141,8 +141,6 @@
 		B79230B92A4B8B46003F3D99 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79230B82A4B8B46003F3D99 /* URL.swift */; };
 		B79529162B1E72C100D98653 /* UpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79529152B1E72C100D98653 /* UpdateHelper.swift */; };
 		B79529172B1E733200D98653 /* CiderUpdateServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF6B262B12C81900A7DEEE /* CiderUpdateServiceProtocol.swift */; };
-		B79529192B1E73BF00D98653 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B79529182B1E73BF00D98653 /* FirebaseFirestoreSwift */; };
-		B795291B2B1E749B00D98653 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B795291A2B1E749B00D98653 /* FirebaseAnalyticsSwift */; };
 		B797AFF6297F3AB900D77282 /* InteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF5297F3AB900D77282 /* InteractiveText.swift */; };
 		B797AFF8297F3B6A00D77282 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF7297F3B6A00D77282 /* ArtistView.swift */; };
 		B797AFFA297F3E2000D77282 /* MediaArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF9297F3E2000D77282 /* MediaArtist.swift */; };
@@ -201,7 +199,6 @@
 		B7D5B9E2292C2F9900046B7F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D5B9E1292C2F9900046B7F /* Logging.swift */; };
 		B7DDCCD42B26772C006E1429 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DDCCD32B26772C006E1429 /* AboutView.swift */; };
 		B7DDCCD62B267989006E1429 /* NSApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DDCCD52B267989006E1429 /* NSApplication.swift */; };
-		B7DDCCD82B27B09C006E1429 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B7DDCCD72B27B09C006E1429 /* FirebaseStorage */; };
 		B7DDCCE72B27BEC4006E1429 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7DDCCE62B27BEB4006E1429 /* GoogleService-Info.plist */; };
 		B7DDCCF12B2A5872006E1429 /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = B7DDCCF02B2A5872006E1429 /* Files */; };
 		B7E1CE072996EC6800D25D0F /* SearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E1CE062996EC6800D25D0F /* SearchSuggestions.swift */; };
@@ -530,10 +527,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B776851F2B2A6A3B002B5C97 /* Files in Frameworks */,
-				B795291B2B1E749B00D98653 /* FirebaseAnalyticsSwift in Frameworks */,
-				B79529192B1E73BF00D98653 /* FirebaseFirestoreSwift in Frameworks */,
 				B70294182B48C0F700664181 /* SwiftyUtils in Frameworks */,
-				B7DDCCD82B27B09C006E1429 /* FirebaseStorage in Frameworks */,
 				B77065F62B4CBC8000551769 /* Subprocess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1038,9 +1032,6 @@
 			);
 			name = CiderUpdateService;
 			packageProductDependencies = (
-				B79529182B1E73BF00D98653 /* FirebaseFirestoreSwift */,
-				B795291A2B1E749B00D98653 /* FirebaseAnalyticsSwift */,
-				B7DDCCD72B27B09C006E1429 /* FirebaseStorage */,
 				B776851E2B2A6A3B002B5C97 /* Files */,
 				B70294172B48C0F700664181 /* SwiftyUtils */,
 				B77065F52B4CBC8000551769 /* Subprocess */,
@@ -2376,16 +2367,6 @@
 			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
 		};
-		B79529182B1E73BF00D98653 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
-		B795291A2B1E749B00D98653 /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
-		};
 		B7A24ECC2AFAF89200B97E07 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
@@ -2410,11 +2391,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7C83DA72A561C9200470320 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		B7DDCCD72B27B09C006E1429 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
 		};
 		B7DDCCF02B2A5872006E1429 /* Files */ = {
 			isa = XCSwiftPackageProductDependency;

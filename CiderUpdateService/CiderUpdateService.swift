@@ -7,14 +7,11 @@
 //
 
 import Foundation
-import FirebaseCore
-import FirebaseAnalytics
-import FirebaseFirestore
-import FirebaseStorage
 import Files
 import System
 import Subprocess
 import SwiftyUtils
+import AppKit
 
 extension URL {
     func listExtendedAttributes() throws -> [String] {
@@ -51,43 +48,8 @@ extension URL {
 /// This object implements the protocol which we have defined. It provides the actual behavior for the service. It is 'exported' by the service to make it available to the process hosting the service over an NSXPCConnection.
 class CiderUpdateService: NSObject, CiderUpdateServiceProtocol {
     
-    private let firestore: Firestore
-    private let storage: FirebaseStorage.Storage
-    
     private var observation: NSKeyValueObservation?
-    
-    override init() {
-        FirebaseConfiguration.shared.setLoggerLevel(.min)
-#if DEBUG
-        Analytics.setAnalyticsCollectionEnabled(false)
-#endif
-        FirebaseApp.configure()
-        
-        self.firestore = Firestore.firestore().then {
-            $0.settings = FirestoreSettings().then {
-                $0.cacheSettings = MemoryCacheSettings(garbageCollectorSettings: MemoryLRUGCSettings())
-            }
-        }
-        self.storage = Storage.storage()
-    }
-    
-    func fetchPresentVersion() async throws -> Data {
-        let document = try await self.firestore.collection("app").document("releases").collection("macos-native").document("present").getDocument()
-        let version = document["version"] as! String
-        let build = document["build"] as! Int
-        let downloadLink = try await self.storage.reference(withPath: "releases/macos-native").child("Cider-\(version)-b\(build).dmg").downloadURL()
-        
-        return try JSONEncoder().encode(CiderUpdateManifest(
-            version: version,
-            build: build,
-            downloadLink: downloadLink,
-            downloadHash: document["hash"] as! String
-        ))
-    }
-    
-    func fetchCurrentChangelogs(version: String, build: Int) async throws -> Data {
-        return try await self.storage.reference(withPath: "changelogs/macos-native").child("Cider-\(version)-b\(build).md").data(maxSize: .max)
-    }
+    private var isUpdateInProgress: Bool = false
     
     func removeQuarantineFlag(path: String, reply onReply: @escaping (_ error: Error) -> Void) {
         do {
@@ -104,6 +66,7 @@ class CiderUpdateService: NSObject, CiderUpdateServiceProtocol {
     
     func applyUpdate(manifestData: Data, dmgPath: String, parentPid: Int32, appPath: String) async throws {
         ProcessInfo.processInfo.disableAutomaticTermination("Update in progress")
+        self.isUpdateInProgress = true
         
         let appPath = try Folder(path: appPath)
         let updateBundle = try Folder.temporary.createSubfolderIfNeeded(withName: Bundle.main.bundleIdentifier!).createSubfolderIfNeeded(at: "Updates")
@@ -135,6 +98,14 @@ class CiderUpdateService: NSObject, CiderUpdateServiceProtocol {
         try await NSWorkspace.shared.openApplication(at: appPath.url, configuration: NSWorkspace.OpenConfiguration().then {
             $0.arguments = ["-show-changelogs"]
         })
+        exit(0)
+    }
+    
+    func cleanup() {
+        if self.isUpdateInProgress {
+            return
+        }
+        
         exit(0)
     }
     
