@@ -38,7 +38,7 @@ struct QueueView: View {
                                 QueueTrackView(track: queueTrack, allowReordering: allowReordering, onReordering: { reorderingIndex in
                                     if reorderingIndex == nil, let lastReorderingIndex = self.reorderingIndex, lastReorderingIndex != 0, self.ciderPlayback.queue.indices.contains(lastReorderingIndex) {
                                         Task {
-                                            await self.ciderPlayback.reorderQueuedItem(from: index, to: lastReorderingIndex)
+                                            await self.ciderPlayback.playbackEngine.reorderQueuedItem(from: index, to: lastReorderingIndex)
                                         }
                                     }
                                     
@@ -48,7 +48,7 @@ struct QueueView: View {
                                     }
                                 }, onPlay: {
                                     Task {
-                                        await self.ciderPlayback.skipToQueueIndex(index)
+                                        await self.ciderPlayback.playbackEngine.skipToQueueIndex(index)
                                     }
                                 })
                                 .frame(maxWidth: scrollGeometry.size.width * 0.9)
@@ -69,7 +69,7 @@ struct QueueView: View {
         }, headerChildren: {
             Button {
                 Task {
-                    await self.ciderPlayback.setAutoPlay(!self.ciderPlayback.playbackBehaviour.autoplayEnabled)
+                    await self.ciderPlayback.playbackEngine.setAutoPlay(!self.ciderPlayback.playbackBehaviour.autoplayEnabled)
                     Defaults[.playbackAutoplay] = self.ciderPlayback.playbackBehaviour.autoplayEnabled
                 }
             } label: {

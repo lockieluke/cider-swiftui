@@ -13,12 +13,10 @@ class MKModal : ObservableObject {
     @Published var hasDeveloperToken = false
     
     private let logger = Logger(label: "MusicKit Wrapper")
-    private let ciderPlayback: CiderPlayback
     
     let AM_API: AMAPI
     
-    init(ciderPlayback: CiderPlayback, cacheModal: CacheModal) {
-        self.ciderPlayback = ciderPlayback
+    init(cacheModal: CacheModal) {
         self.AM_API = AMAPI(cacheModal: cacheModal)
     }
     
@@ -33,7 +31,6 @@ class MKModal : ObservableObject {
 //                        }
                     DispatchQueue.main.async {
                         self.hasDeveloperToken = true
-                        self.ciderPlayback.setDeveloperToken(developerToken: developerToken, mkModal: self)
                         self.logger.success("Successfully fetched MusicKit Developer Token", displayTick: true)
                         continuation.resume(returning: developerToken)
                     }

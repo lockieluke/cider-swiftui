@@ -63,7 +63,7 @@ struct LyricLine: View {
             }
             .onTapGesture {
                 Task {
-                    await ciderPlayback.seekToTime(seconds: Int(lyric.startTime))
+                    await self.ciderPlayback.playbackEngine.seekToTime(seconds: Int(lyric.startTime))
                 }
             }
     }

@@ -5,7 +5,6 @@
 import SwiftUI
 import Sliders
 import Inject
-import Throttler
 
 struct PlaybackBar: View {
     
@@ -30,12 +29,10 @@ struct PlaybackBar: View {
                 
                 ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...nowPlayingState.duration, step: 1, onEditingChanged: { isEditing in
                     if isEditing != self.isEditingTrack {
-                        Debouncer.debounce(delay: .milliseconds(100), shouldRunImmediately: false) {
-                            DispatchQueue.main.async {
-                                Task {
-                                    await self.ciderPlayback.seekToTime(seconds: Int(currentTimeValue))
-                                    self.isEditingTrack = isEditing
-                                }
+                        DispatchQueue.main.async {
+                            Task {
+                                await self.ciderPlayback.playbackEngine.seekToTime(seconds: Int(currentTimeValue))
+                                self.isEditingTrack = isEditing
                             }
                         }
                     }
@@ -56,9 +53,7 @@ struct PlaybackBar: View {
                                     GeometryReader { geometry in
                                         Color.clear
                                             .onChange(of: geometry.size) { newSize in
-                                                Debouncer.debounce {
-                                                    self.playbackBarWidth = newSize.width
-                                                }
+                                                self.playbackBarWidth = newSize.width
                                             }
                                             .onAppear {
                                                 self.playbackBarWidth = geometry.size.width

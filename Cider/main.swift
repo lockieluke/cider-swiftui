@@ -69,7 +69,6 @@ class AppDelegate : NSObject, ApplicationDelegate {
             Logger.shared.info("Cider is exiting")
             ElevationHelper.shared.terminate()
             UpdateHelper.shared.terminate()
-            CiderPlayback.shutdownAll()
             exit(exitCode)
         }
         signal(SIGTERM, terminatedCallback)
@@ -142,9 +141,9 @@ class AppDelegate : NSObject, ApplicationDelegate {
 #if canImport(AppKit)
     func applicationWillTerminate(_ notification: Notification) {
 #if os(macOS)
+        self.appWindow.ciderPlayback.shutdown()
         ElevationHelper.shared.terminate()
         UpdateHelper.shared.terminate()
-        self.appWindow.ciderPlayback.shutdownSync()
 #endif
     }
 #elseif canImport(UIKit)

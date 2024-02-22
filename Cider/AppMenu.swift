@@ -137,8 +137,7 @@ class AppMenu {
         let developerMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
-                NSMenuItem(title: "Open WebSockets Debugger", action: #selector(self.openWSDebugger(_:)), keyEquivalent: "").then { $0.target = self },
-                NSMenuItem(title: "Open CiderPlaybackAgent debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
+                NSMenuItem(title: "Open playback debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Show Donation View", action: #selector(self.showDonationView(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Show What's New View", action: #selector(self.showWhatsNewView(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self },
@@ -218,15 +217,6 @@ class AppMenu {
     }
     
 #if DEBUG
-    @objc func openWSDebugger(_ sender: Any) {
-        let wsDebugger = WSDebugger(
-            wsModal: self.wsModal,
-            ciderPlayback: self.ciderPlayback,
-            appWindowModal: self.appWindowModal
-        )
-        wsDebugger.open()
-    }
-    
     @objc func clearWebViewCache(_ sender: Any) {
         WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast) {
             Logger.shared.info("Successfully cleared WebKit cache")
@@ -312,7 +302,7 @@ class AppMenu {
     
     @objc func openInspector(_ sender: Any) {
         Task {
-            await self.ciderPlayback.openInspector()
+            await self.ciderPlayback.playbackEngine.openDebugPanel()
         }
     }
 #endif

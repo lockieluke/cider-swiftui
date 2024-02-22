@@ -43,9 +43,10 @@ class CiderElevationHelper: NSObject, CiderElevationHelperProtocol {
         self.discordRpc.clearActivity()
     }
     
-    @MainActor
     @objc func rpcUpdateActivity() {
-        self.discordRpc.updateActivity()
+        DispatchQueue.global(qos: .default).async {
+            self.discordRpc.updateActivity()
+        }
     }
     
     @MainActor

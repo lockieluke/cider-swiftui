@@ -93,8 +93,8 @@ struct MediaPresentable: View {
                             }
                             .onTapGesture {
                                 Task {
-                                    await self.ciderPlayback.setQueue(item: self.item)
-                                    await self.ciderPlayback.play()
+                                    await self.ciderPlayback.playbackEngine.setQueue(item: self.item)
+                                    await self.ciderPlayback.playbackEngine.play(shuffle: false)
                                 }
                             }
                         }

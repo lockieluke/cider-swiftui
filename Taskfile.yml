@@ -97,15 +97,14 @@ tasks:
       - test -f "`which swift-precompiler`"
     sources:
       - Cider/**/*.swift
-      - CiderPlaybackAgent/**/*.swift
       - CiderWebModules/dist/**/*
     generates:
       - Precompiled.swift
     cmds:
-      - swift-precompiler precompile "Cider/:CiderPlaybackAgent/" {{.CLI_ARGS}}
+      - swift-precompiler precompile "Cider/" {{.CLI_ARGS}}
 
   build:xc:
-    desc: "Build all targets including Cider and CiderPlaybackAgent"
+    desc: "Build Xcode target"
     preconditions:
       - test -f "`which xcbeautify`"
     cmds:
@@ -213,9 +212,3 @@ tasks:
     desc: "Disable Stage Manager for running iPad simulator"
     cmds:
       - xcrun simctl spawn booted defaults write -g SBChamoisWindowingEnabled -bool NO
-
-  kill:cider-playback-agent:
-    aliases: [ kill-cpa ]
-    desc: "Kill a hanging CiderPlaybackAgent process"
-    cmds:
-      - killall "CiderPlaybackAgent"

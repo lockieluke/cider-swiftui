@@ -137,12 +137,15 @@ struct ContentView: View {
                 self.mkModal.authenticateWithToken(userToken: userToken)
                 Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
                 
-                self.ciderPlayback.setUserToken(userToken: userToken)
-                self.ciderPlayback.start()
+                await self.ciderPlayback.setUserToken(userToken: userToken)
+                await self.ciderPlayback.start()
                 
                 await self.mkModal.initStorefront()
                 DispatchQueue.main.async {
                     self.mkModal.isAuthorised = true
+                    
+                    // WKWebView has to be added to NSWindow for playback to work
+                    self.appWindowModal.nsWindow?.contentView?.addSubview((self.ciderPlayback.playbackEngine as! MKJSPlayback).webview)
                 }
                 Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
             } else {

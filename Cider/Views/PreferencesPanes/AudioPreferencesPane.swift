@@ -15,8 +15,9 @@ struct AudioPreferencesPane: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     
     @Default(.audioQuality) private var audioQuality
+    @Default(.playbackBackend) private var playbackBackend
     
-    var audioQualityDescription: String {
+    private var audioQualityDescription: String {
         get {
             switch self.audioQuality {
                 
@@ -34,6 +35,17 @@ struct AudioPreferencesPane: View {
         }
     }
     
+    private var playbackBackendDescription: String {
+        get {
+            switch self.playbackBackend {
+                
+            case .MKJS:
+                return "MusicKit JS is the default, most reliable playback engine for \(Bundle.main.displayName)"
+                
+            }
+        }
+    }
+    
     var body: some View {
         Settings.Container(contentWidth: 450.0) {
             Settings.Section(title: "") {
@@ -41,6 +53,18 @@ struct AudioPreferencesPane: View {
                     PrefSectionText("Playback Settings")
                     
                     VStack(alignment: .leading) {
+                        Picker("Playback Engine", selection: $playbackBackend) {
+                            Text("MusicKit JS").tag(PlaybackEngineType.MKJS)
+                        }
+                        .onChange(of: playbackBackend) { playbackBackend in
+                            Defaults[.playbackBackend] = playbackBackend
+                        }
+                        Text("\(playbackBackendDescription).  Changes require restart")
+                            .settingDescription()
+                        
+                        Spacer()
+                            .frame(height: 20)
+                        
                         Picker("Audio Quality", selection: $audioQuality) {
                             Text("High 256kbps").tag(AudioQuality.High)
                             Text("Standard 64kbps").tag(AudioQuality.Standard)
@@ -50,7 +74,7 @@ struct AudioPreferencesPane: View {
                             Debouncer.debounce {
                                 Task {
                                     Defaults[.audioQuality] = audioQuality
-                                    await self.ciderPlayback.setAudioQuality(audioQuality)
+                                    await self.ciderPlayback.playbackEngine.setAudioQuality(audioQuality)
                                 }
                             }
                         }

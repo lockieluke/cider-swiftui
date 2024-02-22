@@ -30,9 +30,9 @@ class AppWindow: NSObject, NSWindowDelegate {
         
         let cacheModal = CacheModal()
         let connectModal = ConnectModal()
-        let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal)
-        let mkModal = MKModal(ciderPlayback: ciderPlayback, cacheModal: cacheModal)
-        let authModal = AuthModal(mkModal: mkModal)
+        let mkModal = MKModal(cacheModal: cacheModal)
+        let ciderPlayback = CiderPlayback(appWindowModal: self.appWindowModal, mkModal: mkModal)
+        let authModal = AuthModal(mkModal: mkModal, ciderPlayback: ciderPlayback)
         let navigationModal = NavigationModal()
         
         let contentView = ContentView()

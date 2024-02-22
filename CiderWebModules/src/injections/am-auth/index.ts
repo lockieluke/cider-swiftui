@@ -11,9 +11,7 @@ declare global {
                     postMessage: (message: object) => void
                 }
             }
-        },
-        unauthoriseAM: () => void;
-        configureMusicKit: () => Promise<void>;
+        }
     }
 }
 

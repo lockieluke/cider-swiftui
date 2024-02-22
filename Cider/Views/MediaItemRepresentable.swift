@@ -65,8 +65,8 @@ struct MediaItemRepresentable: View {
         }
         .onTapGesture {
             Task {
-                await self.ciderPlayback.setQueue(item: self.item)
-                await self.ciderPlayback.clearAndPlay(shuffle: false, item: self.item)
+                await self.ciderPlayback.playbackEngine.setQueue(item: self.item)
+                await self.ciderPlayback.clearAndPlay(shuffle: false)
             }
         }
         .modifier(PressActions(onEvent: { isPressed in

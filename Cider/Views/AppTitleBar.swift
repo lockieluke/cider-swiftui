@@ -47,7 +47,7 @@ struct AppTitleBar: View {
                     ActionButton(actionType: .AirPlay) {
                         Task {
                             guard let frame = self.appWindowModal.nsWindow?.frame else { return }
-                            let supportsAirplay = await self.ciderPlayback.openAirPlayPicker(x: Int(frame.maxX - 113.5), y: Int(frame.maxY - 45))
+                            let supportsAirplay = await self.ciderPlayback.playbackEngine.openAirPlayPicker(x: Int(frame.maxX - 113.5), y: Int(frame.maxY - 45))
                             
                             // TODO: Support third party casting services
                         }

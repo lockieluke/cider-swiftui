@@ -46,27 +46,6 @@ struct DeveloperPreferencesPane: View {
                                 .toggleStyle(.checkbox)
                             Text("This setting will apply next time \(Bundle.main.displayName) is launched")
                                 .settingDescription()
-                            
-                            HStack(alignment: .center) {
-                                Circle()
-                                    .fill(.green)
-                                    .frame(width: 7, height: 7)
-                                
-                                if ciderPlayback.isReady {
-                                    VStack(alignment: .leading) {
-                                        Text("CiderPlaybackAgent is active on port \(Text(verbatim: "\(Int(ciderPlayback.agentPort))")) with Session ID")
-                                        
-                                        Text(ciderPlayback.agentSessionId)
-                                            .foregroundColor(.blue)
-                                            .modifier(BasicHoverModifier())
-                                            .onTapGesture {
-                                                NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(self.ciderPlayback.agentSessionId)
-                                            }
-                                    }
-                                    .padding(.leading, 3)
-                                }
-                            }
-                            .padding(.vertical)
                         }
                         
                         Group {

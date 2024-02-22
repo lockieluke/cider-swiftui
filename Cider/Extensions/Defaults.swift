@@ -15,6 +15,7 @@ enum AudioQuality: Int, Defaults.Serializable {
 
 extension Defaults.Keys {
     
+    static let playbackBackend = Key<PlaybackEngineType>("playbackBackend", default: .MKJS)
     static let audioQuality = Key<AudioQuality>("audioQuality", default: .High)
     static let playbackAutoplay = Key<Bool>("playbackAutoplay", default: true)
     

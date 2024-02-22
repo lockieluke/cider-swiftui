@@ -114,8 +114,8 @@ struct SearchBar: View {
                             .onTapGesture {
                                 if let track = self.track {
                                     Task {
-                                        await self.ciderPlayback.setQueue(item: .mediaTrack(track))
-                                        await self.ciderPlayback.clearAndPlay(item: .mediaTrack(track))
+                                        await self.ciderPlayback.playbackEngine.setQueue(item: .mediaTrack(track))
+                                        await self.ciderPlayback.clearAndPlay(shuffle: false)
                                     }
                                 }
                             }

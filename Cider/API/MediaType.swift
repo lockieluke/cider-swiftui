@@ -60,8 +60,30 @@ extension MediaDynamic: Identifiable, Hashable {
         }
     }
     
+    // type without an s at the end
+    var singularType: String {
+        switch self {
+            
+        case .mediaItem(let mediaItem):
+            let rawType = mediaItem.type.rawValue
+            return rawType.hasSuffix("s") ? String(rawType.dropLast()) : rawType
+            
+        case .mediaTrack( _):
+            return "song"
+            
+        case .mediaPlaylist( _):
+            return "playlist"
+            
+        case .mediaStation(_):
+            return "station"
+            
+        case .mediaAppleCurator(_):
+            return "apple-curator"
+            
+        }
+    }
+    
     var type: String {
-        
         switch self {
             
         case .mediaItem(let mediaItem):
@@ -80,7 +102,6 @@ extension MediaDynamic: Identifiable, Hashable {
             return "apple-curators"
             
         }
-        
     }
     
     var title: String {

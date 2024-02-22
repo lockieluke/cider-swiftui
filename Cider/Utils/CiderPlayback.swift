@@ -3,13 +3,55 @@
 //
 
 import Foundation
-import Starscream
-import SwiftyJSON
-import Throttler
 import Defaults
-import SwiftUI
 import Alamofire
-import Subprocess
+
+enum PlaybackEngineType: String, Defaults.Serializable {
+    case MKJS = "musickit-js"
+}
+
+class PlaybackEngineBaseClass {
+    
+    weak var parent: CiderPlayback!
+    
+    init(parent: CiderPlayback) {
+        self.parent = parent
+    }
+    
+}
+
+protocol PlaybackEngine: PlaybackEngineBaseClass {
+    
+    func setQueue(item: MediaDynamic) async
+    func skipToQueueIndex(_ index: Int) async
+    func reorderQueuedItem(from: Int, to: Int) async
+    func setShuffleMode(_ shuffle: Bool) async
+    func setRepeatMode(_ repeatMode: RepeatMode) async
+    func setAutoPlay(_ autoPlay: Bool) async
+    func play(shuffle: Bool) async
+    func pause() async
+    func stop() async
+    func seekToTime(seconds: Int) async
+    
+    func skip(_ type: CiderPlayback.SkipType) async
+    
+    func openAirPlayPicker(x: Int, y: Int) async
+    func openDebugPanel() async
+    func setAudioQuality(_ quality: AudioQuality) async
+    func setVolume(_ volume: Double) async
+    
+    func start() async
+    func shutdown()
+    
+}
+
+extension PlaybackEngine {
+    
+    func play() async {
+        await self.play(shuffle: false)
+    }
+    
+}
 
 struct NowPlayingState {
     
@@ -55,349 +97,49 @@ struct PlaybackBehaviour {
     
 }
 
-class CiderPlayback : ObservableObject, WebSocketDelegate {
+class CiderPlayback : ObservableObject {
     
     @Published var nowPlayingState = NowPlayingState()
     @Published var playbackBehaviour = PlaybackBehaviour()
-    @Published var isReady = false
-    
-    let agentPort: UInt16
-    let agentSessionId: String
-    
-    private let logger: Logger
+
+    let logger = Logger(label: "CiderPlayback")
     private let appWindowModal: AppWindowModal
-#if os(macOS)
-    private var proc: Subprocess
-    private let procUrl: String
-    private let defaultArguments: [String]
-    private var additionalArguments: [String] = []
-#endif
-    private let wsCommClient: CiderWSProvider
-    private let commClient: NetworkingProvider
+    var userToken: String?
+    var developerToken: String?
+    private var defaultsObserver: Defaults.Observation!
     
-    private var mkModal: MKModal?
-    private var isRunning: Bool
-    
+    let mkModal: MKModal
     var queue: [MediaTrack] = []
+    var playbackEngine: (any PlaybackEngine)!
     
-    static var stores: [CiderPlayback] = []
-    
-    init(appWindowModal: AppWindowModal) {
-        let logger = Logger(label: "CiderPlayback")
-        let agentPort = Networking.findFreeLocalPort()
-        let agentSessionId = UUID().uuidString
-        self.wsCommClient = CiderWSProvider(baseURL: URL(string: "http://localhost:\(agentPort)/ws")!, wsTarget: .CiderPlaybackAgent, defaultHeaders:  [
-            "Agent-Session-ID": agentSessionId,
-            "User-Agent": "Cider SwiftUI"
-        ])
-        self.commClient = NetworkingProvider(baseURL: URL(string: "http://127.0.0.1:\(agentPort)")!, defaultHeaders: [
-            "Agent-Session-ID": agentSessionId,
-            "User-Agent": "Cider SwiftUI"
-        ])
-        
-#if os(macOS)
-        let procUrl: String
-        if #available(macOS 13.0, *) {
-            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("MacOS").appendingPathComponent("CiderPlaybackAgent").path(percentEncoded: false))
-        } else {
-            procUrl = (Bundle.main.bundleURL.appendingPathComponent("Contents").appendingPathComponent("MacOS").appendingPathComponent("CiderPlaybackAgent").path)
-        }
-        var config = JSON([
-            "openWebInspectorAutomatically": false
-        ])
-        let proc = Subprocess([procUrl])
-#endif
-        
-#if DEBUG
-        config["openWebInspectorAutomatically"].boolValue = Defaults[.debugOpenWebInspectorAutomatically]
-#endif
-        
-#if os(macOS)
-        self.defaultArguments = [
-            "--agent-port", String(agentPort),
-            "--agent-session-id", "\"\(agentSessionId)\"",
-            "--config", config.rawString(.utf8)!
-        ]
-#endif
-        
-        self.logger = logger
+    init(appWindowModal: AppWindowModal, mkModal: MKModal) {
         self.appWindowModal = appWindowModal
-        self.agentSessionId = agentSessionId
-#if os(macOS)
-        self.proc = proc
-        self.procUrl = procUrl
-#endif
-        self.agentPort = agentPort
-        self.isRunning = false
-        
-        CiderPlayback.stores.append(self)
-    }
-    
-    func setDeveloperToken(developerToken: String, mkModal: MKModal) {
-        if !self.isRunning {
-#if os(macOS)
-            self.additionalArguments += ["--am-token", developerToken]
-            self.proc = Subprocess([self.procUrl] + self.defaultArguments + self.additionalArguments)
-#endif
-        }
         self.mkModal = mkModal
-    }
-    
-    func setUserToken(userToken: String) {
-        if !self.isRunning {
-#if os(macOS)
-            self.additionalArguments += ["--am-user-token", userToken]
-            self.proc = Subprocess([self.procUrl] + self.defaultArguments + self.additionalArguments)
-#endif
-        }
-    }
-    
-    @MainActor
-    func setQueue(item: MediaDynamic) async {
-        await self.setQueue(requestBody: ["\(item.type)-id": item.id])
-    }
-    
-    @MainActor
-    func skipToQueueIndex(_ index: Int) async {
-        do {
-            _ = try await self.wsCommClient.request("/skip-to-queue-index", body: [
-                "index": index
-            ])
-        } catch {
-            self.logger.error("Skip to queue index \(index) failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func setQueue(requestBody: [String : Any]? = nil) async {
-        do {
-            _ = try await self.wsCommClient.request("/set-queue", body: requestBody)
-        } catch {
-            self.logger.error("Set Queue failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func setShuffleMode(_ shuffle: Bool) async {
-        self.playbackBehaviour.shuffle = shuffle
-        do {
-            _ = try await self.wsCommClient.request("/set-shuffle-mode", body: [
-                "shuffle": shuffle
-            ])
-        } catch {
-            self.logger.error("Set shuffle mode failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func setRepeatMode(_ repeatMode: RepeatMode) async {
-        self.playbackBehaviour.repeatMode = repeatMode
-        do {
-            _ = try await self.wsCommClient.request("/set-repeat-mode", body: [
-                "repeat-mode": repeatMode.rawValue
-            ])
-        } catch {
-            self.logger.error("Set repeat mode failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func setAutoPlay(_ autoPlay: Bool) async {
-        self.playbackBehaviour.autoplayEnabled = autoPlay
-        do {
-            _ = try await self.wsCommClient.request("/set-autoplay", body: [
-                "autoplay": autoPlay
-            ])
-        } catch {
-            self.logger.error("Set autoplay failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func clearAndPlay(shuffle: Bool = false, item: MediaDynamic) async {
-        await self.stop()
-        await self.play(shuffle: shuffle)
-    }
-    
-    @MainActor
-    func play(shuffle: Bool = false) async {
-        DispatchQueue.main.async {
-            self.playbackBehaviour.shuffle = shuffle
-        }
-        do {
-            _ = try await self.wsCommClient.request("/play", body: [
-                "shuffle": shuffle
-            ])
-        } catch {
-            self.logger.error("Play failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func pause() async {
-        do {
-            _ = try await self.wsCommClient.request("/pause")
-        } catch {
-            self.logger.error("Pause failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func stop() async {
-        do {
-            _ = try await self.wsCommClient.request("/stop")
-        } catch {
-            self.logger.error("Stop failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func seekToTime(seconds: Int) async {
-        do {
-            _ = try await self.wsCommClient.request("/seek-to-time", body: [
-                "seconds": seconds
-            ])
-        } catch {
-            self.logger.error("Seek to time \(error)", displayCross: true)
-        }
-    }
-    
-    enum SkipType {
-        case Previous, Next
-    }
-    
-    @MainActor
-    func skip(type: SkipType) async {
-        do {
-            _ = try await self.wsCommClient.request(type == .Previous ? "/previous" : "/next")
-        } catch {
-            self.logger.error("Skip failed \(error)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func reorderQueuedItem(from: Int, to: Int) async {
-        self.queue.move(from: from, to: to)
-        do {
-            _ = try await self.wsCommClient.request("/reorder-queued-item", body: [
-                "from": from,
-                "to": to
-            ])
-        } catch {
-            self.logger.error("Failed to reorder queued item from \(from) to \(to)", displayCross: true)
-        }
-    }
-    
-    @MainActor
-    func openAirPlayPicker(x: Int? = nil, y: Int? = nil) async -> Bool {
-        do {
-            let result = try await self.wsCommClient.request("/open-airplay-picker", body: x != nil && y != nil ? [
-                "x": x!,
-                "y": y!
-            ] : .none)
-            return result["supportsAirPlay"].boolValue
-        } catch {
-            self.logger.error("Skip failed \(error)", displayCross: true)
-        }
+        self.playbackEngine = self.getEngine(type: Defaults[.playbackBackend])
         
-        return false
-    }
-    
-    @MainActor
-    func openInspector() async {
-        if self.isReady {
-            do {
-                _ = try await self.wsCommClient.request("/open-inspector")
-            } catch {
-                self.logger.error("Failed to open CIderWebAgent's inspector", displayCross: true)
+        defer {
+            self.defaultsObserver = Defaults.observe(.playbackBackend) { changes in
+                self.playbackEngine = self.getEngine(type: Defaults[.playbackBackend])
             }
         }
     }
     
-    @MainActor
-    func togglePlaybackSync() {
-        Task {
-            await (self.nowPlayingState.isPlaying ? self.pause() : self.play())
-        }
+    func setDeveloperToken(developerToken: String) async {
+        self.developerToken = developerToken
+        await self.start()
     }
     
-    @MainActor
-    func setAudioQuality(_ quality: AudioQuality) async {
-        do {
-            _ = try await self.wsCommClient.request("/set-audio-quality", body: [
-                "quality": quality.rawValue
-            ])
-        } catch {
-            self.logger.error("Failed to set audio quality to \(quality.rawValue)", displayCross: true)
-        }
+    func setUserToken(userToken: String) async {
+        self.userToken = userToken
+        await self.start()
     }
     
-    @MainActor
-    func setVolume(_ volume: Double) async {
-        do {
-            _ = try await self.wsCommClient.request("/set-volume", body: [
-                "volume": volume
-            ])
-        } catch {
-            self.logger.error("Failed to set volume to \(volume)", displayCross: true)
-        }
+    func start() async {
+        await self.playbackEngine.start()
     }
     
-    func start() {
-        if self.isRunning {
-            return
-        }
-        
-#if os(macOS)
-        let connectWS = {
-            if !self.isReady {
-                self.wsCommClient.delegate = self
-                self.logger.info("Attempting to connect to CiderPlaybackAgent WebSockets")
-                self.wsCommClient.connect()
-            }
-        }
-        
-        #if !DEBUG
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-            if Networking.isPortOpen(port: self.agentPort) {
-                connectWS()
-                timer.invalidate()
-            }
-        }
-        #endif
-        
-        do {
-            try self.proc.launch(outputHandler: { data in
-                if !data.isEmpty {
-                    guard let str = String(data: data, encoding: .utf8) else {
-                        return
-                    }
-                    var newStr = str
-                    if let last = newStr.last, last.isNewline {
-                        newStr.removeLast()
-                    }
-                    
-                    if newStr == "websocketcomm.ready" {
-                        connectWS()
-                    } else {
-                        self.logger.info("[CiderPlaybackAgent] \(newStr)")
-                    }
-                }
-            }, errorHandler: { data in
-                guard let str = String(data: data, encoding: .utf8) else {
-                    return
-                }
-                
-                self.logger.error("CiderPlaybackAgent threw an error: \(str)")
-            }, terminationHandler: { process in
-                self.logger.error("CiderPlaybackAgent exited \(self.proc.terminationReason): \(self.proc.exitCode)")
-            })
-            self.isRunning = true
-            self.logger.info("CiderPlaybackAgent on port \(self.agentPort) with Session ID \(self.agentSessionId)")
-        } catch {
-            self.logger.error("Error running CiderPlaybackAgent: \(error)")
-        }
-#endif
+    func shutdown() {
+        self.playbackEngine.shutdown()
     }
     
     @MainActor
@@ -411,6 +153,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         var artworkUrl: URL = artwork.getUrl(width: 200, height: 200)
         
         if artworkUrl.absoluteString.count > 256 || artworkUrl.absoluteString.contains("blobstore") {
+            struct RPCResponse: Decodable {
+                let url: String
+            }
+            
             AF.request("https://api-rpc.cider.sh/", parameters: [
                 "imageUrl": artworkUrl,
                 "albumId": Id,
@@ -419,24 +165,20 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
                 switch response.result {
                 case .success(let data):
                     do {
-                        let json = try JSON(data: data)
-                        if let urlString = json["url"].string, let url = URL(string: urlString) {
-                            artworkUrl = url
-                        }
+                        let json = try JSONDecoder().decode(RPCResponse.self, from: data)
+                        artworkUrl = URL(string: json.url)!
                     } catch {
-                        self.logger.error("JSON Parsing Error: \(error)")
+                        self.logger.error("JSON Parsing Error: \(error.localizedDescription)")
                     }
                 case .failure(let error):
-                    self.logger.error("Failed to fetch artwork: \(error)")
+                    self.logger.error("Failed to fetch artwork: \(error.localizedDescription)")
                 }
                 
 #if os(macOS)
-                DispatchQueue.global(qos: .default).async { [artworkUrl] in
-                    ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
-                    ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
-                    ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
-                    ElevationHelper.shared.xpc.rpcUpdateActivity()
-                }
+                ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+                ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
+                ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
+                ElevationHelper.shared.xpc.rpcUpdateActivity()
 #endif
                 
                 self.nowPlayingState = NowPlayingState(
@@ -452,12 +194,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
             
         } else {
 #if os(macOS)
-            DispatchQueue.global(qos: .default).async { [artworkUrl] in
-                ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
-                ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
-                ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
-                ElevationHelper.shared.xpc.rpcUpdateActivity()
-            }
+            ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+            ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
+            ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
+            ElevationHelper.shared.xpc.rpcUpdateActivity()
 #endif
             
             self.nowPlayingState = NowPlayingState(
@@ -472,12 +212,10 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         }
         let artworkURL = artwork.getUrl(width: 200, height: 200)
 #if os(macOS)
-        DispatchQueue.global(qos: .default).async {
-            ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
-            ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
-            ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
-            ElevationHelper.shared.xpc.rpcUpdateActivity()
-        }
+        ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+        ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
+        ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
+        ElevationHelper.shared.xpc.rpcUpdateActivity()
 #endif
         self.nowPlayingState = NowPlayingState(
             item: item,
@@ -490,181 +228,26 @@ class CiderPlayback : ObservableObject, WebSocketDelegate {
         )
     }
     
-    func shutdown() async {
-        do {
-            _ = try await self.commClient.request("/shutdown")
-        } catch {
-            self.logger.error("Error shutting down CiderPlaybackAgent: \(error)")
+    private func getEngine(type: PlaybackEngineType) -> any PlaybackEngine {
+        switch type {
+        case .MKJS:
+            return MKJSPlayback(parent: self)
         }
     }
     
-    func shutdownSync() {
-        let semaphore = DispatchSemaphore(value: 0)
+    func clearAndPlay(shuffle: Bool = false) async {
+        await self.playbackEngine.stop()
+        await self.playbackEngine.play(shuffle: shuffle)
+    }
+    
+    func togglePlaybackSync() {
         Task {
-            await self.shutdown()
-            semaphore.signal()
-        }
-        semaphore.wait()
-    }
-    
-    func didReceive(event: WebSocketEvent, client: WebSocketClient) {
-        switch event {
-            
-        case .connected:
-            self.isReady = true
-            self.logger.success("Connected to CiderPlaybackAgent", displayTick: true)
-            break
-            
-        case .disconnected(let reason, let code):
-            self.isReady = false
-            self.logger.error("CiderPlaybackAgent is disconnected with code \(code): \(reason)")
-            break
-            
-        case .peerClosed:
-            self.logger.error("WebSockets peer closed")
-            
-        case .error(let error):
-            if let error = error {
-                self.logger.error("WebSockets error: \(error.localizedDescription)")
-            }
-            break
-            
-        case .text(let message):
-            guard let json = try? JSON(data: message.data(using: .utf8)!),
-                  let eventName = json["eventName"].string,
-                  let requestId = json["requestId"].string
-            else { return }
-            
-            WSModal.shared.traffic.append(WSTrafficRecord(target: .CiderPlaybackAgent, rawJSONString: message, dateSent: .now, trafficType: .Receive, requestId: requestId))
-            
-            switch eventName {
-                
-            case "ciderPlaybackAgentReady":
-                Task {
-                    await self.setAutoPlay(self.playbackBehaviour.autoplayEnabled)
-                    await self.setAudioQuality(Defaults[.audioQuality])
-                }
-                break
-                
-            case "mediaItemDidChange":
-                withAnimation(.spring()) {
-                    self.nowPlayingState.playbackPipelineInitialised = true
-                }
-                let mediaParams = json["mediaParams"]
-                
-                
-                
-                Task {
-                    let id = mediaParams["id"].stringValue
-                    guard let mediaTrack = try? await self.mkModal?.AM_API.fetchSong(id: id) else {
-                        self.logger.error("Unable to fetch now playing track: \(id)")
-                        return
-                    }
-                    
-                    await self.updateNowPlayingStateBeforeReady(item: .mediaTrack(mediaTrack))
-                    
-                    DispatchQueue.main.async {
-                        if let name = mediaParams["name"].string,
-                           let contentRating = mediaParams["contentRating"].string,
-                           let artistName = mediaParams["artistName"].string {
-                            self.nowPlayingState.item = .mediaTrack(mediaTrack)
-                            self.nowPlayingState.name = name
-                            self.nowPlayingState.artistName = artistName
-                            self.nowPlayingState.contentRating = contentRating
-                        }
-                        
-                        let newArtworkURL = URL(string: mediaParams["artworkURL"].stringValue.replacingOccurrences(of: "{w}", with: "200").replacingOccurrences(of: "{h}", with: "200"))
-                        if newArtworkURL != self.nowPlayingState.artworkURL {
-                            self.nowPlayingState.artworkURL = newArtworkURL
-                        }
-                        
-                        self.nowPlayingState.isPlaying = true
-                        self.nowPlayingState.isReady = true
-                    }
-                }
-                
-                break
-                
-            case "playbackStateDidChange":
-                switch json["playbackState"].string {
-                    
-                case "paused":
-                    self.nowPlayingState.isPlaying = false
-#if os(macOS)
-                    DispatchQueue.global(qos: .default).async {
-                        ElevationHelper.shared.xpc.rpcSetActivityTimestamps(start: 0, end: 0)
-                        ElevationHelper.shared.xpc.rpcUpdateActivity()
-                    }
-#endif
-                    break
-                    
-                case "stopped":
-                    self.nowPlayingState.reset()
-#if os(macOS)
-                    DispatchQueue.global(qos: .default).async {
-                        ElevationHelper.shared.xpc.rpcClearActivity()
-                    }
-#endif
-                    break
-                    
-                case "playing":
-                    self.nowPlayingState.hasItemToPlay = true
-                    self.nowPlayingState.isPlaying = true
-                    self.nowPlayingState.isReady = true
-                    break
-                    
-                default:
-                    break
-                    
-                }
-                break
-                
-            case "playbackTimeDidChange":
-                Throttler.throttle(shouldRunImmediately: true) {
-                    DispatchQueue.main.async {
-                        let currentTime = TimeInterval(json["currentTime"].intValue + 1)
-                        let remainingTime = TimeInterval(json["remainingTime"].intValue)
-                        if self.appWindowModal.isFocused || self.appWindowModal.isVisibleInViewport {
-                            self.nowPlayingState.currentTime = currentTime
-                            self.nowPlayingState.remainingTime = remainingTime
-                        }
-                    }
-                }
-                break
-                
-            case "playbackDurationDidChange":
-                DispatchQueue.main.async {
-                    let timeInterval = TimeInterval(json["duration"].doubleValue)
-                    if self.nowPlayingState.duration != timeInterval {
-                        self.nowPlayingState.duration = timeInterval
-                    }
-                }
-                break
-                
-            case "queueItemsDidChange":
-                let newQueue = json["queue"]
-                self.queue = []
-                
-                for (_, subJson):(String, JSON) in newQueue {
-                    self.queue.append(MediaTrack(data: subJson))
-                }
-                break
-                
-            default:
-                break
-                
-            }
-            
-            break
-            
-        default:
-            break
-            
+            await (self.nowPlayingState.isPlaying ? self.playbackEngine.pause() : self.playbackEngine.play())
         }
     }
-    
-    static func shutdownAll() {
-        CiderPlayback.stores.forEach { $0.shutdownSync() }
+
+    enum SkipType {
+        case Previous, Next
     }
     
 }

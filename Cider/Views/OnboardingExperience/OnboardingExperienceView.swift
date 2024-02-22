@@ -268,8 +268,8 @@ struct OnboardingExperienceView: View {
                                 self.mkModal.authenticateWithToken(userToken: userToken)
                                 Logger.shared.info("Authentication took \(authTimer.stop()) seconds")
                                 
-                                self.ciderPlayback.setUserToken(userToken: userToken)
-                                self.ciderPlayback.start()
+                                await self.ciderPlayback.setUserToken(userToken: userToken)
+                                await self.ciderPlayback.start()
                                 
                                 await self.mkModal.initStorefront()
                                 DispatchQueue.main.async {

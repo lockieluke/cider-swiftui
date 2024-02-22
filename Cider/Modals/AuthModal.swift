@@ -115,7 +115,7 @@ class AuthModal: ObservableObject {
         
     }
     
-    init(mkModal: MKModal) {
+    init(mkModal: MKModal, ciderPlayback: CiderPlayback) {
         self.webview = WKWebView(frame: .zero).then {
             $0.setValue(false, forKey: "drawsBackground")
 #if DEBUG
@@ -140,6 +140,7 @@ class AuthModal: ObservableObject {
             self.webview.configuration.userContentController.add(self.scriptHandler, name: "ciderkit")
             Task {
                 if let developerToken = try? await mkModal.fetchDeveloperToken() {
+                    await ciderPlayback.setDeveloperToken(developerToken: developerToken)
                     DispatchQueue.main.async {
                         self.amDeveloperToken = developerToken
                         self.webview.configuration.userContentController.addUserScript(WKUserScript(source: "window.AM_TOKEN=\"\(developerToken)\";\(precompileIncludeStr("@/CiderWebModules/dist/am-auth.js"))", injectionTime: .atDocumentStart, forMainFrameOnly: true))

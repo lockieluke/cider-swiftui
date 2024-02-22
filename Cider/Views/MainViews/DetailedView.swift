@@ -84,8 +84,8 @@ struct DetailedView: View {
     
     func playSync(item: MediaDynamic, shuffle: Bool = false) {
         Task {
-            await self.ciderPlayback.setQueue(item: item)
-            await self.ciderPlayback.clearAndPlay(shuffle: shuffle, item: item)
+            await self.ciderPlayback.playbackEngine.setQueue(item: item)
+            await self.ciderPlayback.clearAndPlay(shuffle: shuffle)
         }
     }
     

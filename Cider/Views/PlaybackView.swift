@@ -38,25 +38,25 @@ struct PlaybackView: View {
                 HStack {
                     PlaybackButton(icon: .Shuffle, tooltip: playbackBehaviour.shuffle ? "Don't Shuffle" : "Shuffle", highlighted: $ciderPlayback.playbackBehaviour.shuffle) {
                         Task {
-                            await ciderPlayback.setShuffleMode(!playbackBehaviour.shuffle)
+                            await self.ciderPlayback.playbackEngine.setShuffleMode(!playbackBehaviour.shuffle)
                         }
                     }
                     PlaybackButton(icon: .Backward, tooltip: "Previous") {
                         Task {
-                            await ciderPlayback.skip(type: .Previous)
+                            await self.ciderPlayback.playbackEngine.skip(.Previous)
                         }
                     }
                     PlaybackButton(icon: nowPlayingState.isPlaying ? .Pause : .Play, tooltip: nowPlayingState.isPlaying ? "Pause" : "Play", size: 23) {
-                        ciderPlayback.togglePlaybackSync()
+                        self.ciderPlayback.togglePlaybackSync()
                     }
                     PlaybackButton(icon: .Forward, tooltip: "Next") {
                         Task {
-                            await ciderPlayback.skip(type: .Next)
+                            await self.ciderPlayback.playbackEngine.skip(.Next)
                         }
                     }
                     PlaybackButton(icon: repeatModeIcon.icon, color: repeatModeIcon.color, tooltip: repeatModeIcon.nextTooltip) {
                         Task {
-                            await ciderPlayback.setRepeatMode(playbackBehaviour.repeatMode.next())
+                            await self.ciderPlayback.playbackEngine.setRepeatMode(playbackBehaviour.repeatMode.next())
                         }
                     }
                 }
@@ -74,7 +74,7 @@ struct PlaybackView: View {
                     VolumeSlider(value: volume, inRange: 0.0...1.0, activeFillColor: .secondary, fillColor: .secondary.opacity(0.5), emptyColor: .secondary.opacity(0.3), height: 8) { _ in
                         Throttler.throttle {
                             Task {
-                                await ciderPlayback.setVolume(volume.wrappedValue)
+                                await self.ciderPlayback.playbackEngine.setVolume(volume.wrappedValue)
                             }
                         }
                     }
