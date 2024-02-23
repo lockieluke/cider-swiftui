@@ -319,10 +319,6 @@
 		B76AE929299E993500A19558 /* Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comparable.swift; sourceTree = "<group>"; };
 		B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectModal.swift; sourceTree = "<group>"; };
 		B76FC6F92A902FB600F8F80E /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
-		B77065F72B4CC22F00551769 /* cider-connect.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cider-connect.js"; path = "CiderWebModules/dist/cider-connect.js"; sourceTree = "<group>"; };
-		B77065F82B4CC22F00551769 /* am-auth.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "am-auth.js"; path = "CiderWebModules/dist/am-auth.js"; sourceTree = "<group>"; };
-		B77065F92B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "handle-googleauth-unsafe-dialog.js"; path = "CiderWebModules/dist/handle-googleauth-unsafe-dialog.js"; sourceTree = "<group>"; };
-		B77065FA2B4CC22F00551769 /* cider-playback-agent.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cider-playback-agent.js"; path = "CiderWebModules/dist/cider-playback-agent.js"; sourceTree = "<group>"; };
 		B77066012B51F01000551769 /* Precompiled.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Precompiled.swift; sourceTree = "<group>"; };
 		B770D8CE29A0390A00E0A655 /* Cider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cider-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreferencesPane.swift; sourceTree = "<group>"; };
@@ -485,10 +481,6 @@
 			isa = PBXGroup;
 			children = (
 				B77066012B51F01000551769 /* Precompiled.swift */,
-				B77065F82B4CC22F00551769 /* am-auth.js */,
-				B77065F72B4CC22F00551769 /* cider-connect.js */,
-				B77065FA2B4CC22F00551769 /* cider-playback-agent.js */,
-				B77065F92B4CC22F00551769 /* handle-googleauth-unsafe-dialog.js */,
 				B700C17F28B920F10069FDF5 /* Cider */,
 				B79050312B0E949600CED9B6 /* CiderElevationHelper */,
 				B7CF6B232B12C81900A7DEEE /* CiderUpdateService */,

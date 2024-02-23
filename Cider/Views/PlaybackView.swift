@@ -72,10 +72,8 @@ struct PlaybackView: View {
                 
                 PatchedGeometryReader { geometry in
                     VolumeSlider(value: volume, inRange: 0.0...1.0, activeFillColor: .secondary, fillColor: .secondary.opacity(0.5), emptyColor: .secondary.opacity(0.3), height: 8) { _ in
-                        Throttler.throttle {
-                            Task {
-                                await self.ciderPlayback.playbackEngine.setVolume(volume.wrappedValue)
-                            }
+                        Task {
+                            await self.ciderPlayback.playbackEngine.setVolume(volume.wrappedValue)
                         }
                     }
                     .frame(width: (geometry.maxRelative * 0.3).clamped(to: 100...150))

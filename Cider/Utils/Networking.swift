@@ -4,7 +4,6 @@
 
 import Foundation
 import SwiftyJSON
-import Starscream
 import Throttler
 import Alamofire
 import Cache
