@@ -17,7 +17,6 @@ class AppWindow: NSObject, NSWindowDelegate {
     private let nativeUtilsWrapper: NativeUtilsWrapper
     private let cacheModal: CacheModal
     private let connectModal: ConnectModal
-    private let wsModal = WSModal.shared
     private let authModal: AuthModal
     private let appMenu: AppMenu
     
@@ -82,7 +81,6 @@ class AppWindow: NSObject, NSWindowDelegate {
         let appMenu = AppMenu(window,
                               mkModal: mkModal,
                               authModal: authModal,
-                              wsModal: self.wsModal,
                               ciderPlayback: ciderPlayback,
                               appWindowModal: self.appWindowModal,
                               nativeUtilsWrapper: nativeUtilsWrapper,

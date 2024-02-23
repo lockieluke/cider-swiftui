@@ -17,7 +17,6 @@ class AppMenu {
     private let settingsWindowController: SettingsWindowController
     private let mkModal: MKModal
     private let authModal: AuthModal
-    private let wsModal: WSModal
     private let ciderPlayback: CiderPlayback
     private let appWindowModal: AppWindowModal
     private let nativeUtilsWrapper: NativeUtilsWrapper
@@ -28,7 +27,7 @@ class AppMenu {
     private var hasPreviouslyOpenedPlayground: Bool = false
     private var playgroundWindowDelegate: NSWindowDelegate!
     
-    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, wsModal: WSModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal, navigationModal: NavigationModal) {
+    init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal, navigationModal: NavigationModal) {
         let menu = NSMenu()
         
         #if DEBUG
@@ -60,7 +59,6 @@ class AppMenu {
         self.menu = menu
         self.mkModal = mkModal
         self.authModal = authModal
-        self.wsModal = wsModal
         self.ciderPlayback = ciderPlayback
         self.appWindowModal = appWindowModal
         self.nativeUtilsWrapper = nativeUtilsWrapper

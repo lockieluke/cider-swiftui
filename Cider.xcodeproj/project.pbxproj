@@ -92,7 +92,6 @@
 		B768871B2949225200C623C9 /* BasicHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768871A2949225200C623C9 /* BasicHoverModifier.swift */; };
 		B7688723294A06F600C623C9 /* Diagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688722294A06F500C623C9 /* Diagnostic.swift */; };
 		B7688725294A076300C623C9 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7688724294A076300C623C9 /* Process.swift */; };
-		B768872C294A359400C623C9 /* WSModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768872B294A359400C623C9 /* WSModal.swift */; };
 		B76AE922299C03D400A19558 /* MediaPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE921299C03D400A19558 /* MediaPlaylist.swift */; };
 		B76AE924299C044800A19558 /* MediaDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AE923299C044800A19558 /* MediaDescription.swift */; };
 		B76AE928299C162600A19558 /* MissingArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = B76AE927299C162600A19558 /* MissingArtwork.png */; };
@@ -312,7 +311,6 @@
 		B768871A2949225200C623C9 /* BasicHoverModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHoverModifier.swift; sourceTree = "<group>"; };
 		B7688722294A06F500C623C9 /* Diagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostic.swift; sourceTree = "<group>"; };
 		B7688724294A076300C623C9 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
-		B768872B294A359400C623C9 /* WSModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSModal.swift; sourceTree = "<group>"; };
 		B76AE921299C03D400A19558 /* MediaPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaylist.swift; sourceTree = "<group>"; };
 		B76AE923299C044800A19558 /* MediaDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDescription.swift; sourceTree = "<group>"; };
 		B76AE927299C162600A19558 /* MissingArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingArtwork.png; sourceTree = "<group>"; };
@@ -741,7 +739,6 @@
 				B7AAB70A28BD24B4009AABEA /* MKModal.swift */,
 				B75219AF291984AD005CF8F0 /* NavigationModal.swift */,
 				B75219BF291F0742005CF8F0 /* PersonalisedData.swift */,
-				B768872B294A359400C623C9 /* WSModal.swift */,
 				B74EEBDD29D88B7200711DB6 /* NativeUtils.swift */,
 				B70524C62A6F2931001654B3 /* CacheModal.swift */,
 				B76FC6CB2A8F889D00F8F80E /* ConnectModal.swift */,
@@ -1245,7 +1242,6 @@
 				B725013A28C2624300992F57 /* Color.swift in Sources */,
 				B700C19A28B92E020069FDF5 /* AppWindow.swift in Sources */,
 				B7C5C5DA29CE6F4C00EF4D11 /* QueueTrackView.swift in Sources */,
-				B768872C294A359400C623C9 /* WSModal.swift in Sources */,
 				B790345E29F091D5001B11AE /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
