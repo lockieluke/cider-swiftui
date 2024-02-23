@@ -40,6 +40,14 @@ struct ChangeLogsView: View {
     }
     private let wkNavigationDelegate: ChangelogsViewWKNavigationDelegate
     
+    private func loadContent() {
+        #if DEBUG
+        self.wkWebView.load(URLRequest(url: URL(string: "https://localhost:5173/changelogs")!))
+        #else
+        self.wkWebView.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/changelogs.html"), baseURL: URL(string: "https://localhost")!)
+        #endif
+    }
+    
     init() {
         let wkNavigationDelegate = ChangelogsViewWKNavigationDelegate()
         self.wkWebView = WKWebView(frame: .zero).then {
@@ -48,9 +56,6 @@ struct ChangeLogsView: View {
             $0.configuration.userContentController.addUserScript(WKUserScript(source: "window.BUILD_INFO = { version: \"\(Bundle.main.appVersion)\", build: \(Bundle.main.appBuild) };", injectionTime: .atDocumentStart, forMainFrameOnly: true, in: .page))
             #if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-            $0.load(URLRequest(url: URL(string: "https://localhost:5173/changelogs")!))
-            #else
-            $0.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/changelogs.html"), baseURL: URL(string: "https://localhost")!)
             #endif
         }
         self.wkNavigationDelegate = wkNavigationDelegate
@@ -92,6 +97,7 @@ struct ChangeLogsView: View {
         .frame(width: (size?.width ?? .zero) * 0.85, height: (size?.height ?? .zero) * 0.85)
         .onAppear {
             Defaults[.lastShownChangelogs] = "\(Bundle.main.appVersion)-\(Bundle.main.appBuild)"
+            self.loadContent()
         }
         .enableInjection()
     }

@@ -159,6 +159,11 @@ class AuthModal: ObservableObject {
 #endif
     }
     
+    func dispose() {
+        let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+        self.webview.perform(disposeSel)
+    }
+    
     func unauthorise() async {
         return await withCheckedContinuation { continuation in
             DispatchQueue.main.async {

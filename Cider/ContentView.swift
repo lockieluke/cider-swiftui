@@ -147,6 +147,7 @@ struct ContentView: View {
                     // WKWebView has to be added to NSWindow for playback to work
                     self.appWindowModal.nsWindow?.contentView?.addSubview((self.ciderPlayback.playbackEngine as! MKJSPlayback).webview)
                 }
+                self.authModal.dispose()
                 Logger.shared.info("Cider initialised in \(timer.stop()) seconds")
             } else {
                 self.mkModal.isAuthorised = false
