@@ -135,7 +135,7 @@ class AppMenu {
         let developerMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
-                NSMenuItem(title: "Open playback debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
+                NSMenuItem(title: "Open Playback Debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Show Donation View", action: #selector(self.showDonationView(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Show What's New View", action: #selector(self.showWhatsNewView(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self },

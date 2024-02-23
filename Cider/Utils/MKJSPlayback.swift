@@ -215,6 +215,12 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
             self.scriptHandler = mkjsScriptMessageHandler
             self.webview.loadHTMLString(html, baseURL: URL(string: "https://beta.music.apple.com")!)
         }
+        
+#if DEBUG
+        if Defaults[.debugOpenWebInspectorAutomatically] {
+            await self.openDebugPanel()
+        }
+#endif
     }
     
     private func runMKJS(_ script: String, arguments: [String: Any] = [:], async: Bool = false, isAssignment: Bool = false) async {

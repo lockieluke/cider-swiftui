@@ -40,9 +40,9 @@ struct DeveloperPreferencesPane: View {
                         }
                         
                         Group {
-                            PrefSectionText("Debugging Settings - CiderPlaybackAgent")
+                            PrefSectionText("Debugging Settings - Playback Engine (\(Defaults[.playbackBackend].rawValue))")
                             
-                            Toggle("When CiderPlaybackAgent is launched, open Web Inspector automatically", isOn: $openWebInspectorAutomatically)
+                            Toggle("Open Playback Debugger automatically", isOn: $openWebInspectorAutomatically)
                                 .toggleStyle(.checkbox)
                             Text("This setting will apply next time \(Bundle.main.displayName) is launched")
                                 .settingDescription()
