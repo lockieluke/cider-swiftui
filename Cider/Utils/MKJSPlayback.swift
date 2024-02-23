@@ -91,7 +91,7 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
                     if self.parent.parent.nowPlayingState.duration != timeInterval {
                         self.parent.parent.nowPlayingState.duration = timeInterval
                     }
-                } else if eventName == "queueItemsDidChange", let _items = dict["items"] as? Any {
+                } else if eventName == "queueItemsDidChange", let _items = dict["items"] {
                     let items = JSON(_items)
                     self.parent.parent.queue = []
                     
@@ -128,7 +128,7 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
         DispatchQueue.main.async {
             self.parent.playbackBehaviour.autoplayEnabled = autoPlay
         }
-        await self.runMKJS("mk.autoplayEnabled = \(autoPlay)", isAssignment: true)
+        await self.runMKJS("setAutoplay(autoplay)", arguments: ["autoplay": autoPlay], isAssignment: true)
     }
     
     func play(shuffle: Bool) async {
@@ -203,7 +203,7 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
                         Meta().charset("utf-8")
                         Meta().name(.viewport).content("width=device-width, initial-scale=1")
                         
-                        Script().setContents("const AM_TOKEN=\"\(developerToken)\";const AM_USER_TOKEN=\"\(userToken)\";const DEFAULT_AUDIO_QUALITY=\(Defaults[.audioQuality].rawValue);\(precompileIncludeStr("@/CiderWebModules/dist/mkjs-playback.js"))")
+                        Script().setContents("const AM_TOKEN=\"\(developerToken)\";const AM_USER_TOKEN=\"\(userToken)\";const DEFAULT_AUDIO_QUALITY=\(Defaults[.audioQuality].rawValue);const DEFAULT_AUTOPLAY=\(self.parent.playbackBehaviour.autoplayEnabled);\(precompileIncludeStr("@/CiderWebModules/dist/mkjs-playback.js"))")
                     }
                     Body {
                         H1("MKJSPlayback")

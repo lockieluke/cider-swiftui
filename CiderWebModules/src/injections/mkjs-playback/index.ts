@@ -3,7 +3,7 @@ import to from "await-to-js";
 import store from "store2";
 import * as _ from "lodash-es";
 
-declare let AM_TOKEN: string, AM_USER_TOKEN: string, DEFAULT_AUDIO_QUALITY: number;
+declare let AM_TOKEN: string, AM_USER_TOKEN: string, DEFAULT_AUDIO_QUALITY: number, DEFAULT_AUTOPLAY: boolean;
 
 declare global {
     interface Window {
@@ -24,6 +24,7 @@ declare global {
             next: () => void,
             skipToQueueIndex: (index: number) => void,
             seekToTime: (seconds: number) => Promise<void>,
+            setAutoplay: (enabled: boolean) => void,
             isAirPlayAvailable: () => boolean,
             openAirPlayPicker: () => void,
             unauthorise: () => void
@@ -126,6 +127,8 @@ window.addEventListener("load", () => {
         };
 
         let lastSyncedQueue: MusicKit.MediaItem[] = [];
+        let isQueueReady = false;
+        let isAutoplayEnabled = DEFAULT_AUTOPLAY;
         const syncQueue = (force: boolean = false) => {
             const ids = _.map(mk.queue.items, "id");
             const lastSyncedIds = _.map(lastSyncedQueue, "id");
@@ -186,6 +189,12 @@ window.addEventListener("load", () => {
             syncQueue();
         });
 
+        mk.addEventListener("queueIsReady", () => {
+            isQueueReady = true;
+
+            mk.autoplayEnabled = isAutoplayEnabled;
+        });
+
         window.ciderInterop = {
             mk,
             async play() {
@@ -229,6 +238,12 @@ window.addEventListener("load", () => {
             },
             async seekToTime(seconds: number) {
                 await window.ciderInterop.mk.seekToTime(seconds);
+            },
+            setAutoplay(enabled: boolean) {
+                if (isQueueReady)
+                    mk.autoplayEnabled = enabled;
+
+                isAutoplayEnabled = enabled;
             },
             isAirPlayAvailable: () => {
                 // @ts-expect-error "webkitShowPlaybackTargetPicker" doesn't exist on type "HTMLAudioElement"

@@ -67,20 +67,22 @@ struct QueueView: View {
                 }
             }
         }, headerChildren: {
-            Button {
-                Task {
-                    await self.ciderPlayback.playbackEngine.setAutoPlay(!self.ciderPlayback.playbackBehaviour.autoplayEnabled)
-                    Defaults[.playbackAutoplay] = self.ciderPlayback.playbackBehaviour.autoplayEnabled
+            if ciderPlayback.nowPlayingState.playbackPipelineInitialised {
+                Button {
+                    Task {
+                        await self.ciderPlayback.playbackEngine.setAutoPlay(!self.ciderPlayback.playbackBehaviour.autoplayEnabled)
+                        Defaults[.playbackAutoplay] = self.ciderPlayback.playbackBehaviour.autoplayEnabled
+                    }
+                } label: {
+                    Image(systemSymbol: .infinity)
+                        .padding()
+                        .frame(width: 25, height: 25)
+                        .background(.thickMaterial)
+                        .foregroundColor(ciderPlayback.playbackBehaviour.autoplayEnabled ? .pink : .white)
+                        .clipShape(Circle())
                 }
-            } label: {
-                Image(systemSymbol: .infinity)
-                    .padding()
-                    .frame(width: 25, height: 25)
-                    .background(.thickMaterial)
-                    .foregroundColor(ciderPlayback.playbackBehaviour.autoplayEnabled ? .pink : .white)
-                    .clipShape(Circle())
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
         })
     }
 }
