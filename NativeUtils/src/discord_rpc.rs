@@ -14,8 +14,13 @@ pub struct DiscordRPCAgent {
 
 impl DiscordRPCAgent {
     pub fn new() -> Self {
+        let client = Client::new(1020414178047041627);
+        client.on_ready(|context| {
+            println!("Connected to Discord as {:?}", context.event);
+        }).persist();
+
         Self {
-            client: Client::new(1020414178047041627),
+            client,
             state: String::new(),
             details: String::new(),
             start_timestamp: None,

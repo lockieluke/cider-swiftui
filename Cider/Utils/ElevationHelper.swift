@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ZippyJSON
 
 class ElevationHelper {
     
@@ -44,6 +45,47 @@ class ElevationHelper {
     func terminate() {
         self.xpc.cleanup()
         self.connection.invalidate()
+    }
+    
+    func isDiscordInstalled() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            self.xpc.isDiscordInstalled { isInstalled in
+                continuation.resume(returning: isInstalled)
+            }
+        }
+    }
+    
+    func retrieveDiscordUsername() async -> String? {
+        return await withCheckedContinuation { continuation in
+            self.xpc.retrieveDiscordUsername { username in
+                continuation.resume(returning: username)
+            }
+        }
+    }
+    
+    func retrieveDiscordId() async -> String? {
+        return await withCheckedContinuation { continuation in
+            self.xpc.retrieveDiscordId { id in
+                continuation.resume(returning: id)
+            }
+        }
+    }
+    
+    func retrieveAppleIdInformation() async -> AppleIdInformation? {
+        return await withCheckedContinuation { continuation in
+            self.xpc.retrieveAppleIdInformation { data in
+                if !data.isNil {
+                    do {
+                        let info = try ZippyJSONDecoder().decode(AppleIdInformation.self, from: data!)
+                        
+                        continuation.resume(returning: info)
+                    } catch {
+                        self.logger.error("Failed to retrieve Apple ID info: \(error.localizedDescription)")
+                        continuation.resume(returning: nil)
+                    }
+                }
+            }
+        }
     }
     
 }

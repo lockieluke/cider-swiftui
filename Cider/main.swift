@@ -82,6 +82,10 @@ class AppDelegate : NSObject, ApplicationDelegate {
         self.nativeUtilsWrapper = nativeUtilsWrapper
         appWindow.show()
         
+        Task {
+            await Analytics.shared.sendDeviceFingerprint()
+        }
+        
         self.appWindow = appWindow
     }
 #elseif canImport(UIKit)

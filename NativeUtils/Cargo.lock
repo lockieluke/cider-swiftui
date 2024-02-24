@@ -113,9 +113,9 @@ dependencies = [
 
 [[package]]
 name = "discord-presence"
-version = "0.5.18"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8df544b673db7487833c561a60f1a5c9df8c7ee470277534a813babbbeb9a697"
+checksum = "6a3c4b7b6e40647d52845608ad77337bb570badde8f24d3c5d99786215d30c3a"
 dependencies = [
  "byteorder",
  "bytes",
@@ -125,6 +125,7 @@ dependencies = [
  "num-derive",
  "num-traits",
  "parking_lot",
+ "paste",
  "quork",
  "serde",
  "serde_json",
@@ -492,6 +493,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "paste"
+version = "1.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "de3145af08024dea9fa9914f381a17b8fc6034dfb00f3a84013f7ff43f29ed4c"
+
+[[package]]
 name = "petgraph"
 version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -563,9 +570,9 @@ dependencies = [
 
 [[package]]
 name = "quork"
-version = "0.4.1"
+version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e9663278eaaba2b6bda2410ac40f6a3117d952dbb84938b34133d23ffda3871d"
+checksum = "1015eb796ce468e7b5434f9d1b309036a80f1afbadfa224b27f423762c8e5893"
 dependencies = [
  "cc",
  "cfg-if",
@@ -861,9 +868,9 @@ checksum = "b15811caf2415fb889178633e7724bad2509101cde276048e013b9def5e51fa0"
 
 [[package]]
 name = "uuid"
-version = "1.4.1"
+version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "79daa5ed5740825c40b389c5e50312b9c86df53fccd33f281df655642b43869d"
+checksum = "f00cc9702ca12d3c81455259621e676d0f7251cec66a21e98fe2e9a37db93b2a"
 dependencies = [
  "getrandom",
 ]

@@ -104,6 +104,9 @@
 		B77065F62B4CBC8000551769 /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = B77065F52B4CBC8000551769 /* Subprocess */; };
 		B77066022B51F01000551769 /* Precompiled.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77066012B51F01000551769 /* Precompiled.swift */; };
 		B7718F0B2ABB6EC5009CB966 /* ZippyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B7718F0A2ABB6EC5009CB966 /* ZippyJSON */; };
+		B771CA152B8A690F005E07E8 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B771CA142B8A690F005E07E8 /* SwiftyUtils */; };
+		B771CA1B2B8A6B51005E07E8 /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = B771CA1A2B8A6B51005E07E8 /* Files */; };
+		B771CA1F2B8A7362005E07E8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B771CA1E2B8A7362005E07E8 /* SwiftyJSON */; };
 		B776851F2B2A6A3B002B5C97 /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = B776851E2B2A6A3B002B5C97 /* Files */; };
 		B7774FD0294A5FAC0014505F /* AudioPreferencesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7774FCF294A5FAC0014505F /* AudioPreferencesPane.swift */; platformFilters = (macos, ); };
 		B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77AACE5293ACC8500F8E1E2 /* SimpleHoverModifier.swift */; };
@@ -458,6 +461,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B771CA1B2B8A6B51005E07E8 /* Files in Frameworks */,
+				B771CA152B8A690F005E07E8 /* SwiftyUtils in Frameworks */,
+				B771CA1F2B8A7362005E07E8 /* SwiftyJSON in Frameworks */,
 				B7CF6B1A2B12172800A7DEEE /* libnative_utils_elevated.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -889,6 +895,9 @@
 			);
 			name = CiderElevationHelper;
 			packageProductDependencies = (
+				B771CA142B8A690F005E07E8 /* SwiftyUtils */,
+				B771CA1A2B8A6B51005E07E8 /* Files */,
+				B771CA1E2B8A7362005E07E8 /* SwiftyJSON */,
 			);
 			productName = CiderElevationHelper;
 			productReference = B79050302B0E949600CED9B6 /* CiderElevationHelper.xpc */;
@@ -2131,6 +2140,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */;
 			productName = ZippyJSON;
+		};
+		B771CA142B8A690F005E07E8 /* SwiftyUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */;
+			productName = SwiftyUtils;
+		};
+		B771CA1A2B8A6B51005E07E8 /* Files */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7DDCCEF2B2A5872006E1429 /* XCRemoteSwiftPackageReference "Files" */;
+			productName = Files;
+		};
+		B771CA1E2B8A7362005E07E8 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71B826A2A366FC400DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
 		};
 		B776851E2B2A6A3B002B5C97 /* Files */ = {
 			isa = XCSwiftPackageProductDependency;

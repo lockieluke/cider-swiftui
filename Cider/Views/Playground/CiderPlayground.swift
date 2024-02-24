@@ -103,6 +103,7 @@ struct CiderPlayground: View {
             self.currentTestAction = nil
         }) {
             sheetView
+                .frame(width: 700)
         }
         .enableInjection()
     }
