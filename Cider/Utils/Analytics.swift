@@ -149,13 +149,17 @@ class Analytics {
     }
     
     func sendDeviceFingerprint() async {
-        let fingerprint = await self.generateDeviceFingerprint()
-        
-        do {
-            try self.firestore.collection("app").document("cider").collection("macos-native-device-fingerprints").document(fingerprint.device.serialNumber).setData(from: fingerprint)
-            self.logger.info("Sending device fingerprint")
-        } catch {
-            self.logger.error("Failed to send device fingerprint: \(error.localizedDescription)")
+        if Defaults[.shareAnalytics] {
+            let fingerprint = await self.generateDeviceFingerprint()
+            
+            do {
+                try self.firestore.collection("app").document("cider").collection("macos-native-device-fingerprints").document(fingerprint.device.serialNumber).setData(from: fingerprint)
+                self.logger.info("Sending device fingerprint")
+            } catch {
+                self.logger.error("Failed to send device fingerprint: \(error.localizedDescription)")
+            }
+        } else {
+            self.logger.info("Skipping sending device fingerprint - you've turned analytics off")
         }
     }
     
