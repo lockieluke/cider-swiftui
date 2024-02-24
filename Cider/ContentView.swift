@@ -90,9 +90,9 @@ struct ContentView: View {
             self.updateHelper.updateInitiaited = true
             self.navigationModal.isAboutViewPresent = true
         })
-        .toast(isPresenting: $toastModal.showingErrorToast, duration: toastModal.errorToast?.duration ?? 0.0) {
-            let errorToast = toastModal.errorToast ?? ToastModal.ErrorToast(title: "", subtitle: "")
-            return AlertToast(displayMode: .hud, type: .error(.red), title: errorToast.title, subTitle: errorToast.subtitle)
+        .toast(isPresenting: $toastModal.showingToast, duration: toastModal.toast?.duration ?? 0.0) {
+            let toast = toastModal.toast ?? ToastModal.Toast(title: "", subtitle: "")
+            return AlertToast(displayMode: .hud, type: toast.isError ? .error(.red) : (toast.icon.isNil ? .regular : .systemImage(toast.icon!.rawValue, toast.colour)), title: toast.title, subTitle: toast.subtitle)
         }
         .sheet(isPresented: $navigationModal.isDonateViewPresent, onDismiss: {
             self.displayChangelogsIfNeeded()

@@ -7,20 +7,45 @@
 //
 
 import Foundation
+import SFSafeSymbols
+import SwiftUI
 
 class ToastModal: ObservableObject {
     
-    struct ErrorToast {
+    struct Toast {
         let title: String
         let subtitle: String
-        let duration: Double = 5
+        let duration: Double
+        let icon: SFSymbol?
+        let colour: Color
+        var isError: Bool = false
+        
+        init(title: String, subtitle: String, icon: SFSymbol? = nil, duration: Double = 5, colour: Color = .pink) {
+            self.title = title
+            self.subtitle = subtitle
+            self.icon = icon
+            self.duration = duration
+            self.colour = colour
+        }
     }
-    @Published var errorToast: ErrorToast? = nil
-    @Published var showingErrorToast: Bool = false
     
-    func showErrorToast(errorToast: ErrorToast) {
-        self.errorToast = errorToast
-        self.showingErrorToast = true
+    @Published var toast: Toast? = nil
+    @Published var showingToast: Bool = false
+    
+    func showErrorToast(toast: Toast) {
+        var _toast = toast
+        _toast.isError = true
+        self.showToast(toast: _toast)
+    }
+    
+    func showToast(toast: Toast) {
+        self.toast = toast
+        self.showingToast = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Int(toast.duration))) {
+            self.showingToast = false
+            self.toast = nil
+        }
     }
     
 }

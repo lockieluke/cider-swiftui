@@ -13,6 +13,7 @@ struct CatalogActions: ViewModifier {
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var navigationModal: NavigationModal
+    @EnvironmentObject private var toastModal: ToastModal
     
     @State private var prefetechedAttributes = false
     @State private var isInLibrary = false
@@ -98,15 +99,18 @@ struct CatalogActions: ViewModifier {
         case "love":
             rating = (rating == .Liked) ? .Neutral : .Liked
             _ = await mkModal.AM_API.setRating(item: item, rating: rating)
+            self.toastModal.showToast(toast: ToastModal.Toast(title: rating == .Liked ? "Loved" : rating == .Neutral ? "Unloved" : "", subtitle: "\(rating == .Liked ? "Added" : rating == .Neutral ? "Removed" : "") **\(item.title)** \(rating == .Liked ? "to" : rating == .Neutral ? "from" : "") Loved", icon: rating == .Liked ? .heartFill : rating == .Neutral ? .heartSlashFill : nil, duration: 2))
             
         case "dislike":
             rating = (rating == .Disliked) ? .Neutral : .Disliked
             _ = await mkModal.AM_API.setRating(item: item, rating: rating)
+            self.toastModal.showToast(toast: ToastModal.Toast(title: "Disliked", subtitle: "Disliked **\(item.title)**", icon: .heartSlashFill, duration: 2))
             
         case "mod-library":
             if await mkModal.AM_API.addToLibrary(item: item, !isInLibrary) {
                 isInLibrary.toggle()
             }
+            self.toastModal.showToast(toast: ToastModal.Toast(title: "\(isInLibrary ? "Added to" : "Removed from") Library", subtitle: "\(isInLibrary ? "Added **\(item.title)** to" : "Removed **\(item.title)** from") Library", icon: isInLibrary ? .plus : .xCircle, duration: 2, colour: isInLibrary ? .green : .pink))
             
         case "nav-item":
             do {
