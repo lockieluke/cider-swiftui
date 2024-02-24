@@ -241,10 +241,13 @@ struct SearchBar: View {
                         .onTapGesture {
                             self.isFocused = true
                         }
-                        .overlay {
-                            Image(systemSymbol: .magnifyingglass)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                .padding(.trailing, 10)
+                        .if(searchModal.currentSearchText.isEmpty) { view in
+                            view
+                                .overlay {
+                                    Image(systemSymbol: .magnifyingglass)
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .padding(.trailing, 10)
+                                }
                         }
                 }
                 .focused($isFocused)
