@@ -115,7 +115,7 @@ struct NavigationContainer: View {
                             .zIndex(1)
                     }
                 } else {
-                    if (try? Keychain().get("mk-token")).isNil {
+                    if (try? Keychain().get("mk-token")).isNil || !mkModal.isAuthorised {
                         NativeComponent(authModal.webview)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }

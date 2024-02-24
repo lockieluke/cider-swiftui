@@ -167,6 +167,7 @@ class AuthModal: ObservableObject {
     func unauthorise() async {
         return await withCheckedContinuation { continuation in
             DispatchQueue.main.async {
+                self.keychain["mk-token"] = nil
                 self.loadPage(params: [
                     URLQueryItem(name: "signout", value: "true")
                 ])
