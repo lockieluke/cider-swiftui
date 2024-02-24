@@ -5,6 +5,7 @@
 import Foundation
 import Defaults
 import Alamofire
+import ZippyJSON
 
 enum PlaybackEngineType: String, Defaults.Serializable {
     case MKJS = "musickit-js"
@@ -165,7 +166,7 @@ class CiderPlayback : ObservableObject {
                 switch response.result {
                 case .success(let data):
                     do {
-                        let json = try JSONDecoder().decode(RPCResponse.self, from: data)
+                        let json = try ZippyJSONDecoder().decode(RPCResponse.self, from: data)
                         artworkUrl = URL(string: json.url)!
                     } catch {
                         self.logger.error("JSON Parsing Error: \(error.localizedDescription)")

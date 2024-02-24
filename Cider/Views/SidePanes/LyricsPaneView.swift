@@ -12,6 +12,7 @@ import SwiftyJSON
 import WrappingHStack
 import Throttler
 import Foundation
+import ZippyJSON
 
 struct LyricData: Codable {
     let leadingSilence: Double
@@ -145,8 +146,7 @@ struct LyricsPaneView: View {
                 do {
                     if let jsonString = lyricsJson.rawString() {
                         if let jsonData = jsonString.data(using: .utf8) {
-                            let decoder = JSONDecoder()
-                            self.lyricsData = try decoder.decode(LyricData.self, from: jsonData)
+                            self.lyricsData = try ZippyJSONDecoder().decode(LyricData.self, from: jsonData)
                         }
                     }
                 } catch {
