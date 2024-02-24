@@ -27,7 +27,7 @@ struct PlaybackBar: View {
                 let playbackBarWidth = currentTimeValue == 0 ? 0 : self.playbackBarWidth * overlayBarWidth.f + 1
                 Text("\(isEditingTrack ? currentTimeValue.minuteSecond : (nowPlayingState.currentTime?.minuteSecond ?? "0:00"))").isHidden(!nowPlayingState.hasItemToPlay)
                 
-                ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...nowPlayingState.duration, step: 1, onEditingChanged: { isEditing in
+                ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...nowPlayingState.duration.clamped(to: 1...TimeInterval(Int.max)), step: 1, onEditingChanged: { isEditing in
                     if isEditing != self.isEditingTrack {
                         DispatchQueue.main.async {
                             Task {
