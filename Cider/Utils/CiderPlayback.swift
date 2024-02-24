@@ -136,6 +136,7 @@ class CiderPlayback : ObservableObject {
     }
     
     func start() async {
+        self.logger.info("Starting Playback Engine")
         await self.playbackEngine.start()
     }
     
