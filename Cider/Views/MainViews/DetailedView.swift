@@ -91,6 +91,7 @@ struct DetailedView: View {
     
     var body: some View {
         let originalSize = self.detailedViewParams.originalSize
+        let catalogActions = CatalogActions(item: detailedViewParams.item)
         
         PatchedGeometryReader { geometry in
             HStack(spacing: 0) {
@@ -135,6 +136,7 @@ struct DetailedView: View {
                             rotationAngle = isInLibrary ? 45 : 0
                         }
                         .padding(.vertical, 5)
+                        .modifier(catalogActions)
                     
                     if let animationNamespace = self.detailedViewParams.geometryMatching,
                        let id = self.id {
@@ -144,26 +146,29 @@ struct DetailedView: View {
                     }
                     
                     VStack {
-                        HStack {
-                            Text("\(title)")
-                                .font(.system(size: 18, weight: .bold))
-                            if contentRating == "explicit" {
-                                Image(systemSymbol: .eSquareFill)
+                        Group {
+                            HStack {
+                                Text("\(title)")
+                                    .font(.system(size: 18, weight: .bold))
+                                if contentRating == "explicit" {
+                                    Image(systemSymbol: .eSquareFill)
+                                }
+                                if playlistType == .PersonalMix {
+                                    Image(systemSymbol: .personCropCircle).foregroundColor(Color(platformColor: artwork.bgColour))
+                                        .font(.system(size: 18))
+                                        .tooltip("Playlist curated by Apple Music")
+                                        .modifier(SimpleHoverModifier())
+                                }
                             }
-                            if playlistType == .PersonalMix {
-                                Image(systemSymbol: .personCropCircle).foregroundColor(Color(platformColor: artwork.bgColour))
-                                    .font(.system(size: 18))
-                                    .tooltip("Playlist curated by Apple Music")
-                                    .modifier(SimpleHoverModifier())
-                            }
+                            Text("\(playlistType == .PersonalMix ? "Made For You" : artistName)")
+                                .foregroundColor(.gray)
+                            
+                            
+                            Text(description.standard.htmlToString)
+                                .multilineTextAlignment(.center)
+                                .frame(maxWidth: 300)
                         }
-                        Text("\(playlistType == .PersonalMix ? "Made For You" : artistName)")
-                            .foregroundColor(.gray)
-                        
-                        
-                        Text(description.standard.htmlToString)
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: 300)
+                        .modifier(catalogActions)
                         
                         HStack {
                             MediaActionButton(icon: .Play) {
