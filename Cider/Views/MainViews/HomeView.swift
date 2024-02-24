@@ -81,7 +81,19 @@ struct HomeView: View {
                     }
                     .buttonStyle(.borderless)
                     Button {
-                        URL(string: "https://github.com/ciderapp/Cider-2/issues/new?assignees=&labels=\("🕓+Pending+Implementation,🐛+Bug".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&template=bug_report.yaml&title=\("[Bug] [macOS SwiftUI]:".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")?.open()
+                        var components = URLComponents(string: "https://github.com/ciderapp/Cider-2/issues/new")
+                        components?.queryItems = [
+                            URLQueryItem(name: "assignees", value: "lockieluke"),
+                            URLQueryItem(name: "labels", value: "bug,macos"),
+                            URLQueryItem(name: "template", value: "bug_report.yaml"),
+                            URLQueryItem(name: "title", value: "[Bug] [macOS SwiftUI]: ")
+                        ]
+                        
+                        if Analytics.shared.isArcDefaultBrowser {
+                            components?.url?.openInRegularArcWindow()
+                        } else {
+                            components?.url?.open()
+                        }
                     } label: {
                         HStack {
                             Image(systemSymbol: .ladybug)

@@ -23,4 +23,27 @@ extension URL {
         #endif
     }
     
+    func openInRegularArcWindow() {
+        let script = NSAppleScript(source: """
+tell application "Arc"
+    if (count of windows) is 0 then
+        make new window
+    end if
+    
+    tell front window
+        make new tab with properties {URL:"\(self.absoluteString)"}
+    end tell
+    
+    activate
+end tell
+""")
+        
+        var errorDict: NSDictionary? = nil
+        script?.executeAndReturnError(&errorDict)
+        if let error = errorDict {
+            print("Error opening URL in regular Arc window: \(error), falling back to opening using URL.open")
+            self.open()
+        }
+    }
+    
 }

@@ -19,6 +19,10 @@ class Analytics {
     
     private let logger = Logger(label: "Analytics")
     
+    var isArcDefaultBrowser: Bool {
+        return self.retrieveUserDefaultBrowser() == "company.thebrowser.Browser"
+    }
+    
     func startSentry() {
         self.configureSentryScope()
         
@@ -59,6 +63,30 @@ class Analytics {
         SentrySDK.close()
         #endif
         self.logger.success("Stopped Sentry")
+    }
+    
+    func retrieveUserDefaultBrowser() -> String? {
+        let httpUrl = NSURL(string: "http:")!
+        let httpsUrl = NSURL(string: "https:")!
+
+        let httpDefaultApp = LSCopyDefaultApplicationURLForURL(httpUrl as CFURL, .all, nil)
+        let httpsDefaultApp = LSCopyDefaultApplicationURLForURL(httpsUrl as CFURL, .all, nil)
+
+        if httpDefaultApp != nil {
+            if let appName = Bundle(url: httpDefaultApp!.takeRetainedValue() as URL)?.bundleIdentifier {
+                if appName.lowercased().contains("arcbrowser") {
+                    print("Arc Browser is default for HTTP")
+                }
+            }
+        }
+
+        if httpsDefaultApp != nil {
+            if let appName = Bundle(url: httpsDefaultApp!.takeRetainedValue() as URL)?.bundleIdentifier {
+                return appName
+            }
+        }
+        
+        return nil
     }
     
 }

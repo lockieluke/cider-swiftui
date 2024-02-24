@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires Apple Events to perform actions like opening a URL in a regular Arc window if installed</string>
 	<key>SENTRY_DSN_URL</key>
 	<string>https://349d217b9785b6597768c605a744a3fb@o954055.ingest.sentry.io/4506646172794880</string>
 	<key>CFBundleURLTypes</key>

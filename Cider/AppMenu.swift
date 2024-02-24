@@ -251,6 +251,11 @@ class AppMenu {
             TestAction(name: "Remove UA Cache", description: "Remove latest User Agent from cache", action: {
                 Networking.clearUserAgentCache()
                 return nil
+            }),
+            TestAction(name: "Generate DeviceFingerprint Info", description: "Generate information that can identify a user's device privately for analytical purposes", action: {
+                return """
+Default Browser: \(Analytics.shared.retrieveUserDefaultBrowser() ?? "Unknown")
+"""
             })
         ])
             .frame(minWidth: 800, minHeight: 600)

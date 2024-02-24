@@ -24,7 +24,7 @@ struct CiderPlayground: View {
     @State private var showResults: Bool = false
     @State private var currentTestAction: CiderPlaygroundTestAction?
     @State private var loadingResults: Bool = false
-    @State private var results: Any?
+    @State private var results: String?
     
     private let testActions: [CiderPlaygroundTestAction]
     
@@ -35,8 +35,10 @@ struct CiderPlayground: View {
     var sheetView: some View {
         VStack {
             ScrollView(.vertical) {
-                Text(results.debugDescription)
-                    .textSelection(.enabled)
+                if let results = self.results {
+                    Text(results)
+                        .textSelection(.enabled)
+                }
                 Spacer()
             }
             HStack {
@@ -70,7 +72,7 @@ struct CiderPlayground: View {
                                 self.loadingResults = true
                                 self.results = "No Results"
                                 if let results = await testAction.action() {
-                                    self.results = unwrapAny(results)
+                                    self.results = String(reflecting: results)
                                 }
                                 self.showResults = true
                                 self.loadingResults = false
