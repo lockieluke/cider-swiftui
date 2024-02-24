@@ -22,9 +22,11 @@ struct CatalogActions: ViewModifier {
     @Namespace private var animationNamespace
     
     private let item: MediaDynamic
+    private let isNowPlaying: Bool
     
-    init(item: MediaDynamic) {
+    init(item: MediaDynamic, isNowPlaying: Bool = false) {
         self.item = item
+        self.isNowPlaying = isNowPlaying
     }
     
     private var loveActionText: String {
@@ -47,11 +49,16 @@ struct CatalogActions: ViewModifier {
             ContextMenuArg(dislikeActionText, id: "dislike", disabled: rating == .Liked),
             ContextMenuArg(isInLibrary ? "Remove from Library" : "Add to Library", id: "mod-library"),
             ContextMenuArg("Go to \(itemTypeText)", id: "nav-item", visible: (item.albumId?.isEmpty == false)),
-            ContextMenuArg("Add to Playlist"),
-            ContextMenuArg(),
-            ContextMenuArg("Play Next"),
-            ContextMenuArg("Play Later")
+            ContextMenuArg("Add to Playlist")
         ]
+        
+        if !self.isNowPlaying {
+            menuItems += [
+                ContextMenuArg(),
+                ContextMenuArg("Play Next"),
+                ContextMenuArg("Play Later")
+            ]
+        }
         
 #if DEBUG
         menuItems += [

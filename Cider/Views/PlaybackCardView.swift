@@ -47,6 +47,10 @@ struct PlaybackCardView: View {
             }
             .padding([.horizontal, .vertical], 10)
         }
+        .if(!ciderPlayback.nowPlayingState.item.isNil) { view in
+            view
+                .modifier(CatalogActions(item: ciderPlayback.nowPlayingState.item!, isNowPlaying: true))
+        }
         .enableInjection()
     }
 }
