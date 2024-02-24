@@ -103,11 +103,11 @@ class CiderPlayback : ObservableObject {
     @Published var playbackBehaviour = PlaybackBehaviour()
 
     let logger = Logger(label: "CiderPlayback")
-    private let appWindowModal: AppWindowModal
     var userToken: String?
     var developerToken: String?
     private var defaultsObserver: Defaults.Observation!
     
+    let appWindowModal: AppWindowModal
     let mkModal: MKModal
     var queue: [MediaTrack] = []
     var playbackEngine: (any PlaybackEngine)!

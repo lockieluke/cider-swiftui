@@ -80,11 +80,13 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
                         
                     }
                 } else if eventName == "playbackTimeDidChange", let currentTime = dict["currentTime"] as? Int, let remainingTime = dict["remainingTime"] as? Int {
-                    let currentTime = TimeInterval(currentTime + 1)
-                    let remainingTime = TimeInterval(remainingTime)
-                    
-                    self.parent.parent.nowPlayingState.currentTime = currentTime
-                    self.parent.parent.nowPlayingState.remainingTime = remainingTime
+                    if self.parent.parent.appWindowModal.isVisibleInViewport {
+                        let currentTime = TimeInterval(currentTime + 1)
+                        let remainingTime = TimeInterval(remainingTime)
+                        
+                        self.parent.parent.nowPlayingState.currentTime = currentTime
+                        self.parent.parent.nowPlayingState.remainingTime = remainingTime
+                    }
                 } else if eventName == "playbackDurationDidChange", let duration = dict["duration"] as? Double, duration != .zero {
                     print("duration: \(duration)")
                     let timeInterval = TimeInterval(duration)
