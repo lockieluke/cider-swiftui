@@ -66,6 +66,7 @@ struct MediaTrackRepresentable: View {
             self.isClicked = isPressed
         }))
         .padding(.horizontal)
+        .modifier(CatalogActions(item: .mediaTrack(mediaTrack)))
         .enableInjection()
     }
 }
