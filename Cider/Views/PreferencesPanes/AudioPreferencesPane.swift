@@ -62,25 +62,27 @@ struct AudioPreferencesPane: View {
                         Text("\(playbackBackendDescription).  Changes require restart")
                             .settingDescription()
                         
-                        Spacer()
-                            .frame(height: 20)
-                        
-                        Picker("Audio Quality", selection: $audioQuality) {
-                            Text("High 256kbps").tag(AudioQuality.High)
-                            Text("Standard 64kbps").tag(AudioQuality.Standard)
-                            Text("Lossless (Beta)").tag(AudioQuality.Lossless)
-                        }
-                        .onChange(of: audioQuality) { audioQuality in
-                            Debouncer.debounce {
-                                Task {
-                                    Defaults[.audioQuality] = audioQuality
-                                    await self.ciderPlayback.playbackEngine.setAudioQuality(audioQuality)
+                        if ciderPlayback.nowPlayingState.playbackPipelineInitialised {
+                            Spacer()
+                                .frame(height: 20)
+                            
+                            Picker("Audio Quality", selection: $audioQuality) {
+                                Text("High 256kbps").tag(AudioQuality.High)
+                                Text("Standard 64kbps").tag(AudioQuality.Standard)
+                                Text("Lossless (Beta)").tag(AudioQuality.Lossless)
+                            }
+                            .onChange(of: audioQuality) { audioQuality in
+                                Debouncer.debounce {
+                                    Task {
+                                        Defaults[.audioQuality] = audioQuality
+                                        await self.ciderPlayback.playbackEngine.setAudioQuality(audioQuality)
+                                    }
                                 }
                             }
+                            
+                            Text(audioQualityDescription)
+                                .settingDescription()
                         }
-                        
-                        Text(audioQualityDescription)
-                            .settingDescription()
                     }
                 }
                 .fixedSize(horizontal: false, vertical: true)
