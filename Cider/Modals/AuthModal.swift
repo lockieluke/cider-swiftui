@@ -122,7 +122,8 @@ class AuthModal: ObservableObject {
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
             $0.load(URLRequest(url: URL(string: "https://localhost:5173/am-auth")!))
 #else
-            $0.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/am-auth.html"), baseURL: URL(string: "https://localhost")!)
+            // MusicKit JS refueses to give us the token unless we have a properly formed URL with port and path
+            $0.loadSimulatedRequest(URLRequest(url: URL(string: "https://localhost:5173/am-auth")!), responseHTML: precompileIncludeStr("@/CiderWebModules/dist/am-auth.html"))
 #endif
             
             if AuthModal.OPEN_INSPECTOR {
@@ -155,7 +156,7 @@ class AuthModal: ObservableObject {
 #if DEBUG
         webview.load(URLRequest(url: URL(string: "https://localhost:5173/am-auth?\(params)")!))
 #else
-        webview.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/am-auth.html"), baseURL: URL(string: "https://localhost?\(params)")!)
+        webview.loadSimulatedRequest(URLRequest(url: URL(string: "https://localhost:5173/am-auth?\(params)")!), responseHTML: precompileIncludeStr("@/CiderWebModules/dist/am-auth.html"))
 #endif
     }
     
