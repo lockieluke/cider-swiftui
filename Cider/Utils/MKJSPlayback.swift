@@ -235,8 +235,10 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
     
     func shutdown() {
         // Private API usage
-        let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
-        self.webview.perform(disposeSel)
+        if !self.webview.isNil {
+            let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+            self.webview.perform(disposeSel)
+        }
     }
     
 }
