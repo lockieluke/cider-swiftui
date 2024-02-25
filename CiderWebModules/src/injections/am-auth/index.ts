@@ -37,8 +37,14 @@ const entry = async () => {
 
     if (location.hostname === "authorize.music.apple.com") {
         (await waitForTheElement("#app > div > div > footer"))?.remove();
-        const continueButton = await waitForTheElement("#app > div > div > section > div.base-content-wrapper__button-container > button");
-        if (continueButton) (<HTMLButtonElement>continueButton).click();
+        // const continueButton = await waitForTheElement("#app > div > div > section > div.base-content-wrapper__button-container > button");
+        // if (continueButton) (<HTMLButtonElement>continueButton).click();
+
+        const params = new URLSearchParams(location.search);
+        window.webkit.messageHandlers.ciderkit.postMessage({
+            event: "authenticated",
+            token: params.get("musicUserToken")
+        });
     }
 
     if (location.hostname === "localhost") {
