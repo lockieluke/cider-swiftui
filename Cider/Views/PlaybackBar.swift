@@ -18,16 +18,17 @@ struct PlaybackBar: View {
     @State private var playbackGradientRadius = false
     @State private var shouldShowThumb = false
     @State private var isEditingTrack = false
+    @State private var duration: TimeInterval = 0
     
     var body: some View {
         PatchedGeometryReader { geometry in
             HStack {
                 let nowPlayingState = ciderPlayback.nowPlayingState
-                let overlayBarWidth = currentTimeValue / nowPlayingState.duration
-                let playbackBarWidth = currentTimeValue == 0 ? 0 : self.playbackBarWidth * overlayBarWidth.f + 1
+                let overlayBarWidth = currentTimeValue / duration
+                let _playbackBarWidth = currentTimeValue == 0 ? 0 : self.playbackBarWidth * overlayBarWidth.f + 1
                 Text("\(isEditingTrack ? currentTimeValue.minuteSecond : (nowPlayingState.currentTime?.minuteSecond ?? "0:00"))").isHidden(!nowPlayingState.hasItemToPlay)
                 
-                ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...nowPlayingState.duration.clamped(to: 1...TimeInterval(Int.max)), step: 1, onEditingChanged: { isEditing in
+                ValueSlider(value: nowPlayingState.hasItemToPlay ? $currentTimeValue : .constant(0), in: 0...duration.clamped(to: 1...TimeInterval(Int.max)), step: 1, onEditingChanged: { isEditing in
                     if isEditing != self.isEditingTrack {
                         DispatchQueue.main.async {
                             Task {
@@ -62,7 +63,7 @@ struct PlaybackBar: View {
                                 }
                             
                             Capsule().foregroundColor(.pink)
-                                .frame(width: playbackBarWidth)
+                                .frame(width: abs(_playbackBarWidth))
                         }
                     )
                     .onHover { isHovering in
@@ -71,7 +72,7 @@ struct PlaybackBar: View {
                         .background {
                             Rectangle()
                                 .fill(.clear)
-                                .frame(width: playbackBarWidth, height: 30)
+                                .frame(width: abs(_playbackBarWidth), height: 30)
                                 .onHover { isHovering in
                                     self.shouldShowThumb = isHovering
                                 }
@@ -90,13 +91,20 @@ struct PlaybackBar: View {
                 ))
                 .frame(width: geometry.minRelative * 20, height: 5)
                 
-                Text("\(ciderPlayback.nowPlayingState.duration.minuteSecond)").isHidden(!nowPlayingState.hasItemToPlay)
+                Text("\(duration.minuteSecond)").isHidden(!nowPlayingState.hasItemToPlay)
             }
             .onChange(of: self.ciderPlayback.nowPlayingState.currentTime) { newCurrentTime in
-                if newCurrentTime == self.ciderPlayback.nowPlayingState.duration {
+                if newCurrentTime == self.duration {
                     self.ciderPlayback.nowPlayingState.reset()
                 } else if !isEditingTrack {
                     self.currentTimeValue = Double(newCurrentTime ?? 0)
+                }
+            }
+            .onChange(of: self.ciderPlayback.nowPlayingState.duration) { newDuration in
+                if newDuration != .zero && self.ciderPlayback.nowPlayingState.playbackPipelineInitialised {
+                    self.duration = newDuration
+                } else if self.ciderPlayback.nowPlayingState.item.isNil && !self.ciderPlayback.nowPlayingState.isPlaying {
+                    self.duration = 0
                 }
             }
         }

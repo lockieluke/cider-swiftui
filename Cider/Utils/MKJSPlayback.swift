@@ -92,7 +92,6 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
                         self.parent.parent.nowPlayingState.remainingTime = remainingTime
                     }
                 } else if eventName == "playbackDurationDidChange", let duration = dict["duration"] as? Double, duration != .zero {
-                    print("duration: \(duration)")
                     let timeInterval = TimeInterval(duration)
                     if self.parent.parent.nowPlayingState.duration != timeInterval {
                         self.parent.parent.nowPlayingState.duration = timeInterval
