@@ -1,7 +1,13 @@
 import * as _ from "lodash-es";
 import to from "await-to-js";
 import {initializeApp} from "firebase/app";
-import {signOut, getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup} from "firebase/auth";
+import {getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup, signOut} from "firebase/auth";
+
+declare global {
+    interface Window {
+        sendNativeMessage: (message: unknown) => void;
+    }
+}
 
 window.sendNativeMessage = message => {
     alert(JSON.stringify(message));
