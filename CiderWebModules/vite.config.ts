@@ -4,7 +4,6 @@ import * as path from "path";
 import {fileURLToPath} from "url";
 import tsconfigPaths from "vite-tsconfig-paths";
 import {viteSingleFile} from "vite-plugin-singlefile";
-import viteTopLevelAwait from "vite-plugin-top-level-await";
 import eslintPlugin from "@nabla/vite-plugin-eslint";
 import {nodePolyfills} from "vite-plugin-node-polyfills";
 
@@ -18,7 +17,7 @@ export default defineConfig(() => ({
             "@src": path.join(__dirname, "src")
         }
     },
-    plugins: [solid(), tsconfigPaths(), viteTopLevelAwait(), nodePolyfills({
+    plugins: [solid(), tsconfigPaths(), nodePolyfills({
         globals: {
             Buffer: true
         }

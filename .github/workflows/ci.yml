@@ -78,26 +78,15 @@ jobs:
         with:
           scheme: 'Cider - Release'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 'latest'
+          bun-version: latest
 
-      - name: Install CiderWebModules dependencies with Yarn
-        uses: ./.github/actions/yarn-nm-install
-        with:
-          cwd: 'CiderWebModules/'
-          enable-corepack: true
-          cache-node-modules: true
-          cache-install-state: true
-      
-      - name: Install CiderDevUtils's dependencies with Yarn
-        uses: ./.github/actions/yarn-nm-install
-        with:
-          cwd: 'CiderDevUtils/'
-          enable-corepack: true
-          cache-node-modules: true
-          cache-install-state: true
+      - name: Install CiderWebModules dependencies with Bun
+        working-directory: "CiderWebModules/"
+        run: task install-deps:all-js
+
 
       - name: Setup Xcode version
         uses: maxim-lobanov/setup-xcode@v1.5.1

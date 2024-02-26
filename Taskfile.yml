@@ -66,9 +66,9 @@ tasks:
 
   install-deps:cider-web-modules-js:
     dir: 'CiderWebModules/'
-    desc: "Install CiderWebModules' dependencies with Yarn"
+    desc: "Install CiderWebModules' dependencies with Bun"
     cmds:
-      - yarn
+      - bun install
 
   install-deps:all-js:
     desc: "Install all JS dependencies"
@@ -81,11 +81,11 @@ tasks:
     sources:
       - src/**/*.{ts,tsx}
       - package.json
-      - yarn.lock
+      - bun.lockb
     generates:
       - dist/**/*.js
     cmds:
-      - yarn build
+      - bun run build
 
   build:all-js:
     cmds:

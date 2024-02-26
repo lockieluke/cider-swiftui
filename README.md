@@ -12,7 +12,7 @@ git clone https://github.com/ciderapp/project2-swiftui.git Cider-macOS
 
 ## Setting up the project 🧰
 
-*<sub>Make sure you have [Xcode Command Line Tool](https://developer.apple.com/downloads/)(Xcode preferrably), [Rust Toolchain(Intel and ARM)](https://www.rust-lang.org/), [cargo-lipo](https://github.com/TimNN/cargo-lipo), [CMake](https://cmake.org/), [Task](https://taskfile.dev/), [Yarn **3**](https://yarnpkg.com/), [Node.js](https://nodejs.org/en/) installed</sub>*
+*<sub>Make sure you have [Xcode Command Line Tool](https://developer.apple.com/downloads/)(Xcode preferrably), [Rust Toolchain(Intel and ARM)](https://www.rust-lang.org/), [cargo-lipo](https://github.com/TimNN/cargo-lipo), [CMake](https://cmake.org/), [Task](https://taskfile.dev/) and [Bun](https://bun.sh/) installed</sub>*
 
 Navigate into the project directory
 
@@ -33,14 +33,6 @@ task quickstart
 ```
 
 <sub>Setup a `.env` file with `CIDER_GOOGLE_SERVICE_URL` and `CIDER_UPDATE_SERVICE_GOOGLE_SERVICE_URL` so the script can automatically fetch all the `GoogleService-Info, ask me on Discord if you are unsure, you should have these values if you're a Cider employee</sub>
-
-### Install JS Dependencies 📚
-
-Yarn dependencies have to be installed before proceeding as Cider for macOS uses some TypeScript code for handling MusicKit Authorisation, Playback and the developer toolkit(`CiderDevUtils`) which includes the dev server
-
-```shell
-task install-deps:all-js
-```
 
 ### Services and APIs ⚙️
 
