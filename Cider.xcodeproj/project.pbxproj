@@ -125,15 +125,14 @@
 		B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */; platformFilters = (macos, ); };
 		B78C2BD42B5C91B20047DDFC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B78C2BD32B5C91B20047DDFC /* FirebaseStorage */; };
 		B790345E29F091D5001B11AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B790345D29F091D5001B11AE /* Settings.swift */; platformFilters = (macos, ); };
-		B79050332B0E949600CED9B6 /* CiderElevationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050322B0E949600CED9B6 /* CiderElevationHelper.swift */; };
-		B79050352B0E949600CED9B6 /* CiderElevationHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050342B0E949600CED9B6 /* CiderElevationHelperProtocol.swift */; };
-		B79050372B0E949600CED9B6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050362B0E949600CED9B6 /* main.swift */; };
+		B79050372B0E949600CED9B6 /* CiderElevationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050362B0E949600CED9B6 /* CiderElevationHelper.swift */; };
 		B790503C2B0E949600CED9B6 /* CiderElevationHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = B79050302B0E949600CED9B6 /* CiderElevationHelper.xpc */; platformFilters = (macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B79050AA2B11693500CED9B6 /* libnative_utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B71B82C52A37750900DD8BC2 /* libnative_utils.a */; };
-		B79050AC2B11695000CED9B6 /* ElevationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050AB2B11695000CED9B6 /* ElevationHelper.swift */; };
-		B79050AD2B116B3100CED9B6 /* CiderElevationHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79050342B0E949600CED9B6 /* CiderElevationHelperProtocol.swift */; };
 		B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79230B62A4B834B003F3D99 /* UIApplication.swift */; platformFilter = ios; };
 		B79230B92A4B8B46003F3D99 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79230B82A4B8B46003F3D99 /* URL.swift */; };
+		B79475322B8C049A00A30756 /* SwiftyXPC in Frameworks */ = {isa = PBXBuildFile; productRef = B79475312B8C049A00A30756 /* SwiftyXPC */; };
+		B79475342B8C068500A30756 /* ElevationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79475332B8C068500A30756 /* ElevationHelper.swift */; };
+		B79475362B8C081700A30756 /* SwiftyXPC in Frameworks */ = {isa = PBXBuildFile; productRef = B79475352B8C081700A30756 /* SwiftyXPC */; };
 		B79529162B1E72C100D98653 /* UpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79529152B1E72C100D98653 /* UpdateHelper.swift */; };
 		B79529172B1E733200D98653 /* CiderUpdateServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF6B262B12C81900A7DEEE /* CiderUpdateServiceProtocol.swift */; };
 		B797AFF6297F3AB900D77282 /* InteractiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797AFF5297F3AB900D77282 /* InteractiveText.swift */; };
@@ -160,6 +159,8 @@
 		B7B02F57295629030065FCDD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B02F56295629030065FCDD /* Double.swift */; };
 		B7B128D82B7AA65000AEF9CD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = B7B128D72B7AA65000AEF9CD /* KeychainAccess */; };
 		B7B3D8C029B005100014F63D /* ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B3D8BF29B005100014F63D /* ContextMenu.swift */; };
+		B7B54CD92B8D3D430000876C /* CiderElevationHelperCommandSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B54CD82B8D3D430000876C /* CiderElevationHelperCommandSet.swift */; };
+		B7B54CDA2B8D3D5F0000876C /* CiderElevationHelperCommandSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B54CD82B8D3D430000876C /* CiderElevationHelperCommandSet.swift */; };
 		B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C06F832932E1C5000C1192 /* NavigationContainer.swift */; };
 		B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */; };
 		B7C364E42A60A87500D4711A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C364E32A60A87500D4711A /* Menu.swift */; };
@@ -340,16 +341,14 @@
 		B78B721029F09A64006EDC69 /* SwiftBridgeCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftBridgeCore.swift; path = NativeUtils/Generated/SwiftBridgeCore.swift; sourceTree = SOURCE_ROOT; };
 		B790345D29F091D5001B11AE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B79050302B0E949600CED9B6 /* CiderElevationHelper.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = CiderElevationHelper.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
-		B79050322B0E949600CED9B6 /* CiderElevationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderElevationHelper.swift; sourceTree = "<group>"; };
-		B79050342B0E949600CED9B6 /* CiderElevationHelperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderElevationHelperProtocol.swift; sourceTree = "<group>"; };
-		B79050362B0E949600CED9B6 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B79050362B0E949600CED9B6 /* CiderElevationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderElevationHelper.swift; sourceTree = "<group>"; };
 		B79050382B0E949600CED9B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B79050392B0E949600CED9B6 /* CiderElevationHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CiderElevationHelper.entitlements; sourceTree = "<group>"; };
 		B79050472B0EAC2C00CED9B6 /* CiderElevationHelper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CiderElevationHelper-Bridging-Header.h"; sourceTree = "<group>"; };
 		B790504F2B11573D00CED9B6 /* libnative_utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_utils.a; path = NativeUtils/target/universal/debug/libnative_utils.a; sourceTree = "<group>"; };
-		B79050AB2B11695000CED9B6 /* ElevationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevationHelper.swift; sourceTree = "<group>"; };
 		B79230B62A4B834B003F3D99 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		B79230B82A4B8B46003F3D99 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		B79475332B8C068500A30756 /* ElevationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElevationHelper.swift; sourceTree = "<group>"; };
 		B79529152B1E72C100D98653 /* UpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHelper.swift; sourceTree = "<group>"; };
 		B797AFF5297F3AB900D77282 /* InteractiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveText.swift; sourceTree = "<group>"; };
 		B797AFF7297F3B6A00D77282 /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
@@ -374,6 +373,7 @@
 		B7AAF7752ACE096600A9346C /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
 		B7B02F56295629030065FCDD /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		B7B3D8BF29B005100014F63D /* ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenu.swift; sourceTree = "<group>"; };
+		B7B54CD82B8D3D430000876C /* CiderElevationHelperCommandSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderElevationHelperCommandSet.swift; sourceTree = "<group>"; };
 		B7C06F832932E1C5000C1192 /* NavigationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationContainer.swift; sourceTree = "<group>"; };
 		B7C364E32A60A87500D4711A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B7C364E52A61E90400D4711A /* VolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeSlider.swift; sourceTree = "<group>"; };
@@ -431,6 +431,7 @@
 				B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */,
 				B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */,
 				B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */,
+				B79475322B8C049A00A30756 /* SwiftyXPC in Frameworks */,
 				B71B82872A36712600DD8BC2 /* Settings in Frameworks */,
 				B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */,
 				B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */,
@@ -464,6 +465,7 @@
 				B771CA1B2B8A6B51005E07E8 /* Files in Frameworks */,
 				B771CA152B8A690F005E07E8 /* SwiftyUtils in Frameworks */,
 				B771CA1F2B8A7362005E07E8 /* SwiftyJSON in Frameworks */,
+				B79475362B8C081700A30756 /* SwiftyXPC in Frameworks */,
 				B7CF6B1A2B12172800A7DEEE /* libnative_utils_elevated.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -699,12 +701,11 @@
 		B79050312B0E949600CED9B6 /* CiderElevationHelper */ = {
 			isa = PBXGroup;
 			children = (
-				B79050322B0E949600CED9B6 /* CiderElevationHelper.swift */,
-				B79050342B0E949600CED9B6 /* CiderElevationHelperProtocol.swift */,
-				B79050362B0E949600CED9B6 /* main.swift */,
+				B79050362B0E949600CED9B6 /* CiderElevationHelper.swift */,
 				B79050382B0E949600CED9B6 /* Info.plist */,
 				B79050392B0E949600CED9B6 /* CiderElevationHelper.entitlements */,
 				B79050472B0EAC2C00CED9B6 /* CiderElevationHelper-Bridging-Header.h */,
+				B7B54CD82B8D3D430000876C /* CiderElevationHelperCommandSet.swift */,
 			);
 			path = CiderElevationHelper;
 			sourceTree = "<group>";
@@ -712,6 +713,7 @@
 		B7AAB6F728BA2DBF009AABEA /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B79475332B8C068500A30756 /* ElevationHelper.swift */,
 				B706050C28BE0B4F002AD76C /* AMAPI.swift */,
 				B7C651D328C415F000D32DDC /* AppleAuth.swift */,
 				B703BBCE28CC05FA00228324 /* Alert.swift */,
@@ -728,7 +730,6 @@
 				B70524C12A6D2E39001654B3 /* ParkBenchTimer.swift */,
 				B7332B0D2A96C4A50019221D /* NativeComponent.swift */,
 				B77D950C2A9CB7D9007ED4BD /* Any.swift */,
-				B79050AB2B11695000CED9B6 /* ElevationHelper.swift */,
 				B79529152B1E72C100D98653 /* UpdateHelper.swift */,
 				B71530392B66FB0D00A81935 /* Analytics.swift */,
 				B74A413E2B86A1CA003A8810 /* MKJSPlayback.swift */,
@@ -875,6 +876,7 @@
 				B71530372B65DED600A81935 /* SentrySwiftUI */,
 				B7B128D72B7AA65000AEF9CD /* KeychainAccess */,
 				B74A41412B87B4BF003A8810 /* SwiftHtml */,
+				B79475312B8C049A00A30756 /* SwiftyXPC */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -898,6 +900,7 @@
 				B771CA142B8A690F005E07E8 /* SwiftyUtils */,
 				B771CA1A2B8A6B51005E07E8 /* Files */,
 				B771CA1E2B8A7362005E07E8 /* SwiftyJSON */,
+				B79475352B8C081700A30756 /* SwiftyXPC */,
 			);
 			productName = CiderElevationHelper;
 			productReference = B79050302B0E949600CED9B6 /* CiderElevationHelper.xpc */;
@@ -991,6 +994,7 @@
 				B71530342B65DED500A81935 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				B7B128D62B7AA64F00AEF9CD /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				B74A41402B87B4BF003A8810 /* XCRemoteSwiftPackageReference "swift-html" */,
+				B79475302B8C049A00A30756 /* XCRemoteSwiftPackageReference "SwiftyXPC" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1122,8 +1126,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7B54CDA2B8D3D5F0000876C /* CiderElevationHelperCommandSet.swift in Sources */,
 				B79529172B1E733200D98653 /* CiderUpdateServiceProtocol.swift in Sources */,
-				B79050AD2B116B3100CED9B6 /* CiderElevationHelperProtocol.swift in Sources */,
 				B71D54082ABCBADA001A62D6 /* OnboardingExperience.swift in Sources */,
 				B7663CC72A9223AC009E82DA /* Apple.swift in Sources */,
 				B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */,
@@ -1165,6 +1169,7 @@
 				B798983A29D22A9400A734DC /* Array.swift in Sources */,
 				B74A413F2B86A1CA003A8810 /* MKJSPlayback.swift in Sources */,
 				B76887122948F9C600C623C9 /* Support.swift in Sources */,
+				B79475342B8C068500A30756 /* ElevationHelper.swift in Sources */,
 				B7C364E82A6206C800D4711A /* SidebarPane.swift in Sources */,
 				B76AE92A299E993500A19558 /* Comparable.swift in Sources */,
 				B768871929491B3B00C623C9 /* DeveloperPreferencesPane.swift in Sources */,
@@ -1186,7 +1191,6 @@
 				B736F2732A634DFF008A0458 /* HomeView.swift in Sources */,
 				B7E1CE072996EC6800D25D0F /* SearchSuggestions.swift in Sources */,
 				B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */,
-				B79050AC2B11695000CED9B6 /* ElevationHelper.swift in Sources */,
 				B700C1A628B955090069FDF5 /* AppMenu.swift in Sources */,
 				B7CF3767299A942000922CDA /* SearchView.swift in Sources */,
 				B77AACF2293B871700F8E1E2 /* MediaTrackRepresentable.swift in Sources */,
@@ -1261,9 +1265,8 @@
 			files = (
 				B7CF6B1B2B12174400A7DEEE /* native-utils.swift in Sources */,
 				B7CF6B1C2B12174400A7DEEE /* SwiftBridgeCore.swift in Sources */,
-				B79050332B0E949600CED9B6 /* CiderElevationHelper.swift in Sources */,
-				B79050352B0E949600CED9B6 /* CiderElevationHelperProtocol.swift in Sources */,
-				B79050372B0E949600CED9B6 /* main.swift in Sources */,
+				B7B54CD92B8D3D430000876C /* CiderElevationHelperCommandSet.swift in Sources */,
+				B79050372B0E949600CED9B6 /* CiderElevationHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1938,6 +1941,14 @@
 				minimumVersion = 1.2.10;
 			};
 		};
+		B79475302B8C049A00A30756 /* XCRemoteSwiftPackageReference "SwiftyXPC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CharlesJS/SwiftyXPC.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.2;
+			};
+		};
 		B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
@@ -2165,6 +2176,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		B79475312B8C049A00A30756 /* SwiftyXPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B79475302B8C049A00A30756 /* XCRemoteSwiftPackageReference "SwiftyXPC" */;
+			productName = SwiftyXPC;
+		};
+		B79475352B8C081700A30756 /* SwiftyXPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B79475302B8C049A00A30756 /* XCRemoteSwiftPackageReference "SwiftyXPC" */;
+			productName = SwiftyXPC;
 		};
 		B7AAF7782ACE175900A9346C /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;

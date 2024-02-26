@@ -76,7 +76,6 @@ class AppDelegate : NSObject, ApplicationDelegate {
         signal(SIGKILL, terminatedCallback)
         signal(SIGSTOP, terminatedCallback)
         
-        ElevationHelper.shared.start()
         UpdateHelper.shared.start()
         
         self.nativeUtilsWrapper = nativeUtilsWrapper

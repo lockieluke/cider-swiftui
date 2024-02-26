@@ -397,6 +397,15 @@
       }
     },
     {
+      "identity" : "swiftyxpc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CharlesJS/SwiftyXPC.git",
+      "state" : {
+        "revision" : "3968f30df6dad4e21b5cee9c5343fa9fac7cef30",
+        "version" : "0.5.2"
+      }
+    },
+    {
       "identity" : "throttler",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/boraseoksoon/Throttler.git",

@@ -145,7 +145,7 @@ class CiderPlayback : ObservableObject {
     }
     
     @MainActor
-    func updateNowPlayingStateBeforeReady(item: MediaDynamic) {
+    func updateNowPlayingStateBeforeReady(item: MediaDynamic) async {
         if item.id == self.nowPlayingState.item?.id {
             return
         }
@@ -177,10 +177,12 @@ class CiderPlayback : ObservableObject {
                 }
                 
 #if os(macOS)
-                ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
-                ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
-                ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
-                ElevationHelper.shared.xpc.rpcUpdateActivity()
+                Task {
+                    await ElevationHelper.shared.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+                    await ElevationHelper.shared.rpcSetActivityState(state: "by \(artistName)")
+                    await ElevationHelper.shared.rpcSetActivityDetails(details: title)
+                    await ElevationHelper.shared.rpcUpdateActivity()
+                }
 #endif
                 
                 self.nowPlayingState = NowPlayingState(
@@ -196,10 +198,10 @@ class CiderPlayback : ObservableObject {
             
         } else {
 #if os(macOS)
-            ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
-            ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
-            ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
-            ElevationHelper.shared.xpc.rpcUpdateActivity()
+            await ElevationHelper.shared.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+            await ElevationHelper.shared.rpcSetActivityState(state: "by \(artistName)")
+            await ElevationHelper.shared.rpcSetActivityDetails(details: title)
+            await ElevationHelper.shared.rpcUpdateActivity()
 #endif
             
             self.nowPlayingState = NowPlayingState(
@@ -214,10 +216,10 @@ class CiderPlayback : ObservableObject {
         }
         let artworkURL = artwork.getUrl(width: 200, height: 200)
 #if os(macOS)
-        ElevationHelper.shared.xpc.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
-        ElevationHelper.shared.xpc.rpcSetActivityState(state: "by \(artistName)")
-        ElevationHelper.shared.xpc.rpcSetActivityDetails(details: title)
-        ElevationHelper.shared.xpc.rpcUpdateActivity()
+        await ElevationHelper.shared.rpcSetActivityAssets(largeImage: artworkUrl.absoluteString, largeText: title, smallImage: "", smallText: "")
+        await ElevationHelper.shared.rpcSetActivityState(state: "by \(artistName)")
+        await ElevationHelper.shared.rpcSetActivityDetails(details: title)
+        await ElevationHelper.shared.rpcUpdateActivity()
 #endif
         self.nowPlayingState = NowPlayingState(
             item: item,

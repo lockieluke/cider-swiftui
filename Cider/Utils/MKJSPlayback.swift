@@ -57,15 +57,19 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
                     case "paused":
                         self.parent.parent.nowPlayingState.isPlaying = false
 #if os(macOS)
-                        ElevationHelper.shared.xpc.rpcSetActivityTimestamps(start: 0, end: 0)
-                        ElevationHelper.shared.xpc.rpcUpdateActivity()
+                        Task {
+                            await ElevationHelper.shared.rpcSetActivityTimestamps(start: 0, end: 0)
+                            await ElevationHelper.shared.rpcUpdateActivity()
+                        }
 #endif
                         break
                         
                     case "stopped":
                         self.parent.parent.nowPlayingState.reset()
 #if os(macOS)
-                        ElevationHelper.shared.xpc.rpcClearActivity()
+                        Task {
+                            await ElevationHelper.shared.rpcClearActivity()
+                        }
 #endif
                         break
                         

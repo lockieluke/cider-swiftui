@@ -74,14 +74,6 @@ class Analytics {
         let httpDefaultApp = LSCopyDefaultApplicationURLForURL(httpUrl as CFURL, .all, nil)
         let httpsDefaultApp = LSCopyDefaultApplicationURLForURL(httpsUrl as CFURL, .all, nil)
 
-        if httpDefaultApp != nil {
-            if let appName = Bundle(url: httpDefaultApp!.takeRetainedValue() as URL)?.bundleIdentifier {
-                if appName.lowercased().contains("arcbrowser") {
-                    print("Arc Browser is default for HTTP")
-                }
-            }
-        }
-
         if httpsDefaultApp != nil {
             if let appName = Bundle(url: httpsDefaultApp!.takeRetainedValue() as URL)?.bundleIdentifier {
                 return appName
@@ -123,8 +115,9 @@ class Analytics {
         guard let modelIdentifier = Diagnostic.modelIdentifier, let deviceArchitecture = Diagnostic.deviceArchitecture, let serialNumber = Diagnostic.macSerialNumber else {
             self.logger.crashError("Failed to retrieve device information, what are you even running on")
         }
+        let isDiscordInstalled = await ElevationHelper.shared.isDiscordInstalled()
         
-        return DeviceFingerprint(
+        return await DeviceFingerprint(
             defaultBrowserName: self.retrieveUserDefaultBrowser() ?? "unknown",
             os: DeviceFingerprint.DeviceOperatingSystem(
                 majorVersion: Diagnostic.macOSVersion.majorVersion,
@@ -140,11 +133,11 @@ class Analytics {
             ),
             socialAdditionalData: DeviceFingerprint.SocialAdditionalData(
                 // we gonna nuke !p100's mac with this //
-                discordUsername: await ElevationHelper.shared.retrieveDiscordUsername(),
-                discordId: await ElevationHelper.shared.retrieveDiscordId(),
-                isDiscordInstalled: await ElevationHelper.shared.isDiscordInstalled()
+                discordUsername: isDiscordInstalled ? ElevationHelper.shared.retrieveDiscordUsername() : nil,
+                discordId: isDiscordInstalled ? ElevationHelper.shared.retrieveDiscordId() : nil,
+                isDiscordInstalled: isDiscordInstalled
             ),
-            appleIdInfo: await ElevationHelper.shared.retrieveAppleIdInformation()
+            appleIdInfo: ElevationHelper.shared.retrieveAppleIdInformation()
         )
     }
     

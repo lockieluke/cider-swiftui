@@ -1,5 +1,5 @@
 //
-//  CiderElevationHelper.swift
+//  main.swift
 //  CiderElevationHelper
 //
 //  Created by Sherlock LUK on 22/11/2023.
@@ -11,75 +11,106 @@ import SwiftyUtils
 import AppKit
 import Files
 import SwiftyJSON
+import SwiftyXPC
 
-class CiderElevationHelper: NSObject, CiderElevationHelperProtocol {
+@main
+class CiderElevationHelper {
     
     private let discordRpc = DiscordRPCAgent()
     
-    override init() {
+    static func main() {
         ProcessInfo.processInfo.disableAutomaticTermination("DiscordRPCHelper")
+        
+        do {
+            let xpcService = CiderElevationHelper()
+            
+            // In an actual product, you should always set a real code signing requirement here, for security
+            let requirement: String? = nil
+            
+            let serviceListener = try XPCListener(type: .service, codeSigningRequirement: requirement)
+            
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.initialiseDiscordRpc, handler: xpcService.initialiseDiscordRpc)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.rpcSetActivityState, handler: xpcService.rpcSetActivityState)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.rpcSetActivityDetails, handler: xpcService.rpcSetActivityDetails)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.rpcSetActivityTimestamps, handler: xpcService.rpcSetActivityTimestamps)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.rpcClearActivity, handler: xpcService.rpcClearActivity)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.rpcUpdateActivity, handler: xpcService.rpcUpdateActivity)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.rpcSetActivityAssets, handler: xpcService.rpcSetActivityAssets)
+            
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.cleanup, handler: xpcService.cleanup)
+            
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.isDiscordInstalled, handler: xpcService.isDiscordInstalled)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.retrieveDiscordUsername, handler: xpcService.retrieveDiscordUsername)
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.retrieveDiscordId, handler: xpcService.retrieveDiscordId)
+            
+            serviceListener.setMessageHandler(name: CiderElevationHelperCommandSet.retrieveAppleIdInformation, handler: xpcService.retrieveAppleIdInformation)
+            
+            serviceListener.activate()
+            fatalError("Should never get here")
+        } catch {
+            fatalError("Error while setting up XPC service: \(error)")
+        }
     }
     
-    func cleanup() {
+    struct EmptyStruct: Codable {}
+    func cleanup(_: XPCConnection, empty: EmptyStruct) {
         self.discordRpc.stop()
         exit(0)
     }
     
-    func rpcSetActivityState(state: String) {
+    func rpcSetActivityState(_: XPCConnection, state: String) {
         self.discordRpc.setActivityState(state)
     }
     
-    func rpcSetActivityDetails(details: String) {
+    func rpcSetActivityDetails(_: XPCConnection, details: String) {
         self.discordRpc.setActivityDetails(details)
     }
     
-    func rpcSetActivityTimestamps(start: Int64, end: Int64) {
-        self.discordRpc.setActivityTimestamps(start, end)
+    func rpcSetActivityTimestamps(_: XPCConnection, timestamps: RPCTimestamp) {
+        self.discordRpc.setActivityTimestamps(timestamps.start, timestamps.end)
     }
     
-    func rpcClearActivity() {
+    func rpcClearActivity(_: XPCConnection) {
         self.discordRpc.clearActivity()
     }
     
-    func rpcUpdateActivity() {
+    func rpcUpdateActivity(_: XPCConnection) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.discordRpc.updateActivity()
         }
     }
     
-    func rpcSetActivityAssets(largeImage: String, largeText: String, smallImage: String, smallText: String) {
-        self.discordRpc.setActivityAssets(largeImage, largeText, smallImage, smallText)
+    func rpcSetActivityAssets(_: XPCConnection, assets: RPCAssets) {
+        self.discordRpc.setActivityAssets(assets.largeImage, assets.largeText, assets.smallImage, assets.smallText)
     }
     
-    func initialiseDiscordRpc() {
+    func initialiseDiscordRpc(_: XPCConnection) {
         self.discordRpc.start()
     }
     
-    func isDiscordInstalled(withReply reply: @escaping (Bool) -> Void) {
+    func isDiscordInstalled(_: XPCConnection) async -> Bool {
         let bundleIdentifier = "com.hnc.Discord"
         
-        reply(!NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleIdentifier).isNil)
+        return !NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleIdentifier).isNil
     }
     
-    func retrieveDiscordUsername(withReply reply: @escaping (String?) -> Void) {
+    func retrieveDiscordUsername(_: XPCConnection) async -> String? {
         guard let scopev3 = try? Folder.home.subfolder(named: "Library").subfolder(named: "Application Support").subfolder(named: "discord").subfolder(named: "sentry").file(named: "scope_v3.json"), let data = try? scopev3.read(), let json = try? JSON(data: data) else {
-            reply(nil)
-            return
+            return nil
         }
         
-        reply(json["scope"]["_user"]["username"].string)
+        return json["scope"]["_user"]["username"].string
     }
     
-    func retrieveDiscordId(withReply reply: @escaping (String?) -> Void) {
+    func retrieveDiscordId(_: XPCConnection) -> String? {
         guard let scopev3 = try? Folder.home.subfolder(named: "Library").subfolder(named: "Application Support").subfolder(named: "discord").subfolder(named: "sentry").file(named: "scope_v3.json"), let data = try? scopev3.read(), let json = try? JSON(data: data) else {
-            reply(nil)
-            return
+            return nil
         }
         
-        reply(json["scope"]["_user"]["id"].string)
+        return json["scope"]["_user"]["id"].string
     }
     
-    func retrieveAppleIdInformation(withReply reply: @escaping (Data?) -> Void) {
+    func retrieveAppleIdInformation(_: XPCConnection) -> Data? {
         if let defaults = UserDefaults(suiteName: "MobileMeAccounts"), let dict = (defaults.dictionaryRepresentation()["Accounts"] as? NSArray)?[0] as? [String: Any?] {
             do {
                 let response = try JSONEncoder().encode(AppleIdInformation(
@@ -94,13 +125,13 @@ class CiderElevationHelper: NSObject, CiderElevationHelperProtocol {
                     primaryEmailVerified: dict["primaryEmailVerified"] as! Bool
                 ))
                 
-                reply(response)
+                return response
             } catch {
                 fatalError("Error retrieving Apple ID info: \(error.localizedDescription)")
             }
         }
         
-        reply(nil)
+        return nil
     }
     
 }
