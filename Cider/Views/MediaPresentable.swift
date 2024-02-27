@@ -60,12 +60,10 @@ struct MediaPresentable: View {
                         self.isHovering = isHovering
                     }
                     .onTapGesture {
-                        withAnimation(.interactiveSpring(response: 0.55, blendDuration: 100)) {
-                            if case let .mediaItem(mediaItem) = item {
-                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
-                            } else if case let .mediaPlaylist(mediaPlaylist) = item {
-                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
-                            }
+                        if case let .mediaItem(mediaItem) = item {
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
+                        } else if case let .mediaPlaylist(mediaPlaylist) = item {
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
                         }
                     }
                     .modifier(CatalogActions(item: item))
