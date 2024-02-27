@@ -12,7 +12,7 @@ jobs:
     env:
       KEYCHAIN: job-${{ github.job }}-${{ github.run_id	}}-${{ github.run_number }}-${{ github.run_attempt }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Configure variables
         run: |
@@ -89,7 +89,7 @@ jobs:
 
 
       - name: Setup Xcode version
-        uses: maxim-lobanov/setup-xcode@v1.5.1
+        uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
           xcode-version: latest
 
@@ -102,12 +102,12 @@ jobs:
           echo "${HOME}/.cargo/bin" >> $GITHUB_PATH
 
       - name: Install cargo-lipo from crates.io
-        uses: baptiste0928/cargo-install@v2
+        uses: baptiste0928/cargo-install@v3
         with:
           crate: cargo-lipo
 
       - name: Install swift-precompiler from crates.io
-        uses: baptiste0928/cargo-install@v2
+        uses: baptiste0928/cargo-install@v3
         with:
           crate: swift-precompiler
 
@@ -138,14 +138,14 @@ jobs:
         run: zip -r Cider.xcarchive.zip Cider.xcarchive/**/*
 
       - name: Upload XCArchive
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Cider XCArchive (Compressed)
           path: ${{ env.XC_ARCHIVE }}.zip
           retention-days: 1
 
       - name: Upload DMG
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Cider.dmg
           path: ${{ runner.temp }}/dest/Cider.dmg
