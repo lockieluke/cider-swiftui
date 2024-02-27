@@ -8,7 +8,7 @@ import Defaults
 
 enum RootNavigationType {
     
-    case Home, ListenNow, Browse, Radio, Library, AnyView
+    case Home, ListenNow, Browse, Radio, Library, Playlist, AnyView
     
 }
 
@@ -162,6 +162,18 @@ class NavigationModal : ObservableObject {
     func appendViewStack(_ viewStack: NavigationStack, backAction: (() -> Void)? = nil) {
         if (viewStack.params == .rootViewParams && self.currentlyPresentViewType == .Root) || viewStack.params == self.currentlyPresentViewStack?.params {
             return
+        }
+        var modifyingViewStack = viewStack
+        modifyingViewStack.rootStackOrigin = self.currentRootStack
+        self.viewsStack.indices.forEach { index in
+            self.viewsStack[index].isPresent = false
+        }
+        self.viewsStack.append(modifyingViewStack)
+    }
+    
+    func replaceCurrentViewStack(_ viewStack: NavigationStack) {
+        if self.viewsStack.last?.rootStackOrigin == self.currentRootStack {
+            self.viewsStack.removeLast()
         }
         var modifyingViewStack = viewStack
         modifyingViewStack.rootStackOrigin = self.currentRootStack

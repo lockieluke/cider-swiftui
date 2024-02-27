@@ -58,6 +58,7 @@ fileprivate struct SidebarItem: View {
     
     @State private var isHovering = false
     @State private var isClicking = false
+    @State private var highlightingAnyway = false
     
     @EnvironmentObject private var navigationModal: NavigationModal
     @EnvironmentObject private var mkModal: MKModal
@@ -88,17 +89,17 @@ fileprivate struct SidebarItem: View {
         self.playlistID = playlistID
     }
     
-    func shouldHighlight() -> Bool {
-        if self.isHovering {
+    var shouldHighlight: Bool {
+        if self.isHovering || self.highlightingAnyway {
             return true
-        }
-        
-        if self.stackType != .AnyView {
-            return navigationModal.currentRootStack == self.stackType
         }
         
         if self.playlistID != nil {
             return navigationModal.viewsStack.last?.params?.value == self.playlistID
+        }
+        
+        if self.stackType != .AnyView {
+            return navigationModal.currentRootStack == self.stackType
         }
         
         return false
@@ -119,17 +120,18 @@ fileprivate struct SidebarItem: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background {
             RoundedRectangle(cornerRadius: 10)
-                .fill(shouldHighlight() ?  Color.secondary.opacity(0.5) : Color.clear)
+                .fill(shouldHighlight ?  Color.secondary.opacity(0.5) : Color.clear)
                 .animation(.easeInOut, value: isClicking)
         }
         .onHover { isHovering in
             self.isHovering = isHovering
         }
         .onTapGesture {
-            self.navigationModal.showSidebar = false
+            self.highlightingAnyway = true
             if playlistID == nil {
                 self.navigationModal.currentRootStack = self.stackType
                 self.navigationModal.resetToRoot()
+                self.highlightingAnyway = false
             } else {
                 Task {
                     var playlist: MediaPlaylist?
@@ -138,9 +140,9 @@ fileprivate struct SidebarItem: View {
                     } catch {}
                     
                     if playlist != nil {
-                        self.navigationModal.showSidebar = false
-                        self.navigationModal.currentRootStack = .AnyView
-                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(playlist!), geometryMatching: nil, originalSize: CGSize(width: 1, height: 1), coverKind: "bb"))))
+                        self.navigationModal.currentRootStack = .Playlist
+                        self.highlightingAnyway = false
+                        self.navigationModal.replaceCurrentViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(playlist!), geometryMatching: nil, originalSize: CGSize(width: 1, height: 1), coverKind: "bb"))))
                     }
                 }
             }
@@ -228,7 +230,7 @@ struct SidebarPane: View {
                     
                     Section("Playlists") {
                         ForEach(allPlaylistsData) { playlist in
-                            SidebarItem(playlist.title, icon: .Playlist, playlistID: playlist.id)
+                            SidebarItem(playlist.title, icon: .Playlist, stackType: .Playlist, playlistID: playlist.id)
                         }
                     }
                     .foregroundStyle(.white)
