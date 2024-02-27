@@ -216,7 +216,7 @@ struct SidebarPane: View {
                     }
                     
                     Section("Library") {
-                        SidebarItem("Recently Added", icon: .RecentlyAdded)
+                        SidebarItem("Recently Added", icon: .RecentlyAdded, stackType: .RecentlyAdded)
                         SidebarItem("Songs", icon: .Songs)
                         SidebarItem("Albums", icon: .Albums)
                         SidebarItem("Artists", icon: .Artists)
@@ -236,7 +236,7 @@ struct SidebarPane: View {
                     .foregroundStyle(.white)
                 }
                 .task {
-                    await fetchPlaylists()
+                    self.allPlaylistsData = await mkModal.AM_API.fetchPlaylists()
                 }
                 .animation(.none)
             }
@@ -266,10 +266,7 @@ struct SidebarPane: View {
         .listStyle(.sidebar)
         .enableInjection()
     }
-    
-    private func fetchPlaylists() async {
-        self.allPlaylistsData = await mkModal.AM_API.fetchPlaylists()
-    }
+
 }
 
 struct SidebarPane_Previews: PreviewProvider {

@@ -532,6 +532,36 @@ class AMAPI {
         return []
     }
     
+    func fetchRecentlyAdded(limit: Int = 25, offset: Int = 0) async -> [MediaDynamic] {
+        
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/recently-added", parameters: [
+            "limit": limit,
+            "offset": offset,
+            "platform": "web",
+            "include": "catalog",
+            "extend": "artistUrl"
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch personal social profile: \(error.localizedDescription)")
+        } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
+            return items.compactMap { item in
+                switch MediaType(rawValue: item["type"].stringValue) {
+                    
+                case .Song:
+                    return .mediaTrack(MediaTrack(data: item))
+                    
+                case .Playlist:
+                    return .mediaPlaylist(MediaPlaylist(data: item))
+                    
+                default:
+                    return .mediaItem(MediaItem(data: item))
+                }
+            }
+        }
+        
+        return []
+    }
+    
     func fetchBrowse() async -> [MediaBrowseData] {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/editorial/\(self.STOREFRONT_ID!)/groupings", parameters: [
             "art[url]": "f",

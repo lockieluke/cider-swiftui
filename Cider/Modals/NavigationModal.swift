@@ -8,7 +8,7 @@ import Defaults
 
 enum RootNavigationType {
     
-    case Home, ListenNow, Browse, Radio, Library, Playlist, AnyView
+    case Home, ListenNow, Browse, Radio, Library, RecentlyAdded, Playlist, AnyView
     
 }
 
@@ -117,8 +117,12 @@ struct NavigationStack {
 
 class NavigationModal : ObservableObject {
     
-    // Sidebar Items
-    @Published var currentRootStack: RootNavigationType = .Home
+    @Published var currentRootStack: RootNavigationType = .Home {
+        didSet {
+            self.loadedRootStacks.insert(self.currentRootStack)
+        }
+    }
+    @Published var loadedRootStacks: Set<RootNavigationType> = [.Home]
     
     // View Stack in each sidebar item screen
     @Published var viewsStack: [NavigationStack] = [] {

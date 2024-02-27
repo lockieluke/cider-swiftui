@@ -49,9 +49,10 @@ struct NavigationContainer: View {
             
             ZStack {
                 if self.mkModal.isAuthorised {
+                    let currentRootStack = navigationModal.currentRootStack
+                    let hasShown = navigationModal.loadedRootStacks.contains(currentRootStack)
                     ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
                         let isPresent = viewStack.isPresent
-                        let currentRootStack = navigationModal.currentRootStack
                         let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
                         let shouldUpperStackShow = isPresent && currentRootStack == viewStackOrigin
                         
@@ -62,15 +63,23 @@ struct NavigationContainer: View {
                                 HomeView()
                                     .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
                                     .hideWithoutDestroying(currentRootStack != .Home || !isPresent)
+                                    .isHidden(!hasShown)
                                 
                                 ListenNowView()
                                     .hideWithoutDestroying(currentRootStack != .ListenNow || !isPresent)
+                                    .isHidden(!hasShown)
                                 
                                 BrowseView()
                                     .hideWithoutDestroying(currentRootStack != .Browse || !isPresent)
+                                    .isHidden(!hasShown)
                                 
                                 RadioView()
                                     .hideWithoutDestroying(currentRootStack != .Radio || !isPresent)
+                                    .isHidden(!hasShown)
+                                
+                                RecentlyAddedView()
+                                    .hideWithoutDestroying(currentRootStack != .RecentlyAdded || !isPresent)
+                                    .isHidden(!hasShown)
                             }
                             
                         case .detailedViewParams(let detailedViewParams):
