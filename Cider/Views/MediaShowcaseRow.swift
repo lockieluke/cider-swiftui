@@ -13,6 +13,8 @@ struct MediaShowcaseRow: View {
     @EnvironmentObject private var ciderPlayback: CiderPlayback
     @EnvironmentObject private var navigationModal: NavigationModal
     
+    @Namespace private var mediaAnimationNamespace
+    
     var rowTitle: String
     var items: [MediaDynamic]
     
@@ -27,7 +29,7 @@ struct MediaShowcaseRow: View {
                 ScrollView([.horizontal]) {
                     LazyHStack {
                         ForEach(items, id: \.id) { item in
-                            MediaPresentable(item: item, maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: true)
+                            MediaPresentable(item: item, maxRelative: geometry.maxRelative.clamped(to: 1000...1300), animationNamespace: mediaAnimationNamespace)
                                 .padding()
                         }
                     }

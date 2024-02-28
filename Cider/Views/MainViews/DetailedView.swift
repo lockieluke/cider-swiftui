@@ -138,9 +138,8 @@ struct DetailedView: View {
                         .padding(.vertical, 5)
                         .modifier(catalogActions)
                     
-                    if let animationNamespace = self.detailedViewParams.geometryMatching,
-                       let id = self.id {
-                        cover
+                    if let animationNamespace = self.detailedViewParams.geometryMatching, let animationId = self.detailedViewParams.animationId {
+                        cover.matchedGeometryEffect(id: "MediaPresentable-\(animationId)", in: animationNamespace, properties: .position)
                     } else {
                         cover
                     }

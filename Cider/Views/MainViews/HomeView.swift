@@ -35,6 +35,8 @@ struct HomeView: View {
     @State private var recentlyPlayedItemsState = LoadingState.loading
     @State private var personalRecommendationState = LoadingState.loading
     
+    @Namespace private var mediaAnimationNamespace
+    
     func loadHomeViewData() async {
         let personalSocialProfile = await self.mkModal.AM_API.fetchPersonalSocialProfile()
         DispatchQueue.main.async {
@@ -122,7 +124,7 @@ struct HomeView: View {
                     PatchedGeometryReader { geometry in
                         HStack {
                             ForEach(homeViewData.personalRecommendation, id: \.id) { recommendationItem in
-                                MediaPresentable(item: .mediaPlaylist(recommendationItem), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), coverKind: "ss", geometryMatched: true)
+                                MediaPresentable(item: .mediaPlaylist(recommendationItem), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), coverKind: "ss", animationNamespace: mediaAnimationNamespace)
                             }
                         }
                     }

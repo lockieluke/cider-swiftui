@@ -57,12 +57,14 @@ enum NavigationDynamicParams: Equatable {
 struct DetailedViewParams {
     let item: MediaDynamic
     let geometryMatching: Namespace.ID?
+    let animationId: String?
     let originalSize: CGSize
     let coverKind: String
     
-    init(item: MediaDynamic, geometryMatching: Namespace.ID?, originalSize: CGSize, coverKind: String = "bb") {
+    init(item: MediaDynamic, geometryMatching: Namespace.ID? = nil, animationId: String? = nil, originalSize: CGSize, coverKind: String = "bb") {
         self.item = item
         self.geometryMatching = geometryMatching
+        self.animationId = animationId
         self.originalSize = originalSize
         self.coverKind = coverKind
     }

@@ -67,7 +67,7 @@ struct SearchView: View {
                             ScrollView(.horizontal) {
                                 LazyHStack {
                                     ForEach(albums, id: \.id) { album in
-                                        MediaPresentable(item: .mediaItem(album), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: false)
+                                        MediaPresentable(item: .mediaItem(album), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
                                             .padding(.vertical)
                                     }
                                 }
@@ -83,7 +83,7 @@ struct SearchView: View {
                             ScrollView(.horizontal) {
                                 LazyHStack {
                                     ForEach(playlists, id: \.id) { playlist in
-                                        MediaPresentable(item: .mediaPlaylist(playlist), maxRelative: geometry.maxRelative.clamped(to: 1000...1300), geometryMatched: false)
+                                        MediaPresentable(item: .mediaPlaylist(playlist), maxRelative: geometry.maxRelative.clamped(to: 1000...1300))
                                             .padding(.vertical)
                                     }
                                 }

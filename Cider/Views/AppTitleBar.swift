@@ -100,6 +100,7 @@ struct AppTitleBar: View {
             
             SearchBar()
         }
+        .animation(.spring.speed(2), value: navigationModal.isBackAvailable)
         .frame(height: titleBarHeight)
         .enableInjection()
     }

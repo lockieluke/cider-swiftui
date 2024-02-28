@@ -16,9 +16,11 @@ struct MediaPresentable: View {
     
     private let item: MediaDynamic
     private let maxRelative: CGFloat
-    private let geometryMatched: Bool
     private let coverKind: String
     private let isHostOrArtist: Bool
+    
+    private let animationNamespace: Namespace.ID?
+    private let animationId = UUID().uuidString
     
     private var id, title: String!
     private var artwork: MediaArtwork!
@@ -26,13 +28,11 @@ struct MediaPresentable: View {
     @State private var isHovering = false
     @State private var isHoveringPlay = false
     
-    @Namespace private var cardAnimation
-    
-    init(item: MediaDynamic, 
+    init(item: MediaDynamic,
          maxRelative: CGFloat,
          coverKind: String = "bb",
-         geometryMatched: Bool = false,
-         isHostOrArtist: Bool = false
+         isHostOrArtist: Bool = false,
+         animationNamespace: Namespace.ID? = nil
     ) {
         self.id = item.id
         self.title = item.title
@@ -40,14 +40,15 @@ struct MediaPresentable: View {
         
         self.item = item
         self.maxRelative = maxRelative
-        self.geometryMatched = geometryMatched
         self.isHostOrArtist = isHostOrArtist
         self.coverKind = coverKind
+        
+        self.animationNamespace = animationNamespace
     }
     
     var innerBody: some View {
         VStack {
-            let artworkView = ZStack {
+            ZStack {
                 WebImage(url: artwork.getUrl(width: 200, height: 200, kind: coverKind), options: [.retryFailed])
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -60,10 +61,12 @@ struct MediaPresentable: View {
                         self.isHovering = isHovering
                     }
                     .onTapGesture {
-                        if case let .mediaItem(mediaItem) = item {
-                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
-                        } else if case let .mediaPlaylist(mediaPlaylist) = item {
-                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.geometryMatched ? self.cardAnimation : nil, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
+                        withAnimation(.spring) {
+                            if case let .mediaItem(mediaItem) = item {
+                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
+                            } else if case let .mediaPlaylist(mediaPlaylist) = item {
+                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
+                            }
                         }
                     }
                     .modifier(CatalogActions(item: item))
@@ -104,12 +107,18 @@ struct MediaPresentable: View {
                     .transition(.opacity)
                 }
             }
-            
-            if geometryMatched, let id = self.id {
-                artworkView
-                    .matchedGeometryEffect(id: id, in: cardAnimation)
-            } else {
-                artworkView
+            .if(!animationNamespace.isNil) { view in
+                view
+                    .onTapGesture {
+                        withAnimation(.spring) {
+                            if case let .mediaItem(mediaItem) = item {
+                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
+                            } else if case let .mediaPlaylist(mediaPlaylist) = item {
+                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
+                            }
+                        }
+                    }
+                    .matchedGeometryEffect(id: "MediaPresentable-\(animationId)", in: animationNamespace!, properties: .frame, isSource: true)
             }
             
             Text("\(title)")
