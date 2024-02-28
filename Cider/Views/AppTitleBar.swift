@@ -34,7 +34,9 @@ struct AppTitleBar: View {
                 
                 if navigationModal.isBackAvailable && !searchModal.shouldDisplaySearchPage {
                     ActionButton(actionType: .Back) {
-                        self.navigationModal.goBack()
+                        withAnimation(.interactiveSpring) {
+                            self.navigationModal.goBack()
+                        }
                     }
                 }
                 

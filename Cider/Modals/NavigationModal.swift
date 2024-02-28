@@ -173,6 +173,9 @@ class NavigationModal : ObservableObject {
         if let indexToRemove = self.viewsStack.lastIndex(where: { viewStack in viewStack.rootStackOrigin == self.currentRootStack }) {
             self.viewsStack.remove(at: indexToRemove)
         }
+        if self.viewsStack.count > 1 {
+            self.viewsStack[self.viewsStack.count - 1].isPresent = true
+        }
     }
     
     @Published var currentlyPresentViewStack: NavigationStack?
