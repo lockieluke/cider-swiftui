@@ -127,7 +127,7 @@ class CiderElevationHelper {
                 
                 return response
             } catch {
-                fatalError("Error retrieving Apple ID info: \(error.localizedDescription)")
+                print("Error retrieving Apple ID info: \(error.localizedDescription)")
             }
         }
         
