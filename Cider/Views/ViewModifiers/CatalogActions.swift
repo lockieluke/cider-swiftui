@@ -19,6 +19,9 @@ struct CatalogActions: ViewModifier {
     @State private var isInLibrary = false
     @State private var rating: MediaRatings = .Neutral
     @State private var albumData: MediaItem?
+    #if DEBUG
+    @State private var showingInspectModal = false
+    #endif
     
     @Namespace private var animationNamespace
     
@@ -64,7 +67,8 @@ struct CatalogActions: ViewModifier {
 #if DEBUG
         menuItems += [
             ContextMenuArg(),
-            ContextMenuArg("Copy ID")
+            ContextMenuArg("Copy ID"),
+            ContextMenuArg("Inspect")
         ]
 #endif
         
@@ -74,7 +78,7 @@ struct CatalogActions: ViewModifier {
     func body(content: Content) -> some View {
         content
 #if canImport(AppKit)
-            .captureMouseEvent(.MouseEntered) {
+            .onHover { isHovering in
                 Task {
                     if !prefetechedAttributes {
                         rating = await mkModal.AM_API.fetchRating(item: item)
@@ -86,6 +90,15 @@ struct CatalogActions: ViewModifier {
                 }
             }
 #endif
+        #if DEBUG
+            .popover(isPresented: $showingInspectModal) {
+                VStack {
+                    Text("Title: \(item.title)")
+                    Text("Type: \(item.type)")
+                }
+                .padding()
+            }
+        #endif
             .contextMenu(menu, { id in
                 Task {
                     await handleMenuAction(withId: id)
@@ -126,9 +139,13 @@ struct CatalogActions: ViewModifier {
                 print("Error navigating: \(error)")
             }
 
-#if os(macOS)
+#if os(macOS) && DEBUG
         case "copy-id":
             NativeUtilsWrapper.nativeUtilsGlobal.copy_string_to_clipboard(item.id)
+            
+        case "inspect":
+            self.showingInspectModal = true
+            break
 #endif
             
         default:
