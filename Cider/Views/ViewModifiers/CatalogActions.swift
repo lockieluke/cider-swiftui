@@ -82,7 +82,9 @@ struct CatalogActions: ViewModifier {
                 Task {
                     if !prefetechedAttributes {
                         rating = await mkModal.AM_API.fetchRating(item: item)
-                        if let inLibrary = await mkModal.AM_API.fetchLibraryCatalog(item: item) {
+                        if item.type == "library-albums" {
+                            isInLibrary = true
+                        } else if let inLibrary = await mkModal.AM_API.fetchLibraryCatalog(item: item) {
                             isInLibrary = inLibrary
                         }
                         prefetechedAttributes = true

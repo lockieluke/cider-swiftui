@@ -406,7 +406,7 @@ class AMAPI {
         if disallowedTypes.contains(item.type) { return nil }
         
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/", parameters: [
-            "ids[\(item.type)]": (item.id as NSString).integerValue,
+            "ids[\(item.type)]": item.id,
             "relate": "library",
             "fields": "inLibrary"
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
@@ -536,7 +536,6 @@ class AMAPI {
     }
     
     func fetchRecentlyAdded(limit: Int = 25, offset: Int = 0) async -> [MediaDynamic] {
-        
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/recently-added", parameters: [
             "limit": limit,
             "offset": offset,
