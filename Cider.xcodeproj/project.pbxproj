@@ -993,7 +993,6 @@
 				B7718F092ABB6EC5009CB966 /* XCRemoteSwiftPackageReference "ZippyJSON" */,
 				B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */,
-				B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 				B7DDCCEF2B2A5872006E1429 /* XCRemoteSwiftPackageReference "Files" */,
 				B77065F22B4CBC7600551769 /* XCRemoteSwiftPackageReference "Subprocess" */,
 				B72ECF5C2B647A7A00944694 /* XCRemoteSwiftPackageReference "atlantis" */,
@@ -1955,14 +1954,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.5.2;
-			};
-		};
-		B7A24EC92AFAF87D00B97E07 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.3;
 			};
 		};
 		B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */ = {
