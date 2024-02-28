@@ -53,7 +53,11 @@ class MKModal : ObservableObject {
     @MainActor
     func authenticateWithToken(userToken: String) {
         self.AM_API.AM_USER_TOKEN = userToken
-        try? self.AM_API.initialiseAMNetworking()
+        do {
+            try self.AM_API.initialiseAMNetworking()
+        } catch {
+            self.logger.error("Failed to initialise AM Networking: \(error)")
+        }
     }
     
     @MainActor
