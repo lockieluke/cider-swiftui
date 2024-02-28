@@ -101,11 +101,7 @@ struct NavigationStack {
 
 class NavigationModal : ObservableObject {
     
-    @Published var currentRootStack: RootNavigationType = .Home {
-        didSet {
-            self.loadedRootStacks.insert(self.currentRootStack)
-        }
-    }
+    @Published var currentRootStack: RootNavigationType = .Home
     @Published var loadedRootStacks: Set<RootNavigationType> = [.Home]
     
     // View Stack in each sidebar item screen

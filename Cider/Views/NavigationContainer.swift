@@ -62,23 +62,23 @@ struct NavigationContainer: View {
                             Group {
                                 HomeView()
                                     .hideWithoutDestroying(currentRootStack != .Home || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Home }).count > 1)
-                                    .isHidden(!hasShown)
+                                    .isHidden(!hasShown, remove: true)
                                 
                                 ListenNowView()
                                     .hideWithoutDestroying(currentRootStack != .ListenNow || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .ListenNow }).count > 0)
-                                    .isHidden(!hasShown)
+                                    .isHidden(!hasShown, remove: true)
                                 
                                 BrowseView()
                                     .hideWithoutDestroying(currentRootStack != .Browse || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Browse }).count > 0)
-                                    .isHidden(!hasShown)
+                                    .isHidden(!hasShown, remove: true)
                                 
                                 RadioView()
                                     .hideWithoutDestroying(currentRootStack != .Radio || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Radio }).count > 0)
-                                    .isHidden(!hasShown)
+                                    .isHidden(!hasShown, remove: true)
                                 
                                 RecentlyAddedView()
                                     .hideWithoutDestroying(currentRootStack != .RecentlyAdded || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .RecentlyAdded }).count > 0)
-                                    .isHidden(!hasShown)
+                                    .isHidden(!hasShown, remove: true)
                             }
                             
                         case .detailedViewParams(let detailedViewParams):
@@ -133,6 +133,9 @@ struct NavigationContainer: View {
             }
             .layoutPriority(1)
             .animation(.none, value: navigationModal.showSidebar)
+        }
+        .onChange(of: navigationModal.currentRootStack) { currentRootStack in
+            self.navigationModal.loadedRootStacks.insert(currentRootStack)
         }
         .padding(.top, 45)
         .padding(.bottom, 100)
