@@ -53,6 +53,7 @@ struct MediaPresentable: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
+                    .fixedSize()
                     .cornerRadius(isHostOrArtist ? .infinity : 5)
                     .brightness(isHovering ? -0.1 : 0)
                     .animation(.easeIn(duration: 0.15), value: isHovering)
