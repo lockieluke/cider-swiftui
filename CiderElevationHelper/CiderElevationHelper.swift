@@ -110,25 +110,19 @@ class CiderElevationHelper {
         return json["scope"]["_user"]["id"].string
     }
     
-    func retrieveAppleIdInformation(_: XPCConnection) -> Data? {
+    func retrieveAppleIdInformation(_: XPCConnection) -> AppleIdInformation? {
         if let defaults = UserDefaults(suiteName: "MobileMeAccounts"), let dict = (defaults.dictionaryRepresentation()["Accounts"] as? NSArray)?[0] as? [String: Any?] {
-            do {
-                let response = try JSONEncoder().encode(AppleIdInformation(
-                    isLoggedIn: dict["LoggedIn"] as! Bool,
-                    displayName: dict["DisplayName"] as! String,
-                    accountId: dict["AccountID"] as! String,
-                    accountDescription: dict["AccountDescription"] as! String,
-                    accountUUID: dict["AccountUUID"] as! String,
-                    firstName: dict["firstName"] as! String,
-                    lastName: dict["lastName"] as! String,
-                    isManaged: dict["isManagedAppleID"] as! Bool,
-                    primaryEmailVerified: dict["primaryEmailVerified"] as! Bool
-                ))
-                
-                return response
-            } catch {
-                print("Error retrieving Apple ID info: \(error.localizedDescription)")
-            }
+            return AppleIdInformation(
+                isLoggedIn: dict["LoggedIn"] as! Bool,
+                displayName: dict["DisplayName"] as! String,
+                accountId: dict["AccountID"] as! String,
+                accountDescription: dict["AccountDescription"] as! String,
+                accountUUID: dict["AccountUUID"] as! String,
+                firstName: dict["firstName"] as! String,
+                lastName: dict["lastName"] as! String,
+                isManaged: dict["isManagedAppleID"] as! Bool,
+                primaryEmailVerified: dict["primaryEmailVerified"] as! Bool
+            )
         }
         
         return nil

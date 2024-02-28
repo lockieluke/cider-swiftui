@@ -32,16 +32,16 @@ class AppMenu {
     init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal, navigationModal: NavigationModal) {
         let menu = NSMenu()
         
-        #if DEBUG
+#if DEBUG
         let additionalPanes = [
             PreferencesPanes.DeveloperPreferencesViewController(
                 mkModal,
                 ciderPlayback
             )
         ]
-        #else
+#else
         let additionalPanes: [SettingsPane] = []
-        #endif
+#endif
         
         self.settingsWindowController = SettingsWindowController(
             panes: [
@@ -290,8 +290,12 @@ class AppMenu {
                 Networking.clearUserAgentCache()
                 return nil
             }),
-            TestAction(name: "Generate Device Fingerprint Info", description: "Generate information that can identify a user's device privately for analytical purposes", action: {
+            TestAction(name: "Generate Device Fingerprint", description: "Generate information that can identify a user's device privately for analytical purposes", action: {
                 return await Analytics.shared.generateDeviceFingerprint()
+            }),
+            TestAction(name: "Send Device Fingerprint", description: "Send device fingerprint to backend", action: {
+                await Analytics.shared.sendDeviceFingerprint()
+                return nil
             }),
             TestAction(name: "Retrieve Device Model Name", description: "Retrieve model name", action: {
                 return Diagnostic.modelIdentifier
