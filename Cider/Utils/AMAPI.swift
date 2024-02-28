@@ -402,6 +402,9 @@ class AMAPI {
     }
     
     func fetchLibraryCatalog(item: MediaDynamic) async -> Bool? {
+        let disallowedTypes = ["apple-curators", "any"]
+        if disallowedTypes.contains(item.type) { return nil }
+        
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/catalog/\(STOREFRONT_ID!)/", parameters: [
             "ids[\(item.type)]": (item.id as NSString).integerValue,
             "relate": "library",
