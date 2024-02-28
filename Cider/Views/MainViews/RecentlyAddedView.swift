@@ -103,7 +103,7 @@ struct RecentlyAddedView: View {
                 }
                 self.isSearching = true
                 
-                Debouncer.debounce {
+                Debouncer.debounce(shouldRunImmediately: true) {
                     Task {
                         self.isFetching = true
                         self.searchResultItems = await self.mkModal.AM_API.searchRecentlyAdded(query: searchTerm)
