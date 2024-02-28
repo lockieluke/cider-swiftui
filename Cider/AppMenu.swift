@@ -25,6 +25,8 @@ class AppMenu {
     private let navigationModal: NavigationModal
     
     private var hasPreviouslyOpenedPlayground: Bool = false
+    private var hasPreviouslyOpenedNavDebugger: Bool = false
+    private var navigationDebuggerWindowDelegate: NSWindowDelegate!
     private var playgroundWindowDelegate: NSWindowDelegate!
     
     init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal, navigationModal: NavigationModal) {
@@ -136,6 +138,7 @@ class AppMenu {
             $0.submenu = NSMenu(title: "Developer")
             $0.submenu?.items = [
                 NSMenuItem(title: "Open Playback Debugger", action: #selector(self.openInspector(_:)), keyEquivalent: "").then { $0.target = self },
+                NSMenuItem(title: "Open Navigation Debugger", action: #selector(self.openNavigationDebugger(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Show Donation View", action: #selector(self.showDonationView(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Show What's New View", action: #selector(self.showWhatsNewView(_:)), keyEquivalent: "").then { $0.target = self },
                 NSMenuItem(title: "Playground...", action: #selector(self.openPlaygrounds(_:)), keyEquivalent: "\\").then { $0.target = self },
@@ -221,8 +224,43 @@ class AppMenu {
         }
     }
     
+    @objc func openNavigationDebugger(_ sender: Any) {
+        if self.hasPreviouslyOpenedNavDebugger {
+            return
+        }
+        
+        class NavigationDebuggerWindowDelegate: NSObject, NSWindowDelegate {
+            
+            weak var parent: AppMenu!
+            
+            init(parent: AppMenu!) {
+                self.parent = parent
+            }
+            
+            func windowWillClose(_ notification: Notification) {
+                self.parent.hasPreviouslyOpenedNavDebugger = false
+            }
+        }
+        
+        let navigationDebuggerWindow = NSWindow(contentViewController: NSHostingController(rootView: NavigationDebugger().environmentObject(self.navigationModal))).then {
+            let navigationDebuggerWindowDelegate = NavigationDebuggerWindowDelegate(parent: self)
+            $0.delegate = navigationDebuggerWindowDelegate
+            
+            $0.title = "Navigation Debugger"
+            $0.styleMask = [.titled, .closable, .resizable]
+            $0.collectionBehavior = [.fullScreenNone]
+            $0.isReleasedWhenClosed = false
+            $0.center()
+            
+            self.navigationDebuggerWindowDelegate = navigationDebuggerWindowDelegate
+        }
+        
+        navigationDebuggerWindow.makeKeyAndOrderFront(sender)
+        self.hasPreviouslyOpenedNavDebugger = true
+    }
+    
     @objc func openPlaygrounds(_ sender: Any) {
-        if hasPreviouslyOpenedPlayground {
+        if self.hasPreviouslyOpenedPlayground {
             return
         }
         

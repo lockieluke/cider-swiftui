@@ -32,9 +32,9 @@ struct AppTitleBar: View {
                     .isHidden(appWindowModal.isFullscreen)
                     .animation(.linear, value: appWindowModal.isFullscreen)
                 
-                if navigationModal.navigationActions.enableBack && !searchModal.shouldDisplaySearchPage {
+                if navigationModal.isBackAvailable && !searchModal.shouldDisplaySearchPage {
                     ActionButton(actionType: .Back) {
-                        self.navigationModal.navigationActions.backAction?()
+                        self.navigationModal.goBack()
                     }
                 }
                 

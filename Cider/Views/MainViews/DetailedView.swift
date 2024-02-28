@@ -140,7 +140,7 @@ struct DetailedView: View {
                     
                     if let animationNamespace = self.detailedViewParams.geometryMatching,
                        let id = self.id {
-                        cover.matchedGeometryEffect(id: id, in: animationNamespace)
+                        cover
                     } else {
                         cover
                     }

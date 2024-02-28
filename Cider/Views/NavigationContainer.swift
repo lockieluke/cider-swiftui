@@ -61,24 +61,23 @@ struct NavigationContainer: View {
                         case .rootViewParams:
                             Group {
                                 HomeView()
-                                    .opacity(currentRootStack != .Home || !isPresent ? 0 : 1)
-                                    .hideWithoutDestroying(currentRootStack != .Home || !isPresent)
+                                    .hideWithoutDestroying(currentRootStack != .Home || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Home }).count > 1)
                                     .isHidden(!hasShown)
                                 
                                 ListenNowView()
-                                    .hideWithoutDestroying(currentRootStack != .ListenNow || !isPresent)
+                                    .hideWithoutDestroying(currentRootStack != .ListenNow || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .ListenNow }).count > 0)
                                     .isHidden(!hasShown)
                                 
                                 BrowseView()
-                                    .hideWithoutDestroying(currentRootStack != .Browse || !isPresent)
+                                    .hideWithoutDestroying(currentRootStack != .Browse || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Browse }).count > 0)
                                     .isHidden(!hasShown)
                                 
                                 RadioView()
-                                    .hideWithoutDestroying(currentRootStack != .Radio || !isPresent)
+                                    .hideWithoutDestroying(currentRootStack != .Radio || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Radio }).count > 0)
                                     .isHidden(!hasShown)
                                 
                                 RecentlyAddedView()
-                                    .hideWithoutDestroying(currentRootStack != .RecentlyAdded || !isPresent)
+                                    .hideWithoutDestroying(currentRootStack != .RecentlyAdded || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .RecentlyAdded }).count > 0)
                                     .isHidden(!hasShown)
                             }
                             

@@ -88,24 +88,6 @@ struct ArtistViewParams {
     
 }
 
-struct NavigationActions {
-    
-    var enableBack = false {
-        didSet {
-            if !enableBack {
-                self.backAction = nil
-            }
-        }
-    }
-    
-    var backAction: (() -> Void)? = nil
-    
-    mutating func reset() {
-        self.enableBack = false
-    }
-    
-}
-
 struct NavigationStack {
     
     let id = UUID()
@@ -128,18 +110,6 @@ class NavigationModal : ObservableObject {
     @Published var viewsStack: [NavigationStack] = [] {
         didSet {
             let presentIndex = viewsStack.firstIndex(where: { viewStack in viewStack.isPresent }) ?? 0
-            self.navigationActions.reset()
-            if viewsStack.count != 1 {
-                if viewsStack.indices.contains(viewsStack.indices.last ?? 0) {
-                    self.navigationActions.enableBack = true
-                    self.navigationActions.backAction = {
-                        withAnimation(.interactiveSpring()) {
-                            self.viewsStack.removeLast()
-                            self.viewsStack[self.viewsStack.endIndex - 1].isPresent = true
-                        }
-                    }
-                }
-            }
             
             let currentPresentViewStack = viewsStack.first(where: { viewStack in viewStack.isPresent })
             self.currentlyPresentViewStack = currentPresentViewStack
@@ -170,7 +140,9 @@ class NavigationModal : ObservableObject {
         var modifyingViewStack = viewStack
         modifyingViewStack.rootStackOrigin = self.currentRootStack
         self.viewsStack.indices.forEach { index in
-            self.viewsStack[index].isPresent = false
+            if self.viewsStack[index].rootStackOrigin == self.currentRootStack {
+                self.viewsStack[index].isPresent = false
+            }
         }
         self.viewsStack.append(modifyingViewStack)
     }
@@ -182,22 +154,32 @@ class NavigationModal : ObservableObject {
         var modifyingViewStack = viewStack
         modifyingViewStack.rootStackOrigin = self.currentRootStack
         self.viewsStack.indices.forEach { index in
-            self.viewsStack[index].isPresent = false
+            if self.viewsStack[index].rootStackOrigin == self.currentRootStack {
+                self.viewsStack[index].isPresent = false
+            }
         }
         self.viewsStack.append(modifyingViewStack)
     }
     
-    func resetToRoot() {
-        let temp = self.viewsStack[0]
-        self.viewsStack.removeAll()
-        self.viewsStack.append(temp)
+    func resetToRoot(rootStack: RootNavigationType) {
+        let viewStackToKeep = self.viewsStack[0]
+        self.viewsStack = [viewStackToKeep] + self.viewsStack.filter { viewStack in viewStack.rootStackOrigin == rootStack }
         self.viewsStack[0].isPresent = true
+    }
+    
+    func goBack() {
+        if let indexToRemove = self.viewsStack.lastIndex(where: { viewStack in viewStack.rootStackOrigin == self.currentRootStack }) {
+            self.viewsStack.remove(at: indexToRemove)
+        }
     }
     
     @Published var currentlyPresentViewStack: NavigationStack?
     @Published var currentlyPresentViewStackIndex: Int?
     @Published var currentlyPresentViewType: NavigationStackType?
-    @Published var navigationActions = NavigationActions()
+    
+    var isBackAvailable: Bool {
+        return self.viewsStack.filter ({ $0.rootStackOrigin == self.currentRootStack }).count > (self.currentRootStack == .Home ? 1 : 0)
+    }
     
     @Published var showQueue: Bool = false
     @Published var showLyrics: Bool = false

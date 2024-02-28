@@ -162,6 +162,7 @@
 		B7B54CD92B8D3D430000876C /* CiderElevationHelperCommandSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B54CD82B8D3D430000876C /* CiderElevationHelperCommandSet.swift */; };
 		B7B54CDA2B8D3D5F0000876C /* CiderElevationHelperCommandSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B54CD82B8D3D430000876C /* CiderElevationHelperCommandSet.swift */; };
 		B7B54CDC2B8E86790000876C /* RecentlyAddedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B54CDB2B8E86790000876C /* RecentlyAddedView.swift */; };
+		B7B54CDE2B8EA3F40000876C /* NavigationDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B54CDD2B8EA3F40000876C /* NavigationDebugger.swift */; };
 		B7C06F842932E1C5000C1192 /* NavigationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C06F832932E1C5000C1192 /* NavigationContainer.swift */; };
 		B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = B7C364DF2A5CB3D100D4711A /* SwiftUIIntrospect */; };
 		B7C364E42A60A87500D4711A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C364E32A60A87500D4711A /* Menu.swift */; };
@@ -376,6 +377,7 @@
 		B7B3D8BF29B005100014F63D /* ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenu.swift; sourceTree = "<group>"; };
 		B7B54CD82B8D3D430000876C /* CiderElevationHelperCommandSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CiderElevationHelperCommandSet.swift; sourceTree = "<group>"; };
 		B7B54CDB2B8E86790000876C /* RecentlyAddedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedView.swift; sourceTree = "<group>"; };
+		B7B54CDD2B8EA3F40000876C /* NavigationDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDebugger.swift; sourceTree = "<group>"; };
 		B7C06F832932E1C5000C1192 /* NavigationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationContainer.swift; sourceTree = "<group>"; };
 		B7C364E32A60A87500D4711A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B7C364E52A61E90400D4711A /* VolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeSlider.swift; sourceTree = "<group>"; };
@@ -571,7 +573,7 @@
 			isa = PBXGroup;
 			children = (
 				B71D54042ABCB72A001A62D6 /* OnboardingExperience */,
-				B7CF89592A759274007808A2 /* Playground */,
+				B7CF89592A759274007808A2 /* DebugViews */,
 				B74EEBCE29D7AE7D00711DB6 /* SidePanes */,
 				B77AACE4293ACC7600F8E1E2 /* ViewModifiers */,
 				B768871529491AFE00C623C9 /* PreferencesPanes */,
@@ -769,12 +771,13 @@
 			path = CiderUpdateService;
 			sourceTree = "<group>";
 		};
-		B7CF89592A759274007808A2 /* Playground */ = {
+		B7CF89592A759274007808A2 /* DebugViews */ = {
 			isa = PBXGroup;
 			children = (
 				B7CF895A2A759281007808A2 /* CiderPlayground.swift */,
+				B7B54CDD2B8EA3F40000876C /* NavigationDebugger.swift */,
 			);
-			path = Playground;
+			path = DebugViews;
 			sourceTree = "<group>";
 		};
 		B7ECB7C429033AA700B5DF11 /* MainViews */ = {
@@ -1225,6 +1228,7 @@
 				B7E72361299455430086EDA4 /* MediaArtistPresentable.swift in Sources */,
 				B709E8722A8848E7004B7D98 /* AccountPreferencesPane.swift in Sources */,
 				B71F4BA72ADAA30A003EE0E6 /* RadioView.swift in Sources */,
+				B7B54CDE2B8EA3F40000876C /* NavigationDebugger.swift in Sources */,
 				B728B0562A75CAA200BAC665 /* MediaBrowseData.swift in Sources */,
 				B70189442AAFA55500A7EAA0 /* HeroCard.swift in Sources */,
 				B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */,

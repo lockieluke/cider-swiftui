@@ -255,7 +255,10 @@ extension View {
     }
     
     @ViewBuilder func hideWithoutDestroying(_ hidden: Bool) -> some View {
-        self.frame(maxWidth: hidden ? .zero : .infinity, maxHeight: hidden ? .zero : .infinity)
+//        self.frame(maxWidth: hidden ? .zero : .infinity, maxHeight: hidden ? .zero : .infinity)
+        self
+            .opacity(hidden ? 0 : 1)
+            .allowsHitTesting(!hidden)
     }
     
 #if canImport(AppKit)

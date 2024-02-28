@@ -33,7 +33,6 @@ struct ListenNowView: View {
             
             self.personalisedData.recommendationSections = await self.mkModal.AM_API.fetchRecommendations()
         }
-        .allowsHitTesting(navigationModal.currentlyPresentViewType == .Root && navigationModal.currentRootStack == .ListenNow)
         .enableInjection()
     }
 }

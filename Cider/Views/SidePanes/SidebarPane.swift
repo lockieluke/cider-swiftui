@@ -130,7 +130,6 @@ fileprivate struct SidebarItem: View {
             self.highlightingAnyway = true
             if playlistID == nil {
                 self.navigationModal.currentRootStack = self.stackType
-                self.navigationModal.resetToRoot()
                 self.highlightingAnyway = false
             } else {
                 Task {
