@@ -157,18 +157,6 @@ tasks:
       - rm -rf {{.XC_ARCHIVE}}
       - set -o pipefail && xcodebuild -project {{.XC_PROJ}} -scheme "Cider - Release" archive -allowProvisioningUpdates -configuration Release -sdk macosx -destination platform=macOS,name="Any Mac" -archivePath {{.XC_ARCHIVE}} | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
 
-  archive:build-app-bundle:
-    desc: "Export .app bundle from .xcarchive"
-    sources:
-      - "{{.XC_ARCHIVE}}"
-    generates:
-      - "{{.CIDER_DEST_APP}}"
-    preconditions:
-      - test -f "`which xcbeautify`"
-    cmds:
-      - rm -rf {{.CIDER_DEST_APP}}
-      - set -o pipefail && xcodebuild -exportArchive -archivePath {{.XC_ARCHIVE}} -exportPath {{.DEST_PATH}} -exportOptionsPlist ExportOptions.plist | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
-
   build:dmg:
     desc: "Build DMG for input .app"
     preconditions:
