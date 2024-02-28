@@ -85,11 +85,13 @@ struct NavigationContainer: View {
                             DetailedView(detailedViewParams: detailedViewParams)
                                 .opacity(shouldUpperStackShow ? 1 : 0)
                                 .allowsHitTesting(shouldUpperStackShow)
+                                .transition(.opacity.animation(.spring))
                             
                         case .artistViewParams(let artistViewParams):
                             ArtistView(params: artistViewParams)
                                 .hideWithoutDestroying(!shouldUpperStackShow)
                                 .allowsHitTesting(shouldUpperStackShow)
+                                .transition(.opacity.animation(.spring))
                             
                         default:
                             Color.clear
