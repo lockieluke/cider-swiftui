@@ -71,11 +71,10 @@ class Analytics {
         let httpUrl = NSURL(string: "http:")!
         let httpsUrl = NSURL(string: "https:")!
 
-        let httpDefaultApp = LSCopyDefaultApplicationURLForURL(httpUrl as CFURL, .all, nil)
-        let httpsDefaultApp = LSCopyDefaultApplicationURLForURL(httpsUrl as CFURL, .all, nil)
-
-        if httpsDefaultApp != nil {
-            if let appName = Bundle(url: httpsDefaultApp!.takeRetainedValue() as URL)?.bundleIdentifier {
+        if let httpDefaultApp = LSCopyDefaultApplicationURLForURL(httpUrl as CFURL, .all, nil), let httpsDefaultApp = LSCopyDefaultApplicationURLForURL(httpsUrl as CFURL, .all, nil) {
+            if let appName = Bundle(url: httpsDefaultApp.takeRetainedValue() as URL)?.bundleIdentifier {
+                httpDefaultApp.release()
+                httpsDefaultApp.release()
                 return appName
             }
         }
