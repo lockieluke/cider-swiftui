@@ -17,7 +17,7 @@ const __dirname = path.dirname(path.resolve(__filename, ".."));
 
 const tmpDir = path.resolve(__dirname, "dist", "tmp");
 const injectionScripts = await glob("src/injections/*");
-const routes = await glob("src/routes/**/index.{tsx,ts}");
+const routes = new Bun.Glob("src/routes/**/index.{tsx,ts}");
 
 const cleanup = async (done: () => void) => {
     await fs.remove(tmpDir);
@@ -38,7 +38,7 @@ const spinner = ora("Building routes").start();
 
 const templateHtml = await fs.readFile(path.resolve(__dirname, "index.html"), "utf-8");
 await fs.mkdirp(tmpDir);
-await async.asyncForEach(routes, async route => {
+for await (const route of routes.scan()) {
     const $ = cheerio.load(templateHtml);
     await fs.ensureDir(tmpDir);
 
@@ -74,7 +74,7 @@ await async.asyncForEach(routes, async route => {
     }
 
     spinner.succeed(`Built ${route}`);
-});
+}
 
 spinner.start("Building injections");
 const targets = await async.asyncMap(injectionScripts, target => path.basename(target));
