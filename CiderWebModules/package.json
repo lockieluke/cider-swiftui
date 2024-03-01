@@ -23,6 +23,8 @@
     "solid-spinner": "^0.2.0",
     "solid-transition-group": "^0.2.3",
     "store2": "^2.14.2",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss-animate": "^1.0.7",
     "wait-for-the-element": "^4.0.1"
   },
   "devDependencies": {
