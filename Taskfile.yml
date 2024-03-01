@@ -178,6 +178,18 @@ tasks:
       - test -d /Volumes/Cider && diskutil eject /Volumes/Cider || true
       - create-dmg --volname "{{.DMG_TITLE}}" --volicon assets/icon.icns --background assets/bg.tiff --window-pos 200 120 --window-size 540 380 --icon-size 100 --icon "Cider.app" 120 210 --hide-extension "Cider.app" --app-drop-link 410 210 "{{.DEST_DMG_PATH}}" "{{.DEST_PATH}}/dmg"
 
+  archive:build-app-bundle:
+    desc: "Export .app bundle from .xcarchive"
+    sources:
+      - "{{.XC_ARCHIVE}}"
+    generates:
+      - "{{.CIDER_DEST_APP}}"
+    preconditions:
+      - test -f "`which xcbeautify`"
+    cmds:
+      - rm -rf {{.CIDER_DEST_APP}}
+      - set -o pipefail && xcodebuild -exportArchive -archivePath {{.XC_ARCHIVE}} -exportPath {{.DEST_PATH}} -exportOptionsPlist ExportOptions.plist | xcbeautify`if [ -n "$GITHUB_ACTIONS" ]; then echo " --renderer github-actions"; fi`
+
   fetch:google-services:
     desc: "Fetch GoogleServices entitlements"
     cmds:
