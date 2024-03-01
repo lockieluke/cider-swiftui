@@ -73,8 +73,7 @@ class Analytics {
 
         if let httpDefaultApp = LSCopyDefaultApplicationURLForURL(httpUrl as CFURL, .all, nil), let httpsDefaultApp = LSCopyDefaultApplicationURLForURL(httpsUrl as CFURL, .all, nil) {
             if let appName = Bundle(url: httpsDefaultApp.takeRetainedValue() as URL)?.bundleIdentifier {
-                httpDefaultApp.release()
-                httpsDefaultApp.release()
+                // you can't release the Unmanaged objects for some reason, it would crash the app
                 return appName
             }
         }
