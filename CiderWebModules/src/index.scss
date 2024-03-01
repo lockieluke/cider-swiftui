@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "../node_modules/@validide/resizable-table-columns/dist/css/resizable-table-columns.css";
-
 html {
   body {
     @apply select-none text-zinc-800 dark:text-white bg-transparent;
