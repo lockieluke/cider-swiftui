@@ -189,6 +189,7 @@ class NavigationModal : ObservableObject {
             Defaults[.showSidebarAtLaunch] = self.showSidebar
         }
     }
+    @Published var shouldHideSidebar: Bool = false
     
     @Published var inOnboardingExperience: Bool = false
     @Published var isDonateViewPresent: Bool = false

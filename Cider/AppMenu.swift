@@ -8,6 +8,7 @@ import AppKit
 import Settings
 import SwiftUI
 import WebKit
+import Combine
 
 class AppMenu {
     
@@ -28,6 +29,8 @@ class AppMenu {
     private var hasPreviouslyOpenedNavDebugger: Bool = false
     private var navigationDebuggerWindowDelegate: NSWindowDelegate!
     private var playgroundWindowDelegate: NSWindowDelegate!
+    private var shouldHideSidebarCancellable: AnyCancellable?
+    private var toggleSidebarCancellation: AnyCancellable?
     
     init(_ window: NSWindow, mkModal: MKModal, authModal: AuthModal, ciderPlayback: CiderPlayback, appWindowModal: AppWindowModal, nativeUtilsWrapper: NativeUtilsWrapper, cacheModal: CacheModal, connectModal: ConnectModal, navigationModal: NavigationModal) {
         let menu = NSMenu()
@@ -55,6 +58,49 @@ class AppMenu {
             animated: true,
             hidesToolbarForSingleItem: false
         )
+        
+        defer {
+            self.shouldHideSidebarCancellable = self.navigationModal.$shouldHideSidebar.sink { shouldHideSidebar in
+                // messy code for removing toggle sidebar menu item
+                DispatchQueue.main.async {
+                    let menu = NSApplication.shared.mainMenu
+                    menu?.items = menu?.items.map { item in
+                        if let submenu = item.submenu, submenu.title == "View" {
+                            item.submenu?.items = submenu.items.compactMap { submenuItem in
+                                if submenuItem.title == "Toggle Sidebar" {
+                                    return NSMenuItem(title: "Toggle Sidebar", action: #selector(self.toggleSidebar(_:)), keyEquivalent: "s").then {
+                                        $0.target = shouldHideSidebar ? nil : self
+                                        $0.state = navigationModal.showSidebar ? .on : .off
+                                    }
+                                }
+                                return submenuItem
+                            }
+                        }
+                        
+                        return item
+                    } as! [NSMenuItem]
+                    NSApplication.shared.mainMenu = menu
+                }
+            }
+            self.toggleSidebarCancellation = self.navigationModal.$showSidebar.sink { showSidebar in
+                DispatchQueue.main.async {
+                    let menu = NSApplication.shared.mainMenu
+                    menu?.items = menu?.items.map { item in
+                        if let submenu = item.submenu, submenu.title == "View" {
+                            item.submenu?.items = submenu.items.compactMap { submenuItem in
+                                if submenuItem.title == "Toggle Sidebar" {
+                                    submenuItem.state = showSidebar ? .on : .off
+                                }
+                                return submenuItem
+                            }
+                        }
+                        
+                        return item
+                    } as! [NSMenuItem]
+                    NSApplication.shared.mainMenu = menu
+                }
+            }
+        }
         
         self.window = window
         self.appName = ProcessInfo.processInfo.processName
@@ -128,7 +174,9 @@ class AppMenu {
         let viewMenu = NSMenuItem().then {
             $0.submenu = NSMenu(title: "View").then {
                 $0.items = [
-                    NSMenuItem(title: "Toggle Sidebar", action: #selector(self.toggleSidebar(_:)), keyEquivalent: "s").then { $0.target = self }
+                    self.navigationModal.shouldHideSidebar ? .separator() : NSMenuItem(title: "Toggle Sidebar", action: #selector(self.toggleSidebar(_:)), keyEquivalent: "s").then {
+                        $0.target = self
+                    }
                 ]
             }
         }

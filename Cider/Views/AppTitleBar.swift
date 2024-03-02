@@ -40,8 +40,10 @@ struct AppTitleBar: View {
                     }
                 }
                 
-                ActionButton(actionType: .Library) {
-                    self.navigationModal.showSidebar.toggle()
+                if !navigationModal.shouldHideSidebar {
+                    ActionButton(actionType: .Library) {
+                        self.navigationModal.showSidebar.toggle()
+                    }
                 }
                 Spacer()
 #if os(macOS)
@@ -103,6 +105,7 @@ struct AppTitleBar: View {
             SearchBar()
         }
         .animation(.spring.speed(2), value: navigationModal.isBackAvailable)
+        .animation(.spring.speed(2), value: navigationModal.shouldHideSidebar)
         .frame(height: titleBarHeight)
         .enableInjection()
     }

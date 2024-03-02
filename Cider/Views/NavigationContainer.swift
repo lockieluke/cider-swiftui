@@ -25,124 +25,129 @@ struct NavigationContainer: View {
     @State private var isAdjustingSidebar: Bool = false
     
     var body: some View {
-        HSplitView {
-            SidebarPane()
-                .frame(width: navigationModal.showSidebar ? nil : .zero)
-                .animation(isAdjustingSidebar ? .none : .interactiveSpring)
-                .overlay {
-                    GeometryReader { geometry in
-                        Color.clear
-                            .onChange(of: geometry.size) { newSize in
-                                // Save sidebar width here
-                                let newWidth = newSize.width
-                                if newWidth != .zero && newWidth != 0 {
-                                    self.isAdjustingSidebar = true
-                                    Defaults[.sidebarWidth] = Double(newWidth)
-                                    // TODO: Disable animation when sidebar is being adjusted
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-                                        self.isAdjustingSidebar = false
+        PatchedGeometryReader { windowGeometry in
+            HSplitView {
+                SidebarPane()
+                    .frame(width: navigationModal.shouldHideSidebar ? .zero : navigationModal.showSidebar ? nil : .zero)
+                    .animation(isAdjustingSidebar ? .none : .interactiveSpring)
+                    .overlay {
+                        GeometryReader { geometry in
+                            Color.clear
+                                .onChange(of: geometry.size) { newSize in
+                                    // Save sidebar width here
+                                    let newWidth = newSize.width
+                                    if newWidth != .zero && newWidth != 0 {
+                                        self.isAdjustingSidebar = true
+                                        Defaults[.sidebarWidth] = Double(newWidth)
+                                        // TODO: Disable animation when sidebar is being adjusted
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+                                            self.isAdjustingSidebar = false
+                                        }
                                     }
                                 }
-                            }
+                        }
                     }
-                }
-            
-            ZStack {
-                if self.mkModal.isAuthorised {
-                    let currentRootStack = navigationModal.currentRootStack
-                    let hasShown = navigationModal.loadedRootStacks.contains(currentRootStack)
-                    ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
-                        let isPresent = viewStack.isPresent
-                        let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
-                        let shouldUpperStackShow = isPresent && currentRootStack == viewStackOrigin
-                        
-                        switch viewStack.params {
+                
+                ZStack {
+                    if self.mkModal.isAuthorised {
+                        let currentRootStack = navigationModal.currentRootStack
+                        let hasShown = navigationModal.loadedRootStacks.contains(currentRootStack)
+                        ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
+                            let isPresent = viewStack.isPresent
+                            let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
+                            let shouldUpperStackShow = isPresent && currentRootStack == viewStackOrigin
                             
-                        case .rootViewParams:
-                            Group {
-                                HomeView()
-                                    .hideWithoutDestroying(currentRootStack != .Home || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Home }).count > 1)
-                                    .isHidden(!hasShown, remove: true)
+                            switch viewStack.params {
                                 
-                                ListenNowView()
-                                    .hideWithoutDestroying(currentRootStack != .ListenNow || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .ListenNow }).count > 0)
-                                    .isHidden(!hasShown, remove: true)
+                            case .rootViewParams:
+                                Group {
+                                    HomeView()
+                                        .hideWithoutDestroying(currentRootStack != .Home || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Home }).count > 1)
+                                        .isHidden(!hasShown, remove: true)
+                                    
+                                    ListenNowView()
+                                        .hideWithoutDestroying(currentRootStack != .ListenNow || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .ListenNow }).count > 0)
+                                        .isHidden(!hasShown, remove: true)
+                                    
+                                    BrowseView()
+                                        .hideWithoutDestroying(currentRootStack != .Browse || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Browse }).count > 0)
+                                        .isHidden(!hasShown, remove: true)
+                                    
+                                    RadioView()
+                                        .hideWithoutDestroying(currentRootStack != .Radio || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Radio }).count > 0)
+                                        .isHidden(!hasShown, remove: true)
+                                    
+                                    RecentlyAddedView()
+                                        .hideWithoutDestroying(currentRootStack != .RecentlyAdded || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .RecentlyAdded }).count > 0)
+                                        .isHidden(!hasShown, remove: true)
+                                    
+                                    SongsView()
+                                        .hideWithoutDestroying(currentRootStack != .Songs || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Songs }).count > 0)
+                                        .isHidden(!hasShown, remove: true)
+                                }
                                 
-                                BrowseView()
-                                    .hideWithoutDestroying(currentRootStack != .Browse || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Browse }).count > 0)
-                                    .isHidden(!hasShown, remove: true)
+                            case .detailedViewParams(let detailedViewParams):
+                                DetailedView(detailedViewParams: detailedViewParams)
+                                    .opacity(shouldUpperStackShow ? 1 : 0)
+                                    .allowsHitTesting(shouldUpperStackShow)
+                                    .transition(.opacity.animation(.spring))
                                 
-                                RadioView()
-                                    .hideWithoutDestroying(currentRootStack != .Radio || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Radio }).count > 0)
-                                    .isHidden(!hasShown, remove: true)
+                            case .artistViewParams(let artistViewParams):
+                                ArtistView(params: artistViewParams)
+                                    .hideWithoutDestroying(!shouldUpperStackShow)
+                                    .allowsHitTesting(shouldUpperStackShow)
+                                    .transition(.opacity.animation(.spring))
                                 
-                                RecentlyAddedView()
-                                    .hideWithoutDestroying(currentRootStack != .RecentlyAdded || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .RecentlyAdded }).count > 0)
-                                    .isHidden(!hasShown, remove: true)
-                                
-                                SongsView()
-                                    .hideWithoutDestroying(currentRootStack != .Songs || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Songs }).count > 0)
-                                    .isHidden(!hasShown, remove: true)
+                            default:
+                                Color.clear
                             }
                             
-                        case .detailedViewParams(let detailedViewParams):
-                            DetailedView(detailedViewParams: detailedViewParams)
-                                .opacity(shouldUpperStackShow ? 1 : 0)
-                                .allowsHitTesting(shouldUpperStackShow)
-                                .transition(.opacity.animation(.spring))
-                            
-                        case .artistViewParams(let artistViewParams):
-                            ArtistView(params: artistViewParams)
-                                .hideWithoutDestroying(!shouldUpperStackShow)
-                                .allowsHitTesting(shouldUpperStackShow)
-                                .transition(.opacity.animation(.spring))
-                            
-                        default:
-                            Color.clear
+                        }
+                        .hideWithoutDestroying(searchModal.shouldDisplaySearchPage)
+                        .zIndex(0)
+                        
+                        if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
+                            SearchView()
+                                .transition(.opacity.animation(.spring().speed(2)))
+                                .zIndex(1)
+                                .onChange(of: self.navigationModal.currentlyPresentViewStackIndex) { _ in
+                                    self.searchModal.shouldDisplaySearchPage = false
+                                }
+                                .onDisappear {
+                                    self.searchModal.searchResults = nil
+                                }
                         }
                         
-                    }
-                    .hideWithoutDestroying(searchModal.shouldDisplaySearchPage)
-                    .zIndex(0)
-                    
-                    if searchModal.shouldDisplaySearchPage && !searchModal.currentSearchText.isEmpty {
-                        SearchView()
-                            .transition(.opacity.animation(.spring().speed(2)))
-                            .zIndex(1)
-                            .onChange(of: self.navigationModal.currentlyPresentViewStackIndex) { _ in
-                                self.searchModal.shouldDisplaySearchPage = false
-                            }
-                            .onDisappear {
-                                self.searchModal.searchResults = nil
-                            }
-                    }
-                    
-                    if navigationModal.showQueue {
-                        QueueView()
-                            .transition(.move(edge: .trailing))
-                            .zIndex(1)
-                    }
-                    
-                    if navigationModal.showLyrics {
-                        LyricsPaneView()
-                            .transition(.move(edge: .trailing))
-                            .zIndex(1)
-                    }
-                } else {
-                    if (try? Keychain().get("mk-token")).isNil || !mkModal.isAuthorised {
-                        NativeComponent(authModal.webview)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        if navigationModal.showQueue {
+                            QueueView()
+                                .transition(.move(edge: .trailing))
+                                .zIndex(1)
+                        }
+                        
+                        if navigationModal.showLyrics {
+                            LyricsPaneView()
+                                .transition(.move(edge: .trailing))
+                                .zIndex(1)
+                        }
+                    } else {
+                        if (try? Keychain().get("mk-token")).isNil || !mkModal.isAuthorised {
+                            NativeComponent(authModal.webview)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
                     }
                 }
+                .layoutPriority(1)
+                .animation(.none, value: navigationModal.showSidebar)
             }
-            .layoutPriority(1)
-            .animation(.none, value: navigationModal.showSidebar)
+            .onChange(of: navigationModal.currentRootStack) { currentRootStack in
+                self.navigationModal.loadedRootStacks.insert(currentRootStack)
+            }
+            .onChange(of: windowGeometry.size) { size in
+                self.navigationModal.shouldHideSidebar = size.width < 1100
+            }
+            .padding(.top, 45)
+            .padding(.bottom, 100)
         }
-        .onChange(of: navigationModal.currentRootStack) { currentRootStack in
-            self.navigationModal.loadedRootStacks.insert(currentRootStack)
-        }
-        .padding(.top, 45)
-        .padding(.bottom, 100)
         .enableInjection()
     }
 }
