@@ -530,13 +530,32 @@ class AMAPI {
         return []
     }
     
-    func fetchRecentlyPlayed(limit: Int? = nil) async -> [MediaDynamic] {
-        var parameters: [String : Any]? = nil
-        if let limit = limit {
-            parameters?["limit"] = limit
+    func fetchLibraryAlbums(limit: Int = 25, offset: Int = 0, sortBy: LibrarySortBy = .dataAdded, isAscending: Bool = false) async -> [MediaDynamic] {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/albums", parameters: [
+            "limit": limit,
+            "offset": offset,
+            "sort": "\(isAscending ? "" : "-")\(sortBy.rawValue)",
+            "platform": "web",
+            "include[library-albums]": "artists",
+            "extend": "inFavorites"
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch library albums: \(error.localizedDescription)")
+        } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
+            return items.compactMap { item in
+                return .mediaItem(MediaItem(data: item))
+            }
         }
         
-        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: parameters, encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        return []
+    }
+    
+    func fetchRecentlyPlayed(limit: Int = 25) async -> [MediaDynamic] {
+        var parameters: [String : Any]? = nil
+        
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: [
+            "limit": limit
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch personal social profile: \(error.localizedDescription)")
         } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {

@@ -84,6 +84,7 @@
 		B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */; };
 		B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75C7C1229B12AE500F7693E /* CatalogActions.swift */; };
 		B764C3082B93853A00B5ABE2 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = B764C3072B93853A00B5ABE2 /* Tabler */; };
+		B764C30A2B93B4EC00B5ABE2 /* AlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */; };
 		B7663CC72A9223AC009E82DA /* Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC52A92223D009E82DA /* Apple.swift */; };
 		B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC82A922567009E82DA /* TapEffectModifier.swift */; };
 		B766B18C2A74064E00B974E6 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B18B2A74064E00B974E6 /* BrowseView.swift */; };
@@ -312,6 +313,7 @@
 		B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchedGeometryReader.swift; sourceTree = "<group>"; };
 		B75C7C1229B12AE500F7693E /* CatalogActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogActions.swift; sourceTree = "<group>"; };
 		B764C2FB2B92953C00B5ABE2 /* MediaLibrarySong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLibrarySong.swift; sourceTree = "<group>"; };
+		B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
 		B7663CC52A92223D009E82DA /* Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apple.swift; sourceTree = "<group>"; };
 		B7663CC82A922567009E82DA /* TapEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapEffectModifier.swift; sourceTree = "<group>"; };
 		B766B18B2A74064E00B974E6 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
@@ -798,6 +800,7 @@
 				B71F4BA62ADAA30A003EE0E6 /* RadioView.swift */,
 				B7B54CDB2B8E86790000876C /* RecentlyAddedView.swift */,
 				B71EADE02B9141A200E57CED /* SongsView.swift */,
+				B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */,
 			);
 			path = MainViews;
 			sourceTree = "<group>";
@@ -1214,6 +1217,7 @@
 				B77C91AE294FCCE100124B47 /* CaseIterable.swift in Sources */,
 				B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */,
 				B77AACF4293B8B0D00F8E1E2 /* TransparentScrollbarsModifier.swift in Sources */,
+				B764C30A2B93B4EC00B5ABE2 /* AlbumsView.swift in Sources */,
 				B7332B0E2A96C4A50019221D /* NativeComponent.swift in Sources */,
 				B7C651D628C4B8E200D32DDC /* AuthModal.swift in Sources */,
 				B77AACE6293ACC8500F8E1E2 /* SimpleHoverModifier.swift in Sources */,

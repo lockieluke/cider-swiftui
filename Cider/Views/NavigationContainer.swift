@@ -84,6 +84,10 @@ struct NavigationContainer: View {
                                     SongsView()
                                         .hideWithoutDestroying(currentRootStack != .Songs || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Songs }).count > 0)
                                         .isHidden(!hasShown, remove: true)
+                                    
+                                    AlbumsView()
+                                        .hideWithoutDestroying(currentRootStack != .Albums || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Albums }).count > 0)
+                                        .isHidden(!hasShown, remove: true)
                                 }
                                 
                             case .detailedViewParams(let detailedViewParams):
