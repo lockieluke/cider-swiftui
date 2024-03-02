@@ -97,6 +97,7 @@ struct CatalogActions: ViewModifier {
                 VStack {
                     Text("Title: \(item.title)")
                     Text("Type: \(item.type)")
+                    Text("ID: \(item.id)")
                 }
                 .padding()
             }
