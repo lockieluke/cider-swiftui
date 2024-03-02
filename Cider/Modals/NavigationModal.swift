@@ -179,7 +179,7 @@ class NavigationModal : ObservableObject {
     @Published var currentlyPresentViewType: NavigationStackType?
     
     var isBackAvailable: Bool {
-        return self.viewsStack.filter ({ $0.rootStackOrigin == self.currentRootStack }).count > (self.currentRootStack == .Home ? 1 : 0)
+        return self.viewsStack.filter ({ $0.rootStackOrigin == self.currentRootStack }).count > (self.currentRootStack == .Home ? 1 : 0) && self.currentRootStack != .Playlist
     }
     
     @Published var showQueue: Bool = false

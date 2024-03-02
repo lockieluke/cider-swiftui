@@ -95,7 +95,7 @@ fileprivate struct SidebarItem: View {
         }
         
         if self.playlistID != nil {
-            return navigationModal.viewsStack.last?.params?.value == self.playlistID
+            return navigationModal.viewsStack.last?.params?.value == self.playlistID && self.navigationModal.currentRootStack == .Playlist
         }
         
         if self.stackType != .AnyView {
