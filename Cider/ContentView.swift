@@ -131,6 +131,7 @@ struct ContentView: View {
             self.navigationModal.showSidebar = Defaults[.showSidebarAtLaunch]
         }
         .task {
+            await ElevationHelper.shared.initialiseDiscordRpc()
             if self.launchedBefore, let userToken = Keychain()["mk-token"] {
                 let timer = ParkBenchTimer()
                 let authTimer = ParkBenchTimer()
