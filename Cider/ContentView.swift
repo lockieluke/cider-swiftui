@@ -45,37 +45,35 @@ struct ContentView: View {
     
     var body: some View {
         let shouldPresentUpdateToast = Binding(get: { !self.navigationModal.showSidebar && self.updateHelper.updateNeeded && !ProcessInfo.processInfo.arguments.contains("-disable-update-checks") }, set: { _ in })
-        GeometryReader { geometry in
-            ZStack {
-                if navigationModal.inOnboardingExperience {
-                    OnboardingExperienceView()
-                } else {
-                    NavigationContainer()
+        
+        ZStack {
+            if navigationModal.inOnboardingExperience {
+                OnboardingExperienceView()
+            } else {
+                NavigationContainer()
+                
+                VStack {
+                    AppTitleBar()
                     
-                    VStack {
-                        AppTitleBar()
-                        
-                        Spacer()
-                        PlaybackView()
-                            .frame(maxHeight: .infinity, alignment: .bottom)
-                            .frame(height: 100)
-                    }
+                    Spacer()
+                    PlaybackView()
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .frame(height: 100)
                 }
             }
-            .onTapGesture {
-#if canImport(AppKit)
-                NSApp.keyWindow?.makeFirstResponder(nil)
-#endif
-            }
-            .onAppear {
-                if !self.navigationModal.inOnboardingExperience {
-                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
-                }
-            }
-            .background(VisualEffectBackground(material: .fullScreenUI).edgesIgnoringSafeArea(.top).isHidden(navigationModal.inOnboardingExperience))
-            .frame(width: geometry.size.width, height: geometry.size.height + geometry.safeAreaInsets.top)
-            .edgesIgnoringSafeArea(.top)
         }
+        .onTapGesture {
+#if canImport(AppKit)
+            NSApp.keyWindow?.makeFirstResponder(nil)
+#endif
+        }
+        .onAppear {
+            if !self.navigationModal.inOnboardingExperience {
+                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .rootViewParams))
+            }
+        }
+        .background(VisualEffectBackground(material: .fullScreenUI).edgesIgnoringSafeArea(.top).isHidden(navigationModal.inOnboardingExperience))
+        .edgesIgnoringSafeArea(.top)
         .toast(isPresenting: $displayAskDonationAgainToast, duration: 5) {
             AlertToast(displayMode: .hud, type: .systemImage(SFSymbol.clockArrowCirclepath.rawValue, .yellow), title: "We'll remind you tomorrow")
         }
