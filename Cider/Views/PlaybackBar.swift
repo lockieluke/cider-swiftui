@@ -62,9 +62,11 @@ struct PlaybackBar: View {
                                                 }
                                         }
                                     }
+                                    .drawingGroup()
                                 
                                 Capsule().foregroundColor(.pink)
                                     .frame(width: abs(_playbackBarWidth))
+                                    .drawingGroup()
                             }
                         )
                         .onHover { isHovering in
@@ -78,12 +80,14 @@ struct PlaybackBar: View {
                                         self.shouldShowThumb = isHovering
                                     }
                                     .allowsHitTesting(false)
+                                    .drawingGroup()
                             }
                             .frame(height: 5),
                         thumb: Circle()
                             .onHover { isHovering in
                                 self.shouldShowThumb = isHovering
                             }
+                            .drawingGroup()
                             .hideWithoutDestroying(!nowPlayingState.hasItemToPlay || !shouldShowThumb)
                         ,
                         thumbSize: CGSize(width: 8, height: 8),
@@ -94,6 +98,7 @@ struct PlaybackBar: View {
                     
                     Text("\(duration.minuteSecond)").isHidden(!nowPlayingState.hasItemToPlay)
                 }
+                .drawingGroup()
                 .onChange(of: self.ciderPlayback.nowPlayingState.currentTime) { newCurrentTime in
                     if newCurrentTime == self.duration {
                         self.ciderPlayback.nowPlayingState.reset()
@@ -102,7 +107,6 @@ struct PlaybackBar: View {
                     }
                 }
                 .onChange(of: self.ciderPlayback.nowPlayingState.duration) { newDuration in
-                    print(newDuration)
                     if newDuration != .zero && newDuration > 0 && self.ciderPlayback.nowPlayingState.playbackPipelineInitialised {
                         self.duration = newDuration
                     } else if self.ciderPlayback.nowPlayingState.item.isNil && !self.ciderPlayback.nowPlayingState.isPlaying {
