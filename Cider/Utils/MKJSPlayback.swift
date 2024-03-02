@@ -74,6 +74,7 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
                         break
                         
                     case "playing":
+                        self.parent.parent.nowPlayingState.playbackPipelineInitialised = true
                         self.parent.parent.nowPlayingState.hasItemToPlay = true
                         self.parent.parent.nowPlayingState.isPlaying = true
                         self.parent.parent.nowPlayingState.isReady = true
@@ -162,7 +163,7 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
         }
     }
     
-    func openAirPlayPicker(x: Int, y: Int) async {
+    func openAirPlayPicker() async {
         await self.runMKJS("openAirPlayPicker()")
     }
     
@@ -189,7 +190,7 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
         
         DispatchQueue.main.async {
             let mkjsScriptMessageHandler = MKJSScriptMessageHandler(parent: self)
-            self.webview = WKWebView(frame: .zero).then {
+            self.webview = WKWebView(frame: CGRect(x: .zero, y: .zero, width: 1, height: 1)).then {
 #if DEBUG
                 $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
 #endif

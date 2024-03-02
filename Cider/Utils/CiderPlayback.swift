@@ -36,7 +36,7 @@ protocol PlaybackEngine: PlaybackEngineBaseClass {
     
     func skip(_ type: CiderPlayback.SkipType) async
     
-    func openAirPlayPicker(x: Int, y: Int) async
+    func openAirPlayPicker() async
     func openDebugPanel() async
     func setAudioQuality(_ quality: AudioQuality) async
     func setVolume(_ volume: Double) async
