@@ -205,7 +205,7 @@ struct SidebarPane: View {
                 }
             }
             
-            if mkModal.isAuthorised {
+            if mkModal.isAuthorised && navigationModal.showSidebar {
                 Group {
                     SidebarSection("Apple Music") {
                         SidebarItem("Home", icon: .Home, stackType: .Home)
@@ -234,7 +234,7 @@ struct SidebarPane: View {
                 .task {
                     self.allPlaylistsData = await mkModal.AM_API.fetchPlaylists()
                 }
-                .animation(.none)
+                .transition(.opacity.animation(.spring.delay(2)))
             }
         }
         .introspect(.list, on: .macOS(.v10_15, .v11, .v12, .v13, .v14)) { list in
