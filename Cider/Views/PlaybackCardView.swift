@@ -25,15 +25,15 @@ struct PlaybackCardView: View {
                 .cornerRadius(5)
             
             VStack(alignment: .leading) {
-                HStack {
+                HStack(spacing: 0) {
                     Text(nowPlayingState.name ?? "Not Playing")
                         .lineLimit(1)
-                        .font(.system(.headline))
-                        .frame(width: 150, alignment: .leading)
                         .truncationMode(.tail)
+                        .font(.system(.headline))
                     
                     if nowPlayingState.contentRating == "explicit" {
                         Image(systemSymbol: .eSquareFill)
+                            .padding(.horizontal, 2)
                     }
                 }
                 
