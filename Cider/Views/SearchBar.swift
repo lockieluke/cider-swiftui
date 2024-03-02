@@ -6,7 +6,7 @@ import SwiftUI
 import Inject
 import Throttler
 import SDWebImageSwiftUI
-import Introspect
+import SwiftUIIntrospect
 
 struct SearchBar: View {
     

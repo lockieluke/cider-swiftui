@@ -4,7 +4,7 @@
 
 import SwiftUI
 import Inject
-import Introspect
+import SwiftUIIntrospect
 
 struct MediaShowcaseRow: View {
     

@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Introspect
+import SwiftUIIntrospect
 import Inject
 import Defaults
 
