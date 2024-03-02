@@ -214,25 +214,22 @@ struct SidebarPane: View {
                         SidebarItem("Radio", icon: .Radio, stackType: .Radio)
                     }
                     
-                    Section("Library") {
+                    SidebarSection("Library") {
                         SidebarItem("Recently Added", icon: .RecentlyAdded, stackType: .RecentlyAdded)
                         SidebarItem("Songs", icon: .Songs)
                         SidebarItem("Albums", icon: .Albums)
                         SidebarItem("Artists", icon: .Artists)
                     }
-                    .foregroundStyle(.white)
                     
-                    Section("Apple Music Playlists") {
+                    SidebarSection("Apple Music Playlists") {
                         
                     }
-                    .foregroundStyle(.white)
                     
-                    Section("Playlists") {
+                    SidebarSection("Playlists") {
                         ForEach(allPlaylistsData) { playlist in
                             SidebarItem(playlist.title, icon: .Playlist, stackType: .Playlist, playlistID: playlist.id)
                         }
                     }
-                    .foregroundStyle(.white)
                 }
                 .task {
                     self.allPlaylistsData = await mkModal.AM_API.fetchPlaylists()
