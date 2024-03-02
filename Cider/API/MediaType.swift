@@ -85,6 +85,14 @@ extension MediaDynamic: Identifiable, Hashable {
         }
     }
     
+    var playableType: String {
+        if self.singularType.starts(with: "library-") {
+            return self.singularType.replacingOccurrences(of: "library-", with: "")
+        }
+        
+        return self.singularType
+    }
+    
     var type: String {
         switch self {
             

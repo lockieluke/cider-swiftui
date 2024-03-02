@@ -111,7 +111,7 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
     }
     
     func setQueue(item: MediaDynamic) async {
-        await self.runMKJS("setQueue({\(item.singularType): id})", arguments: ["id": item.singularType == "album" ? item.albumId! : item.id], async: true)
+        await self.runMKJS("setQueue({\(item.playableType): id})", arguments: ["id": item.singularType == "album" ? item.albumId! : item.id], async: true)
     }
     
     func skipToQueueIndex(_ index: Int) async {
