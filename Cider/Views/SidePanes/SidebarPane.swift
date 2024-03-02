@@ -175,7 +175,7 @@ fileprivate struct SidebarSection<Content: View>: View {
                 content()
             }
         }
-        .foregroundStyle(.gray)
+        .foregroundStyle(colorScheme == .dark ? .white : .black)
     }
     
 }
