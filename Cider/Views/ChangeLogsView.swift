@@ -42,7 +42,7 @@ struct ChangeLogsView: View {
     
     private func loadContent() {
         #if DEBUG
-        self.wkWebView.load(URLRequest(url: URL(string: "https://localhost:5173/changelogs")!))
+        self.wkWebView.load(URLRequest(url: URL(string: "http://localhost:5173/changelogs")!))
         #else
         self.wkWebView.loadHTMLString(precompileIncludeStr("@/CiderWebModules/dist/changelogs.html"), baseURL: URL(string: "https://localhost")!)
         #endif

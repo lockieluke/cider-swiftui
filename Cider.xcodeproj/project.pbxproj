@@ -41,7 +41,6 @@
 		B715303A2B66FB0D00A81935 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71530392B66FB0D00A81935 /* Analytics.swift */; };
 		B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82682A366F3B00DD8BC2 /* SwiftyUtils */; };
 		B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826B2A366FC400DD8BC2 /* SwiftyJSON */; };
-		B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826E2A36700300DD8BC2 /* Introspect */; };
 		B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82742A36703A00DD8BC2 /* SDWebImageSwiftUI */; };
 		B71B827B2A36708000DD8BC2 /* Rainbow in Frameworks */ = {isa = PBXBuildFile; productRef = B71B827A2A36708000DD8BC2 /* Rainbow */; };
 		B71B827E2A3670BD00DD8BC2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B71B827D2A3670BD00DD8BC2 /* Alamofire */; };
@@ -57,6 +56,8 @@
 		B71D54082ABCBADA001A62D6 /* OnboardingExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54072ABCBADA001A62D6 /* OnboardingExperience.swift */; };
 		B71D540A2ABCBC97001A62D6 /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71D54092ABCBC97001A62D6 /* NSWindow.swift */; };
 		B71D54212ABFA1BD001A62D6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B71D54202ABFA1BD001A62D6 /* Lottie */; };
+		B71EADE12B9141A200E57CED /* SongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71EADE02B9141A200E57CED /* SongsView.swift */; };
+		B71EADE32B914F3100E57CED /* WebUIIsland.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71EADE22B914F3100E57CED /* WebUIIsland.swift */; };
 		B71F4BA72ADAA30A003EE0E6 /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71F4BA62ADAA30A003EE0E6 /* RadioView.swift */; };
 		B71F4BAD2ADC90FC003EE0E6 /* MediaRadioData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71F4BAC2ADC90FC003EE0E6 /* MediaRadioData.swift */; };
 		B725013A28C2624300992F57 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B725013928C2624300992F57 /* Color.swift */; };
@@ -82,6 +83,7 @@
 		B75219C0291F0742005CF8F0 /* PersonalisedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75219BF291F0742005CF8F0 /* PersonalisedData.swift */; };
 		B753CF50293A9C8D00019B15 /* PatchedGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */; };
 		B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75C7C1229B12AE500F7693E /* CatalogActions.swift */; };
+		B764C3082B93853A00B5ABE2 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = B764C3072B93853A00B5ABE2 /* Tabler */; };
 		B7663CC72A9223AC009E82DA /* Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC52A92223D009E82DA /* Apple.swift */; };
 		B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC82A922567009E82DA /* TapEffectModifier.swift */; };
 		B766B18C2A74064E00B974E6 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B18B2A74064E00B974E6 /* BrowseView.swift */; };
@@ -283,6 +285,8 @@
 		B71D54092ABCBC97001A62D6 /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
 		B71D54282AC04BCD001A62D6 /* Startup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Startup.json; sourceTree = "<group>"; };
 		B71D54292AC04BCD001A62D6 /* StartupText.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StartupText.json; sourceTree = "<group>"; };
+		B71EADE02B9141A200E57CED /* SongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsView.swift; sourceTree = "<group>"; };
+		B71EADE22B914F3100E57CED /* WebUIIsland.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebUIIsland.swift; sourceTree = "<group>"; };
 		B71F4BA62ADAA30A003EE0E6 /* RadioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
 		B71F4BAC2ADC90FC003EE0E6 /* MediaRadioData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRadioData.swift; sourceTree = "<group>"; };
 		B725013928C2624300992F57 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -307,6 +311,7 @@
 		B75219BF291F0742005CF8F0 /* PersonalisedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalisedData.swift; sourceTree = "<group>"; };
 		B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchedGeometryReader.swift; sourceTree = "<group>"; };
 		B75C7C1229B12AE500F7693E /* CatalogActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogActions.swift; sourceTree = "<group>"; };
+		B764C2FB2B92953C00B5ABE2 /* MediaLibrarySong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLibrarySong.swift; sourceTree = "<group>"; };
 		B7663CC52A92223D009E82DA /* Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apple.swift; sourceTree = "<group>"; };
 		B7663CC82A922567009E82DA /* TapEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapEffectModifier.swift; sourceTree = "<group>"; };
 		B766B18B2A74064E00B974E6 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
@@ -438,8 +443,8 @@
 				B79475322B8C049A00A30756 /* SwiftyXPC in Frameworks */,
 				B71B82872A36712600DD8BC2 /* Settings in Frameworks */,
 				B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */,
-				B71B826F2A36700300DD8BC2 /* Introspect in Frameworks */,
 				B71B82812A3670E100DD8BC2 /* WrappingHStack in Frameworks */,
+				B764C3082B93853A00B5ABE2 /* Tabler in Frameworks */,
 				B71B827E2A3670BD00DD8BC2 /* Alamofire in Frameworks */,
 				B71B828A2A36713300DD8BC2 /* Sliders in Frameworks */,
 				B71B82932A36718800DD8BC2 /* Defaults in Frameworks */,
@@ -603,6 +608,7 @@
 				B7AAF7752ACE096600A9346C /* DonateView.swift */,
 				B7DDCCD32B26772C006E1429 /* AboutView.swift */,
 				B70294222B49B9ED00664181 /* ChangelogsView.swift */,
+				B71EADE22B914F3100E57CED /* WebUIIsland.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -791,6 +797,7 @@
 				B766B18B2A74064E00B974E6 /* BrowseView.swift */,
 				B71F4BA62ADAA30A003EE0E6 /* RadioView.swift */,
 				B7B54CDB2B8E86790000876C /* RecentlyAddedView.swift */,
+				B71EADE02B9141A200E57CED /* SongsView.swift */,
 			);
 			path = MainViews;
 			sourceTree = "<group>";
@@ -818,6 +825,7 @@
 				B7E27A972AE0836000391D5C /* MediaStation.swift */,
 				B7E27A992AE0892C00391D5C /* MediaEditorialNotes.swift */,
 				B700F0E02AEA64F7009E3D40 /* MediaAppleCurator.swift */,
+				B764C2FB2B92953C00B5ABE2 /* MediaLibrarySong.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -848,7 +856,6 @@
 			packageProductDependencies = (
 				B71B82682A366F3B00DD8BC2 /* SwiftyUtils */,
 				B71B826B2A366FC400DD8BC2 /* SwiftyJSON */,
-				B71B826E2A36700300DD8BC2 /* Introspect */,
 				B71B82742A36703A00DD8BC2 /* SDWebImageSwiftUI */,
 				B71B827A2A36708000DD8BC2 /* Rainbow */,
 				B71B827D2A3670BD00DD8BC2 /* Alamofire */,
@@ -883,6 +890,7 @@
 				B7B128D72B7AA65000AEF9CD /* KeychainAccess */,
 				B74A41412B87B4BF003A8810 /* SwiftHtml */,
 				B79475312B8C049A00A30756 /* SwiftyXPC */,
+				B764C3072B93853A00B5ABE2 /* Tabler */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1000,6 +1008,7 @@
 				B7B128D62B7AA64F00AEF9CD /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				B74A41402B87B4BF003A8810 /* XCRemoteSwiftPackageReference "swift-html" */,
 				B79475302B8C049A00A30756 /* XCRemoteSwiftPackageReference "SwiftyXPC" */,
+				B764C3062B93853A00B5ABE2 /* XCRemoteSwiftPackageReference "SwiftTabler" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1220,6 +1229,7 @@
 				B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */,
 				B700C1AB28B955C20069FDF5 /* AppTitleBar.swift in Sources */,
 				B798562B292ADE13003CA787 /* String.swift in Sources */,
+				B71EADE32B914F3100E57CED /* WebUIIsland.swift in Sources */,
 				B700C1B428B96DBD0069FDF5 /* ActionButton.swift in Sources */,
 				B7ECB7C6290497B000B5DF11 /* ObservableHoveringObject.swift in Sources */,
 				B75219AE29187526005CF8F0 /* MediaArtwork.swift in Sources */,
@@ -1229,6 +1239,7 @@
 				B71F4BA72ADAA30A003EE0E6 /* RadioView.swift in Sources */,
 				B7B54CDE2B8EA3F40000876C /* NavigationDebugger.swift in Sources */,
 				B728B0562A75CAA200BAC665 /* MediaBrowseData.swift in Sources */,
+				B71EADE12B9141A200E57CED /* SongsView.swift in Sources */,
 				B70189442AAFA55500A7EAA0 /* HeroCard.swift in Sources */,
 				B7C5C5E029CF827F00EF4D11 /* Defaults.swift in Sources */,
 				B7B54CDC2B8E86790000876C /* RecentlyAddedView.swift in Sources */,
@@ -1478,7 +1489,6 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cider/Cider-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
@@ -1793,7 +1803,7 @@
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.6.1;
+				minimumVersion = 1.1.3;
 			};
 		};
 		B71B82732A36703A00DD8BC2 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
@@ -1924,6 +1934,14 @@
 				minimumVersion = 1.7.0;
 			};
 		};
+		B764C3062B93853A00B5ABE2 /* XCRemoteSwiftPackageReference "SwiftTabler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/openalloc/SwiftTabler.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.7;
+			};
+		};
 		B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -2036,11 +2054,6 @@
 			package = B71B826A2A366FC400DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		B71B826E2A36700300DD8BC2 /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B71B826D2A36700200DD8BC2 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
-		};
 		B71B82742A36703A00DD8BC2 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82732A36703A00DD8BC2 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
@@ -2125,6 +2138,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B74A41402B87B4BF003A8810 /* XCRemoteSwiftPackageReference "swift-html" */;
 			productName = SwiftHtml;
+		};
+		B764C3072B93853A00B5ABE2 /* Tabler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B764C3062B93853A00B5ABE2 /* XCRemoteSwiftPackageReference "SwiftTabler" */;
+			productName = Tabler;
 		};
 		B76FC6F52A8FE14900F8F80E /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;

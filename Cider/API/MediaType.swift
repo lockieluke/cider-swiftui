@@ -11,6 +11,7 @@ enum MediaType: String {
     case Playlist = "playlists",
          Album = "albums",
          LibraryAlbum = "library-albums",
+         LibrarySong = "library-songs",
          AnyMedia = "any",
          Song = "songs",
          Artist = "artists",

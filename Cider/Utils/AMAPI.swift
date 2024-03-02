@@ -507,6 +507,29 @@ class AMAPI {
         return nil
     }
     
+    enum LibrarySortBy: String {
+        case dataAdded = "dateAdded", name = "name"
+    }
+    func fetchLibrarySongs(limit: Int = 25, offset: Int = 0, sortBy: LibrarySortBy = .dataAdded, isAscending: Bool = false) async -> [MediaDynamic] {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/songs", parameters: [
+            "limit": limit,
+            "offset": offset,
+            "sort": "\(isAscending ? "" : "-")\(sortBy.rawValue)",
+            "platform": "web",
+            "include[library-songs]": "albums",
+            "extend": "inFavorites"
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch library songs: \(error.localizedDescription)")
+        } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
+            return items.compactMap { item in
+                return .mediaTrack(MediaTrack(data: item))
+            }
+        }
+        
+        return []
+    }
+    
     func fetchRecentlyPlayed(limit: Int? = nil) async -> [MediaDynamic] {
         var parameters: [String : Any]? = nil
         if let limit = limit {
