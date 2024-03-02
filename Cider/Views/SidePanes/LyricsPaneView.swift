@@ -93,7 +93,7 @@ struct LyricsPaneView: View {
                             
                             VStack(alignment: .leading, spacing: 20) {
                                 ForEach(Array(lyricData.lyrics.enumerated()), id: \.offset) {i, lyric in
-                                    let isActive = lyric.startTime...lyric.endTime ~= Double(seconds)
+                                    let isActive = min(lyric.startTime, 0)...lyric.endTime ~= Double(seconds)
                                     
                                     LyricLine(lyric, active: isActive)
                                         .id(i)
