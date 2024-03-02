@@ -27,7 +27,10 @@ struct PlaybackCardView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(nowPlayingState.name ?? "Not Playing")
+                        .lineLimit(1)
                         .font(.system(.headline))
+                        .frame(width: 150, alignment: .leading)
+                        .truncationMode(.tail)
                     
                     if nowPlayingState.contentRating == "explicit" {
                         Image(systemSymbol: .eSquareFill)
