@@ -237,7 +237,6 @@ struct SidebarPane: View {
                 .transition(.opacity.animation(.spring.delay(2)))
             }
         }
-        .transparentScrollbars()
         .introspect(.list, on: .macOS(.v10_15, .v11, .v12, .v13, .v14)) { list in
             list.backgroundColor = .clear
         }
