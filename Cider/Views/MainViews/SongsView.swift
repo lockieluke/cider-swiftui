@@ -20,6 +20,7 @@ struct SongsView: View {
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
     @EnvironmentObject private var ciderPlayback: CiderPlayback
+    @EnvironmentObject private var navigationModal: NavigationModal
     
     @State private var artworkHovered: String?
     @State private var itemHovered: String?
@@ -203,6 +204,7 @@ struct SongsView: View {
                 }
             }
         }
+        .isHidden(navigationModal.currentRootStack != .Songs)
         .enableInjection()
     }
 }
