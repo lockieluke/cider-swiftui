@@ -218,7 +218,7 @@ struct SidebarPane: View {
                         SidebarItem("Recently Added", icon: .RecentlyAdded, stackType: .RecentlyAdded)
                         SidebarItem("Songs", icon: .Songs, stackType: .Songs)
                         SidebarItem("Albums", icon: .Albums, stackType: .Albums)
-                        SidebarItem("Artists", icon: .Artists)
+                        SidebarItem("Artists", icon: .Artists, stackType: .Artists)
                     }
                     
                     SidebarSection("Apple Music Playlists") {

@@ -89,6 +89,9 @@
 		B764C3132B949FDC00B5ABE2 /* NSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C3122B949FDC00B5ABE2 /* NSView.swift */; };
 		B764C3152B949FF600B5ABE2 /* NoInsetHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C3142B949FF600B5ABE2 /* NoInsetHostingView.swift */; };
 		B764C3182B94F0D100B5ABE2 /* NukeAlamofirePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B764C3172B94F0D100B5ABE2 /* NukeAlamofirePlugin */; };
+		B764C31A2B95194E00B5ABE2 /* ArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C3192B95194E00B5ABE2 /* ArtistsView.swift */; };
+		B764C31D2B951EBC00B5ABE2 /* SplitView in Frameworks */ = {isa = PBXBuildFile; productRef = B764C31C2B951EBC00B5ABE2 /* SplitView */; };
+		B764C31F2B95244100B5ABE2 /* MediaLibraryArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C31E2B95244100B5ABE2 /* MediaLibraryArtist.swift */; };
 		B7663CC72A9223AC009E82DA /* Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC52A92223D009E82DA /* Apple.swift */; };
 		B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC82A922567009E82DA /* TapEffectModifier.swift */; };
 		B766B18C2A74064E00B974E6 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B18B2A74064E00B974E6 /* BrowseView.swift */; };
@@ -320,6 +323,8 @@
 		B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
 		B764C3122B949FDC00B5ABE2 /* NSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSView.swift; sourceTree = "<group>"; };
 		B764C3142B949FF600B5ABE2 /* NoInsetHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInsetHostingView.swift; sourceTree = "<group>"; };
+		B764C3192B95194E00B5ABE2 /* ArtistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsView.swift; sourceTree = "<group>"; };
+		B764C31E2B95244100B5ABE2 /* MediaLibraryArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLibraryArtist.swift; sourceTree = "<group>"; };
 		B7663CC52A92223D009E82DA /* Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apple.swift; sourceTree = "<group>"; };
 		B7663CC82A922567009E82DA /* TapEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapEffectModifier.swift; sourceTree = "<group>"; };
 		B766B18B2A74064E00B974E6 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
@@ -435,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B79050AA2B11693500CED9B6 /* libnative_utils.a in Frameworks */,
+				B764C31D2B951EBC00B5ABE2 /* SplitView in Frameworks */,
 				B71530382B65DED600A81935 /* SentrySwiftUI in Frameworks */,
 				B70524C52A6F15D8001654B3 /* Cache in Frameworks */,
 				B70524BB2A6C96C2001654B3 /* SwiftUIBackports in Frameworks */,
@@ -811,6 +817,7 @@
 				B7B54CDB2B8E86790000876C /* RecentlyAddedView.swift */,
 				B71EADE02B9141A200E57CED /* SongsView.swift */,
 				B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */,
+				B764C3192B95194E00B5ABE2 /* ArtistsView.swift */,
 			);
 			path = MainViews;
 			sourceTree = "<group>";
@@ -839,6 +846,7 @@
 				B7E27A992AE0892C00391D5C /* MediaEditorialNotes.swift */,
 				B700F0E02AEA64F7009E3D40 /* MediaAppleCurator.swift */,
 				B764C2FB2B92953C00B5ABE2 /* MediaLibrarySong.swift */,
+				B764C31E2B95244100B5ABE2 /* MediaLibraryArtist.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -906,6 +914,7 @@
 				B764C30C2B949C0600B5ABE2 /* Nuke */,
 				B764C30E2B949C0600B5ABE2 /* NukeUI */,
 				B764C3172B94F0D100B5ABE2 /* NukeAlamofirePlugin */,
+				B764C31C2B951EBC00B5ABE2 /* SplitView */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1025,6 +1034,7 @@
 				B764C3062B93853A00B5ABE2 /* XCRemoteSwiftPackageReference "SwiftTabler" */,
 				B764C30B2B949C0600B5ABE2 /* XCRemoteSwiftPackageReference "Nuke" */,
 				B764C3162B94F0D100B5ABE2 /* XCRemoteSwiftPackageReference "Nuke-Alamofire-Plugin" */,
+				B764C31B2B951EBC00B5ABE2 /* XCRemoteSwiftPackageReference "SplitView" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1189,11 +1199,13 @@
 				B798983429D0B6DB00A734DC /* List.swift in Sources */,
 				B766B18C2A74064E00B974E6 /* BrowseView.swift in Sources */,
 				B7D1671D28D3C0C300D5B5E8 /* NSApp.swift in Sources */,
+				B764C31A2B95194E00B5ABE2 /* ArtistsView.swift in Sources */,
 				B70189472AB241CD00A7EAA0 /* PlayParams.swift in Sources */,
 				B700C18328B920F10069FDF5 /* ContentView.swift in Sources */,
 				B7F623F72915DBA500316F8E /* MediaRecommendation.swift in Sources */,
 				B7E27A982AE0836000391D5C /* MediaStation.swift in Sources */,
 				B703BBCF28CC05FA00228324 /* Alert.swift in Sources */,
+				B764C31F2B95244100B5ABE2 /* MediaLibraryArtist.swift in Sources */,
 				B797AFF6297F3AB900D77282 /* InteractiveText.swift in Sources */,
 				B75219C0291F0742005CF8F0 /* PersonalisedData.swift in Sources */,
 				B736F2752A634F1D008A0458 /* DateUtils.swift in Sources */,
@@ -1969,6 +1981,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		B764C31B2B951EBC00B5ABE2 /* XCRemoteSwiftPackageReference "SplitView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stevengharris/SplitView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.5.2;
+			};
+		};
 		B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -2180,6 +2200,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B764C3162B94F0D100B5ABE2 /* XCRemoteSwiftPackageReference "Nuke-Alamofire-Plugin" */;
 			productName = NukeAlamofirePlugin;
+		};
+		B764C31C2B951EBC00B5ABE2 /* SplitView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B764C31B2B951EBC00B5ABE2 /* XCRemoteSwiftPackageReference "SplitView" */;
+			productName = SplitView;
 		};
 		B76FC6F52A8FE14900F8F80E /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;

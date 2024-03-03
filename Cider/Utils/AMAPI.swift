@@ -550,6 +550,49 @@ class AMAPI {
         return []
     }
     
+    func fetchLibraryArtists(limit: Int = 25, offset: Int = 0, sortBy: LibrarySortBy = .dataAdded, isAscending: Bool = false) async -> [MediaLibraryArtist] {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/artists", parameters: [
+            "limit": limit,
+            "offset": offset,
+            "sort": "\(isAscending ? "" : "-")\(sortBy.rawValue)",
+            "platform": "web",
+            "include": "catalog",
+            "art[url]": "f"
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch library artists: \(error.localizedDescription)")
+        } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
+            return items.compactMap { item in
+                return MediaLibraryArtist(data: item)
+            }
+        }
+        
+        return []
+    }
+    
+    func fetchLibraryArtistsAlbums(id: String, limit: Int = 25, offset: Int = 0) async -> [MediaDynamic] {
+        let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/library/artists/\(id)/albums", parameters: [
+            "limit": limit,
+            "offset": offset,
+            "platform": "web",
+            "include": "artwork",
+            "extend": "artwork",
+            "fields[artists]": "url,artwork",
+            "includeOnly": "catalog,artists",
+            "include[library-albums]": "artists,tracks,catalog",
+            "include[library-artists]": "catalog"
+        ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
+        if let error = res.error {
+            self.logger.error("Failed to fetch library artists albums: \(error.localizedDescription)")
+        } else if let data = res.data, let json = try? JSON(data: data), let items = json["data"].array {
+            return items.compactMap { item in
+                return .mediaItem(MediaItem(data: item))
+            }
+        }
+        
+        return []
+    }
+    
     func fetchRecentlyPlayed(limit: Int = 12) async -> [MediaDynamic] {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: [
             "limit": limit,

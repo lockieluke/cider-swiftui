@@ -92,6 +92,11 @@ struct NavigationContainer: View {
                                         AlbumsView()
                                             .hideWithoutDestroying(currentRootStack != .Albums || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Albums }).count > 0)
                                     }
+                                    
+                                    if navigationModal.hasLoadedRootStack(.Artists) {
+                                        ArtistsView()
+                                            .hideWithoutDestroying(currentRootStack != .Artists || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Artists }).count > 0)
+                                    }
                                 }
                                 
                             case .detailedViewParams(let detailedViewParams):

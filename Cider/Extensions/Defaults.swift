@@ -8,9 +8,20 @@
 
 import Foundation
 import Defaults
+import SplitView
 
 enum AudioQuality: Int, Defaults.Serializable {
     case Standard = 64, High = 256, Lossless = 0
+}
+
+func usingUserDefaults(_ fraction: CGFloat? = nil, key: String) -> FractionHolder {
+    let defaultKey = Defaults.Key<CGFloat>(key, default: fraction ?? 0.5)
+    
+    return FractionHolder(
+        fraction,
+        getter: { Defaults[defaultKey] },
+        setter: { fraction in Defaults[defaultKey] = fraction }
+    )
 }
 
 extension Defaults.Keys {
