@@ -101,7 +101,21 @@ struct NavigationStack {
 
 class NavigationModal : ObservableObject {
     
-    @Published var currentRootStack: RootNavigationType = .Home
+    @Published var currentRootStack: RootNavigationType = .Home {
+        didSet {
+            let thisRootStack = currentRootStack
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10)) {
+                if thisRootStack == self.currentRootStack {
+                    self.loadedRootStacks.forEach {
+                        if $0 != thisRootStack {
+                            self.loadedRootStacks.remove($0)
+                        }
+                    }
+                    Logger.sharedLoggers[.UIInteraction]?.success("Cleaned up unused root stacks", displayTick: true)
+                }
+            }
+        }
+    }
     @Published var loadedRootStacks: Set<RootNavigationType> = [.Home]
     
     // View Stack in each sidebar item screen

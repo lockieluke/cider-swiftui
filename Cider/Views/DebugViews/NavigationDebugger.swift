@@ -31,6 +31,7 @@ struct NavigationDebugger: View {
         ScrollView {
             VStack {
                 Text("Current Root Stack: \(String(describing: navigationModal.currentRootStack))")
+                Text("Loaded Root Stacks: \(navigationModal.loadedRootStacks.map { String(describing: $0) }.joined(separator: ", "))")
                 ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
                     Text("""
 ID: \(viewStack.id)
