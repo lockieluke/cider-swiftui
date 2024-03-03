@@ -319,7 +319,6 @@
 		B75219BF291F0742005CF8F0 /* PersonalisedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalisedData.swift; sourceTree = "<group>"; };
 		B753CF4F293A9C8D00019B15 /* PatchedGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchedGeometryReader.swift; sourceTree = "<group>"; };
 		B75C7C1229B12AE500F7693E /* CatalogActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogActions.swift; sourceTree = "<group>"; };
-		B764C2FB2B92953C00B5ABE2 /* MediaLibrarySong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLibrarySong.swift; sourceTree = "<group>"; };
 		B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
 		B764C3122B949FDC00B5ABE2 /* NSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSView.swift; sourceTree = "<group>"; };
 		B764C3142B949FF600B5ABE2 /* NoInsetHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInsetHostingView.swift; sourceTree = "<group>"; };
@@ -845,7 +844,6 @@
 				B7E27A972AE0836000391D5C /* MediaStation.swift */,
 				B7E27A992AE0892C00391D5C /* MediaEditorialNotes.swift */,
 				B700F0E02AEA64F7009E3D40 /* MediaAppleCurator.swift */,
-				B764C2FB2B92953C00B5ABE2 /* MediaLibrarySong.swift */,
 				B764C31E2B95244100B5ABE2 /* MediaLibraryArtist.swift */,
 			);
 			path = API;
@@ -1794,7 +1792,7 @@
 			repositoryURL = "https://github.com/hyperoslo/Cache.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
+				minimumVersion = 6.1.0;
 			};
 		};
 		B7107BB52AA2B8D300A83306 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -1850,7 +1848,7 @@
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
+				minimumVersion = 5.8.1;
 			};
 		};
 		B71B827F2A3670E100DD8BC2 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
@@ -1858,7 +1856,7 @@
 			repositoryURL = "https://github.com/dkk/WrappingHStack";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.10;
+				minimumVersion = 2.2.11;
 			};
 		};
 		B71B82822A36711800DD8BC2 /* XCRemoteSwiftPackageReference "UIImageColors" */ = {
@@ -1905,8 +1903,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Defaults.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
 			};
 		};
 		B71B82A12A3673D500DD8BC2 /* XCRemoteSwiftPackageReference "swifter" */ = {
@@ -1922,7 +1920,7 @@
 			repositoryURL = "https://github.com/krzysztofzablocki/Inject.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.3;
+				minimumVersion = 1.3.0;
 			};
 		};
 		B71D541F2ABFA1BD001A62D6 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
