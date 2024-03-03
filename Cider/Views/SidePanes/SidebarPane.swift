@@ -221,10 +221,6 @@ struct SidebarPane: View {
                         SidebarItem("Artists", icon: .Artists, stackType: .Artists)
                     }
                     
-                    SidebarSection("Apple Music Playlists") {
-                        
-                    }
-                    
                     SidebarSection("Playlists") {
                         ForEach(allPlaylistsData) { playlist in
                             SidebarItem(playlist.title, icon: .Playlist, stackType: .Playlist, playlistID: playlist.id)
