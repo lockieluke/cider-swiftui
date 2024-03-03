@@ -59,24 +59,25 @@ struct MediaPresentable: View {
                     
                     Color.clear
                 }
-                    .fixedSize()
-                    .cornerRadius(isHostOrArtist ? .infinity : 5)
-                    .brightness(isHovering ? -0.1 : 0)
-                    .animation(.easeIn(duration: 0.15), value: isHovering)
-                    .allowsHitTesting(false)
-                    .onHover { isHovering in
-                        self.isHovering = isHovering
-                    }
-                    .onTapGesture {
-                        withAnimation(.spring) {
-                            if case let .mediaItem(mediaItem) = item {
-                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
-                            } else if case let .mediaPlaylist(mediaPlaylist) = item {
-                                self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
-                            }
+                .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
+                .fixedSize()
+                .cornerRadius(isHostOrArtist ? .infinity : 5)
+                .brightness(isHovering ? -0.1 : 0)
+                .animation(.easeIn(duration: 0.15), value: isHovering)
+                .allowsHitTesting(false)
+                .onHover { isHovering in
+                    self.isHovering = isHovering
+                }
+                .onTapGesture {
+                    withAnimation(.spring) {
+                        if case let .mediaItem(mediaItem) = item {
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaItem(mediaItem), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
+                        } else if case let .mediaPlaylist(mediaPlaylist) = item {
+                            self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .detailedViewParams(DetailedViewParams(item: .mediaPlaylist(mediaPlaylist), geometryMatching: self.animationNamespace.isNil ? nil : self.animationNamespace!, animationId: self.animationId, originalSize: CGSize(width: maxRelative * 0.15, height: maxRelative * 0.15), coverKind: self.coverKind))))
                         }
                     }
-                    .modifier(CatalogActions(item: item))
+                }
+                .modifier(CatalogActions(item: item))
                 
                 if isHovering {
                     HStack {
