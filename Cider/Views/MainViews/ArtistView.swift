@@ -8,7 +8,7 @@
 
 import SwiftUI
 import AttributedText
-import SDWebImageSwiftUI
+import NukeUI
 import Inject
 
 struct ArtistView: View {
@@ -43,12 +43,18 @@ struct ArtistView: View {
                 VStack {
                     PatchedGeometryReader { geometry in
                         if readyToDisplay {
-                            WebImage(url: artist.artwork.getUrl(width: 500, height: 500))
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(.infinity)
-                                .frame(width: geometry.maxRelative * 0.12, height: geometry.maxRelative * 0.12)
-                                .frame(minWidth: 50, minHeight: 50)
+                            LazyImage(url: artist.artwork.getUrl(width: 500, height: 500)) { state in
+                                if let image = state.image {
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: geometry.maxRelative * 0.12, height: geometry.maxRelative * 0.12)
+                                        .frame(minWidth: 50, minHeight: 50)
+                                }
+                                
+                                Color.clear
+                            }
+                                .clipShape(Circle())
                                 .shadow(radius: 10)
                                 .padding(60)
                             #if os(macOS)

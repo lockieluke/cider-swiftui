@@ -5,7 +5,7 @@
 import SwiftUI
 import Inject
 import Throttler
-import SDWebImageSwiftUI
+import NukeUI
 import SwiftUIIntrospect
 
 struct SearchBar: View {
@@ -94,9 +94,7 @@ struct SearchBar: View {
             PatchedGeometryReader { geometry in
                 HStack {
                     if let artwork = self.artwork {
-                        WebImage(url: artwork.getUrl(width: 100, height: 100))
-                            .resizable()
-                            .scaledToFit()
+                        LazyImage(url: artwork.getUrl(width: 100, height: 100))
                             .frame(width: 30, height: 30)
                             .cornerRadius(self.artist != nil ? .infinity : 6)
                             .brightness(isArtworkHovering ? -0.5 : 0)
@@ -169,7 +167,7 @@ struct SearchBar: View {
                     self.onClick?()
                 }
             }
-
+            
             .modifier(PressActions(onEvent: { isPressed in
                 self.isClicked = isPressed
             }))

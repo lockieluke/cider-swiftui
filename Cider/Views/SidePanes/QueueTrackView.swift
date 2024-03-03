@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import NukeUI
 import Inject
 
 struct QueueTrackView: View {
@@ -33,10 +33,16 @@ struct QueueTrackView: View {
     var body: some View {
         PatchedGeometryReader { geometry in
             HStack {
-                WebImage(url: mediaTrack.artwork.getUrl(width: 50, height: 50))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
+                LazyImage(url: mediaTrack.artwork.getUrl(width: 50, height: 50)) { state in
+                    if let image = state.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                    }
+                    
+                    Color.clear
+                }
                     .cornerRadius(5)
                     .brightness(isHovering ? -0.5 : 0)
                     .padding(.leading, 2)

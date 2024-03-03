@@ -226,6 +226,24 @@
       }
     },
     {
+      "identity" : "nuke",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kean/Nuke.git",
+      "state" : {
+        "revision" : "8ecbfc886da39bccb01c34abef5f2ff4073ad633",
+        "version" : "12.4.0"
+      }
+    },
+    {
+      "identity" : "nuke-alamofire-plugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kean/Nuke-Alamofire-Plugin.git",
+      "state" : {
+        "revision" : "42086107bab85e18d12d8b7e6c01a531215ca3df",
+        "version" : "8.0.0"
+      }
+    },
+    {
       "identity" : "promises",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/promises.git",
@@ -241,24 +259,6 @@
       "state" : {
         "revision" : "e0dada9cd44e3fa7ec3b867e49a8ddbf543e3df3",
         "version" : "4.0.1"
-      }
-    },
-    {
-      "identity" : "sdwebimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImage.git",
-      "state" : {
-        "revision" : "fd010e54231331fc19338f81c6d072cd9ace2825",
-        "version" : "5.18.8"
-      }
-    },
-    {
-      "identity" : "sdwebimageswiftui",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
-      "state" : {
-        "revision" : "261b6cec35686d2dc192b809ab50742b4502a73b",
-        "version" : "2.2.6"
       }
     },
     {

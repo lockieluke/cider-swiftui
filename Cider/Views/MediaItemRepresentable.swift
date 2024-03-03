@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import NukeUI
 import Inject
 
 struct MediaItemRepresentable: View {
@@ -27,9 +27,7 @@ struct MediaItemRepresentable: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            WebImage(url: item.artwork.getUrl(width: 40, height: 40))
-                .resizable()
-                .scaledToFit()
+            LazyImage(url: item.artwork.getUrl(width: 40, height: 40))
                 .frame(width: 30, height: 30)
                 .cornerRadius(5, antialiased: true)
                 .brightness(isHovering ? -0.5 : 0)

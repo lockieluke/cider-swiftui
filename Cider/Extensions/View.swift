@@ -1,8 +1,9 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import Foundation
+import AppKit
 import SwiftUI
 
 struct AnimatableCustomFontModifier: ViewModifier, Animatable {
@@ -246,6 +247,12 @@ struct MouseInsideModifier: ViewModifier {
 // it in a `View` extension, like this:
 extension View {
     
+    func renderAsImage() -> NSImage? {
+        let view = NoInsetHostingView(rootView: self)
+        view.setFrameSize(view.fittingSize)
+        return view.bitmapImage()
+    }
+    
     func animatableFont(name: String, size: Double) -> some View {
         self.modifier(AnimatableCustomFontModifier(name: name, size: size))
     }
@@ -255,7 +262,7 @@ extension View {
     }
     
     @ViewBuilder func hideWithoutDestroying(_ hidden: Bool) -> some View {
-//        self.frame(maxWidth: hidden ? .zero : .infinity, maxHeight: hidden ? .zero : .infinity)
+        //        self.frame(maxWidth: hidden ? .zero : .infinity, maxHeight: hidden ? .zero : .infinity)
         self
             .opacity(hidden ? 0 : 1)
             .allowsHitTesting(!hidden)

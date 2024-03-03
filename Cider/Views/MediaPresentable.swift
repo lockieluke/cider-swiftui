@@ -4,7 +4,7 @@
 
 import SwiftUI
 import Inject
-import SDWebImageSwiftUI
+import NukeUI
 import Throttler
 
 struct MediaPresentable: View {
@@ -49,10 +49,16 @@ struct MediaPresentable: View {
     var innerBody: some View {
         VStack {
             ZStack {
-                WebImage(url: artwork.getUrl(width: 200, height: 200, kind: coverKind), options: [.retryFailed])
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
+                LazyImage(url: artwork.getUrl(width: 200, height: 200, kind: coverKind)) { state in
+                    if let image = state.image {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
+                    }
+                    
+                    Color.clear
+                }
                     .fixedSize()
                     .cornerRadius(isHostOrArtist ? .infinity : 5)
                     .brightness(isHovering ? -0.1 : 0)

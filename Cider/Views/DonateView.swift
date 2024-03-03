@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import NukeUI
 import Defaults
 import Inject
 
@@ -54,11 +54,15 @@ struct DonateView: View {
             HStack(spacing: 80) {
                 ForEach(donationDatas) { donationData in
                     VStack {
-                        WebImage(url: donationData.avatarUrl, options: [.fromLoaderOnly])
-                            .resizable()
-                            .scaledToFill()
+                        LazyImage(url: donationData.avatarUrl) { state in
+                            if let image = state.image {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 100, height: 100)
+                            }
+                        }
                             .clipShape(Circle())
-                            .frame(width: 100, height: 100)
                         
                         Text("@\(donationData.name)")
                             .padding(.top, 3)

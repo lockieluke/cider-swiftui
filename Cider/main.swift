@@ -9,6 +9,8 @@ import GoogleSignIn
 import SwiftyUtils
 import SwiftUI
 import SFSafeSymbols
+import Nuke
+import NukeAlamofirePlugin
 
 #if canImport(AppKit)
 import AppKit
@@ -48,6 +50,13 @@ class AppDelegate : NSObject, ApplicationDelegate {
         FirebaseAnalytics.Analytics.setAnalyticsCollectionEnabled(false)
 #endif
         FirebaseApp.configure()
+        
+        let pipeline = ImagePipeline {
+            $0.dataLoader = NukeAlamofirePlugin.AlamofireDataLoader()
+            $0.imageCache = ImageCache.shared
+        }
+        
+        ImagePipeline.shared = pipeline
     }
     
 #if canImport(AppKit)

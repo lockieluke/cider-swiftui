@@ -4,7 +4,7 @@
 
 import SwiftUI
 import Inject
-import SDWebImageSwiftUI
+import NukeUI
 import UIImageColors
 
 struct DetailedView: View {
@@ -98,16 +98,21 @@ struct DetailedView: View {
                 VStack {
                     let sqaureSize = geometry.minRelative * 0.4
                     
-                    let cover = WebImage(url: artwork.getUrl(width: 600, height: 600, kind: self.detailedViewParams.coverKind))
-                        .onSuccess { image, data, cacheType in
-                            image.getColors(quality: .highest) { colours in
-                                guard let colours = colours else { return }
-                                self.bgGlowGradientColours = Gradient(colors: [Color(platformColor: colours.primary), Color(platformColor: colours.secondary), Color(platformColor: colours.detail), Color(platformColor: colours.background)])
-                            }
+                    let cover = LazyImage(url: artwork.getUrl(width: 600, height: 600, kind: self.detailedViewParams.coverKind)) { state in
+                        if let image = state.image, let nsImage = image.renderAsImage() {
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .onAppear {
+                                    nsImage.getColors(quality: .highest) { colours in
+                                        guard let colours = colours else { return }
+                                        self.bgGlowGradientColours = Gradient(colors: [Color(platformColor: colours.primary), Color(platformColor: colours.secondary), Color(platformColor: colours.detail), Color(platformColor: colours.background)])
+                                    }
+                                }
                         }
-                        .resizable()
-                        .indicator(.progress)
-                        .aspectRatio(contentMode: .fill)
+                        
+                        Color.clear
+                    }
                         .frame(width: sqaureSize, height: sqaureSize, alignment: .center)
                         .clipped()
                         .cornerRadius(5)

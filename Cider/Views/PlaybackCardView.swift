@@ -1,11 +1,12 @@
 //
 //  Copyright © 2022 Cider Collective. All rights reserved.
-//  
+//
 
 import SwiftUI
 import Inject
-import SDWebImageSwiftUI
 import SFSafeSymbols
+import NukeUI
+import Nuke
 
 struct PlaybackCardView: View {
     
@@ -18,11 +19,19 @@ struct PlaybackCardView: View {
         HStack {
             let nowPlayingState = ciderPlayback.nowPlayingState
             
-            WebImage(url: nowPlayingState.artworkURL ?? Bundle.main.url(forResource: "MissingArtwork", withExtension: ".png")!)
-                .resizable()
-                .scaledToFill()
+            LazyImage(url: nowPlayingState.artworkURL ?? Bundle.main.url(forResource: "MissingArtwork", withExtension: ".png")!) { state in
+                if let image = state.image {
+                    image
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                }
+                
+                Color.clear
+            }
+                .pipeline(ImagePipeline(configuration: .withURLCache))
+                .aspectRatio(contentMode: .fit)
                 .frame(width: 50, height: 50)
-                .cornerRadius(5)
+                .clipShape(RoundedRectangle(cornerRadius: 5))
             
             VStack(alignment: .leading) {
                 HStack(spacing: 0) {

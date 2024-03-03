@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import NukeUI
 
 struct MediaArtistPresentable: View {
     
@@ -20,24 +20,27 @@ struct MediaArtistPresentable: View {
     
     var body: some View {
         VStack {
-            WebImage(url: self.artist.artwork.getUrl(width: 200, height: 200))
-                .resizable()
-                .placeholder {
-                    ProgressView()
+            LazyImage(url: self.artist.artwork.getUrl(width: 200, height: 200)) { state in
+                if let image = state.image {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: maxRelative * 0.15, height: maxRelative * 0.15)
                 }
-                .scaledToFit()
-                .frame(width: maxRelative * 0.15, height: maxRelative * 0.15)
-                .cornerRadius(.infinity)
-                .brightness(isHovering ? -0.2 : 0)
-                .animation(.easeIn(duration: 0.15), value: isHovering)
-                .onHover { isHovering in
-                    self.isHovering = isHovering
+                
+                Color.clear
+            }
+            .clipShape(Circle())
+            .brightness(isHovering ? -0.2 : 0)
+            .animation(.easeIn(duration: 0.15), value: isHovering)
+            .onHover { isHovering in
+                self.isHovering = isHovering
+            }
+            .onTapGesture {
+                withAnimation(.interactiveSpring()) {
+                    self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(artist: self.artist))))
                 }
-                .onTapGesture {
-                    withAnimation(.interactiveSpring()) {
-                        self.navigationModal.appendViewStack(NavigationStack(isPresent: true, params: .artistViewParams(ArtistViewParams(artist: self.artist))))
-                    }
-                }
+            }
             
             Text(artist.artistName)
         }

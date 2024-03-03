@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import NukeUI
 import Inject
 
 struct HeroCard: View {
@@ -96,10 +96,16 @@ struct HeroCard: View {
             }
             .modifier(SimpleHoverModifier())
             
-            WebImage(url: URL(string: item.subscriptionHero))
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 530 * scale, height: 135 * scale, alignment: .leading)
+            LazyImage(url: URL(string: item.subscriptionHero)) { state in
+                if let image = state.image {
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 530 * scale, height: 135 * scale, alignment: .leading)
+                }
+                
+                Color.clear
+            }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .shadow(radius: 8)
                 .brightness(isHovering ? -0.1 : 0)

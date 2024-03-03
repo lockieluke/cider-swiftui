@@ -56,7 +56,6 @@ struct AppTitleBar: View {
                             // TODO: Support third party casting services
                         }
                     }
-                    .transition(.fade)
                 }
 #endif
                 ActionButton(actionType: .Queue, enabled: $navigationModal.showQueue) {
@@ -92,7 +91,6 @@ struct AppTitleBar: View {
 #endif
                         }
                     })
-                    .transition(.fade)
                 }
                 Spacer()
                     .frame(width: 10)

@@ -41,7 +41,6 @@
 		B715303A2B66FB0D00A81935 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71530392B66FB0D00A81935 /* Analytics.swift */; };
 		B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82682A366F3B00DD8BC2 /* SwiftyUtils */; };
 		B71B826C2A366FC400DD8BC2 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B71B826B2A366FC400DD8BC2 /* SwiftyJSON */; };
-		B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82742A36703A00DD8BC2 /* SDWebImageSwiftUI */; };
 		B71B827B2A36708000DD8BC2 /* Rainbow in Frameworks */ = {isa = PBXBuildFile; productRef = B71B827A2A36708000DD8BC2 /* Rainbow */; };
 		B71B827E2A3670BD00DD8BC2 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B71B827D2A3670BD00DD8BC2 /* Alamofire */; };
 		B71B82812A3670E100DD8BC2 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = B71B82802A3670E100DD8BC2 /* WrappingHStack */; };
@@ -85,6 +84,11 @@
 		B75C7C1329B12AE500F7693E /* CatalogActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75C7C1229B12AE500F7693E /* CatalogActions.swift */; };
 		B764C3082B93853A00B5ABE2 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = B764C3072B93853A00B5ABE2 /* Tabler */; };
 		B764C30A2B93B4EC00B5ABE2 /* AlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */; };
+		B764C30D2B949C0600B5ABE2 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = B764C30C2B949C0600B5ABE2 /* Nuke */; };
+		B764C30F2B949C0600B5ABE2 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = B764C30E2B949C0600B5ABE2 /* NukeUI */; };
+		B764C3132B949FDC00B5ABE2 /* NSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C3122B949FDC00B5ABE2 /* NSView.swift */; };
+		B764C3152B949FF600B5ABE2 /* NoInsetHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764C3142B949FF600B5ABE2 /* NoInsetHostingView.swift */; };
+		B764C3182B94F0D100B5ABE2 /* NukeAlamofirePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B764C3172B94F0D100B5ABE2 /* NukeAlamofirePlugin */; };
 		B7663CC72A9223AC009E82DA /* Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC52A92223D009E82DA /* Apple.swift */; };
 		B7663CC92A922567009E82DA /* TapEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7663CC82A922567009E82DA /* TapEffectModifier.swift */; };
 		B766B18C2A74064E00B974E6 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B18B2A74064E00B974E6 /* BrowseView.swift */; };
@@ -314,6 +318,8 @@
 		B75C7C1229B12AE500F7693E /* CatalogActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogActions.swift; sourceTree = "<group>"; };
 		B764C2FB2B92953C00B5ABE2 /* MediaLibrarySong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLibrarySong.swift; sourceTree = "<group>"; };
 		B764C3092B93B4EC00B5ABE2 /* AlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
+		B764C3122B949FDC00B5ABE2 /* NSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSView.swift; sourceTree = "<group>"; };
+		B764C3142B949FF600B5ABE2 /* NoInsetHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInsetHostingView.swift; sourceTree = "<group>"; };
 		B7663CC52A92223D009E82DA /* Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apple.swift; sourceTree = "<group>"; };
 		B7663CC82A922567009E82DA /* TapEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapEffectModifier.swift; sourceTree = "<group>"; };
 		B766B18B2A74064E00B974E6 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
@@ -440,12 +446,14 @@
 				B7C364E02A5CB3D100D4711A /* SwiftUIIntrospect in Frameworks */,
 				B7C83DA92A561C9200470320 /* SnapKit in Frameworks */,
 				B71B82842A36711800DD8BC2 /* UIImageColors in Frameworks */,
-				B71B82752A36703A00DD8BC2 /* SDWebImageSwiftUI in Frameworks */,
+				B764C30D2B949C0600B5ABE2 /* Nuke in Frameworks */,
 				B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */,
+				B764C30F2B949C0600B5ABE2 /* NukeUI in Frameworks */,
 				B79475322B8C049A00A30756 /* SwiftyXPC in Frameworks */,
 				B71B82872A36712600DD8BC2 /* Settings in Frameworks */,
 				B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */,
 				B71B82812A3670E100DD8BC2 /* WrappingHStack in Frameworks */,
+				B764C3182B94F0D100B5ABE2 /* NukeAlamofirePlugin in Frameworks */,
 				B764C3082B93853A00B5ABE2 /* Tabler in Frameworks */,
 				B71B827E2A3670BD00DD8BC2 /* Alamofire in Frameworks */,
 				B71B828A2A36713300DD8BC2 /* Sliders in Frameworks */,
@@ -572,6 +580,7 @@
 				B71D54092ABCBC97001A62D6 /* NSWindow.swift */,
 				B7DDCCD52B267989006E1429 /* NSApplication.swift */,
 				B70294202B48D47000664181 /* HTTPURLResponse.swift */,
+				B764C3122B949FDC00B5ABE2 /* NSView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -611,6 +620,7 @@
 				B7DDCCD32B26772C006E1429 /* AboutView.swift */,
 				B70294222B49B9ED00664181 /* ChangelogsView.swift */,
 				B71EADE22B914F3100E57CED /* WebUIIsland.swift */,
+				B764C3142B949FF600B5ABE2 /* NoInsetHostingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -859,7 +869,6 @@
 			packageProductDependencies = (
 				B71B82682A366F3B00DD8BC2 /* SwiftyUtils */,
 				B71B826B2A366FC400DD8BC2 /* SwiftyJSON */,
-				B71B82742A36703A00DD8BC2 /* SDWebImageSwiftUI */,
 				B71B827A2A36708000DD8BC2 /* Rainbow */,
 				B71B827D2A3670BD00DD8BC2 /* Alamofire */,
 				B71B82802A3670E100DD8BC2 /* WrappingHStack */,
@@ -894,6 +903,9 @@
 				B74A41412B87B4BF003A8810 /* SwiftHtml */,
 				B79475312B8C049A00A30756 /* SwiftyXPC */,
 				B764C3072B93853A00B5ABE2 /* Tabler */,
+				B764C30C2B949C0600B5ABE2 /* Nuke */,
+				B764C30E2B949C0600B5ABE2 /* NukeUI */,
+				B764C3172B94F0D100B5ABE2 /* NukeAlamofirePlugin */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -983,7 +995,6 @@
 				B71B82672A366F3B00DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyUtils" */,
 				B71B826A2A366FC400DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				B71B826D2A36700200DD8BC2 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
-				B71B82732A36703A00DD8BC2 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				B71B82792A36708000DD8BC2 /* XCRemoteSwiftPackageReference "Rainbow" */,
 				B71B827C2A3670BD00DD8BC2 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				B71B827F2A3670E100DD8BC2 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
@@ -1012,6 +1023,8 @@
 				B74A41402B87B4BF003A8810 /* XCRemoteSwiftPackageReference "swift-html" */,
 				B79475302B8C049A00A30756 /* XCRemoteSwiftPackageReference "SwiftyXPC" */,
 				B764C3062B93853A00B5ABE2 /* XCRemoteSwiftPackageReference "SwiftTabler" */,
+				B764C30B2B949C0600B5ABE2 /* XCRemoteSwiftPackageReference "Nuke" */,
+				B764C3162B94F0D100B5ABE2 /* XCRemoteSwiftPackageReference "Nuke-Alamofire-Plugin" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -1146,6 +1159,7 @@
 				B7B54CDA2B8D3D5F0000876C /* CiderElevationHelperCommandSet.swift in Sources */,
 				B79529172B1E733200D98653 /* CiderUpdateServiceProtocol.swift in Sources */,
 				B71D54082ABCBADA001A62D6 /* OnboardingExperience.swift in Sources */,
+				B764C3132B949FDC00B5ABE2 /* NSView.swift in Sources */,
 				B7663CC72A9223AC009E82DA /* Apple.swift in Sources */,
 				B79230B72A4B834B003F3D99 /* UIApplication.swift in Sources */,
 				B7AAB70B28BD24B4009AABEA /* MKModal.swift in Sources */,
@@ -1270,6 +1284,7 @@
 				B79230B92A4B8B46003F3D99 /* URL.swift in Sources */,
 				B76FC6CC2A8F889D00F8F80E /* ConnectModal.swift in Sources */,
 				B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */,
+				B764C3152B949FF600B5ABE2 /* NoInsetHostingView.swift in Sources */,
 				B78B721129F09A64006EDC69 /* SwiftBridgeCore.swift in Sources */,
 				B7ECB7A828FAD07D00B5DF11 /* Networking.swift in Sources */,
 				B7AAF7762ACE096600A9346C /* DonateView.swift in Sources */,
@@ -1810,14 +1825,6 @@
 				minimumVersion = 1.1.3;
 			};
 		};
-		B71B82732A36703A00DD8BC2 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.3;
-			};
-		};
 		B71B82792A36708000DD8BC2 /* XCRemoteSwiftPackageReference "Rainbow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Rainbow";
@@ -1946,6 +1953,22 @@
 				minimumVersion = 0.9.7;
 			};
 		};
+		B764C30B2B949C0600B5ABE2 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.4.0;
+			};
+		};
+		B764C3162B94F0D100B5ABE2 /* XCRemoteSwiftPackageReference "Nuke-Alamofire-Plugin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke-Alamofire-Plugin.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		B76FC6F42A8FE14900F8F80E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -2058,11 +2081,6 @@
 			package = B71B826A2A366FC400DD8BC2 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		B71B82742A36703A00DD8BC2 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B71B82732A36703A00DD8BC2 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
 		B71B827A2A36708000DD8BC2 /* Rainbow */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B71B82792A36708000DD8BC2 /* XCRemoteSwiftPackageReference "Rainbow" */;
@@ -2147,6 +2165,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B764C3062B93853A00B5ABE2 /* XCRemoteSwiftPackageReference "SwiftTabler" */;
 			productName = Tabler;
+		};
+		B764C30C2B949C0600B5ABE2 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B764C30B2B949C0600B5ABE2 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		B764C30E2B949C0600B5ABE2 /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B764C30B2B949C0600B5ABE2 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
+		};
+		B764C3172B94F0D100B5ABE2 /* NukeAlamofirePlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B764C3162B94F0D100B5ABE2 /* XCRemoteSwiftPackageReference "Nuke-Alamofire-Plugin" */;
+			productName = NukeAlamofirePlugin;
 		};
 		B76FC6F52A8FE14900F8F80E /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;

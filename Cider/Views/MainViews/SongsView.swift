@@ -10,7 +10,7 @@ import SwiftUI
 import Inject
 import Lottie
 import Tabler
-import SDWebImageSwiftUI
+import NukeUI
 import Throttler
 
 struct SongsView: View {
@@ -116,41 +116,47 @@ struct SongsView: View {
                     let isPlaying = song.id == ciderPlayback.nowPlayingState.item?.id
                     
                     LazyVGrid(columns: gridItems) {
-                        WebImage(url: song.artwork.getUrl(width: 30, height: 30))
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                            .onHover { isHovering in
-                                self.artworkHovered = isHovering ? song.id : nil
+                        LazyImage(url: song.artwork.getUrl(width: 30, height: 30)) { state in
+                            if let image = state.image {
+                                image
+                                    .resizable()
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
                             }
-                            .overlay {
-                                if isPlaying {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(.black.opacity(0.5))
-                                        .overlay {
-                                            Image(systemSymbol: .play)
-                                                .foregroundColor(.white)
-                                                .background(Color.black.opacity(0.5))
-                                        }
-                                } else {
-                                    if artworkHovered {
-                                        Button {
-                                            Task {
-                                                await self.ciderPlayback.playbackEngine.setQueue(item: song)
-                                                await self.ciderPlayback.clearAndPlay()
-                                            }
-                                        } label: {
-                                            Image(systemSymbol: .playFill)
-                                                .foregroundColor(.white)
-                                                .padding(5)
-                                                .background(Color.black.opacity(0.5))
-                                                .clipShape(Circle())
-                                        }
-                                        .buttonStyle(.plain)
-                                        .padding(5)
+                            
+                            Color.clear
+                        }
+                        .frame(width: 30, height: 30)
+                        .onHover { isHovering in
+                            self.artworkHovered = isHovering ? song.id : nil
+                        }
+                        .overlay {
+                            if isPlaying {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(.black.opacity(0.5))
+                                    .overlay {
+                                        Image(systemSymbol: .play)
+                                            .foregroundColor(.white)
+                                            .background(Color.black.opacity(0.5))
                                     }
+                            } else {
+                                if artworkHovered {
+                                    Button {
+                                        Task {
+                                            await self.ciderPlayback.playbackEngine.setQueue(item: song)
+                                            await self.ciderPlayback.clearAndPlay()
+                                        }
+                                    } label: {
+                                        Image(systemSymbol: .playFill)
+                                            .foregroundColor(.white)
+                                            .padding(5)
+                                            .background(Color.black.opacity(0.5))
+                                            .clipShape(Circle())
+                                    }
+                                    .buttonStyle(.plain)
+                                    .padding(5)
                                 }
                             }
+                        }
                         Text(song.title)
                         Text(song.artistName)
                     }
