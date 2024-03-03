@@ -27,6 +27,7 @@ extension Defaults.Keys {
     static let lastLaunchDate = Key<Date>("lastLaunchDate", default: .now)
     static let neverShowDonationPopup = Key<Bool>("neverShowDonationPopup", default: false)
     static let usePretendardFont = Key<Bool>("usePretendardFont", default: false)
+    static let rootStacksSleepSeconds = Key<Int>("rootStacksSleepSeconds", default: 10)
     
     static let sidebarWidth = Key<Double>("sidebarWidth", default: 275.0)
     static let showSidebarAtLaunch = Key<Bool>("showSidebarAtLaunch", default: true)

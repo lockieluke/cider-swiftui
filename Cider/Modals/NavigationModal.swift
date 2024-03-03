@@ -103,15 +103,22 @@ class NavigationModal : ObservableObject {
     
     @Published var currentRootStack: RootNavigationType = .Home {
         didSet {
-            let thisRootStack = currentRootStack
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10)) {
-                if thisRootStack == self.currentRootStack {
-                    self.loadedRootStacks.forEach {
-                        if $0 != thisRootStack {
-                            self.loadedRootStacks.remove($0)
+            if loadedRootStacks.count > 1 {
+                let thisRootStack = currentRootStack
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Defaults[.rootStacksSleepSeconds])) {
+                    if thisRootStack == self.currentRootStack {
+                        var cleanedUpPages = false
+                        self.loadedRootStacks.forEach {
+                            if $0 != thisRootStack {
+                                self.loadedRootStacks.remove($0)
+                                cleanedUpPages = true
+                            }
+                        }
+                        
+                        if cleanedUpPages {
+                            Logger.sharedLoggers[.UIInteraction]?.success("Cleaned up unused root stacks", displayTick: true)
                         }
                     }
-                    Logger.sharedLoggers[.UIInteraction]?.success("Cleaned up unused root stacks", displayTick: true)
                 }
             }
         }

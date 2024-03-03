@@ -16,6 +16,7 @@ struct GeneralPreferencesPane: View {
     @EnvironmentObject private var navigationModal: NavigationModal
     
     @Default(.shareAnalytics) private var shareAnalytics
+    @Default(.rootStacksSleepSeconds) private var rootStacksSleepSeconds
     
     struct DataShareTypeView: View {
         
@@ -49,6 +50,17 @@ struct GeneralPreferencesPane: View {
                         .toggleStyle(.switch)
                         .controlSize(.small)
                     Text("Restart is required for changes to take effect")
+                        .settingDescription()
+                    
+                    PrefSectionText("Performance")
+                    Picker("Pages sleep after", selection: $rootStacksSleepSeconds) {
+                        Text("10 seconds").tag(10)
+                        Text("30 seconds").tag(30)
+                        Text("1 minute").tag(60)
+                        Text("5 minutes").tag(60 * 5)
+                        Text("10 minutes").tag(60 * 10)
+                    }
+                    Text("Individual pages like Home and Listen Now go to sleep after the specified time of inactivity to reserve system resources")
                         .settingDescription()
                     
                     PrefSectionText("Analytics")
