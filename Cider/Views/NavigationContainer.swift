@@ -51,7 +51,6 @@ struct NavigationContainer: View {
                 ZStack {
                     if self.mkModal.isAuthorised {
                         let currentRootStack = navigationModal.currentRootStack
-                        let hasShown = navigationModal.loadedRootStacks.contains(currentRootStack)
                         ForEach(navigationModal.viewsStack, id: \.id) { viewStack in
                             let isPresent = viewStack.isPresent
                             let viewStackOrigin = viewStack.rootStackOrigin ?? .AnyView
@@ -63,31 +62,36 @@ struct NavigationContainer: View {
                                 Group {
                                     HomeView()
                                         .hideWithoutDestroying(currentRootStack != .Home || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Home }).count > 1)
-                                        .isHidden(!hasShown, remove: true)
                                     
-                                    ListenNowView()
-                                        .hideWithoutDestroying(currentRootStack != .ListenNow || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .ListenNow }).count > 0)
-                                        .isHidden(!hasShown, remove: true)
+                                    if navigationModal.hasLoadedRootStack(.ListenNow) {
+                                        ListenNowView()
+                                            .hideWithoutDestroying(currentRootStack != .ListenNow || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .ListenNow }).count > 0)
+                                    }
                                     
-                                    BrowseView()
-                                        .hideWithoutDestroying(currentRootStack != .Browse || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Browse }).count > 0)
-                                        .isHidden(!hasShown, remove: true)
+                                    if navigationModal.hasLoadedRootStack(.Browse) {
+                                        BrowseView()
+                                            .hideWithoutDestroying(currentRootStack != .Browse || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Browse }).count > 0)
+                                    }
                                     
-                                    RadioView()
-                                        .hideWithoutDestroying(currentRootStack != .Radio || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Radio }).count > 0)
-                                        .isHidden(!hasShown, remove: true)
+                                    if navigationModal.hasLoadedRootStack(.Radio) {
+                                        RadioView()
+                                            .hideWithoutDestroying(currentRootStack != .Radio || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Radio }).count > 0)
+                                    }
                                     
-                                    RecentlyAddedView()
-                                        .hideWithoutDestroying(currentRootStack != .RecentlyAdded || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .RecentlyAdded }).count > 0)
-                                        .isHidden(!hasShown, remove: true)
+                                    if navigationModal.hasLoadedRootStack(.RecentlyAdded) {
+                                        RecentlyAddedView()
+                                            .hideWithoutDestroying(currentRootStack != .RecentlyAdded || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .RecentlyAdded }).count > 0)
+                                    }
                                     
-                                    SongsView()
-                                        .hideWithoutDestroying(currentRootStack != .Songs || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Songs }).count > 0)
-                                        .isHidden(!hasShown, remove: true)
+                                    if navigationModal.hasLoadedRootStack(.Songs) {
+                                        SongsView()
+                                            .hideWithoutDestroying(currentRootStack != .Songs || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Songs }).count > 0)
+                                    }
                                     
-                                    AlbumsView()
-                                        .hideWithoutDestroying(currentRootStack != .Albums || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Albums }).count > 0)
-                                        .isHidden(!hasShown, remove: true)
+                                    if navigationModal.hasLoadedRootStack(.Albums) {
+                                        AlbumsView()
+                                            .hideWithoutDestroying(currentRootStack != .Albums || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Albums }).count > 0)
+                                    }
                                 }
                                 
                             case .detailedViewParams(let detailedViewParams):

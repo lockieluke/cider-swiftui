@@ -165,6 +165,10 @@ class NavigationModal : ObservableObject {
         self.viewsStack[0].isPresent = true
     }
     
+    func hasLoadedRootStack(_ rootStack: RootNavigationType) -> Bool {
+        return self.loadedRootStacks.contains(rootStack)
+    }
+    
     func goBack() {
         if let indexToRemove = self.viewsStack.lastIndex(where: { viewStack in viewStack.rootStackOrigin == self.currentRootStack }) {
             self.viewsStack.remove(at: indexToRemove)
