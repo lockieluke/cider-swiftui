@@ -98,7 +98,7 @@ struct DetailedView: View {
                 VStack {
                     let sqaureSize = geometry.minRelative * 0.4
                     
-                    let cover = LazyImage(url: artwork.getUrl(width: 600, height: 600, kind: self.detailedViewParams.coverKind)) { state in
+                    LazyImage(url: artwork.getUrl(width: 600, height: 600, kind: self.detailedViewParams.coverKind)) { state in
                         if let image = state.image, let nsImage = image.renderAsImage() {
                             image
                                 .resizable()
@@ -142,12 +142,6 @@ struct DetailedView: View {
                         }
                         .padding(.vertical, 5)
                         .modifier(catalogActions)
-                    
-                    if let animationNamespace = self.detailedViewParams.geometryMatching, let animationId = self.detailedViewParams.animationId {
-                        cover.matchedGeometryEffect(id: "MediaPresentable-\(animationId)", in: animationNamespace, properties: .position)
-                    } else {
-                        cover
-                    }
                     
                     VStack {
                         Group {

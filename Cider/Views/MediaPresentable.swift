@@ -127,7 +127,6 @@ struct MediaPresentable: View {
                             }
                         }
                     }
-                    .matchedGeometryEffect(id: "MediaPresentable-\(animationId)", in: animationNamespace!, properties: .frame, isSource: true)
             }
             
             Text("\(title)")
