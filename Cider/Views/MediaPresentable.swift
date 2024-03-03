@@ -49,7 +49,7 @@ struct MediaPresentable: View {
     var innerBody: some View {
         VStack {
             ZStack {
-                LazyImage(url: artwork.getUrl(width: 200, height: 200, kind: coverKind)) { state in
+                LazyImage(url: artwork.getUrl(width: 100, height: 100, kind: coverKind)) { state in
                     if let image = state.image {
                         image
                             .resizable()
@@ -59,6 +59,7 @@ struct MediaPresentable: View {
                     
                     Color.clear
                 }
+                .priority(.high)
                 .frame(width: maxRelative * 0.15, height: maxRelative * 0.15, alignment: .center)
                 .fixedSize()
                 .cornerRadius(isHostOrArtist ? .infinity : 5)

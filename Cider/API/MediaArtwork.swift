@@ -38,19 +38,19 @@ struct MediaArtwork {
         self.bgColour = PlatformColor(hex: data["bgColor"].stringValue)
     }
     
-    static func getUrl(url: String, dimension: CGSize, kind: String = "bb", format: String = "jpg") -> URL {
+    static func getUrl(url: String, dimension: CGSize, kind: String = "bb", format: String = "webp") -> URL {
         return URL(string: url.replacingOccurrences(of: "{w}", with: String(format: "%.0f", dimension.width)).replacingOccurrences(of: "{h}", with: String(format: "%.0f", dimension.height)).replacingOccurrences(of: "bb.", with: "\(kind).").replacingOccurrences(of: "{c}", with: kind).replacingOccurrences(of: "{f}", with: format)) ?? Bundle.main.url(forResource: "MissingArtwork", withExtension: "png")!
     }
     
-    func getUrl(_ dimension: CGSize, kind: String = "bb", format: String = "jpg") -> URL {
+    func getUrl(_ dimension: CGSize, kind: String = "bb", format: String = "webp") -> URL {
         return MediaArtwork.getUrl(url: self.rawUrl, dimension: dimension, kind: kind, format: format)
     }
     
-    func getUrl(width: Int, height: Int, kind: String = "bb", format: String = "jpg") -> URL {
+    func getUrl(width: Int, height: Int, kind: String = "bb", format: String = "webp") -> URL {
         return self.getUrl(CGSize(width: width, height: height), kind: kind, format: format)
     }
     
-    func getUrlWithDefaultSize(kind: String = "bb", format: String = "jpg") -> URL {
+    func getUrlWithDefaultSize(kind: String = "bb", format: String = "webp") -> URL {
         return self.getUrl(CGSize(width: self.width, height: self.height), kind: kind, format: format)
     }
     

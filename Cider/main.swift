@@ -54,6 +54,7 @@ class AppDelegate : NSObject, ApplicationDelegate {
         let pipeline = ImagePipeline {
             $0.dataLoader = NukeAlamofirePlugin.AlamofireDataLoader()
             $0.imageCache = ImageCache.shared
+            $0.dataCachePolicy = .storeAll
         }
         
         ImagePipeline.shared = pipeline
