@@ -550,11 +550,13 @@ class AMAPI {
         return []
     }
     
-    func fetchRecentlyPlayed(limit: Int = 25) async -> [MediaDynamic] {
-        var parameters: [String : Any]? = nil
-        
+    func fetchRecentlyPlayed(limit: Int = 12) async -> [MediaDynamic] {
         let res = await AMAPI.amSession.request("\(APIEndpoints.AMAPI)/me/recent/played", parameters: [
-            "limit": limit
+            "limit": limit,
+            "platform": "web",
+            "include": "tracks",
+            "include[albums]": "catalog,tracks,artists",
+            "include[songs]": "catalog,artists"
         ], encoding: URLEncoding(destination: .queryString)).validate().serializingData().response
         if let error = res.error {
             self.logger.error("Failed to fetch personal social profile: \(error.localizedDescription)")
