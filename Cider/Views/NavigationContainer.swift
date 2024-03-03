@@ -29,7 +29,6 @@ struct NavigationContainer: View {
             HSplitView {
                 SidebarPane()
                     .frame(width: navigationModal.shouldHideSidebar ? .zero : navigationModal.showSidebar ? nil : .zero)
-                    .animation(isAdjustingSidebar ? .none : .interactiveSpring)
                     .overlay {
                         GeometryReader { geometry in
                             Color.clear
