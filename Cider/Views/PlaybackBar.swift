@@ -106,13 +106,13 @@ struct PlaybackBar: View {
                         self.currentTimeValue = Double(newCurrentTime ?? 0)
                     }
                 }
-                .onChange(of: self.ciderPlayback.nowPlayingState.duration) { newDuration in
-                    if newDuration != .zero && newDuration > 0 && self.ciderPlayback.nowPlayingState.playbackPipelineInitialised {
-                        self.duration = newDuration
-                    } else if self.ciderPlayback.nowPlayingState.item.isNil && !self.ciderPlayback.nowPlayingState.isPlaying {
-                        self.duration = 0
-                    }
-                }
+            }
+        }
+        .onChange(of: self.ciderPlayback.nowPlayingState.duration) { newDuration in
+            if newDuration != .zero && newDuration > 0 && self.ciderPlayback.nowPlayingState.playbackPipelineInitialised {
+                self.duration = newDuration
+            } else if self.ciderPlayback.nowPlayingState.item.isNil && !self.ciderPlayback.nowPlayingState.isPlaying {
+                self.duration = 0
             }
         }
         .enableInjection()
