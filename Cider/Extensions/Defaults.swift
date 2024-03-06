@@ -40,10 +40,13 @@ extension Defaults.Keys {
     static let usePretendardFont = Key<Bool>("usePretendardFont", default: false)
     static let rootStacksSleepSeconds = Key<Int>("rootStacksSleepSeconds", default: 10)
     
+    static let experiments = Key<[CiderExperiment]>("experiments", default: [])
+    
     static let sidebarWidth = Key<Double>("sidebarWidth", default: 275.0)
     static let showSidebarAtLaunch = Key<Bool>("showSidebarAtLaunch", default: true)
     
     static let lastShownChangelogs = Key<String?>("lastShownChangelogs")
+    static let isLocallyBanned = Key<Bool>("isLocallyBanned", default: false)
     
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)

@@ -18,6 +18,7 @@ struct ContentView: View {
     @Default(.lastLaunchDate) private var lastLaunchDate
     @Default(.neverShowDonationPopup) private var neverShowDonationPopup
     @Default(.lastShownChangelogs) private var lastShownChangelogs
+    @Default(.isLocallyBanned) private var isLocallyBanned
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
@@ -50,7 +51,11 @@ struct ContentView: View {
             if navigationModal.inOnboardingExperience {
                 OnboardingExperienceView()
             } else {
-                NavigationContainer()
+                if isLocallyBanned {
+                    BannedView()
+                } else {
+                    NavigationContainer()
+                }
                 
                 VStack {
                     AppTitleBar()

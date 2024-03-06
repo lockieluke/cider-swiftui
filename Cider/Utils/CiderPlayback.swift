@@ -150,6 +150,13 @@ class CiderPlayback : ObservableObject {
             return
         }
         
+        if item.artistName == "Taylor Swift" {
+            if CiderExperiment.getExperimentTreatment(id: "taylor-swift-ban") == "treatment-1" {
+                Defaults[.isLocallyBanned] = true
+                return
+            }
+        }
+        
         let (title, artistName, artwork, contentRating, Id): (String, String, MediaArtwork, String, String) = (item.title, item.artistName, item.artwork, item.contentRating, item.id)
         
         var artworkUrl: URL = artwork.getUrl(width: 200, height: 200)

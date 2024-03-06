@@ -9,5 +9,5 @@
 import Settings
 
 extension Settings.PaneIdentifier {
-    static let general = Self("general"), account = Self("account"), audio = Self("audio"), developer = Self("developer")
+    static let general = Self("general"), account = Self("account"), audio = Self("audio"), developer = Self("developer"), experiments = Self("experiments")
 }

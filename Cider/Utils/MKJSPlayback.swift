@@ -230,10 +230,12 @@ class MKJSPlayback: PlaybackEngineBaseClass, PlaybackEngine {
     }
     
     private func runMKJS(_ script: String, arguments: [String: Any] = [:], async: Bool = false, isAssignment: Bool = false) async {
-        do {
-            _ = try await self.webview.callAsyncJavaScript("\(isAssignment ? "" : "return ")\(async ? "await " : "")window.ciderInterop.\(script)", arguments: arguments, contentWorld: .page)
-        } catch {
-            self.logger.error("Failed to run MKJS sync command: \(error.localizedDescription)")
+        if !self.webview.isNil {
+            do {
+                _ = try await self.webview.callAsyncJavaScript("\(isAssignment ? "" : "return ")\(async ? "await " : "")window.ciderInterop.\(script)", arguments: arguments, contentWorld: .page)
+            } catch {
+                self.logger.error("Failed to run MKJS sync command: \(error.localizedDescription)")
+            }
         }
     }
     

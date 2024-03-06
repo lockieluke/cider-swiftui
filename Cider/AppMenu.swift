@@ -50,9 +50,8 @@ class AppMenu {
             panes: [
                 PreferencesPanes.GeneralPreferenceViewController(cacheModal, navigationModal),
                 PreferencesPanes.AccountPreferencesViewController(connectModal),
-                PreferencesPanes.AudioPreferencesViewController(
-                    ciderPlayback
-                )
+                PreferencesPanes.AudioPreferencesViewController(ciderPlayback),
+                PreferencesPanes.ExperimentsPreferencesViewController()
             ] + additionalPanes,
             style: .toolbarItems,
             animated: true,

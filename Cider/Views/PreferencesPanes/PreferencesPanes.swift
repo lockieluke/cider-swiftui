@@ -56,7 +56,7 @@ struct PrefSectionText: View {
 struct PreferencesPanes {
     
     static let GeneralPreferenceViewController: (_ cacheModal: CacheModal, _ navigationModal: NavigationModal) -> SettingsPane = { cacheModal, navigationModal in
-        let paneView = Settings.Pane(
+        return Settings.PaneHostingController(pane: Settings.Pane(
             identifier: .general,
             title: "General",
             toolbarIcon: NSImage(systemSymbol: .gearshape, accessibilityDescription: "General Preferences")
@@ -64,27 +64,23 @@ struct PreferencesPanes {
             GeneralPreferencesPane()
                 .environmentObject(cacheModal)
                 .environmentObject(navigationModal)
-        }
-        
-        return Settings.PaneHostingController(pane: paneView)
+        })
     }
     
     static let AccountPreferencesViewController: (_ connectModal: ConnectModal) -> SettingsPane = { connectModal in
-        let paneView = Settings.Pane(
+        return Settings.PaneHostingController(pane: Settings.Pane(
             identifier: .account,
             title: "Connect",
             toolbarIcon: NSImage(systemSymbol: .personCircle, accessibilityDescription: "Cider Connect Preferences")
         ) {
             AccountPreferencesPane()
                 .environmentObject(connectModal)
-        }
-        
-        return Settings.PaneHostingController(pane: paneView)
+        })
     }
     
     #if DEBUG
     static let DeveloperPreferencesViewController: (_ mkModal: MKModal, _ ciderPlayback: CiderPlayback) -> SettingsPane = { mkModal, ciderPlayback in
-        let paneView = Settings.Pane(
+        return Settings.PaneHostingController(pane: Settings.Pane(
             identifier: .developer,
             title: "Developer",
             toolbarIcon: NSImage(systemSymbol: .wrenchAndScrewdriverFill, accessibilityDescription: "Developer Preferences")
@@ -92,23 +88,29 @@ struct PreferencesPanes {
             DeveloperPreferencesPane()
                 .environmentObject(mkModal)
                 .environmentObject(ciderPlayback)
-        }
-        
-        return Settings.PaneHostingController(pane: paneView)
+        })
     }
     #endif
     
     static let AudioPreferencesViewController: (_ ciderPlayback: CiderPlayback) -> SettingsPane = { ciderPlayback in
-        let paneView = Settings.Pane(
+        return Settings.PaneHostingController(pane: Settings.Pane(
             identifier: .audio,
             title: "Audio",
             toolbarIcon: NSImage(systemSymbol: .waveform, accessibilityDescription: "Audio Preferences")
         ) {
             AudioPreferencesPane()
                 .environmentObject(ciderPlayback)
-        }
-        
-        return Settings.PaneHostingController(pane: paneView)
+        })
+    }
+    
+    static let ExperimentsPreferencesViewController: () -> SettingsPane = {
+        return Settings.PaneHostingController(pane: Settings.Pane(
+            identifier: .experiments,
+            title: "Experiments",
+            toolbarIcon: NSImage(systemSymbol: .atom, accessibilityDescription: "Experiments Preferences")
+        ) {
+            ExperimentsPreferencesPane()
+        })
     }
     
 }
