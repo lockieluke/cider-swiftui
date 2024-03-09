@@ -161,6 +161,7 @@
 		B7A57EA52B9C913300480C88 /* AckGenUI in Frameworks */ = {isa = PBXBuildFile; productRef = B7A57EA42B9C913300480C88 /* AckGenUI */; };
 		B7A57EA82B9C91D200480C88 /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7A57EA72B9C91D100480C88 /* Acknowledgements.plist */; };
 		B7A57EAA2B9C931200480C88 /* LicencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A57EA92B9C931200480C88 /* LicencesView.swift */; };
+		B7A57EAD2B9CCF9E00480C88 /* ExtrasBase64 in Frameworks */ = {isa = PBXBuildFile; productRef = B7A57EAC2B9CCF9E00480C88 /* ExtrasBase64 */; };
 		B7A6EB6829C539800041FDD7 /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6EB6729C539800041FDD7 /* QueueView.swift */; };
 		B7AAB6FA28BABE83009AABEA /* SearchModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6F928BABE83009AABEA /* SearchModal.swift */; };
 		B7AAB6FC28BABF64009AABEA /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AAB6FB28BABF64009AABEA /* SearchBar.swift */; };
@@ -466,6 +467,7 @@
 				B764C30D2B949C0600B5ABE2 /* Nuke in Frameworks */,
 				B71B82692A366F3B00DD8BC2 /* SwiftyUtils in Frameworks */,
 				B764C30F2B949C0600B5ABE2 /* NukeUI in Frameworks */,
+				B7A57EAD2B9CCF9E00480C88 /* ExtrasBase64 in Frameworks */,
 				B79475322B8C049A00A30756 /* SwiftyXPC in Frameworks */,
 				B71B82872A36712600DD8BC2 /* Settings in Frameworks */,
 				B76FC6F62A8FE14900F8F80E /* GoogleSignIn in Frameworks */,
@@ -935,6 +937,7 @@
 				B764C31C2B951EBC00B5ABE2 /* SplitView */,
 				B7A57EA22B9C913300480C88 /* AckGen */,
 				B7A57EA42B9C913300480C88 /* AckGenUI */,
+				B7A57EAC2B9CCF9E00480C88 /* ExtrasBase64 */,
 			);
 			productName = Cider;
 			productReference = B700C17D28B920F10069FDF5 /* Cider (Dev).app */;
@@ -1056,6 +1059,7 @@
 				B764C3162B94F0D100B5ABE2 /* XCRemoteSwiftPackageReference "Nuke-Alamofire-Plugin" */,
 				B764C31B2B951EBC00B5ABE2 /* XCRemoteSwiftPackageReference "SplitView" */,
 				B7A57EA12B9C913300480C88 /* XCRemoteSwiftPackageReference "AckGen" */,
+				B7A57EAB2B9CCF9E00480C88 /* XCRemoteSwiftPackageReference "swift-extras-base64" */,
 			);
 			productRefGroup = B700C17E28B920F10069FDF5 /* Products */;
 			projectDirPath = "";
@@ -2073,6 +2077,14 @@
 				minimumVersion = 0.1.7;
 			};
 		};
+		B7A57EAB2B9CCF9E00480C88 /* XCRemoteSwiftPackageReference "swift-extras-base64" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swift-extras/swift-extras-base64.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
 		B7AAF7772ACE175900A9346C /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -2327,6 +2339,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7A57EA12B9C913300480C88 /* XCRemoteSwiftPackageReference "AckGen" */;
 			productName = AckGenUI;
+		};
+		B7A57EAC2B9CCF9E00480C88 /* ExtrasBase64 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7A57EAB2B9CCF9E00480C88 /* XCRemoteSwiftPackageReference "swift-extras-base64" */;
+			productName = ExtrasBase64;
 		};
 		B7AAF7782ACE175900A9346C /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
