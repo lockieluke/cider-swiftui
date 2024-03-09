@@ -114,6 +114,13 @@ tasks:
     cmds:
       - bun generate-licences
 
+  generate-licences:swift:
+    desc: "Generate licences for Swift"
+    generates:
+      - Acknowledgements.plist
+    cmds:
+      - (cd "{{.XC_PROJECT_HASH}}/SourcePackages/checkouts/AckGen"; swift run ackgen)
+
   build:xc:
     desc: "Build Xcode target"
     preconditions:

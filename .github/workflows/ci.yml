@@ -112,7 +112,9 @@ jobs:
           crate: swift-precompiler
 
       - name: Build JS modules
-        run: task build:all-js
+        run: |
+          task build:all-js
+          task generate-licences:cider-web-modules
 
       - name: Fetch Google API credentials
         run: task fetch:google-services

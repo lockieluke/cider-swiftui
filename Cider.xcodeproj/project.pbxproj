@@ -1156,7 +1156,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nDIR=$PROJECT_TEMP_DIR/../../../SourcePackages/checkouts/AckGen\nif [ -d \"$DIR\" ]; then\n  cd $DIR\n  SDKROOT=(xcrun --sdk macosx --show-sdk-path)\n  swift run ackgen\nelse\n  echo \"warning: AckGen not found. Please install the package via SPM (https://github.com/MartinP7r/AckGen#installation)\"\nfi\n\n(cd $SRCROOT; task generate-licences:cider-web-modules)\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\n(cd $SRCROOT; task generate-licences:swift generate-licences:cider-web-modules --parallel)\n";
 		};
 		B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */ = {
 			isa = PBXShellScriptBuildPhase;
