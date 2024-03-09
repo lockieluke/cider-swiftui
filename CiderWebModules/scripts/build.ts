@@ -64,7 +64,8 @@ for await (const route of routes.scan()) {
                 outDir: "./",
                 emptyOutDir: false
             },
-            base: "./"
+            base: "./",
+            mode: "production"
         });
     } catch (error) {
         spinner.fail(`Failed to build ${route}`);

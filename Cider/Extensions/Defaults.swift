@@ -47,6 +47,7 @@ extension Defaults.Keys {
     
     static let lastShownChangelogs = Key<String?>("lastShownChangelogs")
     static let isLocallyBanned = Key<Bool>("isLocallyBanned", default: false)
+    static let shownInviteBeta = Key<Bool>("shownInviteBeta", default: false)
     
     #if DEBUG
     static let debugOpenWebInspectorAutomatically = Key<Bool>("openWebInspectorAutomatically", default: false)

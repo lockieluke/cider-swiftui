@@ -9,6 +9,7 @@ import Inject
 import Defaults
 import SFSafeSymbols
 import KeychainAccess
+import Lottie
 
 struct ContentView: View {
     
@@ -19,6 +20,7 @@ struct ContentView: View {
     @Default(.neverShowDonationPopup) private var neverShowDonationPopup
     @Default(.lastShownChangelogs) private var lastShownChangelogs
     @Default(.isLocallyBanned) private var isLocallyBanned
+    @Default(.shownInviteBeta) private var shownInviteBeta
     
     @EnvironmentObject private var mkModal: MKModal
     @EnvironmentObject private var appWindowModal: AppWindowModal
@@ -64,6 +66,10 @@ struct ContentView: View {
                     PlaybackView()
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .frame(height: 100)
+                }
+                
+                if !shownInviteBeta {
+                    InviteBetaView()
                 }
             }
         }

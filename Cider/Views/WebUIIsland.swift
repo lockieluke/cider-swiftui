@@ -18,6 +18,39 @@ struct WebUIIsland: View {
     private let name: String
     private let staticHtml: String
     private let webview: WKWebView
+    private let onMessage: ((String, [String: AnyObject], WKWebView) -> Void)?
+    private lazy var wkUIDelegate = WebUIIslandUIDelegate(parent: self)
+    private lazy var wkMessageHandler = WebUIIslandMessageHandler(parent: self)
+    
+    class WebUIIslandUIDelegate: NSObject, WKUIDelegate {
+        private let parent: WebUIIsland!
+        
+        init(parent: WebUIIsland) {
+            self.parent = parent
+        }
+        
+        func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo) async {
+            if let mainWindow = await NSApp.keyWindow {
+                await Alert.showModal(on: mainWindow, message: message)
+            }
+        }
+    }
+    
+    class WebUIIslandMessageHandler: NSObject, WKScriptMessageHandler {
+        private let parent: WebUIIsland!
+        
+        init(parent: WebUIIsland) {
+            self.parent = parent
+        }
+        
+        func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+            if message.name == "ciderkit" {
+                guard let dict = message.body as? [String: AnyObject], let eventName = dict["event"] as? String else { return }
+
+                self.parent.onMessage?(eventName, dict, self.parent.webview)
+            }
+        }
+    }
     
     private func loadPage() {
         #if DEBUG
@@ -28,15 +61,25 @@ struct WebUIIsland: View {
         #endif
     }
     
-    init(name: String, staticHtml: String) {
+    private func dispose() {
+        let disposeSel: Selector = NSSelectorFromString("_killWebContentProcess")
+        self.webview.perform(disposeSel)
+    }
+    
+    init(name: String, staticHtml: String, _ onMessage: ((String, [String: AnyObject], WKWebView) -> Void)? = nil) {
         self.logger = Logger(label: "Web UI Island - \(name)")
         self.name = name
         self.staticHtml = staticHtml
+        self.onMessage = onMessage
         self.webview = WKWebView().then {
             $0.setValue(false, forKey: "drawsBackground")
             #if DEBUG
             $0.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
             #endif
+        }
+        defer {
+            self.webview.uiDelegate = self.wkUIDelegate
+            self.webview.configuration.userContentController.add(self.wkMessageHandler, name: "ciderkit")
         }
     }
     
@@ -57,6 +100,9 @@ struct WebUIIsland: View {
             }
             .onAppear {
                 self.loadPage()
+            }
+            .onDisappear {
+                self.dispose()
             }
             .enableInjection()
     }

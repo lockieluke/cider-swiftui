@@ -27,35 +27,42 @@ const server = await createServer(mergeConfig<UserConfig, InlineConfig>(baseConf
             input: path.resolve(__dirname, "index.html")
         }
     },
-    plugins: [solidPlugin(), {
+    plugins: [solidPlugin({
+        dev: true,
+        hot: true,
+        ssr: false
+    }), {
         name: "web-modules-dev-server",
-        transformIndexHtml(html, {originalUrl}) {
-            const url = new URL(`http://localhost:5173${originalUrl}`);
-            const $ = cheerio.load(html);
+        transformIndexHtml: {
+            order: "pre",
+            handler(html, {originalUrl}) {
+                const url = new URL(`http://localhost:5173${originalUrl}`);
+                const $ = cheerio.load(html);
 
-            if (url.pathname === "/") {
-                $("<script></script>").attr("type", "module").text("import './src/index.scss';").appendTo("head");
-                $("<title></title>").text("CiderWebModules").appendTo("head");
+                if (url.pathname === "/") {
+                    $("<script></script>").attr("type", "module").text("import './src/index.scss';").appendTo("head");
+                    $("<title></title>").text("CiderWebModules").appendTo("head");
 
-                const list = $("<ul></ul>");
-                routes.forEach(route => {
-                    const name = path.basename(route);
-                    $("<li></li>").append($("<a></a>").attr({
-                        href: `/${name}`,
-                        style: "text-decoration: none; color: lightblue;"
-                    }).text(name)).appendTo(list);
-                });
+                    const list = $("<ul></ul>");
+                    routes.forEach(route => {
+                        const name = path.basename(route);
+                        $("<li></li>").append($("<a></a>").attr({
+                            href: `/${name}`,
+                            style: "text-decoration: none; color: lightblue;"
+                        }).text(name)).appendTo(list);
+                    });
 
-                $("<h1 class='text-3xl font-bold'></h1>").text("CiderWebModules").appendTo("body");
-                list.appendTo("body");
-            } else {
-                $("<script></script>").attr({
-                    type: "module",
-                    src: `./src/routes${url.pathname}`
-                }).appendTo("body");
+                    $("<h1 class='text-3xl font-bold'></h1>").text("CiderWebModules").appendTo("body");
+                    list.appendTo("body");
+                } else {
+                    $("<script></script>").attr({
+                        type: "module",
+                        src: `./src/routes${url.pathname}`
+                    }).appendTo("body");
+                }
+
+                return $.html();
             }
-
-            return $.html();
         }
     }, ...(process.versions.bun ? [] : [mkcert({})])]
 }));
