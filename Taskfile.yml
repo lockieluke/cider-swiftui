@@ -103,6 +103,17 @@ tasks:
     cmds:
       - swift-precompiler precompile "Cider/" {{.CLI_ARGS}}
 
+  generate-licences:cider-web-modules:
+    desc: "Generate licences for CiderWebModules"
+    dir: "CiderWebModules/"
+    sources:
+      - package.json
+      - bun.lockb
+    generates:
+      - THIRD_PARTY_LICENCES.txt
+    cmds:
+      - bun generate-licences
+
   build:xc:
     desc: "Build Xcode target"
     preconditions:

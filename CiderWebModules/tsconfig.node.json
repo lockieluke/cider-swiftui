@@ -9,6 +9,7 @@
   },
   "include": ["vite.config.ts",
     "scripts/build.ts",
-    "scripts/dev.ts"
+    "scripts/dev.ts",
+    "scripts/generate-licences.ts"
   ]
 }

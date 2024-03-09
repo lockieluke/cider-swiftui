@@ -38,3 +38,6 @@ source-files.xcfilelist
 
 # ESLint
 .eslintcache
+
+# Licences
+THIRD_PARTY_LICENCES.txt

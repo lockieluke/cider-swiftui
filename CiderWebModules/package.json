@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "bun scripts/dev.ts",
     "build": "NODE_ENV=\"production\" bun scripts/build.ts",
+    "generate-licences": "bun scripts/generate-licences.ts",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src"
   },
@@ -51,6 +52,7 @@
     "esbuild-sass-plugin": "^3.0.0",
     "eslint": "^8.56.0",
     "fs-extra": "^11.2.0",
+    "generate-license-file": "^3.0.1",
     "glob": "^10.3.10",
     "musickit-typescript": "github:ciderapp/musickit-types",
     "ora": "^8.0.1",

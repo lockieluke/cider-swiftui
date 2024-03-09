@@ -877,10 +877,10 @@
 			buildPhases = (
 				B74EEBD529D8862500711DB6 /* Build NativeUtils */,
 				B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */,
+				B7A57EA62B9C914200480C88 /* Generate Licences */,
 				B77066032B51F03100551769 /* Precompile Sources */,
 				B700C17928B920F10069FDF5 /* Sources */,
 				B700C17A28B920F10069FDF5 /* Frameworks */,
-				B7A57EA62B9C914200480C88 /* Generate Licences */,
 				B700C17B28B920F10069FDF5 /* Resources */,
 				B7489F542AF4657100BCBD60 /* Copy Helpers */,
 				B790503D2B0E949600CED9B6 /* Embed XPC Services */,
@@ -1156,7 +1156,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "DIR=$PROJECT_TEMP_DIR/../../../SourcePackages/checkouts/AckGen\nif [ -d \"$DIR\" ]; then\n  cd $DIR\n  SDKROOT=(xcrun --sdk macosx --show-sdk-path)\n  swift run ackgen\nelse\n  echo \"warning: AckGen not found. Please install the package via SPM (https://github.com/MartinP7r/AckGen#installation)\"\nfi\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nDIR=$PROJECT_TEMP_DIR/../../../SourcePackages/checkouts/AckGen\nif [ -d \"$DIR\" ]; then\n  cd $DIR\n  SDKROOT=(xcrun --sdk macosx --show-sdk-path)\n  swift run ackgen\nelse\n  echo \"warning: AckGen not found. Please install the package via SPM (https://github.com/MartinP7r/AckGen#installation)\"\nfi\n\n(cd $SRCROOT; task generate-licences:cider-web-modules)\n";
 		};
 		B7C5C5E129CFA95C00EF4D11 /* Build CiderWebModules Resources */ = {
 			isa = PBXShellScriptBuildPhase;
