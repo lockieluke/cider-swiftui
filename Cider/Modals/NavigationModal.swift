@@ -8,7 +8,7 @@ import Defaults
 
 enum RootNavigationType {
     
-    case Home, ListenNow, Browse, Radio, Library, RecentlyAdded, Songs, Albums, Artists, Playlist, AnyView
+    case Home, ListenNow, Browse, Radio, Library, RecentlyAdded, Songs, Albums, Artists, Playlist, Licences, AnyView
     
 }
 

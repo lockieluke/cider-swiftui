@@ -137,6 +137,7 @@ class AppMenu {
         
         appNameMenu.submenu?.items = [
             NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("About %@", comment: ""), ProcessInfo.processInfo.processName), action: #selector(self.showAboutDialog(_:)), keyEquivalent: "").then { $0.target = self },
+            NSMenuItem(title: "View Licences...", action: #selector(self.showLicences(_:)), keyEquivalent: "").then { $0.target = self },
             .separator(),
             preferencesMenu,
             .separator(),
@@ -262,6 +263,10 @@ class AppMenu {
     
     @objc func showWhatsNewView(_ sender: Any) {
         self.navigationModal.isChangelogsViewPresent = true
+    }
+    
+    @objc func showLicences(_ sender: Any) {
+        self.navigationModal.currentRootStack = .Licences
     }
     
 #if DEBUG

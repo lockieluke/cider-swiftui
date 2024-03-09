@@ -6,6 +6,7 @@ import SwiftUI
 import Inject
 import Defaults
 import KeychainAccess
+import AckGen
 
 struct NavigationContainer: View {
     
@@ -95,6 +96,11 @@ struct NavigationContainer: View {
                                     if navigationModal.hasLoadedRootStack(.Artists) {
                                         ArtistsView()
                                             .hideWithoutDestroying(currentRootStack != .Artists || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Artists }).count > 0)
+                                    }
+                                    
+                                    if navigationModal.hasLoadedRootStack(.Licences) {
+                                        LicencesView()
+                                            .hideWithoutDestroying(currentRootStack != .Licences || navigationModal.viewsStack.filter ({ $0.rootStackOrigin == .Licences }).count > 0)
                                     }
                                 }
                                 

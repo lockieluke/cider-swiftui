@@ -8,6 +8,7 @@ Precompiled.swift
 
 # Distribution
 dest/
+Acknowledgements.plist
 
 # Google Services
 Cider/GoogleService-Info.plist
