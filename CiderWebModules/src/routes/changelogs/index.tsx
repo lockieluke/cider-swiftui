@@ -1,3 +1,4 @@
+/* @refresh reload */
 import {render, Show} from "solid-js/web";
 import {createEffect, createSignal} from "solid-js";
 import * as _ from "lodash-es";

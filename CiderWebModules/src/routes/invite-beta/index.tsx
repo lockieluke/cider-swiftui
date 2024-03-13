@@ -1,3 +1,4 @@
+/* @refresh reload */
 import {render, Show} from "solid-js/web";
 
 import "@src/index.scss";

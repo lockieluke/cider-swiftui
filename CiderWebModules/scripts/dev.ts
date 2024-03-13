@@ -34,7 +34,6 @@ const server = await createServer(mergeConfig<UserConfig, InlineConfig>(baseConf
     }), {
         name: "web-modules-dev-server",
         transformIndexHtml: {
-            order: "pre",
             handler(html, {originalUrl}) {
                 const url = new URL(`http://localhost:5173${originalUrl}`);
                 const $ = cheerio.load(html);

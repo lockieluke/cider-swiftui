@@ -1,4 +1,5 @@
 /// <reference types="musickit-typescript" />
+/* @refresh reload */
 
 import {Spinner, SpinnerType} from "solid-spinner";
 import {render, Show} from "solid-js/web";
