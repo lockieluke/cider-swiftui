@@ -8,6 +8,8 @@ This project is no longer actively maintained nor functional. This serves as a t
 
 [Licence](./LICENSE)
 
+[Code Review by Claude](./CLAUDE_REVIEW.md)
+
 <img src="https://cdn.lockie.dev/cider-6.jpg" alt="Cider Hero">
 <img src="https://cdn.lockie.dev/cider-4.jpg" alt="Cider Hero 2">
 
